@@ -90,9 +90,7 @@ class MainActivity : IXposedHookLoadPackage {
 
     /** Hook WebViewClient类，实现：
      *
-     * WebViewClient.setWebContentsDebuggingEnabled(true)
-     *
-     * WebViewClient.getSettings().setJavaScriptEnabled(true)
+     * webViewClient.onPageFinished({webView.evaluateJavascript(vConsole)})
      **/
     private fun hookWebViewClient(classLoader: ClassLoader?, packageName: String?) {
         val targetClasses = arrayOf(
@@ -106,7 +104,7 @@ class MainActivity : IXposedHookLoadPackage {
                 XposedBridge.hookAllMethods(clazz, "onPageFinished", object: XC_MethodHook() {
                     // 设置WebViewClient时，设置页面开始加载时注入vConsole
                     override fun beforeHookedMethod(param: MethodHookParam) {
-                        XposedBridge.log("[EnableWebViewDebugging]: <$packageName>(new ${getClassString(clazz)}).onPageFinished(vConsole)")
+                        XposedBridge.log("[EnableWebViewDebugging]: <$packageName>(new ${getClassString(clazz)}).onPageFinished({webView.evaluateJavascript(vConsole)})")
                         val webView = param.args[0]
                         XposedHelpers.callMethod(webView, "evaluateJavascript", arrayOf(String::class.java, XposedHelpers.findClass(targetClass[1], classLoader)), "javascript:$loadVConsole", null)
                     }
