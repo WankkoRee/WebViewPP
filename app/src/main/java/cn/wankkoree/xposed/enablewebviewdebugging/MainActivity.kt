@@ -11,20 +11,7 @@ import kotlin.collections.HashSet
 class MainActivity : IXposedHookLoadPackage {
     private val webViewClassesHashSet = HashSet<String>()
     private val webViewClientClassesHashSet = HashSet<String>()
-    private val loadVConsole = """
-        if(typeof loadJS === 'undefined'){
-          function loadJS(url, callback) {
-            var script = document.createElement("script"),
-            fn = callback || (()=>{});
-            script.type = "text/javascript";
-            script.onload = ()=>fn();
-            script.src = url;
-            document.getElementsByTagName("head")[0].appendChild(script);
-          }
-        }
-        if(typeof VConsole === 'undefined')
-          loadJS("https://cdn.bootcdn.net/ajax/libs/vConsole/3.11.2/vconsole.min.js", ()=>new VConsole());
-    """.trimIndent()
+    private val vConsole = Util.vConsoleRaw
 
     @Throws(Throwable::class)
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
@@ -106,7 +93,7 @@ class MainActivity : IXposedHookLoadPackage {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                         XposedBridge.log("[EnableWebViewDebugging]: <$packageName>(new ${getClassString(clazz)}).onPageFinished({webView.evaluateJavascript(vConsole)})")
                         val webView = param.args[0]
-                        XposedHelpers.callMethod(webView, "evaluateJavascript", arrayOf(String::class.java, XposedHelpers.findClass(targetClass[1], classLoader)), "javascript:$loadVConsole", null)
+                        XposedHelpers.callMethod(webView, "evaluateJavascript", arrayOf(String::class.java, XposedHelpers.findClass(targetClass[1], classLoader)), "javascript:$vConsole;new VConsole();", null)
                     }
                 })
             }
