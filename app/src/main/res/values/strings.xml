@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">EnableWebViewDebugging</string>
+    <string name="app_description">Enable WebView debugging and add vConsole in it. Support WebView, TBS X5.</string>
+</resources>
