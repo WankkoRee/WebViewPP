@@ -114,11 +114,15 @@ class MainActivity : IXposedHookLoadPackage {
     }
 
     private fun getClassString(clazz: Class<*>): String {
+        return "${clazz.name}<=${clazz.classLoader.javaClass.name}"
+    }
+
+    private fun getClassStringWithHash(clazz: Class<*>): String {
         return "${clazz.name}@${clazz.hashCode()}<=${clazz.classLoader.javaClass.name}@${clazz.classLoader!!.hashCode()}"
     }
 
     private fun checkWebView(targetClass: Class<*>): Boolean {
-        val targetClassS = getClassString(targetClass)
+        val targetClassS = getClassStringWithHash(targetClass)
         return if (webViewClassesHashSet.contains(targetClassS)) {
             false
         } else {
@@ -128,7 +132,7 @@ class MainActivity : IXposedHookLoadPackage {
     }
 
     private fun checkWebViewClient(targetClass: Class<*>): Boolean {
-        val targetClassS = getClassString(targetClass)
+        val targetClassS = getClassStringWithHash(targetClass)
         return if (webViewClientClassesHashSet.contains(targetClassS)) {
             false
         } else {
