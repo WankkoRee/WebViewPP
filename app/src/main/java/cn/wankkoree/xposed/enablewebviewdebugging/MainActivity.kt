@@ -24,23 +24,32 @@ class MainActivity : IXposedHookLoadPackage {
         hookWebView("android.webkit.WebView", lpparam.classLoader, packageName)
         hookWebViewClient(arrayOf(
             "android.webkit.WebViewClient",
-            "android.webkit.ValueCallback",
             "onPageFinished",
+            "android.webkit.ValueCallback",
         ), lpparam.classLoader, packageName)
         // TBS X5 通用
         hookWebView("com.tencent.smtt.sdk.WebView", lpparam.classLoader, packageName)
         hookWebViewClient(arrayOf(
             "com.tencent.smtt.sdk.WebViewClient",
-            "com.tencent.smtt.sdk.ValueCallback",
             "onPageFinished",
+            "com.tencent.smtt.sdk.ValueCallback",
         ), lpparam.classLoader, packageName)
         // tv.danmaku.bili 专用
         if (packageName == "tv.danmaku.bili") {
             log("info", packageName, "Special Hook")
             hookWebViewClient(arrayOf(
                 "com.bilibili.app.comm.bh.g",
-                "com.bilibili.app.comm.bh.interfaces.i",
                 "g",
+                "com.bilibili.app.comm.bh.interfaces.i",
+            ), lpparam.classLoader, packageName)
+        }
+        // com.netease.cloudmusic 专用
+        if (packageName == "com.netease.cloudmusic") {
+            log("info", packageName, "Special Hook")
+            hookWebViewClient(arrayOf(
+                "com.netease.cloudmusic.module.webview.a.c\$b",
+                "onPageFinished",
+                "android.webkit.ValueCallback",
             ), lpparam.classLoader, packageName)
         }
     }
@@ -117,13 +126,13 @@ class MainActivity : IXposedHookLoadPackage {
         if (clazz != null && checkWebViewClient(clazz)){  // 目标类存在且未hook
             log("info", packageName, "${getClassString(clazz)} hooking")
 
-            val hookResult = XposedBridge.hookAllMethods(clazz, targetClass[2], object: XC_MethodHook() {
+            val hookResult = XposedBridge.hookAllMethods(clazz, targetClass[1], object: XC_MethodHook() {
                 // 设置WebViewClient时，设置页面开始加载时注入vConsole
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     val webView = param.args[0]
 
                     log("debug", packageName, "${getClassString(clazz)}.onPageFinished({webView.evaluateJavascript(vConsole)})")
-                    XposedHelpers.callMethod(webView, "evaluateJavascript", arrayOf(String::class.java, XposedHelpers.findClass(targetClass[1], classLoader)), "javascript:$vConsole;new VConsole();", null)
+                    XposedHelpers.callMethod(webView, "evaluateJavascript", arrayOf(String::class.java, XposedHelpers.findClass(targetClass[2], classLoader)), "javascript:$vConsole;new VConsole();", null)
                 }
             })
             log("info", packageName, "${getClassString(clazz)}.onPageFinished() hooked x${hookResult.size}")
