@@ -35,12 +35,14 @@ class MainActivity : IXposedHookLoadPackage {
             "onPageFinished",
         ), lpparam.classLoader, packageName)
         // tv.danmaku.bili 专用
-        if (packageName == "tv.danmaku.bili")
+        if (packageName == "tv.danmaku.bili") {
+            log("info", packageName, "Special Hook")
             hookWebViewClient(arrayOf(
                 "com.bilibili.app.comm.bh.g",
                 "com.bilibili.app.comm.bh.interfaces.i",
                 "g",
             ), lpparam.classLoader, packageName)
+        }
     }
 
     /** Hook WebView类，实现：

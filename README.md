@@ -28,6 +28,11 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5.
 
 ## Support App / 支持情况
 
+> - ✅: It is supported in the general case / 默认可用
+> - ⭕: There are some problems / 存在一些问题
+> - ❌: Not supported, special adaptation is required / 不支持，需要特殊适配
+> - ✳️: It has been specially adapted / 已特殊适配
+
 | App Name | Package Name | Version | Engine | Debugging | vConsole |
 | :----: | :----: | :----: | :----: | :----: | :----: |
 | QQ音乐 | com.tencent.qqmusic | 11.0.0.10(2510) | TBS X5 045412 | ✅ | ✅ |
@@ -40,7 +45,7 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5.
 | 腾讯地图 | com.tencent.map | 9.18.1(1552) | WebView | ✅ | ✅ |
 | 航旅纵横 | com.umetrip.android.msky.app | 7.2.4(412) | WebView | ✅ | ✅ |
 | 起点读书 | com.qidian.QDReader | 7.9.186(674) | TBS X5 045913 | ✅ | ✅ |
-| 哔哩哔哩 | tv.danmaku.bili | 6.56.0(6560300) | WebView | ✅ | ✅ |
+| 哔哩哔哩 | tv.danmaku.bili | 6.56.0(6560300) | WebView | ✅ | ✳️ |
 | 网易云音乐 | com.netease.cloudmusic | 7.0.0(167) | WebView | ✅ | ❌ |
 | 知乎 | com.zhihu.android | 7.14.0(5222) | WebView | ✅ | ❌ |
 | 浙江移动手机营业厅 | com.example.businesshall | 7.3.0(2021072301) | WebView | ✅ | ✅ |
