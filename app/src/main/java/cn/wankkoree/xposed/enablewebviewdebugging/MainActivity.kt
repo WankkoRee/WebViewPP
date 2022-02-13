@@ -52,6 +52,15 @@ class MainActivity : IXposedHookLoadPackage {
                 "android.webkit.ValueCallback",
             ), lpparam.classLoader, packageName)
         }
+        // com.zhihu.android 专用
+        if (packageName == "com.zhihu.android") {
+            log("info", packageName, "Special Hook")
+            hookWebViewClient(arrayOf(
+                "com.zhihu.android.app.ui.widget.webview.c",
+                "onPageFinished",
+                "android.webkit.ValueCallback",
+            ), lpparam.classLoader, packageName)
+        }
     }
 
     /** Hook WebView类，实现：

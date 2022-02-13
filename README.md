@@ -47,6 +47,6 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5.
 | 起点读书 | com.qidian.QDReader | 7.9.186(674) | TBS X5 045913 | ✅ | ✅ |
 | 哔哩哔哩 | tv.danmaku.bili | 6.56.0(6560300) | WebView | ✅ | ✳️ |
 | 网易云音乐 | com.netease.cloudmusic | 7.0.0(167) | WebView | ✅ | ✳️ |
-| 知乎 | com.zhihu.android | 7.14.0(5222) | WebView | ✅ | ❌ |
+| 知乎 | com.zhihu.android | 7.14.0(5222) | WebView | ✅ | ✳️ |
 | 浙江移动手机营业厅 | com.example.businesshall | 7.3.0(2021072301) | WebView | ✅ | ✅ |
 | ... | ... | ... | ... | ... | ... |
