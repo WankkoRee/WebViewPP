@@ -11,7 +11,7 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5.
 
 ## Todo / 计划
 
-- [ ] 增加对`UC U4`的支持
+- [x] 增加对`UC U4`的支持
 - [ ] 增加对`Crosswalk`的支持
 
 ## Credits / 感谢
@@ -26,7 +26,16 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5.
   The inspiration for vConsole injection.
   >vConsole 注入的灵感来源。
 
-## Support App / 支持情况
+## Support Engine / 内核支持情况
+
+| Engine Name | Version | Debugging | vConsole | Comment |
+| :----: | :----: | :----: | :----: | :----: |
+| WebView | X | ✅ | ✅ | 部分 App 由于重写、继承等原因，需要针对性适配 |
+| TBS X5 | X | ✅ | ✅ | |
+| UC U4 | X ~ `3.21.0.82` | ❓ | ❓ | 未找到合适的测试目标 |
+| UC U4 | `3.21.0.174` ~ X | ✅ | ✅ | 一些阿里系的App使用了魔改包，可能无法开启 debugging |
+
+## Support App / 应用支持情况
 
 > - ✅: It is supported in the general case / 默认可用
 > - ⭕: There are some problems / 存在一些问题
@@ -52,5 +61,5 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5.
 | 京东金融 | com.jd.jrapp | 6.0.30(280) | WebView | ✅ | ✅ |
 | QQ邮箱 | com.tencent.androidqqmail | 6.2.0(10149054) | WebView | ✅ | ❌ |
 | 飞书 | com.ss.android.lark | 5.5.3(50535) | WebView | ✅ | ✅ |
-| 闲鱼 | com.taobao.idlefish | 7.3.50(259) | UC U4 | ❌ | ❌ |
+| 闲鱼 | com.taobao.idlefish | 7.3.50(259) | UC U4 3.22.1.196 | ❌ | ✅ |
 | ... | ... | ... | ... | ... | ... |

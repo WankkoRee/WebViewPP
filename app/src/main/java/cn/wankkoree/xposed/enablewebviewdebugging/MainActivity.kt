@@ -1,20 +1,35 @@
 package cn.wankkoree.xposed.enablewebviewdebugging
 
+import android.app.AndroidAppHelper
+import android.content.Context
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
+import java.io.File
 
 
 class MainActivity : IXposedHookLoadPackage {
     private val webViewClassesHashSet = HashSet<String>()
     private val webSettingsClassesHashSet = HashSet<String>()
     private val webViewClientClassesHashSet = HashSet<String>()
+    private val uCInspectClassesHashSet = HashSet<String>()
     private val vConsole = Util.vConsoleRaw
+    private val libUC7zSo = "libWebViewCore_3.21.0.174.200825145737_7z_uc.so"
 
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
         val packageName = lpparam.packageName
+        val cpuArch = with(lpparam.appInfo.nativeLibraryDir) {
+            when {
+                endsWith("arm64") -> "arm64-v8a"
+                endsWith("arm") -> "armeabi-v7a"
+                else -> {
+                    log("info", packageName, "the cpuArch(${toString()}) is not supported")
+                    null
+                }
+            }
+        }
 
         if (packageName == "com.android.webview")
             return // 不 hook WebView 本身
@@ -34,6 +49,21 @@ class MainActivity : IXposedHookLoadPackage {
             "onPageFinished",
             "com.tencent.smtt.sdk.ValueCallback",
         ), lpparam.classLoader, packageName)
+        // UC U4 通用
+        hookWebView("com.uc.webview.export.WebView", lpparam.classLoader, packageName)
+        hookWebViewClient(arrayOf(
+            "com.uc.webview.export.WebViewClient",
+            "onPageFinished",
+            "android.webkit.ValueCallback",
+        ), lpparam.classLoader, packageName)
+        hookWebViewClient(arrayOf(
+            "com.alipay.mobile.nebulauc.impl.UCWebViewClient",
+            "onPageFinished",
+            "android.webkit.ValueCallback",
+        ), lpparam.classLoader, packageName)
+        if (cpuArch != null)
+            hookUCInspect(lpparam.classLoader, packageName, cpuArch)
+
         // tv.danmaku.bili 专用
         if (packageName == "tv.danmaku.bili") {
             log("info", packageName, "Special Hook")
@@ -141,11 +171,46 @@ class MainActivity : IXposedHookLoadPackage {
                     val webView = param.args[0]
 
                     log("debug", packageName, "${getClassString(clazz)}.onPageFinished({webView.evaluateJavascript(vConsole)})")
-                    XposedHelpers.callMethod(webView, "evaluateJavascript", arrayOf(String::class.java, XposedHelpers.findClass(targetClass[2], classLoader)), "javascript:$vConsole;new VConsole();", null)
+                    XposedHelpers.callMethod(webView, "evaluateJavascript", arrayOf(String::class.java, XposedHelpers.findClass(targetClass[2], classLoader)), "javascript:$vConsole;new VConsole();document.getElementById('__vconsole').style.zIndex=2147483647;", null)
                 }
             })
             log("info", packageName, "${getClassString(clazz)}.onPageFinished() hooked x${hookResult.size}")
         }
+    }
+
+    private fun hookUCInspect(classLoader: ClassLoader, packageName: String, cpuArch: String) {
+        val clazz = try{ XposedHelpers.findClass("com.alipay.mobile.nebulauc.impl.UcServiceSetup", classLoader) }catch(e: XposedHelpers.ClassNotFoundError){null}
+        if (clazz != null && checkUCInspect(clazz)) {  // 目标类存在且未hook
+            log("info", packageName, "${getClassString(clazz)} hooking")
+
+            val hookResult = XposedBridge.hookAllMethods(clazz, "updateUCVersionAndSdcardPath", object: XC_MethodHook() {
+                // 初始化UC U4时，强制返回一个调试lib包
+                override fun afterHookedMethod(param: MethodHookParam) {
+                    val context = AndroidAppHelper.currentApplication() as Context
+                    val fooBar = context.getExternalFilesDir("foo/bar")
+                    val libUC7zSoTmp = File(fooBar, "libWebViewCore_ri_7z_uc.so")
+                    if (!libUC7zSoTmp.exists()) {
+                        log("debug", packageName, "Write $cpuArch/$libUC7zSo to ${libUC7zSoTmp.absolutePath}")
+                        val moduleContext = context.createPackageContext("cn.wankkoree.xposed.enablewebviewdebugging", Context.CONTEXT_IGNORE_SECURITY)
+                        val inputStream = moduleContext.assets.open("libUC7zSo/$cpuArch/$libUC7zSo")
+                        val outputStream = libUC7zSoTmp.outputStream()
+                        // copy
+                        val buf = ByteArray(8192)
+                        var length: Int
+                        while (inputStream.read(buf).also { length = it } > 0) {
+                            outputStream.write(buf, 0, length)
+                        }
+                        outputStream.flush()
+                        log("debug", packageName, "Write result: ${libUC7zSoTmp.exists()}")
+                    }
+
+                    log("debug", packageName, "${getClassString(clazz)}.sInitUcFromSdcardPath=\"${libUC7zSoTmp.absolutePath}\"")
+                    XposedHelpers.setStaticObjectField(clazz, "sInitUcFromSdcardPath", libUC7zSoTmp.absolutePath)
+                }
+            })
+            log("info", packageName, "${getClassString(clazz)}.updateUCVersionAndSdcardPath() hooked x${hookResult.size}")
+        }
+
     }
 
     private fun getClassString(clazz: Class<*>): String {
@@ -182,6 +247,16 @@ class MainActivity : IXposedHookLoadPackage {
             false
         } else {
             webViewClientClassesHashSet.add(targetClassS)
+            true
+        }
+    }
+
+    private fun checkUCInspect(targetClass: Class<*>): Boolean {
+        val targetClassS = getClassStringWithHash(targetClass)
+        return if (uCInspectClassesHashSet.contains(targetClassS)) {
+            false
+        } else {
+            uCInspectClassesHashSet.add(targetClassS)
             true
         }
     }
