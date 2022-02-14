@@ -6,8 +6,8 @@
 [![GitHub Downloads](https://img.shields.io/github/downloads/WankkoRee/EnableWebViewDebugging/total?label=GitHub%20Downloads&logo=github&style=flat)](https://github.com/WankkoRee/EnableWebViewDebugging/releases)
 [![LSPosed Downloads](https://img.shields.io/github/downloads/Xposed-Modules-Repo/cn.wankkoree.xposed.enablewebviewdebugging/total?label=LSPosed%20Downloads&logo=Android&style=flat&labelColor=F48FB1&logoColor=ffffff)](https://modules.lsposed.org/module/cn.wankkoree.xposed.enablewebviewdebugging)
 
-Enable WebView debugging and add vConsole in it. Support WebView, TBS X5.
->启用 WebView 调试并添加 vConsole，支持 WebView、TBS X5。
+Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4.
+>启用 WebView 调试并添加 vConsole，支持 WebView、TBS X5、UC U4。
 
 ## Todo / 计划
 
