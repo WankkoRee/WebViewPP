@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">启用 WebView 调试</string>
-    <string name="app_description">启用 WebView 调试并添加 vConsole，支持 WebView、TBS X5。</string>
+    <string name="app_description">启用 WebView 调试并添加 vConsole，支持 WebView、TBS X5、UC U4。</string>
 </resources>
