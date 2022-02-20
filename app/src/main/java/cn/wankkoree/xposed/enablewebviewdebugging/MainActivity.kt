@@ -86,6 +86,15 @@ class MainActivity : IXposedHookLoadPackage {
                 "android.webkit.ValueCallback",
             ), lpparam.classLoader, packageName)
         }
+        // com.tencent.androidqqmail 专用
+        if (packageName == "com.tencent.androidqqmail") {
+            Util.log("info", packageName, "Special Hook")
+            hookWebViewClient(arrayOf(
+                "com.tencent.qqmail.activity.readmail.ReadMailFragment\$69",
+                "onSafePageFinished",
+                "android.webkit.ValueCallback",
+            ), lpparam.classLoader, packageName)
+        }
     }
 
     /** Hook WebView类，实现：
@@ -148,6 +157,19 @@ class MainActivity : IXposedHookLoadPackage {
                 }
             })
             Util.log("info", packageName, "${Util.getClassString(clazz)}.loadUrl() hooked x${hookResult.size}")
+
+            hookResult = XposedBridge.hookAllMethods(clazz, "setWebViewClient", object: XC_MethodHook() {
+                override fun afterHookedMethod(param: MethodHookParam) {
+                    if (param.args[0] != null) {
+                        Util.log("debug", packageName, "${Util.getClassString(clazz)}.setWebViewClient(${Util.getClassString(param.args[0].javaClass)})")
+                    } else { // 撤销设置 WebViewClient
+                        Util.log("debug", packageName, "${Util.getClassString(clazz)}.setWebViewClient(null)")
+                    }
+                    Util.printStackTrace("debug", packageName)
+                }
+            })
+            Util.log("info", packageName, "${Util.getClassString(clazz)}.loadUrl() hooked x${hookResult.size}")
+
         }
     }
 

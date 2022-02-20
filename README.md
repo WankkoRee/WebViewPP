@@ -59,7 +59,7 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4.
 | 知乎 | com.zhihu.android | 7.14.0(5222) | WebView | ✅ | ✳️ |
 | 浙江移动手机营业厅 | com.example.businesshall | 7.3.0(2021072301) | WebView | ✅ | ✅ |
 | 京东金融 | com.jd.jrapp | 6.0.30(280) | WebView | ✅ | ✅ |
-| QQ邮箱 | com.tencent.androidqqmail | 6.2.0(10149054) | WebView | ✅ | ❌ |
+| QQ邮箱 | com.tencent.androidqqmail | 6.2.0(10149054) | WebView | ✅ | ✳️ |
 | 飞书 | com.ss.android.lark | 5.5.3(50535) | WebView | ✅ | ✅ |
 | 闲鱼 | com.taobao.idlefish | 7.3.50(259) | UC U4 3.22.1.196 | ❌ | ✅ |
 | ... | ... | ... | ... | ... | ... |
