@@ -65,6 +65,11 @@ class MainActivity : IXposedHookLoadPackage {
             "org.xwalk.core.XWalkView",
             "org.xwalk.core.XWalkPreferences",
         ), lpparam.classLoader, packageName)
+        hookWebViewClient(arrayOf(
+            "org.xwalk.core.XWalkResourceClient",
+            "onLoadFinished",
+            "android.webkit.ValueCallback",
+        ), lpparam.classLoader, packageName)
 
         // tv.danmaku.bili 专用
         if (packageName == "tv.danmaku.bili") {
@@ -106,6 +111,11 @@ class MainActivity : IXposedHookLoadPackage {
         if (packageName == "com.tencent.mm") {
             Util.log("info", packageName, "Special Hook")
             hookWeChat("org.xwalk.core.XWalkPreferences", lpparam.classLoader, packageName)
+            hookWebViewClient(arrayOf(
+                "com.tencent.xweb.ag",
+                "b",
+                "android.webkit.ValueCallback",
+            ), lpparam.classLoader, packageName)
         }
     }
 
@@ -246,26 +256,39 @@ class MainActivity : IXposedHookLoadPackage {
             val xwalkPreferences = XposedHelpers.findClass(targetClass[1], classLoader)
 
             var hookResult = XposedBridge.hookAllConstructors(clazz, object: XC_MethodHook() {
-                // 创建对象时hook为默认开启调试
+                // 创建对象时hook为默认开启调试、JS
                 override fun beforeHookedMethod(param: MethodHookParam) {
-                    Util.log("debug", packageName, "${Util.getClassString(xwalkPreferences)}.setValue(\"remote-debugging\", true)")
                     try {
+                        Util.log("debug", packageName, "${Util.getClassString(xwalkPreferences)}.setValue(\"remote-debugging\", true)")
                         XposedHelpers.callStaticMethod(xwalkPreferences, "setValue", "remote-debugging", true)
+                        Util.log("debug", packageName, "${Util.getClassString(xwalkPreferences)}.setValue(\"enable-javascript\", true)")
+                        XposedHelpers.callStaticMethod(xwalkPreferences, "setValue", "enable-javascript", true)
                     } catch (e: java.lang.NullPointerException) { } // 防止微信的二改引擎 XWeb 引发报错
                 }
             })
             Util.log("info", packageName, "${Util.getClassString(clazz)} new() hooked x${hookResult.size}")
 
             hookResult = XposedBridge.hookAllMethods(xwalkPreferences, "setValue", object: XC_MethodHook() {
-                // 声明不开启调试时hook为开启调试
+                // 声明不开启调试时hook为开启调试、JS
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     if (param.args[0] == "remote-debugging" && param.args[1] != true) {
-                        Util.log("debug", packageName, "${Util.getClassString(clazz)}.setValue(\"remote-debugging\", ${param.args[1]} -> true)")
+                        Util.log("debug", packageName, "${Util.getClassString(xwalkPreferences)}.setValue(\"remote-debugging\", ${param.args[1]} -> true)")
+                        param.args[1] = true
+                    } else if (param.args[0] == "enable-javascript" && param.args[1] != true) {
+                        Util.log("debug", packageName, "${Util.getClassString(xwalkPreferences)}.setValue(\"enable-javascript\", ${param.args[1]} -> true)")
                         param.args[1] = true
                     }
                 }
             })
             Util.log("info", packageName, "${Util.getClassString(xwalkPreferences)}.setValue() hooked x${hookResult.size}")
+
+            hookResult = XposedBridge.hookAllMethods(clazz, "loadUrl", object: XC_MethodHook() {
+                override fun afterHookedMethod(param: MethodHookParam) {
+                    Util.log("debug", packageName, "${Util.getClassString(clazz)}.loadUrl(\"${param.args[0]}\")")
+                    Util.printStackTrace("debug", packageName)
+                }
+            })
+            Util.log("info", packageName, "${Util.getClassString(clazz)}.loadUrl() hooked x${hookResult.size}")
         }
     }
 
@@ -275,11 +298,15 @@ class MainActivity : IXposedHookLoadPackage {
             Util.log("info", packageName, "${Util.getClassString(clazz)} hooking")
 
             var hookResult = XposedBridge.hookAllConstructors(clazz, object: XC_MethodHook() {
-                // 创建对象时hook为默认开启调试
+                // 创建对象时hook为默认开启调试、JS
                 override fun afterHookedMethod(param: MethodHookParam) {
                     val xwalkPreferences = param.thisObject
+
                     Util.log("debug", packageName, "${Util.getClassString(clazz)}.setValue(\"remote-debugging\", true)")
                     XposedHelpers.callMethod(xwalkPreferences, "setValue", "remote-debugging", true)
+
+                    Util.log("debug", packageName, "${Util.getClassString(clazz)}.setValue(\"enable-javascript\", true)")
+                    XposedHelpers.callMethod(xwalkPreferences, "setValue", "enable-javascript", true)
                 }
             })
             Util.log("info", packageName, "${Util.getClassString(clazz)} new() hooked x${hookResult.size}")

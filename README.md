@@ -35,8 +35,8 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4,
 | TBS X5 | X | ✅ | ✅ | |
 | UC U4 | X ~ `3.21.0.82` | ❓ | ❓ | 未找到合适的测试目标 |
 | UC U4 | `3.21.0.174` ~ X | ✅ | ✅ | 一些阿里系的 App 使用了魔改包，可能无法开启 debugging |
-| Crosswalk | X | ✅ | ❌ | 暂未注入 vConsole |
-| XWeb | X | ✅ | ❌ | 由 Crosswalk 二改而来的引擎，大概只有微信在用 |
+| Crosswalk | X | ✅ | ❓ | 未找到合适的测试目标 |
+| XWeb | X | ✅ | ✅ | 由 Crosswalk 二改而来的引擎，大概只有微信在用 |
 
 ## Support App / 应用支持情况
 
@@ -65,5 +65,5 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4,
 | QQ邮箱 | com.tencent.androidqqmail | 6.2.0(10149054) | WebView | ✅ | ✳️ |
 | 飞书 | com.ss.android.lark | 5.5.3(50535) | WebView | ✅ | ✅ |
 | 闲鱼 | com.taobao.idlefish | 7.3.50(259) | UC U4 3.22.1.196 | ❌ | ✅ |
-| 微信 | com.tencent.mm | 8.0.19(2080) | XWeb 3185 | ✅ | ❌ |
+| 微信 | com.tencent.mm | 8.0.19(2080) | XWeb 3185 | ✅ | ✳️ |
 | ... | ... | ... | ... | ... | ... |
