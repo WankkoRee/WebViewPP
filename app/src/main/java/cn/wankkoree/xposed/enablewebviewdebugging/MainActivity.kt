@@ -124,6 +124,10 @@ class MainActivity : IXposedHookLoadPackage {
      * WebView.setWebContentsDebuggingEnabled(true)
      *
      * webView.getSettings().setJavaScriptEnabled(true)
+     *
+     * webView.loadUrl() breakpoint
+     *
+     * webView.setWebViewClient() breakpoint
      **/
     private fun hookWebView(targetClass: String, classLoader: ClassLoader, packageName: String) {
         val clazz = try{ XposedHelpers.findClass(targetClass, classLoader) }catch(e: XposedHelpers.ClassNotFoundError){null}
@@ -216,6 +220,10 @@ class MainActivity : IXposedHookLoadPackage {
         }
     }
 
+    /** Hook UcServiceSetup类，实现：
+     *
+     * UcServiceSetup.sInitUcFromSdcardPath = "/sdcard/Android/packageName/foo/bar/libWebViewCore_ri_7z_uc.so"
+     **/
     private fun hookUCInspect(classLoader: ClassLoader, packageName: String, cpuArch: String) {
         val clazz = try{ XposedHelpers.findClass("com.alipay.mobile.nebulauc.impl.UcServiceSetup", classLoader) }catch(e: XposedHelpers.ClassNotFoundError){null}
         if (clazz != null && checkUCInspect(clazz)) {  // 目标类存在且未hook
@@ -249,6 +257,14 @@ class MainActivity : IXposedHookLoadPackage {
 
     }
 
+    /** Hook Crosswalk XwalkView、XwalkPreferences类，实现：
+     *
+     * XwalkPreferences.setValue("remote-debugging", true)
+     *
+     * XwalkPreferences.setValue("enable-javascript", true)
+     *
+     * xwalkView.loadUrl() breakpoint
+     **/
     private fun hookCrosswalk(targetClass: Array<String>, classLoader: ClassLoader, packageName: String) {
         val clazz = try{ XposedHelpers.findClass(targetClass[0], classLoader) }catch(e: XposedHelpers.ClassNotFoundError){null}
         if (clazz != null && checkCrosswalk(clazz)){  // 目标类存在且未hook
@@ -292,6 +308,12 @@ class MainActivity : IXposedHookLoadPackage {
         }
     }
 
+    /** Hook XWeb XwalkPreferences类，实现：
+     *
+     * XwalkPreferences.setValue("remote-debugging", true)
+     *
+     * XwalkPreferences.setValue("enable-javascript", true)
+     **/
     private fun hookWeChat(targetClass: String, classLoader: ClassLoader, packageName: String) {
         val clazz = try{ XposedHelpers.findClass(targetClass, classLoader) }catch(e: XposedHelpers.ClassNotFoundError){null}
         if (clazz != null && checkWeChat(clazz)){  // 目标类存在且未hook
