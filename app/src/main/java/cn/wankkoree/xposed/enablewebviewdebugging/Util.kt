@@ -4,8 +4,10 @@ import java.io.InputStream
 import android.app.AndroidAppHelper
 import android.app.Application
 import android.content.Context
+import de.robv.android.xposed.XC_MethodHook
 
 import de.robv.android.xposed.XposedBridge
+import de.robv.android.xposed.XposedHelpers
 
 object Util {
     private const val modulePackage = "cn.wankkoree.xposed.enablewebviewdebugging"
@@ -49,5 +51,30 @@ object Util {
             this.log(level, packageName, "at ${element.className}.${element.methodName}(${element.fileName}:${element.lineNumber})")
         }
         this.log(level, packageName, "---- ---- ---- ----")
+    }
+
+    /** hook 所有不知道名字的类中的方法
+     *
+     * 例：在 LSPosed 中调用：
+     *
+     * `hookAllMethods("com.foo.bar", "LspHooker_", "loadUrl")`
+     */
+    fun hookAllMethods(packageName: String, xposedName: String, methodName: String) {
+        XposedHelpers.findAndHookMethod(ClassLoader::class.java, "loadClass", String::class.java, object : XC_MethodHook() {
+            override fun afterHookedMethod(param: MethodHookParam) {
+                if (param.hasThrowable()) return
+                val clazz = param.result as Class<*>
+                if (clazz.name == xposedName) return
+                val hookResult = XposedBridge.hookAllMethods(clazz, methodName, object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                        log("debug", packageName, "${getClassString(clazz)}.$methodName(${param.args.joinToString()})")
+                        printStackTrace("debug", packageName)
+                    }
+                })
+                if (hookResult.isNotEmpty()) {
+                    log("info", packageName, "${getClassString(clazz)}.$methodName() hooked x${hookResult.size}")
+                }
+            }
+        })
     }
 }
