@@ -12,6 +12,7 @@ class MainActivity : IXposedHookLoadPackage {
     private val webSettingsClassesHashSet = HashSet<String>()
     private val webViewClientClassesHashSet = HashSet<String>()
     private val uCInspectClassesHashSet = HashSet<String>()
+    private val crosswalkClassesHashSet = HashSet<String>()
     private val weChatClassesHashSet = HashSet<String>()
 
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
@@ -60,7 +61,10 @@ class MainActivity : IXposedHookLoadPackage {
         if (cpuArch != null)
             hookUCInspect(lpparam.classLoader, packageName, cpuArch)
         // Crosswalk 通用
-//        hookCrosswalk("org.xwalk.core.XWalkPreferences", lpparam.classLoader, packageName)
+        hookCrosswalk(arrayOf(
+            "org.xwalk.core.XWalkView",
+            "org.xwalk.core.XWalkPreferences",
+        ), lpparam.classLoader, packageName)
 
         // tv.danmaku.bili 专用
         if (packageName == "tv.danmaku.bili") {
@@ -235,6 +239,36 @@ class MainActivity : IXposedHookLoadPackage {
 
     }
 
+    private fun hookCrosswalk(targetClass: Array<String>, classLoader: ClassLoader, packageName: String) {
+        val clazz = try{ XposedHelpers.findClass(targetClass[0], classLoader) }catch(e: XposedHelpers.ClassNotFoundError){null}
+        if (clazz != null && checkCrosswalk(clazz)){  // 目标类存在且未hook
+            Util.log("info", packageName, "${Util.getClassString(clazz)} hooking")
+            val xwalkPreferences = XposedHelpers.findClass(targetClass[1], classLoader)
+
+            var hookResult = XposedBridge.hookAllConstructors(clazz, object: XC_MethodHook() {
+                // 创建对象时hook为默认开启调试
+                override fun beforeHookedMethod(param: MethodHookParam) {
+                    Util.log("debug", packageName, "${Util.getClassString(xwalkPreferences)}.setValue(\"remote-debugging\", true)")
+                    try {
+                        XposedHelpers.callStaticMethod(xwalkPreferences, "setValue", "remote-debugging", true)
+                    } catch (e: java.lang.NullPointerException) { } // 防止微信的二改引擎 XWeb 引发报错
+                }
+            })
+            Util.log("info", packageName, "${Util.getClassString(clazz)} new() hooked x${hookResult.size}")
+
+            hookResult = XposedBridge.hookAllMethods(xwalkPreferences, "setValue", object: XC_MethodHook() {
+                // 声明不开启调试时hook为开启调试
+                override fun beforeHookedMethod(param: MethodHookParam) {
+                    if (param.args[0] == "remote-debugging" && param.args[1] != true) {
+                        Util.log("debug", packageName, "${Util.getClassString(clazz)}.setValue(\"remote-debugging\", ${param.args[1]} -> true)")
+                        param.args[1] = true
+                    }
+                }
+            })
+            Util.log("info", packageName, "${Util.getClassString(xwalkPreferences)}.setValue() hooked x${hookResult.size}")
+        }
+    }
+
     private fun hookWeChat(targetClass: String, classLoader: ClassLoader, packageName: String) {
         val clazz = try{ XposedHelpers.findClass(targetClass, classLoader) }catch(e: XposedHelpers.ClassNotFoundError){null}
         if (clazz != null && checkWeChat(clazz)){  // 目标类存在且未hook
@@ -249,20 +283,9 @@ class MainActivity : IXposedHookLoadPackage {
                 }
             })
             Util.log("info", packageName, "${Util.getClassString(clazz)} new() hooked x${hookResult.size}")
-
-            hookResult = XposedBridge.hookAllMethods(clazz, "setValue", object: XC_MethodHook() {
-                // 声明不开启调试时hook为开启调试
-                override fun beforeHookedMethod(param: MethodHookParam) {
-                    if (param.args[0] == "remote-debugging" && param.args[1] != true) {
-                        Util.log("debug", packageName, "${Util.getClassString(clazz)}.setValue(\"remote-debugging\", ${param.args[1]} -> true)")
-                        param.args[1] = true
-                    }
-                }
-            })
-            Util.log("info", packageName, "${Util.getClassString(clazz)}.setValue() hooked x${hookResult.size}")
         }
     }
-    
+
     private fun checkWebView(targetClass: Class<*>): Boolean {
         val targetClassS = Util.getClassStringWithHash(targetClass)
         return if (webViewClassesHashSet.contains(targetClassS)) {
@@ -299,6 +322,16 @@ class MainActivity : IXposedHookLoadPackage {
             false
         } else {
             uCInspectClassesHashSet.add(targetClassS)
+            true
+        }
+    }
+
+    private fun checkCrosswalk(targetClass: Class<*>): Boolean {
+        val targetClassS = Util.getClassStringWithHash(targetClass)
+        return if (crosswalkClassesHashSet.contains(targetClassS)) {
+            false
+        } else {
+            crosswalkClassesHashSet.add(targetClassS)
             true
         }
     }
