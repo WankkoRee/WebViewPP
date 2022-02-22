@@ -168,7 +168,7 @@ class MainActivity : IXposedHookLoadPackage {
                     Util.printStackTrace("debug", packageName)
                 }
             })
-            Util.log("info", packageName, "${Util.getClassString(clazz)}.loadUrl() hooked x${hookResult.size}")
+            Util.log("info", packageName, "${Util.getClassString(clazz)}.setWebViewClient() hooked x${hookResult.size}")
 
         }
     }
