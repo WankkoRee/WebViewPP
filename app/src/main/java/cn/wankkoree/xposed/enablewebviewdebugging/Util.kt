@@ -5,7 +5,6 @@ import android.app.AndroidAppHelper
 import android.app.Application
 import android.content.Context
 import de.robv.android.xposed.XC_MethodHook
-
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 

@@ -14,6 +14,7 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4,
 - [x] 增加对`UC U4`的支持
 - [x] 增加对`Crosswalk`的支持
 - [x] 增加对`XWeb`的支持
+- [] 增加注入`eruda`
 
 ## Credits / 感谢
 
