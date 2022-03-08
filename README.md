@@ -14,7 +14,16 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4,
 - [x] 增加对`UC U4`的支持
 - [x] 增加对`Crosswalk`的支持
 - [x] 增加对`XWeb`的支持
-- [] 增加注入`eruda`
+- [ ] 增加注入`Eruda`
+- [ ] 增加注入`Chii`
+- [ ] 功能可选开启：
+  - inspector:
+    - `Chrome DevTools`
+    - `Chii`
+  - debugging panel
+    - `vConsole`
+    - `Eruda`
+- [ ] App注入点云端同步
 
 ## Credits / 感谢
 
