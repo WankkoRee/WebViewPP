@@ -213,7 +213,13 @@ class MainActivity : IXposedHookLoadPackage {
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     val webView = param.args[0]
                     Util.log("debug", packageName, "${Util.getClassString(clazz)}.onPageFinished({webView.evaluateJavascript(vConsole)})")
-                    XposedHelpers.callMethod(webView, "evaluateJavascript", arrayOf(String::class.java, XposedHelpers.findClass(targetClass[2], classLoader)), "javascript:${Util.getVConsole()};new VConsole();document.getElementById('__vconsole').style.zIndex=2147483647;", null)
+                    XposedHelpers.callMethod(webView, "evaluateJavascript", arrayOf(String::class.java, XposedHelpers.findClass(targetClass[2], classLoader)), "javascript:" +
+                            "if (typeof vConsole === 'undefined'){" +
+                            "   ${Util.getVConsole()};" +
+                            "   var vConsole=new VConsole();" + // 创建全局变量以供用户使用
+                            "   document.getElementById('__vconsole').style.zIndex=2147483647;" +
+                            "}"
+                        , null)
                 }
             })
             Util.log("info", packageName, "${Util.getClassString(clazz)}.onPageFinished() hooked x${hookResult.size}")
