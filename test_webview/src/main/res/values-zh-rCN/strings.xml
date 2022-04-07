@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WebView 测试</string>
+    <string name="menu_debugging_set">修改调试状态</string>
+    <string name="menu_javascript_set">修改JavaScript状态</string>
+    <string name="settings_will_be_applied_after_restarting_the_app">设置重启App后生效</string>
+</resources>
