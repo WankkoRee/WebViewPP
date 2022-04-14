@@ -126,20 +126,25 @@ class Apps : AppCompatActivity() {
         viewBinding.appsToolbarSearchBtn.isEnabled = false
         viewBinding.appsToolbarMenu.isEnabled = false
         viewBinding.appsLoading.isRefreshing = true
-        viewBinding.appsList.visibility = View.GONE
         lifecycleScope.launch(Dispatchers.IO) {
             val appList = mutableListOf<AppListItemAdapter.AppListItem>()
             val apps = packageManager.getInstalledPackages(PackageManager.GET_META_DATA or PackageManager.GET_PERMISSIONS)
             for (app in apps) {
-                val appItem = AppListItemAdapter.AppListItem(
-                    app.applicationInfo.loadIcon(packageManager),
-                    app.applicationInfo.loadLabel(packageManager) as String,
-                    app.versionName,
-                    app.versionCode,
-                    app.packageName,
-                    app.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 1,
-                    app.requestedPermissions == null || !app.requestedPermissions.contains("android.permission.INTERNET"),
-                )
+                val appItem = this@Apps.modulePrefs("apps_${app.packageName}").run {
+                    val hooks = getSet(AppSP.hooks)
+                    AppListItemAdapter.AppListItem(
+                        app.applicationInfo.loadIcon(packageManager),
+                        app.applicationInfo.loadLabel(packageManager) as String,
+                        app.versionName,
+                        app.versionCode,
+                        app.packageName,
+                        app.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 1,
+                        app.requestedPermissions == null || !app.requestedPermissions.contains("android.permission.INTERNET"),
+                        get(AppSP.is_enabled),
+                        hooks.size,
+                        hooks.fold(0) { sum, hash ->  sum + getInt("hook_times_$hash", 0) },
+                    )
+                }
                 appList.add(appItem)
             }
             lifecycleScope.launch(Dispatchers.Main) {
@@ -159,7 +164,6 @@ class Apps : AppCompatActivity() {
                 viewBinding.appsToolbarSearchBtn.isEnabled = true
                 viewBinding.appsToolbarMenu.isEnabled = true
                 viewBinding.appsLoading.isRefreshing = false
-                viewBinding.appsList.visibility = View.VISIBLE
             }
         }
     }
@@ -252,24 +256,7 @@ class Apps : AppCompatActivity() {
             holder.nameView.text = filteredData[position].name
             holder.versionView.text = "${filteredData[position].versionName}(${filteredData[position].versionCode})"
             holder.packageView.text = filteredData[position].pkg
-            if (!filteredData[position]._isLoaded) {
-                holder.stateView.text = ""
-                lifecycleScope.launch(Dispatchers.IO) {
-                    context!!.modulePrefs("app_${filteredData[position].pkg}").run {
-                        val hooks = getSet(AppSP.hooks)
-                        filteredData[position].isEnabled = get(AppSP.is_enabled)
-                        filteredData[position].ruleNumbers = hooks.size
-                        filteredData[position].hookTimes = hooks.fold(0) { sum, hash ->  sum + getInt("hook_times_$hash", 0) }
-                    }
-                    filteredData[position]._isLoaded = true
-//                    delay(Random.nextLong(1000, 3000))
-                    withContext(Dispatchers.Main) {
-                        holder.stateView.text = context!!.getString(R.string.applistitem_num).format(context!!.getString(if (filteredData[position].isEnabled) R.string.enabled else R.string.disabled), filteredData[position].ruleNumbers, filteredData[position].hookTimes)
-                    }
-                }
-            } else {
-                holder.stateView.text = context!!.getString(R.string.applistitem_num).format(context!!.getString(if (filteredData[position].isEnabled) R.string.enabled else R.string.disabled), filteredData[position].ruleNumbers, filteredData[position].hookTimes)
-            }
+            holder.stateView.text = context!!.getString(R.string.applistitem_num).format(context!!.getString(if (filteredData[position].isEnabled) R.string.enabled else R.string.disabled), filteredData[position].ruleNumbers, filteredData[position].hookTimes)
             holder.isSystemAppView.color = context!!.getColor(if (!filteredData[position].isSystemApp) R.color.backgroundSuccess else R.color.backgroundError)
             holder.isSystemAppView.text = context!!.getString(if (!filteredData[position].isSystemApp) R.string.user_application else R.string.system_application)
             holder.isNoNetworkView.color = context!!.getColor(if (!filteredData[position].isNoNetwork) R.color.backgroundSuccess else R.color.backgroundError)
@@ -284,12 +271,10 @@ class Apps : AppCompatActivity() {
             val pkg: String,
             val isSystemApp: Boolean,
             val isNoNetwork: Boolean,
-        ) {
-            var isEnabled: Boolean = false
-            var hookTimes: Int = 0
-            var ruleNumbers: Int = 0
-            var _isLoaded: Boolean = false
-        }
+            val isEnabled: Boolean,
+            val hookTimes: Int,
+            val ruleNumbers: Int,
+        )
 
         inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
             var p = 0
