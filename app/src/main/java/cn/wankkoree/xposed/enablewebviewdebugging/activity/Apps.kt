@@ -45,12 +45,8 @@ class Apps : AppCompatActivity() {
         viewBinding = AppsBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        AnimationUtils.loadAnimation(this, R.anim.rotate).run {
-            interpolator = LinearInterpolator()
-            viewBinding.appsLoadingImg.startAnimation(this)
-        }
+        viewBinding.appsLoading.setColorSchemeColors(getColor(R.color.backgroundSuccess), getColor(R.color.backgroundInfo), getColor(R.color.backgroundError))
         viewBinding.appsList.layoutManager = LinearLayoutManager(this)
-
         adapter = AppListItemAdapter(lifecycleScope)
         viewBinding.appsList.adapter = adapter
         refresh()
@@ -120,13 +116,16 @@ class Apps : AppCompatActivity() {
                 show()
             }
         }
+        viewBinding.appsLoading.setOnRefreshListener {
+            refresh()
+        }
     }
 
     private fun refresh() {
         viewBinding.appsToolbarSearch.isEnabled = false
         viewBinding.appsToolbarSearchBtn.isEnabled = false
         viewBinding.appsToolbarMenu.isEnabled = false
-        viewBinding.appsLoading.visibility = View.VISIBLE
+        viewBinding.appsLoading.isRefreshing = true
         viewBinding.appsList.visibility = View.GONE
         lifecycleScope.launch(Dispatchers.IO) {
             val appList = mutableListOf<AppListItemAdapter.AppListItem>()
@@ -159,7 +158,7 @@ class Apps : AppCompatActivity() {
                 viewBinding.appsToolbarSearch.isEnabled = true
                 viewBinding.appsToolbarSearchBtn.isEnabled = true
                 viewBinding.appsToolbarMenu.isEnabled = true
-                viewBinding.appsLoading.visibility = View.GONE
+                viewBinding.appsLoading.isRefreshing = false
                 viewBinding.appsList.visibility = View.VISIBLE
             }
         }
