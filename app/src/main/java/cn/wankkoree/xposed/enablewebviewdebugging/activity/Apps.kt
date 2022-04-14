@@ -229,7 +229,7 @@ class Apps : AppCompatActivity() {
                         raw.isSystemApp && !raw.isNoNetwork && showSystemApp ||
                         !raw.isSystemApp && raw.isNoNetwork && showNoNetwork ||
                         raw.isSystemApp && raw.isNoNetwork && showSystemApp && showNoNetwork ||
-                        raw.ruleNumbers > 0
+                        raw.isEnabled
                         ) && (
                         !isSearching || isSearching && (raw.pkg.contains(searchText) || raw.name.contains(searchText))
                         )
