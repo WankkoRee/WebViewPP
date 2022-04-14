@@ -253,6 +253,8 @@ class Apps : AppCompatActivity() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.p = position
             holder.iconView.setImageDrawable(filteredData[position].icon)
+            holder.iconView.contentDescription = filteredData[position].name
+            holder.iconView.colorFilter = if (filteredData[position].isEnabled) null else grayColorFilter
             holder.nameView.text = filteredData[position].name
             holder.versionView.text = "${filteredData[position].versionName}(${filteredData[position].versionCode})"
             holder.packageView.text = filteredData[position].pkg
