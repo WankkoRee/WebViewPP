@@ -268,7 +268,7 @@ class Apps : AppCompatActivity() {
                     }
                 }
             } else {
-                holder.stateView.text = context!!.getString(R.string.applistitem_num).format(filteredData[position].isEnabled, filteredData[position].ruleNumbers, filteredData[position].hookTimes)
+                holder.stateView.text = context!!.getString(R.string.applistitem_num).format(context!!.getString(if (filteredData[position].isEnabled) R.string.enabled else R.string.disabled), filteredData[position].ruleNumbers, filteredData[position].hookTimes)
             }
             holder.isSystemAppView.color = context!!.getColor(if (!filteredData[position].isSystemApp) R.color.backgroundSuccess else R.color.backgroundError)
             holder.isSystemAppView.text = context!!.getString(if (!filteredData[position].isSystemApp) R.string.user_application else R.string.system_application)
