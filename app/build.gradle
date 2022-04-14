@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.devtools.ksp' version '1.6.20-1.0.4'
 }
 
 android {
@@ -10,13 +11,15 @@ android {
             keyPassword ANDROID_KEY_PASSWORD
             keyAlias ANDROID_KEY_ALIAS
             storeFile file(ANDROID_STORE_FILE)
+            v1SigningEnabled true
+            v2SigningEnabled true
         }
     }
     compileSdk 32
 
     defaultConfig {
         applicationId "cn.wankkoree.xposed.enablewebviewdebugging"
-        minSdk 21
+        minSdk 27
         targetSdk 32
         versionCode 4
         versionName 'v1.0.3'
@@ -39,9 +42,23 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
     compileOnly 'de.robv.android.xposed:api:82'
-    compileOnly 'de.robv.android.xposed:api:82:sources'
+    implementation 'com.highcapable.yukihookapi:api:1.0.70'
+    ksp 'com.highcapable.yukihookapi:ksp-xposed:1.0.70'
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+    implementation 'com.google.code.gson:gson:2.9.0'
 }

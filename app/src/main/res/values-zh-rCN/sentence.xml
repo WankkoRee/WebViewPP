@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="please_click_the_download_button_instead_of_here_long_press_on_a_version_tag_to_delete_it">点我没用，点下载。\n长按版本标签可以删除。</string>
+    <string name="please_enable_the_module_first">请先激活模块。</string>
+    <string name="alipay_is_not_found_please_install_it_first">未找到支付宝，请先安装。</string>
+    <string name="the_target_version_already_exists_it_will_be_overwritten">目标版本已存在，将会被覆盖。</string>
+</resources>

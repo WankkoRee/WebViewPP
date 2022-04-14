@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search">Search</string>
+    <string name="menu">Menu</string>
+    <string name="logo">Logo</string>
+    <string name="disabled">Disabled</string>
+    <string name="donate">Donate</string>
+    <string name="unknown">Unknown</string>
+    <string name="enabled">Enabled</string>
+    <string name="back">Back</string>
+    <string name="vconsole" translatable="false">vConsole</string>
+    <string name="nebulaucsdk">NebulaUCSDK</string>
+    <string name="none">None</string>
+    <string name="download_started">Download Started</string>
+    <string name="download_completed">Download Completed</string>
+    <string name="download_failed">Download Failed</string>
+    <string name="pull_failed">Pull %s Failed</string>
+    <string name="refresh">Refresh</string>
+    <string name="user_application">User Application</string>
+    <string name="system_application">System Application</string>
+    <string name="no_network">No Network</string>
+    <string name="need_network">Need Network</string>
+    <string name="delete_completed">Delete Completed</string>
+    <string name="reset">Reset</string>
+</resources>

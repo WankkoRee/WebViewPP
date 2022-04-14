@@ -1,4 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">EnableWebViewDebugging</string>
     <string name="app_description">Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4, Crosswalk(XWalk), XWeb.</string>
+    <string name="main_version_text">Module Version: %s(%d)</string>
+    <string name="main_xposed_text">Hook Framework: %s</string>
+    <string name="main_apps_text">Hooking Rules Manager</string>
+    <string name="main_apps_num">WebView Hook of %d Applications Enabled</string>
+    <string name="main_donate_desc_text">Your donation is the biggest motivation for my developing</string>
+    <string name="main_resources_text">Hooking Resources Manager</string>
+    <string name="main_resources_desc">Manage some loadable resources here, such as vConsole</string>
+    <string name="resources_vconsole_download">Download vConsole</string>
+    <string name="resources_vconsole_local">Local Version: %s</string>
+    <string name="resources_nebulaucsdk_download">Download NebulaUCSDK</string>
+    <string name="applistitem_num">%1$s, %2$d rules, hooked %3$d times</string>
+    <string name="apps_show_system_app">Show System Applications</string>
+    <string name="apps_show_no_network">Show No Network Permission</string>
 </resources>

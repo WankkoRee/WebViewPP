@@ -6,16 +6,16 @@
     <clip-path
         android:pathData="M 54 27 A 27 27 90 0 1 54 81 A 27 27 90 0 1 54 27 Z" />
     <path
-        android:fillColor="#ccffffff"
+        android:fillColor="#77ffffff"
         android:pathData="M 54 27 A 27 27 90 0 1 54 81 A 27 27 90 0 1 54 27 Z" />
     <path
-        android:fillColor="#33ff0000"
+        android:fillColor="#77ff0000"
         android:pathData="M 54 45 L 81 45 L 81 27 L 27 27 L 46.2 58.5 Z" />
     <path
-        android:fillColor="#3300ff00"
+        android:fillColor="#7700ff00"
         android:pathData="M 46.2 58.5 L 27 27 L 27 81 L 49.5 81 L 61.8 58.5 Z" />
     <path
-        android:fillColor="#33ffff00"
+        android:fillColor="#77ffff00"
         android:pathData="M 61.8 58.5 L 49.5 81 L 81 81 L 81 45 L 54 45 Z" />
     <path
         android:fillColor="#77ffffff"

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="please_click_the_download_button_instead_of_here_long_press_on_a_version_tag_to_delete_it">Please click the download button instead of here.\nLong press on a version tag to delete it.</string>
+    <string name="please_enable_the_module_first">Please enable the module first.</string>
+    <string name="alipay_is_not_found_please_install_it_first">Alipay is not found, please install it first.</string>
+    <string name="the_target_version_already_exists_it_will_be_overwritten">The target version already exists, it will be overwritten.</string>
+</resources>

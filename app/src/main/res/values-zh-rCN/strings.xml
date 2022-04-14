@@ -2,4 +2,17 @@
 <resources>
     <string name="app_name">启用 WebView 调试</string>
     <string name="app_description">启用 WebView 调试并添加 vConsole，支持 WebView、TBS X5、UC U4、Crosswalk(XWalk)、XWeb。</string>
+    <string name="main_version_text">模块版本: %s(%d)</string>
+    <string name="main_xposed_text">Hook 框架: %s</string>
+    <string name="main_apps_text">Hook 规则管理</string>
+    <string name="main_apps_num">已开启 %d 个应用的 WebView Hook</string>
+    <string name="main_donate_desc_text">你的打赏就是我开发的最大动力</string>
+    <string name="main_resources_text">Hook 资源管理</string>
+    <string name="main_resources_desc">在这管理一些可供载入的资源，如 vConsole</string>
+    <string name="resources_vconsole_download">下载 vConsole</string>
+    <string name="resources_vconsole_local">本地版本: %s</string>
+    <string name="resources_nebulaucsdk_download">下载 UC 调试内核</string>
+    <string name="applistitem_num">%1$s，配置了 %2$d 条规则，生效了 %3$d 次</string>
+    <string name="apps_show_system_app">显示系统应用</string>
+    <string name="apps_show_no_network">显示无网络权限</string>
 </resources>
