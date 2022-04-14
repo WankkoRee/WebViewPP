@@ -1,9 +1,11 @@
 package cn.wankkoree.xposed.enablewebviewdebugging.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
@@ -20,6 +22,9 @@ import java.net.URLEncoder
 class Main: AppCompatActivity() {
     private lateinit var viewBinding: MainBinding
     private var toast: Toast? = null
+    private val appsResultContract = registerForActivityResult(AppsResultContract()) {
+        viewBinding.mainAppsNum.text = getString(R.string.main_apps_num).format(modulePrefs("apps").getSet(AppsSP.enabled).size)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +68,7 @@ class Main: AppCompatActivity() {
                 toast!!.show()
                 return@setOnClickListener
             }
-            val intent = Intent(this, Apps::class.java)
-            startActivity(intent)
+            appsResultContract.launch(Unit)
         }
         viewBinding.mainResourcesCard.setOnClickListener {
             if (!isModuleActive && !BuildConfig.DEBUG) {
@@ -91,4 +95,12 @@ class Main: AppCompatActivity() {
         }
     }
 
+    class AppsResultContract : ActivityResultContract<Unit, Unit>() {
+        override fun createIntent(context: Context, input: Unit): Intent {
+            return Intent(context, Apps::class.java)
+        }
+
+        override fun parseResult(resultCode: Int, intent: Intent?) {
+        }
+    }
 }

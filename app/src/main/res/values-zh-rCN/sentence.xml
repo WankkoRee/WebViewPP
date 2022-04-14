@@ -4,4 +4,5 @@
     <string name="please_enable_the_module_first">请先激活模块。</string>
     <string name="alipay_is_not_found_please_install_it_first">未找到支付宝，请先安装。</string>
     <string name="the_target_version_already_exists_it_will_be_overwritten">目标版本已存在，将会被覆盖。</string>
+    <string name="do_you_really_reset_this_application_hooking_rules">确定重置目标应用的 Hook 规则吗？</string>
 </resources>

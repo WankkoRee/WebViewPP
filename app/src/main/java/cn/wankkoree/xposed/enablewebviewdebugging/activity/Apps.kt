@@ -7,17 +7,16 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.icu.text.Collator
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.view.animation.LinearInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
@@ -32,13 +31,15 @@ import cn.wankkoree.xposed.enablewebviewdebugging.databinding.AppsBinding
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class Apps : AppCompatActivity() {
     private lateinit var viewBinding: AppsBinding
     private var toast: Toast? = null
     lateinit var adapter: AppListItemAdapter
     private var isSearching = false
+    private val appResultContract = registerForActivityResult(AppResultContract()) {
+        adapter.update(it)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -169,18 +170,19 @@ class Apps : AppCompatActivity() {
     }
 
     class AppListItemAdapter(private val lifecycleScope: LifecycleCoroutineScope) : RecyclerView.Adapter<AppListItemAdapter.ViewHolder>() {
-        private var context: Context? = null
+        private var context: Apps? = null
         private var rawData: List<AppListItemAdapter.AppListItem> = emptyList()
         private val filteredData: MutableList<AppListItemAdapter.AppListItem> = mutableListOf()
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            context = parent.context
+            context = parent.context as Apps
             val view = LayoutInflater.from(context).inflate(R.layout.component_applistitem, parent, false)
             val viewHolder = ViewHolder(view)
             view.setOnClickListener {
                 val intent = Intent(context, App::class.java)
                 intent.putExtra("pkg", filteredData[viewHolder.p].pkg)
-                context!!.startActivity(intent)
+                intent.putExtra("p", viewHolder.p)
+                context!!.appResultContract.launch(intent)
             }
             return viewHolder
         }
@@ -206,8 +208,8 @@ class Apps : AppCompatActivity() {
                             oldItem.name == newItem.name &&
                             oldItem.versionName == newItem.versionName &&
                             oldItem.versionCode == newItem.versionCode &&
-                            oldItem.hookTimes == newItem.hookTimes &&
                             oldItem.ruleNumbers == newItem.ruleNumbers &&
+                            oldItem.hookTimes == newItem.hookTimes &&
                             oldItem.isSystemApp == newItem.isSystemApp &&
                             oldItem.isNoNetwork == newItem.isNoNetwork
                 }
@@ -254,7 +256,7 @@ class Apps : AppCompatActivity() {
             holder.p = position
             holder.iconView.setImageDrawable(filteredData[position].icon)
             holder.iconView.contentDescription = filteredData[position].name
-            holder.iconView.colorFilter = if (filteredData[position].isEnabled) null else grayColorFilter
+            holder.iconView.drawable.mutate().colorFilter = if (filteredData[position].isEnabled) null else grayColorFilter
             holder.nameView.text = filteredData[position].name
             holder.versionView.text = "${filteredData[position].versionName}(${filteredData[position].versionCode})"
             holder.packageView.text = filteredData[position].pkg
@@ -265,6 +267,16 @@ class Apps : AppCompatActivity() {
             holder.isNoNetworkView.text = context!!.getString(if (!filteredData[position].isNoNetwork) R.string.need_network else R.string.no_network)
         }
 
+        fun update(p: Int) {
+            context!!.modulePrefs("apps_${filteredData[p].pkg}").run {
+                val hooks = getSet(AppSP.hooks)
+                filteredData[p].isEnabled = get(AppSP.is_enabled)
+                filteredData[p].ruleNumbers = hooks.size
+                filteredData[p].hookTimes = hooks.fold(0) { sum, hash ->  sum + getInt("hook_times_$hash", 0) }
+            }
+            notifyItemChanged(p)
+        }
+
         data class AppListItem (
             val icon: Drawable,
             val name: String,
@@ -273,9 +285,9 @@ class Apps : AppCompatActivity() {
             val pkg: String,
             val isSystemApp: Boolean,
             val isNoNetwork: Boolean,
-            val isEnabled: Boolean,
-            val hookTimes: Int,
-            val ruleNumbers: Int,
+            var isEnabled: Boolean,
+            var ruleNumbers: Int,
+            var hookTimes: Int,
         )
 
         inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -287,6 +299,20 @@ class Apps : AppCompatActivity() {
             val stateView: TextView = view.findViewById(R.id.component_applistitem_state)
             val isSystemAppView: Tag = view.findViewById(R.id.component_applistitem_is_system_app)
             val isNoNetworkView: Tag = view.findViewById(R.id.component_applistitem_is_no_network)
+        }
+    }
+
+    class AppResultContract : ActivityResultContract<Intent, Int>() {
+        var p = 0
+        override fun createIntent(context: Context, input: Intent): Intent {
+            return input.also {
+                p = it.getIntExtra("p", -1)
+                it.removeExtra("p")
+            }
+        }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Int {
+            return p
         }
     }
 }

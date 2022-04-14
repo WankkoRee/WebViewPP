@@ -70,6 +70,57 @@
             android:layout_height="wrap_content"
             android:paddingVertical="8dp"
             android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/app_card"
+                style="@style/ThemeComponentCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="16dp">
+                    <ImageView
+                        android:id="@+id/app_icon"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        style="@style/ThemeComponentTextViewPrimary"
+                        android:textSize="16sp"
+                        android:id="@+id/app_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toTopOf="@id/app_package"
+                        app:layout_constraintStart_toEndOf="@id/app_icon"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="12sp"
+                        android:id="@+id/app_version"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toTopOf="@id/app_package"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="12sp"
+                        android:id="@+id/app_package"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/app_icon"
+                        app:layout_constraintTop_toBottomOf="@id/app_text" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
