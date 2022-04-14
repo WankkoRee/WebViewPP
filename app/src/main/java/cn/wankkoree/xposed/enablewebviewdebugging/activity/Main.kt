@@ -45,7 +45,7 @@ class Main: AppCompatActivity() {
             viewBinding.mainStatusText.text = getString(R.string.disabled)
             viewBinding.mainXposedText.visibility = View.GONE
         }
-        viewBinding.mainAppsNum.text = getString(R.string.main_apps_num).format(modulePrefs("Apps").getSet(AppsSP.enabled).size)
+        viewBinding.mainAppsNum.text = getString(R.string.main_apps_num).format(modulePrefs("apps").getSet(AppsSP.enabled).size)
 
         viewBinding.mainToolbarMenu.setOnClickListener {
             if (!isModuleActive && !BuildConfig.DEBUG) {
