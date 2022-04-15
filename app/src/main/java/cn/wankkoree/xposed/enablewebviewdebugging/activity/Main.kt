@@ -31,6 +31,7 @@ class Main: AppCompatActivity() {
         viewBinding = MainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        viewBinding.mainToolbarIcon.setImageDrawable(packageManager.getApplicationIcon(BuildConfig.APPLICATION_ID))
         viewBinding.mainVersionText.text = getString(R.string.main_version_text).format(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
         if (isModuleActive) {
             viewBinding.mainStatusCard.setCardBackgroundColor(getColor(R.color.backgroundSuccess))
