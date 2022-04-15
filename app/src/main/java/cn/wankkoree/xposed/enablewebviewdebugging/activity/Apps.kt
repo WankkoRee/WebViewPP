@@ -258,7 +258,7 @@ class Apps : AppCompatActivity() {
             holder.iconView.contentDescription = filteredData[position].name
             holder.iconView.drawable.mutate().colorFilter = if (filteredData[position].isEnabled) null else grayColorFilter
             holder.nameView.text = filteredData[position].name
-            holder.versionView.text = "${filteredData[position].versionName}(${filteredData[position].versionCode})"
+            holder.versionView.text = context!!.getString(R.string.version_format).format(filteredData[position].versionName, filteredData[position].versionCode)
             holder.packageView.text = filteredData[position].pkg
             holder.stateView.text = context!!.getString(R.string.applistitem_num).format(context!!.getString(if (filteredData[position].isEnabled) R.string.enabled else R.string.disabled), filteredData[position].ruleNumbers, filteredData[position].hookTimes)
             holder.isSystemAppView.color = context!!.getColor(if (!filteredData[position].isSystemApp) R.color.backgroundSuccess else R.color.backgroundError)

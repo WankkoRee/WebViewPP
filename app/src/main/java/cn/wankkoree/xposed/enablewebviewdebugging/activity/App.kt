@@ -48,7 +48,7 @@ class App : AppCompatActivity() {
         viewBinding.appIcon.contentDescription = name
         viewBinding.appText.text = name
         viewBinding.appPackage.text = pkg
-        viewBinding.appVersion.text = "$versionName($versionCode)"
+        viewBinding.appVersion.text = getString(R.string.version_format).format(versionName, versionCode)
         refresh()
 
         viewBinding.appToolbarBack.setOnClickListener {
