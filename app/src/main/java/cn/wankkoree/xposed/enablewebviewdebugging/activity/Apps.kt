@@ -231,7 +231,7 @@ class Apps : AppCompatActivity() {
                         raw.isSystemApp && raw.isNoNetwork && showSystemApp && showNoNetwork ||
                         raw.isEnabled
                         ) && (
-                        !isSearching || isSearching && (raw.pkg.contains(searchText) || raw.name.contains(searchText))
+                        !isSearching || isSearching && (raw.pkg.contains(searchText, true) || raw.name.contains(searchText, true))
                         )
                 if (p >= filteredData.size || raw.pkg != filteredData[p].pkg) {
                     if (canShow) {
