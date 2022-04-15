@@ -122,6 +122,14 @@ class Apps : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        if (isSearching) {
+            viewBinding.appsToolbarSearchBtn.callOnClick()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     private fun refresh() {
         viewBinding.appsToolbarSearch.isEnabled = false
         viewBinding.appsToolbarSearchBtn.isEnabled = false
