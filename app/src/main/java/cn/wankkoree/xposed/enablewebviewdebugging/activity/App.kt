@@ -152,14 +152,14 @@ class App : AppCompatActivity() {
         modulePrefs.run {
             name("resources")
             val vConsoleAdapter = getSet(ResourcesSP.vConsole_versions).let {
-                val adapter = ArrayAdapter(this@App, R.layout.spinner_item, it.toArray())
-                adapter.setDropDownViewResource(R.layout.spinner_item)
+                val adapter = ArrayAdapter(this@App, R.layout.component_spinneritem, it.toArray())
+                adapter.setDropDownViewResource(R.layout.component_spinneritem)
                 viewBinding.appResourcesVconsoleVersion.adapter = adapter
                 adapter
             }
             val nebulaUCSDKAdapter = getSet(ResourcesSP.nebulaUCSDK_versions).let {
-                val adapter = ArrayAdapter(this@App, R.layout.spinner_item, it.toArray())
-                adapter.setDropDownViewResource(R.layout.spinner_item)
+                val adapter = ArrayAdapter(this@App, R.layout.component_spinneritem, it.toArray())
+                adapter.setDropDownViewResource(R.layout.component_spinneritem)
                 viewBinding.appResourcesNebulaucsdkVersion.adapter = adapter
                 adapter
             }

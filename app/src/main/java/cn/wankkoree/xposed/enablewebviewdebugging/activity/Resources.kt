@@ -40,8 +40,8 @@ class Resources : AppCompatActivity() {
             }
             if (vConsoleVersionStr != null) {
                 val vConsoleVersion = Gson().fromJson(vConsoleVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.spinner_item, vConsoleVersion.versions)
-                adapter.setDropDownViewResource(R.layout.spinner_item)
+                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, vConsoleVersion.versions)
+                adapter.setDropDownViewResource(R.layout.component_spinneritem)
                 viewBinding.resourcesVconsoleVersion.adapter = adapter
                 viewBinding.resourcesVconsoleVersion.setSelection(adapter.getPosition(vConsoleVersion.tags.latest))
             } else {
@@ -58,8 +58,8 @@ class Resources : AppCompatActivity() {
             }
             if (nebulaUCSDKVersionStr != null) {
                 val nebulaUCSDKVersion = Gson().fromJson(nebulaUCSDKVersionStr, Array<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.github.RepoContent>::class.java)
-                val adapter = ArrayAdapter(context, R.layout.spinner_item, nebulaUCSDKVersion.map{ it.name })
-                adapter.setDropDownViewResource(R.layout.spinner_item)
+                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, nebulaUCSDKVersion.map{ it.name })
+                adapter.setDropDownViewResource(R.layout.component_spinneritem)
                 viewBinding.resourcesNebulaucsdkVersion.adapter = adapter
                 viewBinding.resourcesNebulaucsdkVersion.setSelection(0)
             } else {
