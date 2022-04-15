@@ -21,6 +21,7 @@
     <string name="no_network">No Network</string>
     <string name="need_network">Need Network</string>
     <string name="delete_completed">Delete Completed</string>
+    <string name="delete_failed">Delete Failed</string>
     <string name="reset">Reset</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>

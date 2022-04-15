@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.icu.text.Collator
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,11 +34,12 @@ import kotlinx.coroutines.launch
 class Apps : AppCompatActivity() {
     private lateinit var viewBinding: AppsBinding
     private var toast: Toast? = null
-    lateinit var adapter: AppListItemAdapter
-    private var isSearching = false
     private val appResultContract = registerForActivityResult(AppResultContract()) {
         adapter.update(it)
     }
+
+    lateinit var adapter: AppListItemAdapter
+    private var isSearching = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -310,7 +310,6 @@ class Apps : AppCompatActivity() {
                 it.removeExtra("p")
             }
         }
-
         override fun parseResult(resultCode: Int, intent: Intent?): Int {
             return p
         }

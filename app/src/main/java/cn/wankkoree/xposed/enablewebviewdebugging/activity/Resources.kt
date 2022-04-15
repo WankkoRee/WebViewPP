@@ -11,10 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 import cn.wankkoree.xposed.enablewebviewdebugging.ResourcesVersionAlreadyExisted
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Tag
-import cn.wankkoree.xposed.enablewebviewdebugging.data.ResourcesSP
-import cn.wankkoree.xposed.enablewebviewdebugging.data.getSet
-import cn.wankkoree.xposed.enablewebviewdebugging.data.put
-import cn.wankkoree.xposed.enablewebviewdebugging.data.remove
+import cn.wankkoree.xposed.enablewebviewdebugging.data.*
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ResourcesBinding
 import cn.wankkoree.xposed.enablewebviewdebugging.http.Http
 import com.google.gson.Gson
@@ -163,10 +160,19 @@ class Resources : AppCompatActivity() {
                 addView(Tag(context).also {
                     it.text = vConsoleVersion
                     it.color = getColor(R.color.backgroundInfo)
-                    it.isLongClickable = true
                     it.setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
                         modulePrefs.run {
+                            name("apps")
+                            getSet(AppsSP.enabled).forEach { pkg ->
+                                name("apps_$pkg")
+                                if (get(AppSP.vConsole) && get(AppSP.vConsole_version) == version) {
+                                    toast?.cancel()
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast!!.show()
+                                    return@setOnLongClickListener true
+                                }
+                            }
                             name("resources")
                             remove(ResourcesSP.vConsole_versions, version)
                             name("resources_vConsole_$version")
@@ -187,10 +193,19 @@ class Resources : AppCompatActivity() {
                 addView(Tag(context).also {
                     it.text = nebulaUCSDKVersion
                     it.color = getColor(R.color.backgroundInfo)
-                    it.isLongClickable = true
                     it.setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
                         modulePrefs.run {
+                            name("apps")
+                            getSet(AppsSP.enabled).forEach { pkg ->
+                                name("apps_$pkg")
+                                if (get(AppSP.nebulaUCSDK) && get(AppSP.nebulaUCSDK_version) == version) {
+                                    toast?.cancel()
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast!!.show()
+                                    return@setOnLongClickListener true
+                                }
+                            }
                             name("resources")
                             remove(ResourcesSP.nebulaUCSDK_versions, version)
                             name("resources_nebulaUCSDK_$version")

@@ -20,6 +20,7 @@
     <string name="no_network">无网络权限</string>
     <string name="need_network">有网络权限</string>
     <string name="delete_completed">已删除</string>
+    <string name="delete_failed">删除失败</string>
     <string name="reset">重置</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
