@@ -216,7 +216,7 @@ class App : AppCompatActivity() {
                         "hookWebViewClient" -> getString(R.string.code_hookWebViewClient).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4])
                         else -> getString(R.string.unknown_hook_method)
                     }
-                    v.transitionName = hookEntry[0]
+                    v.transitionName = ruleName
                 } catch (e: Exception) {
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
                     toast?.cancel()
@@ -229,7 +229,7 @@ class App : AppCompatActivity() {
                     ruleResultContract.launch(Intent(this@App, Rule::class.java).also {
                         it.putExtra("pkg", pkg)
                         it.putExtra("rule_name", ruleName)
-                    }, ActivityOptionsCompat.makeSceneTransitionAnimation(this@App, v, v.transitionName))
+                    }, ActivityOptionsCompat.makeSceneTransitionAnimation(this@App, v, ruleName))
                 }
                 v.setOnLongClickListener {
                     //TODO: 删除
