@@ -17,6 +17,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityOptionsCompat
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
+import cn.wankkoree.xposed.enablewebviewdebugging.ResourcesVersionNotExisted
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
 import cn.wankkoree.xposed.enablewebviewdebugging.data.*
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.AppBinding
@@ -232,7 +233,19 @@ class App : AppCompatActivity() {
                     }, ActivityOptionsCompat.makeSceneTransitionAnimation(this@App, v, ruleName))
                 }
                 v.setOnLongClickListener {
-                    //TODO: 删除
+                    AlertDialog.Builder(this@App).run {
+                        setMessage(R.string.do_you_really_delete_this_rule)
+                        setPositiveButton(R.string.confirm) { _, _ ->
+                            modulePrefs("apps_$pkg").run {
+                                remove(AppSP.hooks, ruleName)
+                                remove("hook_entry_$ruleName")
+                            }
+                            refresh()
+                        }
+                        setNegativeButton(R.string.cancel) { _, _ -> }
+                        create()
+                        show()
+                    }
                     true
                 }
                 viewBinding.appHooksList.addView(v)
@@ -241,6 +254,8 @@ class App : AppCompatActivity() {
     }
 
     private fun reset() {
+        try { modulePrefs("apps").remove(AppsSP.enabled, pkg) } catch (_: ResourcesVersionNotExisted) { }
+        modulePrefs("apps_$pkg").clear()
         toast?.cancel()
         toast = Toast.makeText(this@App, getString(R.string.reset_completed), Toast.LENGTH_SHORT)
         toast!!.show()

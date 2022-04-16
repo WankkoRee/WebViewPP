@@ -10,4 +10,6 @@
     <string name="because_s_is_using_it">Because %s is using it.</string>
     <string name="s_cannot_be_empty">%s cannot be empty.</string>
     <string name="s_already_exists">%s already exists.</string>
+    <string name="do_you_really_delete_this_rule">Do you really delete this rule?</string>
+    <string name="do_you_really_reset_all_configurations">Do you really reset all configurations?</string>
 </resources>

@@ -6,10 +6,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 import cn.wankkoree.xposed.enablewebviewdebugging.data.AppsSP
+import cn.wankkoree.xposed.enablewebviewdebugging.data.ResourcesSP
 import cn.wankkoree.xposed.enablewebviewdebugging.data.getSet
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.MainBinding
 import com.highcapable.yukihookapi.hook.xposed.YukiHookModuleStatus
@@ -23,7 +26,7 @@ class Main: AppCompatActivity() {
     private lateinit var viewBinding: MainBinding
     private var toast: Toast? = null
     private val appsResultContract = registerForActivityResult(AppsResultContract()) {
-        viewBinding.mainAppsNum.text = getString(R.string.main_apps_num).format(modulePrefs("apps").getSet(AppsSP.enabled).size)
+        refresh()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +54,7 @@ class Main: AppCompatActivity() {
             viewBinding.mainStatusText.text = getString(R.string.disabled)
             viewBinding.mainXposedText.visibility = View.GONE
         }
-        viewBinding.mainAppsNum.text = getString(R.string.main_apps_num).format(modulePrefs("apps").getSet(AppsSP.enabled).size)
+        refresh()
 
         viewBinding.mainToolbarMenu.setOnClickListener {
             if (!isModuleActive && !BuildConfig.DEBUG) {
@@ -60,7 +63,42 @@ class Main: AppCompatActivity() {
                 toast!!.show()
                 return@setOnClickListener
             }
-            // TODO: 弹出菜单
+            PopupMenu(this@Main, it).run {
+                menuInflater.inflate(R.menu.main_toolbar, menu)
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.main_toolbar_menu_reset -> {
+                            AlertDialog.Builder(this@Main).run {
+                                setMessage(R.string.do_you_really_reset_all_configurations)
+                                setPositiveButton(R.string.confirm) { _, _ ->
+                                    modulePrefs.run {
+                                        name("apps").getSet(AppsSP.enabled).forEach { pkg ->
+                                            name("apps_$pkg").clear()
+                                        }
+                                        name("apps").clear()
+                                        name("resources").getSet(ResourcesSP.vConsole_versions).forEach { version ->
+                                            name("resources_vConsole_$version").clear()
+                                        }
+                                        name("resources").getSet(ResourcesSP.nebulaUCSDK_versions).forEach { version ->
+                                            name("resources_nebulaUCSDK_$version").clear()
+                                        }
+                                        name("resources").clear()
+                                    }
+                                    toast?.cancel()
+                                    toast = Toast.makeText(this@Main, getString(R.string.reset_completed), Toast.LENGTH_SHORT)
+                                    toast!!.show()
+                                    refresh()
+                                }
+                                setNegativeButton(R.string.cancel) { _, _ -> }
+                                create()
+                                show()
+                            }
+                        }
+                    }
+                    true
+                }
+                show()
+            }
         }
         viewBinding.mainAppsCard.setOnClickListener {
             if (!isModuleActive && !BuildConfig.DEBUG) {
@@ -94,6 +132,10 @@ class Main: AppCompatActivity() {
                 toast!!.show()
             }
         }
+    }
+
+    private fun refresh() {
+        viewBinding.mainAppsNum.text = getString(R.string.main_apps_num).format(modulePrefs("apps").getSet(AppsSP.enabled).size)
     }
 
     class AppsResultContract : ActivityResultContract<Unit, Unit>() {

@@ -10,4 +10,6 @@
     <string name="because_s_is_using_it">因为 %s 正在使用它。</string>
     <string name="s_cannot_be_empty">%s 不可为空。</string>
     <string name="s_already_exists">%s 已存在。</string>
+    <string name="do_you_really_delete_this_rule">确定删除这条规则吗？</string>
+    <string name="do_you_really_reset_all_configurations">确定重置所有配置吗？</string>
 </resources>
