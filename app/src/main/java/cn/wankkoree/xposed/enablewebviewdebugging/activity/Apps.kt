@@ -15,6 +15,7 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
@@ -190,7 +191,12 @@ class Apps : AppCompatActivity() {
                 val intent = Intent(context, App::class.java)
                 intent.putExtra("pkg", filteredData[viewHolder.p].pkg)
                 intent.putExtra("p", viewHolder.p)
-                context!!.appResultContract.launch(intent)
+                context!!.appResultContract.launch(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(context!!,
+                    androidx.core.util.Pair(viewHolder.iconView, "${filteredData[viewHolder.p].pkg}iconView"),
+                    androidx.core.util.Pair(viewHolder.nameView, "${filteredData[viewHolder.p].pkg}nameView"),
+                    androidx.core.util.Pair(viewHolder.versionView, "${filteredData[viewHolder.p].pkg}versionView"),
+                    androidx.core.util.Pair(viewHolder.packageView, "${filteredData[viewHolder.p].pkg}packageView"),
+                ))
             }
             return viewHolder
         }
@@ -263,11 +269,15 @@ class Apps : AppCompatActivity() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.p = position
             holder.iconView.setImageDrawable(filteredData[position].icon)
+            holder.iconView.transitionName = "${filteredData[position].pkg}iconView"
             holder.iconView.contentDescription = filteredData[position].name
             holder.iconView.drawable.mutate().colorFilter = if (filteredData[position].isEnabled) null else grayColorFilter
             holder.nameView.text = filteredData[position].name
+            holder.nameView.transitionName = "${filteredData[position].pkg}nameView"
             holder.versionView.text = context!!.getString(R.string.version_format).format(filteredData[position].versionName, filteredData[position].versionCode)
+            holder.versionView.transitionName = "${filteredData[position].pkg}versionView"
             holder.packageView.text = filteredData[position].pkg
+            holder.packageView.transitionName = "${filteredData[position].pkg}packageView"
             holder.stateView.text = context!!.getString(R.string.applistitem_num).format(context!!.getString(if (filteredData[position].isEnabled) R.string.enabled else R.string.disabled), filteredData[position].ruleNumbers, filteredData[position].hookTimes)
             holder.isSystemAppView.color = context!!.getColor(if (!filteredData[position].isSystemApp) R.color.backgroundSuccess else R.color.backgroundError)
             holder.isSystemAppView.text = context!!.getString(if (!filteredData[position].isSystemApp) R.string.user_application else R.string.system_application)

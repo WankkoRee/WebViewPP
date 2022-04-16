@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.transition.Slide
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -41,6 +42,8 @@ class App : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.enterTransition = Slide()
+        window.exitTransition = Slide()
         viewBinding = AppBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
@@ -53,14 +56,18 @@ class App : AppCompatActivity() {
 
         viewBinding.appToolbarName.text = name
         viewBinding.appIcon.setImageDrawable(icon)
+        viewBinding.appIcon.transitionName = "${pkg}iconView"
         viewBinding.appIcon.contentDescription = name
         viewBinding.appText.text = name
+        viewBinding.appText.transitionName = "${pkg}nameView"
         viewBinding.appPackage.text = pkg
+        viewBinding.appPackage.transitionName = "${pkg}packageView"
         viewBinding.appVersion.text = getString(R.string.version_format).format(versionName, versionCode)
+        viewBinding.appVersion.transitionName = "${pkg}versionView"
         refresh()
 
         viewBinding.appToolbarBack.setOnClickListener {
-            finish()
+            finishAfterTransition()
         }
         viewBinding.appToolbarMenu.setOnClickListener {
             PopupMenu(this, it).run {
