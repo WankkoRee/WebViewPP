@@ -33,6 +33,9 @@
             android:name=".activity.App"
             android:exported="false" />
         <activity
+            android:name=".activity.Rule"
+            android:exported="false" />
+        <activity
             android:name=".activity.Resources"
             android:exported="false" />
 

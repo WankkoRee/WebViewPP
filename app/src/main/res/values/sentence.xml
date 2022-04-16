@@ -8,4 +8,6 @@
     <string name="nothing_set_yet_a_default_will_be_set">Nothing set yet, a default will be set.</string>
     <string name="please_download_resources_at_first">Please download resources at first.</string>
     <string name="because_s_is_using_it">Because %s is using it.</string>
+    <string name="s_cannot_be_empty">%s cannot be empty.</string>
+    <string name="s_already_exists">%s already exists.</string>
 </resources>

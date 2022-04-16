@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background">#FF212121</color>
+    <color name="transparent">#00000000</color>
     <color name="textPrimary">#FFFFFFFF</color>
     <color name="textPrimaryReverse">#FF212121</color>
     <color name="textSecondary">#FFDDDDDD</color>

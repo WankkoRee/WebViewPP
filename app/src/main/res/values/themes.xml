@@ -18,6 +18,7 @@
         <item name="android:windowLightNavigationBar">@bool/not_night</item>
         <item name="android:statusBarColor">@color/background</item>
         <item name="android:navigationBarColor">@color/background</item>
+        <item name="android:windowActivityTransitions">true</item>
     </style>
     <style name="ThemeComponentToolbar">
         <item name="android:background">@color/background</item>

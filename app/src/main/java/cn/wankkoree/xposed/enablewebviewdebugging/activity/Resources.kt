@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 import cn.wankkoree.xposed.enablewebviewdebugging.ResourcesVersionAlreadyExisted
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Tag
@@ -35,7 +36,7 @@ class Resources : AppCompatActivity() {
             val vConsoleVersionStr = try {
                 Http.get("https://data.jsdelivr.com/v1/package/npm/vconsole")
             } catch(e: Exception) {
-                Log.e(getString(R.string.app_name), getString(R.string.pull_failed).format(getString(R.string.vconsole)), e)
+                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole)), e)
                 null
             }
             if (vConsoleVersionStr != null) {
@@ -53,7 +54,7 @@ class Resources : AppCompatActivity() {
             val nebulaUCSDKVersionStr = try {
                 Http.get("https://api.github.com/repos/WankkoRee/EnableWebViewDebugging-Rules/contents/resources/nebulaucsdk")
             } catch(e: Exception) {
-                Log.e(getString(R.string.app_name), getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), e)
+                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), e)
                 null
             }
             if (nebulaUCSDKVersionStr != null) {
@@ -82,7 +83,7 @@ class Resources : AppCompatActivity() {
             val vConsoleStr = try {
                 Http.get("https://cdn.jsdelivr.net/npm/vconsole@$version/dist/vconsole.min.js")
             } catch(e: Exception) {
-                Log.e(getString(R.string.app_name), getString(R.string.download_failed), e)
+                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
                 null
             }
             if (vConsoleStr != null) {
@@ -114,13 +115,13 @@ class Resources : AppCompatActivity() {
             val nebulaUCSDKArm64V8aBin = try {
                 Http.getBytes("https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master/resources/nebulaucsdk/$version/arm64-v8a.so")
             } catch(e: Exception) {
-                Log.e(getString(R.string.app_name), getString(R.string.download_failed), e)
+                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
                 null
             }
             val nebulaUCSDKArmeabiV7aBin = try {
                 Http.getBytes("https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master/resources/nebulaucsdk/$version/armeabi-v7a.so")
             } catch(e: Exception) {
-                Log.e(getString(R.string.app_name), getString(R.string.download_failed), e)
+                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
                 null
             }
             if (nebulaUCSDKArm64V8aBin != null && nebulaUCSDKArmeabiV7aBin != null) {

@@ -25,4 +25,10 @@
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
     <string name="reset_completed">重置完成</string>
+    <string name="add_rule">添加规则</string>
+    <string name="rule_editer">规则编辑器</string>
+    <string name="save">保存</string>
+    <string name="rule_name">规则名称</string>
+    <string name="unknown_hook_method">未知 Hook 方法</string>
+    <string name="parse_failed">解析失败</string>
 </resources>

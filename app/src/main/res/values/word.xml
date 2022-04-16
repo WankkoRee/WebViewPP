@@ -27,4 +27,10 @@
     <string name="cancel">Cancel</string>
     <string name="reset_completed">Reset Completed</string>
     <string name="version_format" translatable="false">%1$s(%2$d)</string>
+    <string name="add_rule">Add Rule</string>
+    <string name="rule_editer">Rule Editer</string>
+    <string name="save">Save</string>
+    <string name="rule_name">Rule Name</string>
+    <string name="unknown_hook_method">Unknown Hook Method</string>
+    <string name="parse_failed">Parse Failed</string>
 </resources>

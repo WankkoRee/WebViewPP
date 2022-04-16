@@ -4,4 +4,7 @@
         <attr name="color" format="color" />
         <attr name="text" format="string" />
     </declare-styleable>
+    <declare-styleable name="Code">
+        <attr name="code" format="string" />
+    </declare-styleable>
 </resources>

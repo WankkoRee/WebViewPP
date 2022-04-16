@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -13,7 +14,9 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.app.ActivityOptionsCompat
 import cn.wankkoree.xposed.enablewebviewdebugging.R
+import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
 import cn.wankkoree.xposed.enablewebviewdebugging.data.*
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.AppBinding
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
@@ -21,6 +24,9 @@ import com.highcapable.yukihookapi.hook.factory.modulePrefs
 class App : AppCompatActivity() {
     private lateinit var viewBinding: AppBinding
     private var toast: Toast? = null
+    private val ruleResultContract = registerForActivityResult(RuleResultContract()) {
+        refresh()
+    }
     private val resourcesResultContract = registerForActivityResult(ResourcesResultContract()) {
         refresh()
     }
@@ -91,6 +97,11 @@ class App : AppCompatActivity() {
             toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
             toast!!.show()
             refresh()
+        }
+        viewBinding.appHooksAdd.setOnClickListener {
+            ruleResultContract.launch(Intent(this@App, Rule::class.java).also {
+                it.putExtra("pkg", pkg)
+            }, ActivityOptionsCompat.makeSceneTransitionAnimation(this))
         }
         viewBinding.appResourcesVconsoleCard.setOnLongClickListener {
             this@App.resourcesResultContract.launch(Unit)
@@ -194,6 +205,36 @@ class App : AppCompatActivity() {
                     })
                 }
             }
+            viewBinding.appHooksList.removeAllViews()
+            getSet(AppSP.hooks).forEach { ruleName ->
+                val v = Code(this@App)
+                val hookEntry = getList<String>("hook_entry_$ruleName")
+                try {
+                    v.code = when (hookEntry[0]) {
+                        "hookWebView" -> getString(R.string.code_hookWebView).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4], hookEntry[5], hookEntry[6])
+                        "hookWebViewClient" -> getString(R.string.code_hookWebView).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4])
+                        else -> getString(R.string.unknown_hook_method)
+                    }
+                    v.transitionName = hookEntry[0]
+                } catch (e: Exception) {
+                    toast?.cancel()
+                    toast = Toast.makeText(this@App, getString(R.string.parse_failed), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                    return@forEach // continue
+                }
+                v.isClickable = true
+                v.setOnClickListener {
+                    ruleResultContract.launch(Intent(this@App, Rule::class.java).also {
+                        it.putExtra("pkg", pkg)
+                        it.putExtra("rule_name", ruleName)
+                    }, ActivityOptionsCompat.makeSceneTransitionAnimation(this@App, v, v.transitionName))
+                }
+                v.setOnLongClickListener {
+                    //TODO: 删除
+                    true
+                }
+                viewBinding.appHooksList.addView(v)
+            }
         }
     }
 
@@ -201,6 +242,13 @@ class App : AppCompatActivity() {
         toast?.cancel()
         toast = Toast.makeText(this@App, getString(R.string.reset_completed), Toast.LENGTH_SHORT)
         toast!!.show()
+    }
+
+    class RuleResultContract : ActivityResultContract<Intent, Unit>() {
+        override fun createIntent(context: Context, input: Intent): Intent {
+            return input
+        }
+        override fun parseResult(resultCode: Int, intent: Intent?) { }
     }
 
     class ResourcesResultContract : ActivityResultContract<Unit, Unit>() {

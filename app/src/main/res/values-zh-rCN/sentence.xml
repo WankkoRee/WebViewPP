@@ -8,4 +8,6 @@
     <string name="nothing_set_yet_a_default_will_be_set">从前未配置过，已设置默认值。</string>
     <string name="please_download_resources_at_first">请先下载资源。</string>
     <string name="because_s_is_using_it">因为 %s 正在使用它。</string>
+    <string name="s_cannot_be_empty">%s 不可为空。</string>
+    <string name="s_already_exists">%s 已存在。</string>
 </resources>
