@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityOptionsCompat
+import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
 import cn.wankkoree.xposed.enablewebviewdebugging.data.*
@@ -212,11 +213,12 @@ class App : AppCompatActivity() {
                 try {
                     v.code = when (hookEntry[0]) {
                         "hookWebView" -> getString(R.string.code_hookWebView).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4], hookEntry[5], hookEntry[6])
-                        "hookWebViewClient" -> getString(R.string.code_hookWebView).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4])
+                        "hookWebViewClient" -> getString(R.string.code_hookWebViewClient).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4])
                         else -> getString(R.string.unknown_hook_method)
                     }
                     v.transitionName = hookEntry[0]
                 } catch (e: Exception) {
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
                     toast?.cancel()
                     toast = Toast.makeText(this@App, getString(R.string.parse_failed), Toast.LENGTH_SHORT)
                     toast!!.show()
