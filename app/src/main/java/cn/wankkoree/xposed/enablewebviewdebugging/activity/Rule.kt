@@ -114,6 +114,7 @@ class Rule : AppCompatActivity() {
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method))
                     }
                 }
+                refreshCode()
             }
         }
         viewBinding.ruleName.doAfterTextChanged {
