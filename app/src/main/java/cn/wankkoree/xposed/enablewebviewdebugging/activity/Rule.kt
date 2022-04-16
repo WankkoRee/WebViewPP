@@ -95,20 +95,20 @@ class Rule : AppCompatActivity() {
                     "hookWebView" -> {
                         viewBinding.ruleHookWebView.visibility = View.VISIBLE
                         viewBinding.ruleHookWebViewClient.visibility = View.GONE
-                        viewBinding.ruleHookWebViewClassWebView.setText("android.webkit.WebView")
-                        viewBinding.ruleHookWebViewMethodGetSettings.setText("getSettings")
-                        viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.setText("setWebContentsDebuggingEnabled")
-                        viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.setText("setJavaScriptEnabled")
-                        viewBinding.ruleHookWebViewMethodLoadUrl.setText("loadUrl")
-                        viewBinding.ruleHookWebViewMethodSetWebViewClient.setText("setWebViewClient")
+                        if (viewBinding.ruleHookWebViewClassWebView.text!!.isEmpty()) viewBinding.ruleHookWebViewClassWebView.setText("android.webkit.WebView")
+                        if (viewBinding.ruleHookWebViewMethodGetSettings.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodGetSettings.setText("getSettings")
+                        if (viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.setText("setWebContentsDebuggingEnabled")
+                        if (viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.setText("setJavaScriptEnabled")
+                        if (viewBinding.ruleHookWebViewMethodLoadUrl.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodLoadUrl.setText("loadUrl")
+                        if (viewBinding.ruleHookWebViewMethodSetWebViewClient.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodSetWebViewClient.setText("setWebViewClient")
                     }
                     "hookWebViewClient" -> {
                         viewBinding.ruleHookWebView.visibility = View.GONE
                         viewBinding.ruleHookWebViewClient.visibility = View.VISIBLE
-                        viewBinding.ruleHookWebViewClientClassWebViewClient.setText("android.webkit.WebViewClient")
-                        viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText("onPageFinished")
-                        viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText("evaluateJavascript")
-                        viewBinding.ruleHookWebViewClientClassValueCallback.setText("android.webkit.ValueCallback")
+                        if (viewBinding.ruleHookWebViewClientClassWebViewClient.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassWebViewClient.setText("android.webkit.WebViewClient")
+                        if (viewBinding.ruleHookWebViewClientMethodOnPageFinished.text!!.isEmpty()) viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText("onPageFinished")
+                        if (viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.text!!.isEmpty()) viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText("evaluateJavascript")
+                        if (viewBinding.ruleHookWebViewClientClassValueCallback.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassValueCallback.setText("android.webkit.ValueCallback")
                     }
                     else -> {
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method))
@@ -164,20 +164,20 @@ class Rule : AppCompatActivity() {
                 val hookEntry = getList<String>("hook_entry_$ruleName")
                 when (hookEntry[0]) {
                     "hookWebView" -> {
-                        viewBinding.ruleHookMethod.setSelection(0)
                         viewBinding.ruleHookWebViewClassWebView.setText(hookEntry[1])
                         viewBinding.ruleHookWebViewMethodGetSettings.setText(hookEntry[2])
                         viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.setText(hookEntry[3])
                         viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.setText(hookEntry[4])
                         viewBinding.ruleHookWebViewMethodLoadUrl.setText(hookEntry[5])
                         viewBinding.ruleHookWebViewMethodSetWebViewClient.setText(hookEntry[6])
+                        viewBinding.ruleHookMethod.setSelection(0)
                     }
                     "hookWebViewClient" -> {
-                        viewBinding.ruleHookMethod.setSelection(1)
                         viewBinding.ruleHookWebViewClientClassWebViewClient.setText(hookEntry[1])
                         viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText(hookEntry[2])
                         viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText(hookEntry[3])
                         viewBinding.ruleHookWebViewClientClassValueCallback.setText(hookEntry[4])
+                        viewBinding.ruleHookMethod.setSelection(1)
                     }
                 }
             }
