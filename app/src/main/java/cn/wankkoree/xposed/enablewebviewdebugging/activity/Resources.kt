@@ -33,6 +33,7 @@ class Resources : AppCompatActivity() {
 
         lifecycleScope.launch(Dispatchers.Main) {
             refresh()
+
             val vConsoleVersionStr = try {
                 Http.get("https://data.jsdelivr.com/v1/package/npm/vconsole")
             } catch(e: Exception) {
