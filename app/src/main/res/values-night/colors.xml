@@ -3,7 +3,6 @@
     <color name="background">#FF212121</color>
     <color name="transparent">#00000000</color>
     <color name="textPrimary">#FFFFFFFF</color>
-    <color name="textPrimaryReverse">#FF212121</color>
     <color name="textSecondary">#FFDDDDDD</color>
     <color name="backgroundSuccess">#ff27ae60</color>
     <color name="backgroundError">#ffc0392b</color>

@@ -75,7 +75,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
-                app:cardBackgroundColor="@color/backgroundError">
+                app:cardBackgroundColor="@color/backgroundError"
+                android:outlineSpotShadowColor="@color/backgroundError">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -89,6 +90,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_round_cancel_24"
+                        app:tint="@color/textPrimary"
                         android:contentDescription="@string/disabled" />
 
                     <TextView
@@ -150,6 +152,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_round_bakery_dining_24"
+                        app:tint="@color/textPrimary"
                         android:contentDescription="@string/main_apps_text" />
                     <TextView
                         style="@style/ThemeComponentTextViewPrimary"
@@ -196,6 +199,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_round_catching_pokemon_24"
+                        app:tint="@color/textPrimary"
                         android:contentDescription="@string/main_resources_text" />
                     <TextView
                         style="@style/ThemeComponentTextViewPrimary"
@@ -244,6 +248,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_round_monetization_on_24"
+                        app:tint="@color/textPrimary"
                         android:contentDescription="@string/donate" />
                     <TextView
                         style="@style/ThemeComponentTextViewPrimary"

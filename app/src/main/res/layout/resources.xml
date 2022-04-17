@@ -78,6 +78,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_round_cloud_download_24"
+                        app:tint="@color/textPrimary"
                         android:contentDescription="@string/resources_vconsole_download" />
                     <TextView
                         style="@style/ThemeComponentTextViewPrimary"
@@ -133,6 +134,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_round_cloud_download_24"
+                        app:tint="@color/textPrimary"
                         android:contentDescription="@string/resources_nebulaucsdk_download" />
                     <TextView
                         style="@style/ThemeComponentTextViewPrimary"

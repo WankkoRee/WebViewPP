@@ -1,6 +1,7 @@
 package cn.wankkoree.xposed.enablewebviewdebugging.activity.component
 
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
@@ -18,6 +19,7 @@ class Tag: LinearLayout {
         set(value) {
             field = value
             cardView?.setCardBackgroundColor(value!!)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) cardView?.outlineSpotShadowColor = value!!
         }
     var text: CharSequence? = null
         set(value) {

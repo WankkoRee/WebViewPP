@@ -2,6 +2,7 @@ package cn.wankkoree.xposed.enablewebviewdebugging.activity
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -38,6 +39,7 @@ class Main: AppCompatActivity() {
         viewBinding.mainVersionText.text = getString(R.string.main_version_text).format(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
         if (isModuleActive) {
             viewBinding.mainStatusCard.setCardBackgroundColor(getColor(R.color.backgroundSuccess))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.mainStatusCard.outlineSpotShadowColor = getColor(R.color.backgroundSuccess)
             viewBinding.mainStatusIcon.setImageResource(R.drawable.ic_round_check_circle_24)
             viewBinding.mainStatusIcon.contentDescription = getString(R.string.enabled)
             viewBinding.mainStatusText.text = getString(R.string.enabled)
@@ -49,6 +51,7 @@ class Main: AppCompatActivity() {
             }
         } else {
             viewBinding.mainStatusCard.setCardBackgroundColor(getColor(R.color.backgroundError))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.mainStatusCard.outlineSpotShadowColor = getColor(R.color.backgroundError)
             viewBinding.mainStatusIcon.setImageResource(R.drawable.ic_round_cancel_24)
             viewBinding.mainStatusIcon.contentDescription = getString(R.string.disabled)
             viewBinding.mainStatusText.text = getString(R.string.disabled)

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.transition.Slide
 import android.util.Log
@@ -186,10 +187,12 @@ class App : AppCompatActivity() {
             name("apps_$pkg")
             get(AppSP.is_enabled).let {
                 viewBinding.appCard.setCardBackgroundColor(getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appIcon.drawable.mutate().colorFilter = if (it) null else grayColorFilter
             }
             get(AppSP.vConsole).let {
                 viewBinding.appResourcesVconsoleCard.setCardBackgroundColor(getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsoleCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesVconsoleVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val p = vConsoleAdapter.getPosition(get(AppSP.vConsole_version))
@@ -203,6 +206,7 @@ class App : AppCompatActivity() {
             }
             get(AppSP.nebulaUCSDK).let {
                 viewBinding.appResourcesNebulaucsdkCard.setCardBackgroundColor(getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesNebulaucsdkCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesNebulaucsdkVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val p = nebulaUCSDKAdapter.getPosition(get(AppSP.nebulaUCSDK_version))
