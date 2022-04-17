@@ -75,8 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
-                app:cardBackgroundColor="@color/backgroundError"
-                android:outlineSpotShadowColor="@color/backgroundError">
+                android:backgroundTintMode="src_over">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

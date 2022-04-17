@@ -76,6 +76,7 @@
                 style="@style/ThemeComponentCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTintMode="src_over"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp">
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -145,6 +146,7 @@
                 style="@style/ThemeComponentCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTintMode="src_over"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp">
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -177,6 +179,7 @@
                 style="@style/ThemeComponentCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTintMode="src_over"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="12dp"><!--作为最后一个时应当预留一些阴影范围-->

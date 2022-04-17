@@ -3,6 +3,8 @@ package cn.wankkoree.xposed.enablewebviewdebugging.activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -17,6 +19,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityOptionsCompat
+import androidx.palette.graphics.Palette
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 import cn.wankkoree.xposed.enablewebviewdebugging.ResourcesVersionNotExisted
@@ -186,12 +189,19 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.is_enabled).let {
-                viewBinding.appCard.setCardBackgroundColor(getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError))
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
-                viewBinding.appIcon.drawable.mutate().colorFilter = if (it) null else grayColorFilter
+                val iconTemp = icon.mutate().also { d ->
+                    d.colorFilter = if (it) null else grayColorFilter
+                }
+                viewBinding.appIcon.setImageDrawable(iconTemp)
+                val c = getPrimaryColor(iconTemp)
+                viewBinding.appCard.backgroundTintList = colorStateSingle(c.third and 0x33ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appCard.outlineSpotShadowColor = c.third and 0x33ffffff
+                viewBinding.appText.setTextColor(c.first)
+                viewBinding.appVersion.setTextColor(c.second)
+                viewBinding.appPackage.setTextColor(c.second)
             }
             get(AppSP.vConsole).let {
-                viewBinding.appResourcesVconsoleCard.setCardBackgroundColor(getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError))
+                viewBinding.appResourcesVconsoleCard.backgroundTintList = colorStateSingle(getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsoleCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesVconsoleVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
@@ -205,7 +215,7 @@ class App : AppCompatActivity() {
                 }
             }
             get(AppSP.nebulaUCSDK).let {
-                viewBinding.appResourcesNebulaucsdkCard.setCardBackgroundColor(getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError))
+                viewBinding.appResourcesNebulaucsdkCard.backgroundTintList = colorStateSingle(getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesNebulaucsdkCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesNebulaucsdkVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
@@ -270,6 +280,22 @@ class App : AppCompatActivity() {
         toast?.cancel()
         toast = Toast.makeText(this@App, getString(R.string.reset_completed), Toast.LENGTH_SHORT)
         toast!!.show()
+    }
+
+    private fun getPrimaryColor(d: Drawable): Triple<Int, Int, Int> {
+        // https://stackoverflow.com/a/55852660/15603001
+        d.state = intArrayOf(android.R.attr.state_enabled)
+        val bitmap = Bitmap.createBitmap(d.intrinsicWidth, d.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        d.setBounds(0, 0, canvas.width, canvas.height)
+        d.draw(canvas)
+        return Palette.from(bitmap).generate().let {
+            Triple(
+                it.getVibrantColor(getColor(R.color.textPrimary)),
+                it.getMutedColor(getColor(R.color.textSecondary)),
+                it.getDominantColor(getColor(R.color.background)),
+            )
+        }
     }
 
     class RuleResultContract : ActivityResultContract<Intent, Unit>() {
