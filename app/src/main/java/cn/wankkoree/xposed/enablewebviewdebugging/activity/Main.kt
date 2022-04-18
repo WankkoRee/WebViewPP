@@ -38,7 +38,7 @@ class Main: AppCompatActivity() {
         viewBinding.mainToolbarIcon.setImageDrawable(packageManager.getApplicationIcon(BuildConfig.APPLICATION_ID))
         viewBinding.mainVersionText.text = getString(R.string.main_version_text).format(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
         if (isModuleActive) {
-            viewBinding.mainStatusCard.backgroundTintList = colorStateSingle(getColor(R.color.backgroundSuccess) and 0x77ffffff)
+            viewBinding.mainStatusCard.backgroundTintList = colorStateSingle((getColor(R.color.backgroundSuccess) or 0xff000000.toInt()) and 0x77ffffff)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.mainStatusCard.outlineSpotShadowColor = getColor(R.color.backgroundSuccess)
             viewBinding.mainStatusIcon.setImageResource(R.drawable.ic_round_check_circle_24)
             viewBinding.mainStatusIcon.contentDescription = getString(R.string.enabled)
@@ -50,7 +50,7 @@ class Main: AppCompatActivity() {
                 else -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format(getString(R.string.unknown))
             }
         } else {
-            viewBinding.mainStatusCard.backgroundTintList = colorStateSingle(getColor(R.color.backgroundError) and 0x77ffffff)
+            viewBinding.mainStatusCard.backgroundTintList = colorStateSingle((getColor(R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.mainStatusCard.outlineSpotShadowColor = getColor(R.color.backgroundError)
             viewBinding.mainStatusIcon.setImageResource(R.drawable.ic_round_cancel_24)
             viewBinding.mainStatusIcon.contentDescription = getString(R.string.disabled)

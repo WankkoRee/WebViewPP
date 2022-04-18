@@ -194,14 +194,14 @@ class App : AppCompatActivity() {
                 }
                 viewBinding.appIcon.setImageDrawable(iconTemp)
                 val c = getPrimaryColor(iconTemp)
-                viewBinding.appCard.backgroundTintList = colorStateSingle(c.third and 0x33ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appCard.outlineSpotShadowColor = c.third and 0x33ffffff
+                viewBinding.appCard.backgroundTintList = colorStateSingle((c.third or 0xff000000.toInt()) and 0x33ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appCard.outlineSpotShadowColor = (c.third or 0xff000000.toInt()) and 0x33ffffff
                 viewBinding.appText.setTextColor(c.first)
                 viewBinding.appVersion.setTextColor(c.second)
                 viewBinding.appPackage.setTextColor(c.second)
             }
             get(AppSP.vConsole).let {
-                viewBinding.appResourcesVconsoleCard.backgroundTintList = colorStateSingle(getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) and 0x77ffffff)
+                viewBinding.appResourcesVconsoleCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsoleCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesVconsoleVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
@@ -215,7 +215,7 @@ class App : AppCompatActivity() {
                 }
             }
             get(AppSP.nebulaUCSDK).let {
-                viewBinding.appResourcesNebulaucsdkCard.backgroundTintList = colorStateSingle(getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) and 0x77ffffff)
+                viewBinding.appResourcesNebulaucsdkCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesNebulaucsdkCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesNebulaucsdkVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
