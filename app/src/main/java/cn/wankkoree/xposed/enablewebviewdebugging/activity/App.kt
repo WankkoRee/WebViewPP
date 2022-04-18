@@ -60,14 +60,10 @@ class App : AppCompatActivity() {
 
         viewBinding.appToolbarName.text = name
         viewBinding.appIcon.setImageDrawable(icon)
-        viewBinding.appIcon.transitionName = "${pkg}iconView"
         viewBinding.appIcon.contentDescription = name
         viewBinding.appText.text = name
-        viewBinding.appText.transitionName = "${pkg}nameView"
         viewBinding.appPackage.text = pkg
-        viewBinding.appPackage.transitionName = "${pkg}packageView"
         viewBinding.appVersion.text = getString(R.string.version_format).format(versionName, versionCode)
-        viewBinding.appVersion.transitionName = "${pkg}versionView"
         refresh()
 
         viewBinding.appToolbarBack.setOnClickListener {
@@ -238,7 +234,6 @@ class App : AppCompatActivity() {
                         "hookWebViewClient" -> getString(R.string.code_hookWebViewClient).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4])
                         else -> getString(R.string.unknown_hook_method)
                     }
-                    v.transitionName = ruleName
                 } catch (e: Exception) {
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
                     toast?.cancel()
@@ -251,7 +246,7 @@ class App : AppCompatActivity() {
                     ruleResultContract.launch(Intent(this@App, Rule::class.java).also {
                         it.putExtra("pkg", pkg)
                         it.putExtra("rule_name", ruleName)
-                    }, ActivityOptionsCompat.makeSceneTransitionAnimation(this@App, v, ruleName))
+                    }, ActivityOptionsCompat.makeSceneTransitionAnimation(this@App, it, "targetRule"))
                 }
                 v.setOnLongClickListener {
                     AlertDialog.Builder(this@App).run {

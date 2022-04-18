@@ -118,7 +118,6 @@ class Rule : AppCompatActivity() {
             }
         }
         viewBinding.ruleName.doAfterTextChanged {
-            viewBinding.ruleCode.transitionName = viewBinding.ruleName.text.toString()
             refreshCode()
         }
         viewBinding.ruleHookWebViewClassWebView.doAfterTextChanged {

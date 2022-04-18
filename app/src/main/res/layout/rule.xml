@@ -91,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
+                android:transitionName="targetRule"
                 app:code="" />
             <Spinner
                 android:id="@+id/rule_hook_method"
