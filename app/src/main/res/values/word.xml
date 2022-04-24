@@ -33,4 +33,6 @@
     <string name="rule_name">Rule Name</string>
     <string name="unknown_hook_method">Unknown Hook Method</string>
     <string name="parse_failed">Parse Failed</string>
+    <string name="cloud_rules">Cloud Rules</string>
+    <string name="no_matching_version">No Matching Version</string>
 </resources>

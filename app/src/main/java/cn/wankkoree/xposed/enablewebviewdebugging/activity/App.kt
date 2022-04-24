@@ -110,6 +110,7 @@ class App : AppCompatActivity() {
         viewBinding.appHooksAdd.setOnClickListener {
             ruleResultContract.launch(Intent(this@App, Rule::class.java).also {
                 it.putExtra("pkg", pkg)
+                it.putExtra("version", getString(R.string.version_format).format(versionName, versionCode))
             }, ActivityOptionsCompat.makeSceneTransitionAnimation(this))
         }
         viewBinding.appResourcesVconsoleCard.setOnLongClickListener {
@@ -245,6 +246,7 @@ class App : AppCompatActivity() {
                 v.setOnClickListener {
                     ruleResultContract.launch(Intent(this@App, Rule::class.java).also {
                         it.putExtra("pkg", pkg)
+                        it.putExtra("version", getString(R.string.version_format).format(versionName, versionCode))
                         it.putExtra("rule_name", ruleName)
                     }, ActivityOptionsCompat.makeSceneTransitionAnimation(this@App, it, "targetRule"))
                 }

@@ -12,4 +12,5 @@
     <string name="s_already_exists">%s 已存在。</string>
     <string name="do_you_really_delete_this_rule">确定删除这条规则吗？</string>
     <string name="do_you_really_reset_all_configurations">确定重置所有配置吗？</string>
+    <string name="please_set_custom_hook_rules_then_push_rules_to_rules_repos">请配置自定义 Hook 规则并提交到规则仓库。</string>
 </resources>

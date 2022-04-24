@@ -31,4 +31,6 @@
     <string name="rule_name">规则名称</string>
     <string name="unknown_hook_method">未知 Hook 方法</string>
     <string name="parse_failed">解析失败</string>
+    <string name="cloud_rules">云端规则</string>
+    <string name="no_matching_version">无匹配版本</string>
 </resources>

@@ -43,8 +43,21 @@
                     android:text="@string/rule_editer"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/rule_toolbar_back"
-                    app:layout_constraintEnd_toStartOf="@id/rule_toolbar_save"
+                    app:layout_constraintEnd_toStartOf="@id/rule_toolbar_cloud"
                     app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/rule_toolbar_cloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/rule_toolbar_save"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_round_filter_drama_24"
+                    app:tint="@color/textPrimary"
+                    android:contentDescription="@string/cloud_rules" />
                 <ImageView
                     android:id="@+id/rule_toolbar_save"
                     android:layout_width="wrap_content"
