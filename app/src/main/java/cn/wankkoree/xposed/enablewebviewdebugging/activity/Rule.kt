@@ -59,7 +59,6 @@ class Rule : AppCompatActivity() {
                         override fun onNothingSelected(parent: AdapterView<*>?) { }
                         override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
                             val version = dialogBinding.dialogCloudrulesVersions.adapter.getItem(p) as String
-                            Log.d("WankkoRee", version)
                             lifecycleScope.launch(Dispatchers.Main) {
                                 val rulesStr = try {
                                     Http.get("https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master/rules/$pkg/$version.json")

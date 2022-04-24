@@ -35,4 +35,11 @@
     <string name="parse_failed">Parse Failed</string>
     <string name="cloud_rules">Cloud Rules</string>
     <string name="no_matching_version">No Matching Version</string>
+    <string name="about">About</string>
+    <string name="advance">Advance</string>
+    <string name="yuki_hook_api" translatable="false">YukiHookAPI</string>
+    <string name="wankko_ree" translatable="false">Wankko Ree</string>
+    <string name="latest_version">Latest Version</string>
+    <string name="checking_for_updates">Checking For Updates</string>
+    <string name="update_log">Update Log</string>
 </resources>

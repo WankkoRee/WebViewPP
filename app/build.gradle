@@ -23,8 +23,6 @@ android {
         targetSdk 32
         versionCode 4
         versionName 'v1.0.3'
-
-        signingConfig signingConfigs.release
     }
 
     buildTypes {
@@ -36,17 +34,19 @@ android {
             zipAlignEnabled true
             shrinkResources  true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
-        debug {
-            debuggable true
+        dev {
+            debuggable false
             jniDebuggable false
             renderscriptDebuggable false
             minifyEnabled false
             zipAlignEnabled false
             shrinkResources  false
+            signingConfig signingConfigs.release
         }
-        dev {
-            debuggable false
+        debug {
+            debuggable true
             jniDebuggable false
             renderscriptDebuggable false
             minifyEnabled false

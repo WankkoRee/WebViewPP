@@ -6,4 +6,8 @@
         android:id="@+id/main_toolbar_menu_reset"
         android:title="@string/reset"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/main_toolbar_menu_advance"
+        android:title="@string/advance"
+        app:showAsAction="never"/>
 </menu>

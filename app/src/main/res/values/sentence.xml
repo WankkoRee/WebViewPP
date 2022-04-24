@@ -13,4 +13,10 @@
     <string name="do_you_really_delete_this_rule">Do you really delete this rule?</string>
     <string name="do_you_really_reset_all_configurations">Do you really reset all configurations?</string>
     <string name="please_set_custom_hook_rules_then_push_rules_to_rules_repos">Please set custom hook rules then push rules to Rules Repos.</string>
+    <string name="this_module_is_constructed_using_yukihookapi">This module is constructed using YukiHookAPI.</string>
+    <string name="author_of_this_module">Author of this module.</string>
+    <string name="it_is_checked_that_there_is_a_new_version_do_you_want_to_download_it">It is checked that there is a new version. Do you want to download it?</string>
+    <string name="is_the_latest_version">Is the latest version.</string>
+    <string name="your_version_is_higher_than_the_latest_version_it_may_be_a_withdrawn_version_or_an_internal_beta_version">Your version is higher than the latest version. It may be a withdrawn version or an internal beta version.</string>
+    <string name="if_you_find_this_project_useful_please_star_this_project">If you find this project useful, please star this project.</string>
 </resources>

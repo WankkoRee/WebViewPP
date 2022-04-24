@@ -33,4 +33,9 @@
     <string name="parse_failed">解析失败</string>
     <string name="cloud_rules">云端规则</string>
     <string name="no_matching_version">无匹配版本</string>
+    <string name="about">关于</string>
+    <string name="advance">高级</string>
+    <string name="latest_version">最新版本</string>
+    <string name="checking_for_updates">检查更新中</string>
+    <string name="update_log">更新日志</string>
 </resources>

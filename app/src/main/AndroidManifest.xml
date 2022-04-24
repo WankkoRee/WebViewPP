@@ -38,6 +38,9 @@
         <activity
             android:name=".activity.Resources"
             android:exported="false" />
+        <activity
+            android:name=".activity.Advance"
+            android:exported="false" />
 
         <meta-data
             android:name="xposedmodule"
