@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
-import cn.wankkoree.xposed.enablewebviewdebugging.ResourcesVersionAlreadyExisted
+import cn.wankkoree.xposed.enablewebviewdebugging.ValueAlreadyExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Tag
 import cn.wankkoree.xposed.enablewebviewdebugging.data.*
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ResourcesBinding
@@ -95,7 +95,7 @@ class Resources : AppCompatActivity() {
                     name("resources_vConsole_$version")
                     putString("vConsole", vConsoleStr)
                     name("resources")
-                    try { put(ResourcesSP.vConsole_versions, version) } catch (e: ResourcesVersionAlreadyExisted) {
+                    try { put(ResourcesSP.vConsole_versions, version) } catch (e: ValueAlreadyExistedInSet) {
                         toast?.cancel()
                         toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
                         toast!!.show()
@@ -134,7 +134,7 @@ class Resources : AppCompatActivity() {
                     putString("nebulaUCSDK_arm64-v8a", Base64.encodeToString(nebulaUCSDKArm64V8aBin, Base64.NO_WRAP))
                     putString("nebulaUCSDK_armeabi-v7a", Base64.encodeToString(nebulaUCSDKArmeabiV7aBin, Base64.NO_WRAP))
                     name("resources")
-                    try { put(ResourcesSP.nebulaUCSDK_versions, version) } catch (e: ResourcesVersionAlreadyExisted) {
+                    try { put(ResourcesSP.nebulaUCSDK_versions, version) } catch (e: ValueAlreadyExistedInSet) {
                         toast?.cancel()
                         toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
                         toast!!.show()

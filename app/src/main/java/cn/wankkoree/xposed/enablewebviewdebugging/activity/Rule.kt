@@ -13,7 +13,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
-import cn.wankkoree.xposed.enablewebviewdebugging.ResourcesVersionAlreadyExisted
+import cn.wankkoree.xposed.enablewebviewdebugging.ValueAlreadyExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
 import cn.wankkoree.xposed.enablewebviewdebugging.data.*
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.DialogCloudrulesBinding
@@ -166,7 +166,7 @@ class Rule : AppCompatActivity() {
                 modulePrefs("apps_$pkg").run {
                     try {
                         put(AppSP.hooks, name)
-                    } catch (_: ResourcesVersionAlreadyExisted) {
+                    } catch (_: ValueAlreadyExistedInSet) {
                         if (ruleName == null || ruleName != name) { // 新建 or 修改名称
                             toast?.cancel()
                             toast = Toast.makeText(this@Rule, getString(R.string.s_already_exists).format(getString(R.string.rule_name)), Toast.LENGTH_SHORT)

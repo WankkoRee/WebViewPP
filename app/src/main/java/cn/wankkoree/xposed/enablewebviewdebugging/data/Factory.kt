@@ -1,7 +1,7 @@
 package cn.wankkoree.xposed.enablewebviewdebugging.data
 
-import cn.wankkoree.xposed.enablewebviewdebugging.ResourcesVersionAlreadyExisted
-import cn.wankkoree.xposed.enablewebviewdebugging.ResourcesVersionNotExisted
+import cn.wankkoree.xposed.enablewebviewdebugging.ValueAlreadyExistedInSet
+import cn.wankkoree.xposed.enablewebviewdebugging.ValueNotExistedInSet
 import com.highcapable.yukihookapi.hook.xposed.prefs.YukiHookModulePrefs
 import com.highcapable.yukihookapi.hook.xposed.prefs.data.PrefsData
 
@@ -25,7 +25,7 @@ inline fun <reified T> YukiHookModulePrefs.getList(key: String): List<T> = when 
 
 inline fun <reified T> YukiHookModulePrefs.put(prefs: PrefsData<HashSet<T>>, value: T) {
     val oldSet = getSet(prefs)
-    if (oldSet.contains(value)) throw ResourcesVersionAlreadyExisted("$value is already in ${prefs.key}")
+    if (oldSet.contains(value)) throw ValueAlreadyExistedInSet("$value is already in ${prefs.key}")
     oldSet.add(value)
     putString(prefs.key, oldSet.joinToString("|"))
 }
@@ -40,7 +40,7 @@ inline fun <reified T> YukiHookModulePrefs.putList(key: String, value: List<T>) 
 
 inline fun <reified T> YukiHookModulePrefs.remove(prefs: PrefsData<HashSet<T>>, value: T) {
     val oldSet = getSet(prefs)
-    if (!oldSet.contains(value)) throw ResourcesVersionNotExisted("$value is not in ${prefs.key}")
+    if (!oldSet.contains(value)) throw ValueNotExistedInSet("$value is not in ${prefs.key}")
     oldSet.remove(value)
     putString(prefs.key, oldSet.joinToString("|"))
 }

@@ -22,7 +22,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.palette.graphics.Palette
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
-import cn.wankkoree.xposed.enablewebviewdebugging.ResourcesVersionNotExisted
+import cn.wankkoree.xposed.enablewebviewdebugging.ValueNotExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
 import cn.wankkoree.xposed.enablewebviewdebugging.data.*
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.AppBinding
@@ -272,7 +272,7 @@ class App : AppCompatActivity() {
     }
 
     private fun reset() {
-        try { modulePrefs("apps").remove(AppsSP.enabled, pkg) } catch (_: ResourcesVersionNotExisted) { }
+        try { modulePrefs("apps").remove(AppsSP.enabled, pkg) } catch (_: ValueNotExistedInSet) { }
         modulePrefs("apps_$pkg").clear()
         toast?.cancel()
         toast = Toast.makeText(this@App, getString(R.string.reset_completed), Toast.LENGTH_SHORT)
