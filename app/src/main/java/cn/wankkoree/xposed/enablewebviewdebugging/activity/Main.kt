@@ -169,7 +169,6 @@ class Main: AppCompatActivity() {
             }
             if (latestStr != null) {
                 val latest = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create().fromJson(latestStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.github.RepoRelease::class.java)
-                Log.d("WankkoRee", latest.published_at.toString())
                 Regex("^([0-9]+?)-(.+)\$").matchEntire(latest.tag_name)!!.groupValues.let {
                     val latestCode = it[1].toInt()
                     val latestName = it[2]
