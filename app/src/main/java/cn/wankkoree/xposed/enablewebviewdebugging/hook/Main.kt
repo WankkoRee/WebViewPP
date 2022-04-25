@@ -13,7 +13,6 @@ import com.highcapable.yukihookapi.hook.log.*
 import com.highcapable.yukihookapi.hook.param.PackageParam
 import com.highcapable.yukihookapi.hook.type.java.BooleanType
 import com.highcapable.yukihookapi.hook.type.java.StringType
-import com.highcapable.yukihookapi.hook.xposed.prefs.YukiHookModulePrefs
 
 @InjectYukiHookWithXposed
 class Main : YukiHookXposedInitProxy {

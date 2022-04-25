@@ -35,6 +35,7 @@ android {
             shrinkResources  true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            versionNameSuffix '-release'
         }
         dev {
             debuggable false
@@ -44,6 +45,7 @@ android {
             zipAlignEnabled false
             shrinkResources  false
             signingConfig signingConfigs.release
+            versionNameSuffix '-dev'
         }
         debug {
             debuggable true
@@ -52,6 +54,7 @@ android {
             minifyEnabled false
             zipAlignEnabled false
             shrinkResources  false
+            versionNameSuffix '-debug'
         }
     }
     compileOptions {
@@ -69,7 +72,9 @@ android {
 dependencies {
     compileOnly 'de.robv.android.xposed:api:82'
     implementation 'com.highcapable.yukihookapi:api:1.0.77'
+//    implementation fileTree(dir:'D:/YukiHookAPI/yukihookapi/build/libs',include:['*.jar'])
     ksp 'com.highcapable.yukihookapi:ksp-xposed:1.0.77'
+//    ksp fileTree(dir:'D:/YukiHookAPI/yukihookapi-ksp-xposed/build/libs',include:['*.jar'])
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
