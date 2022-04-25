@@ -19,6 +19,8 @@ import com.tencent.smtt.sdk.QbSdk
 
 class Main : AppCompatActivity() {
     private lateinit var viewBinding: MainBinding
+    private var toast: Toast? = null
+
     private var debugging: Boolean? = null
     private var javascript: Boolean? = null
 
@@ -34,7 +36,9 @@ class Main : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         refresh()
-        Toast.makeText(applicationContext, "debugging = $debugging\njavascript = $javascript", Toast.LENGTH_SHORT).show()
+        toast?.cancel()
+        toast = Toast.makeText(applicationContext, "debugging = $debugging\njavascript = $javascript", Toast.LENGTH_SHORT)
+        toast?.show()
         webViewInit(viewBinding.webView, debugging = debugging, javascript = javascript)
     }
 
@@ -72,7 +76,9 @@ class Main : AppCompatActivity() {
         }
         if (flag) {
             refresh()
-            Toast.makeText(applicationContext, getString(R.string.settings_will_be_applied_after_restarting_the_app), Toast.LENGTH_SHORT).show()
+            toast?.cancel()
+            toast = Toast.makeText(applicationContext, getString(R.string.settings_will_be_applied_after_restarting_the_app), Toast.LENGTH_SHORT)
+            toast?.show()
         }
         return super.onOptionsItemSelected(item)
     }
