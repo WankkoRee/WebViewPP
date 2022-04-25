@@ -15,6 +15,7 @@ android {
             v2SigningEnabled true
         }
     }
+
     compileSdk 32
 
     defaultConfig {
@@ -57,24 +58,31 @@ android {
             versionNameSuffix '-debug'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         viewBinding true
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${defaultConfig.applicationId}-${defaultConfig.versionName}(${defaultConfig.versionCode})-${variant.buildType.name}.apk"
+        }
     }
 }
 
 dependencies {
     compileOnly 'de.robv.android.xposed:api:82'
     implementation 'com.highcapable.yukihookapi:api:1.0.77'
-//    implementation fileTree(dir:'D:/YukiHookAPI/yukihookapi/build/libs',include:['*.jar'])
     ksp 'com.highcapable.yukihookapi:ksp-xposed:1.0.77'
-//    ksp fileTree(dir:'D:/YukiHookAPI/yukihookapi-ksp-xposed/build/libs',include:['*.jar'])
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
