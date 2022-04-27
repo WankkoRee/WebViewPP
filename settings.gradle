@@ -1,5 +1,6 @@
 pluginManagement {
     repositories {
+        mavenLocal()
         gradlePluginPortal()
         google()
         mavenCentral()
@@ -8,9 +9,21 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
+        mavenLocal()
+        // :app
         maven { url "https://api.xposed.info/" }
         maven { url "https://s01.oss.sonatype.org/content/repositories/releases" }
+        // :test_ucu4
+        maven {
+            credentials {
+                username "mvn_read_ws"
+                password "mrk8929"
+            }
+            url "https://mvn.cloud.alipay.com/nexus/content/repositories/releases/"
+        }
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        // General
+        google()
         mavenCentral()
     }
 }
@@ -18,3 +31,4 @@ rootProject.name = "EnableWebViewDebugging"
 include ':app'
 include ':test_webview'
 include ':test_tbsx5'
+include ':test_ucu4'

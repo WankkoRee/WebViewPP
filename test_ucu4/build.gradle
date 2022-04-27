@@ -1,0 +1,94 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven {
+            credentials {
+                username "mvn_read_ws"
+                password "mrk8929"
+            }
+            url "https://mvn.cloud.alipay.com/nexus/content/repositories/releases/"
+        }
+    }
+    dependencies {
+        classpath 'com.android.boost.easyconfig:easyconfig:2.6.0'
+    }
+}
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+apply plugin: 'com.alipay.apollo.baseline.config'
+
+android {
+    signingConfigs {
+        release {
+            storePassword 'mpaas123'
+            keyPassword 'mpaas123'
+            keyAlias 'mpaas123'
+            storeFile file('mpaas_keystore.jks')
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    compileSdkVersion 32
+
+    defaultConfig {
+        applicationId "com.mpaas.demo"
+        minSdkVersion 18
+        targetSdkVersion 32
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            abiFilters "armeabi"
+        }
+        multiDexEnabled true
+        signingConfig signingConfigs.release
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${defaultConfig.applicationId}-${defaultConfig.versionName}(${defaultConfig.versionCode})-${variant.buildType.name}.apk"
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation platform("com.mpaas.android:mpaas-baseline:10.1.68-46")
+    implementation 'com.mpaas.android:nebula'
+    implementation 'com.mpaas.android:uccore'
+    implementation 'com.mpaas.android:essential'
+    annotationProcessor "com.mpaas.mobile:metainfo-compiler:1.3.0"
+    implementation('com.alipay.android.phone.wallet:nebulaucsdk-build:999.3.22.2.30.211011154625@aar') {
+        force = true
+    }
+}

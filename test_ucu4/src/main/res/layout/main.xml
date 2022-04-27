@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/h5_default_titlebar_color"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:id="@+id/titlebar"
+        android:text="@string/app_name" />
+
+    <Button
+        android:id="@+id/btn_scan_open_page"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@android:color/white"
+        android:background="@color/h5_default_titlebar_color"
+        android:layout_margin="12dp"
+        android:clickable="true"
+        android:text="在线页面" />
+
+</LinearLayout>

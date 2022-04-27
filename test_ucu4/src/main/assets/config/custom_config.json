@@ -1,0 +1,6 @@
+[
+  {
+    "value":"{\"h5_enableExternalWebView\":\"YES\",\"h5_externalWebViewSdkVersion\":{\"min\":11,\"max\":31}}",
+    "key":"h5_webViewConfig"
+  }
+]
