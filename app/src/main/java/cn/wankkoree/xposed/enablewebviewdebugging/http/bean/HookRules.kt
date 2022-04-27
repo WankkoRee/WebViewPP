@@ -4,9 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class HookRules (
     @SerializedName("hookWebView")
-    val hookWebView: List<HookRuleWebView>,
+    val hookWebView: List<HookRuleWebView>?,
     @SerializedName("hookWebViewClient")
-    val hookWebViewClient: List<HookRuleWebViewClient>,
+    val hookWebViewClient: List<HookRuleWebViewClient>?,
+    @SerializedName("replaceNebulaUCSDK")
+    val replaceNebulaUCSDK: List<ReplaceNebulaUCSDK>?,
 ) {
     class HookRuleWebView (
         @SerializedName("name")
@@ -27,6 +29,8 @@ data class HookRules (
     class HookRuleWebViewClient (
         @SerializedName("name")
         val name: String,
+        @SerializedName("Class_WebView")
+        val Class_WebView: String,
         @SerializedName("Class_WebViewClient")
         val Class_WebViewClient: String,
         @SerializedName("Method_onPageFinished")
@@ -35,5 +39,15 @@ data class HookRules (
         val Method_evaluateJavascript: String,
         @SerializedName("Class_ValueCallback")
         val Class_ValueCallback: String,
+    )
+    class ReplaceNebulaUCSDK (
+        @SerializedName("name")
+        val name: String,
+        @SerializedName("Class_UcServiceSetup")
+        val Class_UcServiceSetup: String,
+        @SerializedName("Method_updateUCVersionAndSdcardPath")
+        val Method_updateUCVersionAndSdcardPath: String,
+        @SerializedName("Field_sInitUcFromSdcardPath")
+        val Field_sInitUcFromSdcardPath: String,
     )
 }

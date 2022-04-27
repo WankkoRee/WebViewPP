@@ -9,7 +9,9 @@ object Http {
     suspend fun get(url: String): String = withContext(Dispatchers.IO) {
         (URL(url).openConnection() as HttpURLConnection).run {
             requestMethod = "GET"
+            setRequestProperty("Cache-Control", "no-cache")
             useCaches = false
+            defaultUseCaches = false
             connectTimeout = 4000
             readTimeout = 4000
             connect()
@@ -20,7 +22,9 @@ object Http {
     suspend fun getBytes(url: String): ByteArray = withContext(Dispatchers.IO) {
         (URL(url).openConnection() as HttpURLConnection).run {
             requestMethod = "GET"
+            setRequestProperty("Cache-Control", "no-cache")
             useCaches = false
+            defaultUseCaches = false
             connectTimeout = 4000
             readTimeout = 4000
             connect()

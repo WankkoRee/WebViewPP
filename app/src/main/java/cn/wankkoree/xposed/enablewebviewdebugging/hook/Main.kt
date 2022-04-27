@@ -1,5 +1,6 @@
 package cn.wankkoree.xposed.enablewebviewdebugging.hook
 
+import android.util.Base64
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.data.AppSP
 import cn.wankkoree.xposed.enablewebviewdebugging.data.getList
@@ -13,6 +14,7 @@ import com.highcapable.yukihookapi.hook.log.*
 import com.highcapable.yukihookapi.hook.param.PackageParam
 import com.highcapable.yukihookapi.hook.type.java.BooleanType
 import com.highcapable.yukihookapi.hook.type.java.StringType
+import java.io.File
 
 @InjectYukiHookWithXposed
 class Main : YukiHookXposedInitProxy {
@@ -63,17 +65,26 @@ class Main : YukiHookXposedInitProxy {
                         Method_setJavaScriptEnabled = hookEntry[4],
                         Method_loadUrl = hookEntry[5],
                         Method_setWebViewClient = hookEntry[6],
-                        packageName = packageName,
                     )
                 }
                 "hookWebViewClient" -> {
                     hookWebViewClient(
-                        Class_WebViewClient = hookEntry[1],
-                        Method_onPageFinished = hookEntry[2],
-                        Method_evaluateJavascript = hookEntry[3],
-                        Class_ValueCallback = hookEntry[4],
-                        packageName = packageName,
+                        Class_WebView = hookEntry[1],
+                        Class_WebViewClient = hookEntry[2],
+                        Method_onPageFinished = hookEntry[3],
+                        Method_evaluateJavascript = hookEntry[4],
+                        Class_ValueCallback = hookEntry[5],
                     )
+                }
+                "replaceNebulaUCSDK" -> {
+                    cpuArch?.let {
+                        replaceNebulaUCSDK(
+                            Class_UcServiceSetup = hookEntry[1],
+                            Method_updateUCVersionAndSdcardPath = hookEntry[2],
+                            Field_sInitUcFromSdcardPath = hookEntry[3],
+                            it
+                        )
+                    }
                 }
                 else -> {
                     loggerE(msg = "Unknown Hook Method: ${hookEntry[0]}")
@@ -99,29 +110,41 @@ class Main : YukiHookXposedInitProxy {
         Method_setJavaScriptEnabled: String = "setJavaScriptEnabled",
         Method_loadUrl: String = "loadUrl",
         Method_setWebViewClient: String = "setWebViewClient",
-        packageName: String,
     ) {
         Class_WebView.hook {
             injectMember {
                 allConstructors()
                 afterHook {
                     val webView = instance
-                    val getSettingsMethod = method {
+                    val webSettings = method {
                         name = Method_getSettings
-                    }
-                    val webSettings = getSettingsMethod.get(webView).call()
+                    }.result {
+                        onNoSuchMethod {
+                            loggerE(msg = "Hook.Method.NoSuchMethod at hookWebView\uD83D\uDC49<init>\uD83D\uDC49getSettings", e = it)
+                        }
+                    }.get(webView).call()
 
                     if (debug) loggerD(msg = "${instanceClass.name} new().static setWebContentsDebuggingEnabled(true)")
                     method {
                         name = Method_setWebContentsDebuggingEnabled
                         param(BooleanType)
-                    }.get().call(true)
+                    }.result {
+                        onNoSuchMethod {
+                            loggerE(msg = "Hook.Method.NoSuchMethod at hookWebView\uD83D\uDC49<init>\uD83D\uDC49setWebContentsDebuggingEnabled", e = it)
+                        }
+                        get().call(true)
+                    }
 
                     if (debug) loggerD(msg = "${instanceClass.name} new().getSettings().setJavaScriptEnabled(true)")
                     webSettings!!.javaClass.method {
                         name = Method_setJavaScriptEnabled
                         param(BooleanType)
-                    }.get(webSettings).call(true)
+                    }.result {
+                        onNoSuchMethod {
+                            loggerE(msg = "Hook.Method.NoSuchMethod at hookWebView\uD83D\uDC49<init>\uD83D\uDC49setJavaScriptEnabled", e = it)
+                        }
+                        get(webSettings).call(true)
+                    }
 
                     if (!webSettingsClassHashSet.contains(webSettings.javaClass.name)) {
                         webSettings.javaClass.hook(isUseAppClassLoader = false) {
@@ -201,7 +224,7 @@ class Main : YukiHookXposedInitProxy {
                     allMethods(name = Method_loadUrl)
                     afterHook {
                         loggerD(msg = "${instanceClass.name}.loadUrl(\"${args[0]}\")")
-                        Util.printStackTrace()
+                        printStackTrace()
                     }
                 }.result {
                     onNoSuchMemberFailure {
@@ -259,11 +282,11 @@ class Main : YukiHookXposedInitProxy {
      * webViewClient.onPageFinished({webView.evaluateJavascript(vConsole)})
      **/
     private fun PackageParam.hookWebViewClient(
+        Class_WebView: String = "android.webkit.WebView",
         Class_WebViewClient: String = "android.webkit.WebViewClient",
         Method_onPageFinished: String = "onPageFinished",
         Method_evaluateJavascript: String = "evaluateJavascript",
         Class_ValueCallback: String = "android.webkit.ValueCallback",
-        packageName: String,
     ) {
         Class_WebViewClient.hook {
             injectMember {
@@ -272,18 +295,23 @@ class Main : YukiHookXposedInitProxy {
                     val webView = args[0]
 
                     if (debug) loggerD(msg = "${instanceClass.name}.onPageFinished({webView.evaluateJavascript(vConsole)})")
-                    webView!!.javaClass.method {
+                    findClass(Class_WebView).normalClass!!.method {
                         name = Method_evaluateJavascript
                         param(StringType, findClass(Class_ValueCallback).normalClass!!)
-                    }.get(webView).call(
-                        "javascript:" + (if (prefs("apps_$packageName").get(AppSP.vConsole)) {
-                            "if (typeof vConsole === 'undefined'){" +
-                                "   ${prefs("resources_vConsole_${prefs("apps_$packageName").get(AppSP.vConsole_version)}").getString("vConsole")};" +
-                                "   var vConsole=new VConsole();" + // 创建全局变量以供用户使用
-                                "   document.getElementById('__vconsole').style.zIndex=2147483647;" + // 将 vConsole 提升到最顶层
-                            "}"
-                        } else "")
-                    , null)
+                    }.result {
+                        onNoSuchMethod {
+                            loggerE(msg = "Hook.Method.NoSuchMethod at hookWebViewClient\uD83D\uDC49onPageFinished\uD83D\uDC49evaluateJavascript", e = it)
+                        }
+                        get(webView).call(
+                            "javascript:" + (if (prefs("apps_$packageName").get(AppSP.vConsole)) {
+                                "if (typeof vConsole === 'undefined'){" +
+                                        "   ${prefs("resources_vConsole_${prefs("apps_$packageName").get(AppSP.vConsole_version)}").getString("vConsole")};" +
+                                        "   var vConsole=new VConsole();" + // 创建全局变量以供用户使用
+                                        "   document.getElementById('__vconsole').style.zIndex=2147483647;" + // 将 vConsole 提升到最顶层
+                                        "}"
+                            } else "")
+                        , null)
+                    }
                 }
             }.result {
                 onNoSuchMemberFailure {
@@ -307,5 +335,57 @@ class Main : YukiHookXposedInitProxy {
                 loggerI(msg = "Hook.Class.Started at hookWebViewClient\uD83D\uDC49$Class_WebViewClient")
             }
         }
+    }
+
+    private fun PackageParam.replaceNebulaUCSDK(
+        Class_UcServiceSetup: String = "com.alipay.mobile.nebulauc.impl.UcServiceSetup",
+        Method_updateUCVersionAndSdcardPath: String = "updateUCVersionAndSdcardPath",
+        Field_sInitUcFromSdcardPath: String = "sInitUcFromSdcardPath",
+        cpuArch: String,
+    ) {
+        Class_UcServiceSetup.hook {
+            injectMember {
+                allMethods(Method_updateUCVersionAndSdcardPath)
+                afterHook {
+                    if (debug) loggerD(msg = "${instanceClass.name}.updateUCVersionAndSdcardPath({sInitUcFromSdcardPath=nebulaUCSDK})")
+                    if (prefs("apps_$packageName").get(AppSP.nebulaUCSDK)) {
+                        File(appContext.getExternalFilesDir("nebulaUCSDK"), "libWebViewCore_ri_7z_uc.so").let {
+                            if (!it.exists()) {
+                                val nebulaUCSDK = Base64.decode(prefs("resources_nebulaUCSDK_${prefs("apps_$packageName").get(AppSP.nebulaUCSDK_version)}").getString("nebulaUCSDK_$cpuArch"), Base64.NO_WRAP)
+                                it.writeBytes(nebulaUCSDK)
+                            }
+                            this@afterHook.field {
+                                name(Field_sInitUcFromSdcardPath)
+                                modifiers {
+                                    asStatic()
+                                }
+                            }.result {
+                                onNoSuchField {
+                                    loggerE(msg = "Hook.Field.NoSuchField at replaceNebulaUCSDK\uD83D\uDC49updateUCVersionAndSdcardPath\uD83D\uDC49sInitUcFromSdcardPath", e = it)
+                                }
+                                get().set(it.absolutePath)
+                            }
+                        }
+                    }
+                }
+            }
+        }.result {
+            onHookClassNotFoundFailure {
+                loggerE(msg = "Hook.Class.NotFound at replaceNebulaUCSDK\uD83D\uDC49$Class_UcServiceSetup", e = it)
+            }
+            onPrepareHook {
+                loggerI(msg = "Hook.Class.Started at replaceNebulaUCSDK\uD83D\uDC49$Class_UcServiceSetup")
+            }
+        }
+    }
+
+    private fun printStackTrace() {
+        loggerD(msg = "---- ---- ---- ----")
+        val stackElements = Throwable().stackTrace
+        for (i in stackElements.indices) {
+            val element = stackElements[i]
+            loggerD(msg = "at ${element.className}.${element.methodName}(${element.fileName}:${element.lineNumber})")
+        }
+        loggerD(msg = "---- ---- ---- ----")
     }
 }

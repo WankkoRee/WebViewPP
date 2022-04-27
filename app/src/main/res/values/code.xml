@@ -9,9 +9,15 @@
     \t<font color="#1098ad">Method_setWebViewClient</font> = <font color="#339af0">%7$s</font><br/>
     )]]></string>
     <string name="code_hookWebViewClient" translatable="false"><![CDATA[<font color="#b197fc">hook</font> <font color="#ffc078">%1$s</font> : <font color="#38d9a9">hookWebViewClient</font> (<br/>
-    \t<font color="#1098ad">Class_WebViewClient</font> = <font color="#339af0">%2$s</font><br/>
-    \t<font color="#1098ad">Method_onPageFinished</font> = <font color="#339af0">%3$s</font><br/>
-    \t<font color="#1098ad">Method_evaluateJavascript</font> = <font color="#339af0">%4$s</font><br/>
-    \t<font color="#1098ad">Class_ValueCallback</font> = <font color="#339af0">%5$s</font><br/>
+    \t<font color="#1098ad">Class_WebView</font> = <font color="#339af0">%2$s</font><br/>
+    \t<font color="#1098ad">Class_WebViewClient</font> = <font color="#339af0">%3$s</font><br/>
+    \t<font color="#1098ad">Method_onPageFinished</font> = <font color="#339af0">%4$s</font><br/>
+    \t<font color="#1098ad">Method_evaluateJavascript</font> = <font color="#339af0">%5$s</font><br/>
+    \t<font color="#1098ad">Class_ValueCallback</font> = <font color="#339af0">%6$s</font><br/>
+    )]]></string>
+    <string name="code_replaceNebulaUCSDK" translatable="false"><![CDATA[<font color="#b197fc">hook</font> <font color="#ffc078">%1$s</font> : <font color="#38d9a9">replaceNebulaUCSDK</font> (<br/>
+    \t<font color="#1098ad">Class_UcServiceSetup</font> = <font color="#339af0">%2$s</font><br/>
+    \t<font color="#1098ad">Method_updateUCVersionAndSdcardPath</font> = <font color="#339af0">%3$s</font><br/>
+    \t<font color="#1098ad">Field_sInitUcFromSdcardPath</font> = <font color="#339af0">%4$s</font><br/>
     )]]></string>
 </resources>

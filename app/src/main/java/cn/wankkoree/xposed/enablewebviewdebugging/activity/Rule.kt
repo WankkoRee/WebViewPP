@@ -42,7 +42,7 @@ class Rule : AppCompatActivity() {
         pkg = intent.getStringExtra("pkg")!!
         version = intent.getStringExtra("version")!!
 
-        ArrayAdapter(this@Rule, R.layout.component_spinneritem, arrayOf("hookWebView", "hookWebViewClient")).also { adapter ->
+        ArrayAdapter(this@Rule, R.layout.component_spinneritem, arrayOf("hookWebView", "hookWebViewClient", "replaceNebulaUCSDK")).also { adapter ->
             adapter.setDropDownViewResource(R.layout.component_spinneritem)
             viewBinding.ruleHookMethod.adapter = adapter
         }
@@ -69,7 +69,7 @@ class Rule : AppCompatActivity() {
                                 if (rulesStr != null) {
                                     dialogBinding.dialogCloudrulesRules.removeAllViews()
                                     val rules = Gson().fromJson(rulesStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.HookRules::class.java)
-                                    for (hookRule in rules.hookWebView) {
+                                    if (rules.hookWebView != null) for (hookRule in rules.hookWebView) {
                                         val v = Code(this@Rule)
                                         v.code = getString(R.string.code_hookWebView).format(
                                             hookRule.name,
@@ -94,10 +94,11 @@ class Rule : AppCompatActivity() {
                                         }
                                         dialogBinding.dialogCloudrulesRules.addView(v)
                                     }
-                                    for (hookRule in rules.hookWebViewClient) {
+                                    if (rules.hookWebViewClient != null) for (hookRule in rules.hookWebViewClient) {
                                         val v = Code(this@Rule)
                                         v.code = getString(R.string.code_hookWebViewClient).format(
                                             hookRule.name,
+                                            hookRule.Class_WebView,
                                             hookRule.Class_WebViewClient,
                                             hookRule.Method_onPageFinished,
                                             hookRule.Method_evaluateJavascript,
@@ -107,10 +108,30 @@ class Rule : AppCompatActivity() {
                                         v.setOnClickListener {
                                             viewBinding.ruleHookMethod.setSelection(1)
                                             viewBinding.ruleName.setText(hookRule.name)
+                                            viewBinding.ruleHookWebViewClientClassWebView.setText(hookRule.Class_WebView)
                                             viewBinding.ruleHookWebViewClientClassWebViewClient.setText(hookRule.Class_WebViewClient)
                                             viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText(hookRule.Method_onPageFinished)
                                             viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText(hookRule.Method_evaluateJavascript)
                                             viewBinding.ruleHookWebViewClientClassValueCallback.setText(hookRule.Class_ValueCallback)
+                                            dialog.cancel()
+                                        }
+                                        dialogBinding.dialogCloudrulesRules.addView(v)
+                                    }
+                                    if (rules.replaceNebulaUCSDK != null) for (hookRule in rules.replaceNebulaUCSDK) {
+                                        val v = Code(this@Rule)
+                                        v.code = getString(R.string.code_replaceNebulaUCSDK).format(
+                                            hookRule.name,
+                                            hookRule.Class_UcServiceSetup,
+                                            hookRule.Method_updateUCVersionAndSdcardPath,
+                                            hookRule.Field_sInitUcFromSdcardPath,
+                                        )
+                                        v.isClickable = true
+                                        v.setOnClickListener {
+                                            viewBinding.ruleHookMethod.setSelection(2)
+                                            viewBinding.ruleName.setText(hookRule.name)
+                                            viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.setText(hookRule.Class_UcServiceSetup)
+                                            viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.setText(hookRule.Method_updateUCVersionAndSdcardPath)
+                                            viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.setText(hookRule.Field_sInitUcFromSdcardPath)
                                             dialog.cancel()
                                         }
                                         dialogBinding.dialogCloudrulesRules.addView(v)
@@ -190,10 +211,17 @@ class Rule : AppCompatActivity() {
                         )
                         "hookWebViewClient" -> listOf(
                             "hookWebViewClient",
+                            viewBinding.ruleHookWebViewClientClassWebView.text.toString(),
                             viewBinding.ruleHookWebViewClientClassWebViewClient.text.toString(),
                             viewBinding.ruleHookWebViewClientMethodOnPageFinished.text.toString(),
                             viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.text.toString(),
                             viewBinding.ruleHookWebViewClientClassValueCallback.text.toString(),
+                        )
+                        "replaceNebulaUCSDK" -> listOf(
+                            "replaceNebulaUCSDK",
+                            viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.text.toString(),
+                            viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.text.toString(),
+                            viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.text.toString(),
                         )
                         else -> {
                             Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method))
@@ -211,6 +239,7 @@ class Rule : AppCompatActivity() {
                     "hookWebView" -> {
                         viewBinding.ruleHookWebView.visibility = View.VISIBLE
                         viewBinding.ruleHookWebViewClient.visibility = View.GONE
+                        viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
                         if (viewBinding.ruleHookWebViewClassWebView.text!!.isEmpty()) viewBinding.ruleHookWebViewClassWebView.setText("android.webkit.WebView")
                         if (viewBinding.ruleHookWebViewMethodGetSettings.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodGetSettings.setText("getSettings")
                         if (viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.setText("setWebContentsDebuggingEnabled")
@@ -221,10 +250,20 @@ class Rule : AppCompatActivity() {
                     "hookWebViewClient" -> {
                         viewBinding.ruleHookWebView.visibility = View.GONE
                         viewBinding.ruleHookWebViewClient.visibility = View.VISIBLE
+                        viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
+                        if (viewBinding.ruleHookWebViewClientClassWebView.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassWebView.setText("android.webkit.WebView")
                         if (viewBinding.ruleHookWebViewClientClassWebViewClient.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassWebViewClient.setText("android.webkit.WebViewClient")
                         if (viewBinding.ruleHookWebViewClientMethodOnPageFinished.text!!.isEmpty()) viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText("onPageFinished")
                         if (viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.text!!.isEmpty()) viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText("evaluateJavascript")
                         if (viewBinding.ruleHookWebViewClientClassValueCallback.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassValueCallback.setText("android.webkit.ValueCallback")
+                    }
+                    "replaceNebulaUCSDK" -> {
+                        viewBinding.ruleHookWebView.visibility = View.GONE
+                        viewBinding.ruleHookWebViewClient.visibility = View.GONE
+                        viewBinding.ruleReplaceNebulaUCSDK.visibility = View.VISIBLE
+                        if (viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.text!!.isEmpty()) viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.setText("com.alipay.mobile.nebulauc.impl.UcServiceSetup")
+                        if (viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.text!!.isEmpty()) viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.setText("updateUCVersionAndSdcardPath")
+                        if (viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.text!!.isEmpty()) viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.setText("sInitUcFromSdcardPath")
                     }
                     else -> {
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method))
@@ -254,6 +293,9 @@ class Rule : AppCompatActivity() {
         viewBinding.ruleHookWebViewMethodSetWebViewClient.doAfterTextChanged {
             refreshCode()
         }
+        viewBinding.ruleHookWebViewClientClassWebView.doAfterTextChanged {
+            refreshCode()
+        }
         viewBinding.ruleHookWebViewClientClassWebViewClient.doAfterTextChanged {
             refreshCode()
         }
@@ -266,7 +308,15 @@ class Rule : AppCompatActivity() {
         viewBinding.ruleHookWebViewClientClassValueCallback.doAfterTextChanged {
             refreshCode()
         }
-
+        viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.doAfterTextChanged {
+            refreshCode()
+        }
+        viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.doAfterTextChanged {
+            refreshCode()
+        }
+        viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.doAfterTextChanged {
+            refreshCode()
+        }
         refresh()
     }
 
@@ -289,11 +339,18 @@ class Rule : AppCompatActivity() {
                         viewBinding.ruleHookMethod.setSelection(0)
                     }
                     "hookWebViewClient" -> {
-                        viewBinding.ruleHookWebViewClientClassWebViewClient.setText(hookEntry[1])
-                        viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText(hookEntry[2])
-                        viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText(hookEntry[3])
-                        viewBinding.ruleHookWebViewClientClassValueCallback.setText(hookEntry[4])
+                        viewBinding.ruleHookWebViewClientClassWebView.setText(hookEntry[1])
+                        viewBinding.ruleHookWebViewClientClassWebViewClient.setText(hookEntry[2])
+                        viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText(hookEntry[3])
+                        viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText(hookEntry[4])
+                        viewBinding.ruleHookWebViewClientClassValueCallback.setText(hookEntry[5])
                         viewBinding.ruleHookMethod.setSelection(1)
+                    }
+                    "replaceNebulaUCSDK" -> {
+                        viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.setText(hookEntry[1])
+                        viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.setText(hookEntry[2])
+                        viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.setText(hookEntry[3])
+                        viewBinding.ruleHookMethod.setSelection(2)
                     }
                 }
             }
@@ -313,10 +370,17 @@ class Rule : AppCompatActivity() {
             )
             "hookWebViewClient" -> getString(R.string.code_hookWebViewClient).format(
                 viewBinding.ruleName.text.toString(),
+                viewBinding.ruleHookWebViewClientClassWebView.text.toString(),
                 viewBinding.ruleHookWebViewClientClassWebViewClient.text.toString(),
                 viewBinding.ruleHookWebViewClientMethodOnPageFinished.text.toString(),
                 viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.text.toString(),
                 viewBinding.ruleHookWebViewClientClassValueCallback.text.toString(),
+            )
+            "replaceNebulaUCSDK" -> getString(R.string.code_replaceNebulaUCSDK).format(
+                viewBinding.ruleName.text.toString(),
+                viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.text.toString(),
+                viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.text.toString(),
+                viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.text.toString(),
             )
             else -> getString(R.string.unknown_hook_method)
         }

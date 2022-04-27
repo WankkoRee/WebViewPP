@@ -215,6 +215,20 @@
                     android:transitionGroup="true"
                     app:boxBackgroundColor="@color/transparent" >
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rule_hookWebViewClient_Class_WebView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="Class_WebView" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:transitionGroup="true"
+                    app:boxBackgroundColor="@color/transparent" >
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/rule_hookWebViewClient_Class_WebViewClient"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -262,6 +276,54 @@
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:hint="Class_ValueCallback" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/rule_replaceNebulaUCSDK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:transitionGroup="true"
+                    app:boxBackgroundColor="@color/transparent" >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rule_replaceNebulaUCSDK_Class_UcServiceSetup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="Class_UcServiceSetup" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:transitionGroup="true"
+                    app:boxBackgroundColor="@color/transparent" >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rule_replaceNebulaUCSDK_Method_updateUCVersionAndSdcardPath"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="Method_updateUCVersionAndSdcardPath" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:transitionGroup="true"
+                    app:boxBackgroundColor="@color/transparent" >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rule_replaceNebulaUCSDK_Field_sInitUcFromSdcardPath"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="Field_sInitUcFromSdcardPath" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </LinearLayout>

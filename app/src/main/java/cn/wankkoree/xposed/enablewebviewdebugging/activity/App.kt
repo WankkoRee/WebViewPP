@@ -232,7 +232,8 @@ class App : AppCompatActivity() {
                 try {
                     v.code = when (hookEntry[0]) {
                         "hookWebView" -> getString(R.string.code_hookWebView).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4], hookEntry[5], hookEntry[6])
-                        "hookWebViewClient" -> getString(R.string.code_hookWebViewClient).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4])
+                        "hookWebViewClient" -> getString(R.string.code_hookWebViewClient).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4], hookEntry[5])
+                        "replaceNebulaUCSDK" -> getString(R.string.code_replaceNebulaUCSDK).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3])
                         else -> getString(R.string.unknown_hook_method)
                     }
                 } catch (e: Exception) {
