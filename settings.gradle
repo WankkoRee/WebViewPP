@@ -22,6 +22,12 @@ dependencyResolutionManagement {
             url "https://mvn.cloud.alipay.com/nexus/content/repositories/releases/"
         }
         maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        // :test_crosswalk
+        repositories {
+            maven {
+                url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2'
+            }
+        }
         // General
         google()
         mavenCentral()
@@ -32,3 +38,4 @@ include ':app'
 include ':test_webview'
 include ':test_tbsx5'
 include ':test_ucu4'
+include ':test_crosswalk'

@@ -1,0 +1,65 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    signingConfigs {
+        release {
+            storePassword ANDROID_STORE_PASSWORD
+            keyPassword ANDROID_KEY_PASSWORD
+            keyAlias ANDROID_KEY_ALIAS
+            storeFile file(ANDROID_STORE_FILE)
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "cn.wankkoree.test.crosswalk"
+        minSdk 21
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a" , "arm64-v8a", "x86", "x86_64", "mips", "mips64"
+        }
+        signingConfig signingConfigs.release
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    
+    buildFeatures {
+        viewBinding true
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${defaultConfig.applicationId}-${defaultConfig.versionName}(${defaultConfig.versionCode})-${variant.buildType.name}.apk"
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'com.google.android.material:material:1.5.0'
+
+    implementation 'org.xwalk:xwalk_core_library:23.53.589.4'
+    implementation 'junit:junit:4.13.2'
+}
