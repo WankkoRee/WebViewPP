@@ -1,7 +1,7 @@
 package cn.wankkoree.xposed.enablewebviewdebugging.http.bean
 
 import com.google.gson.annotations.SerializedName
-
+// TODO: 添加更多 hook 方法
 data class HookRules (
     @SerializedName("hookWebView")
     val hookWebView: List<HookRuleWebView>?,
@@ -9,6 +9,10 @@ data class HookRules (
     val hookWebViewClient: List<HookRuleWebViewClient>?,
     @SerializedName("replaceNebulaUCSDK")
     val replaceNebulaUCSDK: List<ReplaceNebulaUCSDK>?,
+    @SerializedName("hookCrossWalk")
+    val hookCrossWalk: List<HookCrossWalk>?,
+    @SerializedName("hookXWebPreferences")
+    val hookXWebPreferences: List<HookXWebPreferences>?,
 ) {
     class HookRuleWebView (
         @SerializedName("name")
@@ -49,5 +53,31 @@ data class HookRules (
         val Method_updateUCVersionAndSdcardPath: String,
         @SerializedName("Field_sInitUcFromSdcardPath")
         val Field_sInitUcFromSdcardPath: String,
+    )
+    class HookCrossWalk (
+        @SerializedName("name")
+        val name: String,
+        @SerializedName("Class_XWalkView")
+        val Class_XWalkView: String,
+        @SerializedName("Method_getSettings")
+        val Method_getSettings: String,
+        @SerializedName("Method_setJavaScriptEnabled")
+        val Method_setJavaScriptEnabled: String,
+        @SerializedName("Method_loadUrl")
+        val Method_loadUrl: String,
+        @SerializedName("Method_setResourceClient")
+        val Method_setResourceClient: String,
+        @SerializedName("Class_XWalkPreferences")
+        val Class_XWalkPreferences: String,
+        @SerializedName("Method_setValue")
+        val Method_setValue: String,
+    )
+    class HookXWebPreferences (
+        @SerializedName("name")
+        val name: String,
+        @SerializedName("Class_XWebPreferences")
+        val Class_XWebPreferences: String,
+        @SerializedName("Method_setValue")
+        val Method_setValue: String,
     )
 }

@@ -108,6 +108,7 @@ class Main : AppCompatActivity() {
 
         val webSettings = webView.settings
         if (javascript != null) {
+            XWalkPreferences.setValue(XWalkPreferences.ENABLE_JAVASCRIPT, javascript)
             webSettings.javaScriptEnabled = javascript  // 开启或关闭 JavaScript 交互
         }
 

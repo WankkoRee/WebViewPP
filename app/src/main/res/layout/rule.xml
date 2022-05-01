@@ -112,6 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp" />
+            <!--TODO: 添加更多 hook 方法-->
             <LinearLayout
                 android:id="@+id/rule_hookWebView"
                 android:layout_width="match_parent"
@@ -324,6 +325,144 @@
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:hint="Field_sInitUcFromSdcardPath" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/rule_hookCrossWalk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:transitionGroup="true"
+                    app:boxBackgroundColor="@color/transparent" >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rule_hookCrossWalk_Class_XWalkView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="Class_XWalkView" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:transitionGroup="true"
+                    app:boxBackgroundColor="@color/transparent" >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rule_hookCrossWalk_Method_getSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="Method_getSettings" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:transitionGroup="true"
+                    app:boxBackgroundColor="@color/transparent" >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rule_hookCrossWalk_Method_setJavaScriptEnabled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="Method_setJavaScriptEnabled" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:transitionGroup="true"
+                    app:boxBackgroundColor="@color/transparent" >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rule_hookCrossWalk_Method_loadUrl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="Method_loadUrl" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:transitionGroup="true"
+                    app:boxBackgroundColor="@color/transparent" >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rule_hookCrossWalk_Method_setResourceClient"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="Method_setResourceClient" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:transitionGroup="true"
+                    app:boxBackgroundColor="@color/transparent" >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rule_hookCrossWalk_Class_XWalkPreferences"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="Class_XWalkPreferences" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:transitionGroup="true"
+                    app:boxBackgroundColor="@color/transparent" >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rule_hookCrossWalk_Method_setValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="Method_setValue" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/rule_hookXWebPreferences"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:transitionGroup="true"
+                    app:boxBackgroundColor="@color/transparent" >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rule_hookXWebPreferences_Class_XWebPreferences"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="Class_XWebPreferences" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:transitionGroup="true"
+                    app:boxBackgroundColor="@color/transparent" >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rule_hookXWebPreferences_Method_setValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="Method_setValue" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </LinearLayout>
