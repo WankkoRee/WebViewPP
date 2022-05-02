@@ -8,11 +8,11 @@ import cn.wankkoree.xposed.enablewebviewdebugging.hook.debug.*
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.method.*
 import com.highcapable.yukihookapi.YukiHookAPI
 import com.highcapable.yukihookapi.annotation.xposed.InjectYukiHookWithXposed
-import com.highcapable.yukihookapi.hook.xposed.proxy.YukiHookXposedInitProxy
+import com.highcapable.yukihookapi.hook.xposed.proxy.IYukiHookXposedInit
 import com.highcapable.yukihookapi.hook.log.*
 
-@InjectYukiHookWithXposed
-class Main : YukiHookXposedInitProxy {
+@InjectYukiHookWithXposed(entryClassName = "HookEntry")
+class Main : IYukiHookXposedInit {
     companion object {
         const val debug = BuildConfig.DEBUG || BuildConfig.BUILD_TYPE == "dev"
     }
