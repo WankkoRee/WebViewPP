@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.Drawable
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.palette.graphics.Palette
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 
@@ -32,3 +33,5 @@ fun getPrimaryColor(d: Drawable, context: Context): Triple<Int, Int, Int> {
         )
     }
 }
+
+fun Context.getDrawableCompat(resId: Int) = AppCompatResources.getDrawable(this@getDrawableCompat, resId)

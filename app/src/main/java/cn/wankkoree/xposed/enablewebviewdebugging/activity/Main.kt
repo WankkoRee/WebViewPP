@@ -47,7 +47,7 @@ class Main: AppCompatActivity() {
         if (isModuleActive) {
             viewBinding.mainStatusCard.backgroundTintList = colorStateSingle((getColor(R.color.backgroundSuccess) or 0xff000000.toInt()) and 0x77ffffff)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.mainStatusCard.outlineSpotShadowColor = getColor(R.color.backgroundSuccess)
-            viewBinding.mainStatusIcon.setImageResource(R.drawable.ic_round_check_circle_24)
+            viewBinding.mainStatusIcon.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawableCompat(R.drawable.ic_round_check_circle_24), null, null, null)
             viewBinding.mainStatusIcon.contentDescription = getString(R.string.enabled)
             viewBinding.mainStatusText.text = getString(R.string.enabled)
             viewBinding.mainXposedText.visibility = View.VISIBLE
@@ -59,7 +59,7 @@ class Main: AppCompatActivity() {
         } else {
             viewBinding.mainStatusCard.backgroundTintList = colorStateSingle((getColor(R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.mainStatusCard.outlineSpotShadowColor = getColor(R.color.backgroundError)
-            viewBinding.mainStatusIcon.setImageResource(R.drawable.ic_round_cancel_24)
+            viewBinding.mainStatusIcon.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawableCompat(R.drawable.ic_round_cancel_24), null, null, null)
             viewBinding.mainStatusIcon.contentDescription = getString(R.string.disabled)
             viewBinding.mainStatusText.text = getString(R.string.disabled)
             viewBinding.mainXposedText.visibility = View.GONE

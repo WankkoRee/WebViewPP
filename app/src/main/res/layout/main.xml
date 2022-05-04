@@ -37,7 +37,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
 
-                    android:contentDescription="@string/logo" />
+                    android:contentDescription="@string/logo"
+                    />
                 <TextView android:id="@+id/main_toolbar_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -97,15 +98,15 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     >
-                    <ImageView android:id="@+id/main_status_icon"
+                    <TextView android:id="@+id/main_status_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
 
-                        app:srcCompat="@drawable/ic_round_cancel_24"
-                        app:tint="@color/textPrimary"
+                        app:drawableStartCompat="@drawable/ic_round_cancel_24"
+                        app:drawableTint="@color/textPrimary"
                         android:contentDescription="@string/disabled"
                         />
                     <TextView android:id="@+id/main_status_text"
@@ -162,16 +163,17 @@
                     android:layout_height="match_parent"
                     android:layout_margin="16dp"
                     >
-                    <ImageView android:id="@+id/main_apps_icon"
+                    <TextView android:id="@+id/main_apps_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
 
-                        app:srcCompat="@drawable/ic_round_rule_folder_24"
-                        app:tint="@color/textPrimary"
-                        android:contentDescription="@string/main_apps_text" />
+                        app:drawableStartCompat="@drawable/ic_round_rule_folder_24"
+                        app:drawableTint="@color/textPrimary"
+                        android:contentDescription="@string/main_apps_text"
+                        />
                     <TextView android:id="@+id/main_apps_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -213,15 +215,15 @@
                     android:layout_height="match_parent"
                     android:layout_margin="16dp"
                     >
-                    <ImageView android:id="@+id/main_resources_icon"
+                    <TextView android:id="@+id/main_resources_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
 
-                        app:srcCompat="@drawable/ic_round_folder_special_24"
-                        app:tint="@color/textPrimary"
+                        app:drawableStartCompat="@drawable/ic_round_folder_special_24"
+                        app:drawableTint="@color/textPrimary"
                         android:contentDescription="@string/main_resources_text"
                         />
                     <TextView android:id="@+id/main_resources_text"
@@ -267,15 +269,15 @@
                     android:layout_height="match_parent"
                     android:layout_margin="16dp"
                     >
-                    <ImageView android:id="@+id/main_donate_icon"
+                    <TextView android:id="@+id/main_donate_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
 
-                        app:srcCompat="@drawable/ic_round_monetization_on_24"
-                        app:tint="@color/textPrimary"
+                        app:drawableStartCompat="@drawable/ic_round_monetization_on_24"
+                        app:drawableTint="@color/textPrimary"
                         android:contentDescription="@string/donate"
                         />
                     <TextView android:id="@+id/main_donate_text"
