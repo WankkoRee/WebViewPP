@@ -14,7 +14,7 @@ import com.highcapable.yukihookapi.hook.log.*
 @InjectYukiHookWithXposed(entryClassName = "HookEntry")
 class Main : IYukiHookXposedInit {
     companion object {
-        const val debug = BuildConfig.DEBUG || BuildConfig.BUILD_TYPE == "dev"
+        val debug = BuildConfig.DEBUG || BuildConfig.BUILD_TYPE == "dev"
     }
 
     override fun onInit() = YukiHookAPI.configs {

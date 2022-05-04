@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="color" format="color" />
     <declare-styleable name="Tag">
-        <attr name="color" format="color" />
+        <attr name="color" />
         <attr name="text" format="string" />
     </declare-styleable>
     <declare-styleable name="Code">
         <attr name="code" format="string" />
+    </declare-styleable>
+    <declare-styleable name="License">
+        <attr name="icon" format="reference" />
+        <attr name="title" format="string" />
+        <attr name="desc" format="string" />
+        <attr name="color" />
     </declare-styleable>
 </resources>
