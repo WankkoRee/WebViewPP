@@ -1,468 +1,557 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background" >
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/rule_appbar"
-        android:layout_width="match_parent"
+
+    android:background="@color/background"
+    >
+    <com.google.android.material.appbar.AppBarLayout android:id="@+id/rule_appbar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
         app:elevation="0dp"
-        app:layout_constraintTop_toTopOf="parent">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/rule_toolbar"
+        >
+        <androidx.appcompat.widget.Toolbar android:id="@+id/rule_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:contentInsetStart="8dp"
             app:contentInsetEnd="8dp"
-            style="@style/ThemeComponentToolbar">
+
+            style="@style/ThemeComponentToolbar"
+            >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:id="@+id/rule_toolbar_back"
+                android:layout_height="match_parent"
+                >
+                <TextView android:id="@+id/rule_toolbar_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_round_arrow_back_24"
-                    app:tint="@color/textPrimary"
-                    android:contentDescription="@string/back" />
-                <TextView
-                    android:id="@+id/rule_toolbar_name"
-                    style="@style/ThemeComponentTextViewPrimary"
-                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    app:drawableStartCompat="@drawable/ic_round_arrow_back_24"
+                    app:drawableTint="@color/textPrimary"
+                    android:tooltipText="@string/back"
+                    android:contentDescription="@string/back"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    />
+                <TextView android:id="@+id/rule_toolbar_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:text="@string/rule_editer"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
                     app:layout_constraintStart_toEndOf="@id/rule_toolbar_back"
                     app:layout_constraintEnd_toStartOf="@id/rule_toolbar_cloud"
-                    app:layout_constraintTop_toTopOf="parent" />
-                <ImageView
-                    android:id="@+id/rule_toolbar_cloud"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    style="@style/ThemeComponentTextViewPrimary"
+                    android:textSize="18sp"
+                    android:text="@string/rule_editer"
+                    />
+                <TextView android:id="@+id/rule_toolbar_cloud"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toStartOf="@id/rule_toolbar_save"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_round_filter_drama_24"
-                    app:tint="@color/textPrimary"
-                    android:contentDescription="@string/cloud_rules" />
-                <ImageView
-                    android:id="@+id/rule_toolbar_save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    app:drawableStartCompat="@drawable/ic_round_filter_drama_24"
+                    app:drawableTint="@color/textPrimary"
+                    android:tooltipText="@string/cloud_rules"
+                    android:contentDescription="@string/cloud_rules"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+                <TextView android:id="@+id/rule_toolbar_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_round_save_as_24"
-                    app:tint="@color/textPrimary"
-                    android:contentDescription="@string/save" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    app:drawableStartCompat="@drawable/ic_round_save_as_24"
+                    app:drawableTint="@color/textPrimary"
+                    android:tooltipText="@string/save"
+                    android:contentDescription="@string/save"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/rule_appbar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rule_appbar">
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="8dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
+
+                app:boxBackgroundColor="@color/transparent"
                 android:transitionGroup="true"
-                app:boxBackgroundColor="@color/transparent" >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/rule_name"
+                >
+                <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:background="@color/transparent"
-                    android:hint="@string/rule_name" />
+                    android:hint="@string/rule_name"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
-            <cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
-                android:id="@+id/rule_code"
+            <cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code android:id="@+id/rule_code" android:transitionName="targetRule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
-                android:transitionName="targetRule"
-                app:code="" />
-            <Spinner
-                android:id="@+id/rule_hook_method"
+
+                app:code=""
+                />
+            <Spinner android:id="@+id/rule_hook_method"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="8dp" />
+                android:layout_marginVertical="8dp"
+                />
             <!--TODO: 添加更多 hook 方法-->
-            <LinearLayout
-                android:id="@+id/rule_hookWebView"
+            <LinearLayout android:id="@+id/rule_hookWebView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookWebView_Class_WebView"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookWebView_Class_WebView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Class_WebView" />
+                        android:hint="Class_WebView"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookWebView_Method_getSettings"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookWebView_Method_getSettings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_getSettings" />
+                        android:hint="Method_getSettings"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookWebView_Method_setWebContentsDebuggingEnabled"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookWebView_Method_setWebContentsDebuggingEnabled"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_setWebContentsDebuggingEnabled" />
+                        android:hint="Method_setWebContentsDebuggingEnabled"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookWebView_Method_setJavaScriptEnabled"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookWebView_Method_setJavaScriptEnabled"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_setJavaScriptEnabled" />
+                        android:hint="Method_setJavaScriptEnabled"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookWebView_Method_loadUrl"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookWebView_Method_loadUrl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_loadUrl" />
+                        android:hint="Method_loadUrl"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookWebView_Method_setWebViewClient"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookWebView_Method_setWebViewClient"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_setWebViewClient" />
+                        android:hint="Method_setWebViewClient"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/rule_hookWebViewClient"
+            <LinearLayout android:id="@+id/rule_hookWebViewClient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookWebViewClient_Class_WebView"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookWebViewClient_Class_WebView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Class_WebView" />
+                        android:hint="Class_WebView"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookWebViewClient_Class_WebViewClient"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookWebViewClient_Class_WebViewClient"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Class_WebViewClient" />
+                        android:hint="Class_WebViewClient"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookWebViewClient_Method_onPageFinished"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookWebViewClient_Method_onPageFinished"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_onPageFinished" />
+                        android:hint="Method_onPageFinished"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookWebViewClient_Method_evaluateJavascript"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookWebViewClient_Method_evaluateJavascript"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_evaluateJavascript" />
+                        android:hint="Method_evaluateJavascript"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookWebViewClient_Class_ValueCallback"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookWebViewClient_Class_ValueCallback"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Class_ValueCallback" />
+                        android:hint="Class_ValueCallback"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/rule_replaceNebulaUCSDK"
+            <LinearLayout android:id="@+id/rule_replaceNebulaUCSDK"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_replaceNebulaUCSDK_Class_UcServiceSetup"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_replaceNebulaUCSDK_Class_UcServiceSetup"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Class_UcServiceSetup" />
+                        android:hint="Class_UcServiceSetup"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_replaceNebulaUCSDK_Method_updateUCVersionAndSdcardPath"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_replaceNebulaUCSDK_Method_updateUCVersionAndSdcardPath"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_updateUCVersionAndSdcardPath" />
+                        android:hint="Method_updateUCVersionAndSdcardPath"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_replaceNebulaUCSDK_Field_sInitUcFromSdcardPath"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_replaceNebulaUCSDK_Field_sInitUcFromSdcardPath"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Field_sInitUcFromSdcardPath" />
+                        android:hint="Field_sInitUcFromSdcardPath"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/rule_hookCrossWalk"
+            <LinearLayout android:id="@+id/rule_hookCrossWalk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookCrossWalk_Class_XWalkView"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookCrossWalk_Class_XWalkView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Class_XWalkView" />
+                        android:hint="Class_XWalkView"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookCrossWalk_Method_getSettings"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookCrossWalk_Method_getSettings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_getSettings" />
+                        android:hint="Method_getSettings"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookCrossWalk_Method_setJavaScriptEnabled"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookCrossWalk_Method_setJavaScriptEnabled"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_setJavaScriptEnabled" />
+                        android:hint="Method_setJavaScriptEnabled"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookCrossWalk_Method_loadUrl"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookCrossWalk_Method_loadUrl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_loadUrl" />
+                        android:hint="Method_loadUrl"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookCrossWalk_Method_setResourceClient"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookCrossWalk_Method_setResourceClient"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_setResourceClient" />
+                        android:hint="Method_setResourceClient"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookCrossWalk_Class_XWalkPreferences"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookCrossWalk_Class_XWalkPreferences"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Class_XWalkPreferences" />
+                        android:hint="Class_XWalkPreferences"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookCrossWalk_Method_setValue"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookCrossWalk_Method_setValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_setValue" />
+                        android:hint="Method_setValue"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/rule_hookXWebPreferences"
+            <LinearLayout android:id="@+id/rule_hookXWebPreferences"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookXWebPreferences_Class_XWebPreferences"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookXWebPreferences_Class_XWebPreferences"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Class_XWebPreferences" />
+                        android:hint="Class_XWebPreferences"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
-                    app:boxBackgroundColor="@color/transparent" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rule_hookXWebPreferences_Method_setValue"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookXWebPreferences_Method_setValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@color/transparent"
-                        android:hint="Method_setValue" />
+                        android:hint="Method_setValue"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </LinearLayout>
