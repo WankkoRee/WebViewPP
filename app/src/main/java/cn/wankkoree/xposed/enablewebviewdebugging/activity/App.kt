@@ -68,7 +68,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appToolbarMenu.setOnClickListener {
             PopupMenu(this, it).run {
-                menuInflater.inflate(R.menu.app_toolbar, menu)
+                menuInflater.inflate(R.menu.app_toolbar_menu, menu)
                 setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.app_toolbar_menu_reset -> {

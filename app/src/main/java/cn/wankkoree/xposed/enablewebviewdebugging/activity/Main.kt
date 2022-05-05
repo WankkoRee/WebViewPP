@@ -75,7 +75,7 @@ class Main: AppCompatActivity() {
                 return@setOnClickListener
             }
             PopupMenu(this@Main, it).run {
-                menuInflater.inflate(R.menu.main_toolbar, menu)
+                menuInflater.inflate(R.menu.main_toolbar_menu, menu)
                 setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.main_toolbar_menu_reset -> {

@@ -94,7 +94,7 @@ class Apps : AppCompatActivity() {
         }
         viewBinding.appsToolbarMenu.setOnClickListener {
             PopupMenu(this, it).run {
-                menuInflater.inflate(R.menu.apps_toolbar, menu)
+                menuInflater.inflate(R.menu.apps_toolbar_menu, menu)
                 modulePrefs("apps").run {
                     menu.findItem(R.id.apps_toolbar_menu_show_system_app).isChecked = get(AppsSP.show_system_app)
                     menu.findItem(R.id.apps_toolbar_menu_show_no_network).isChecked = get(AppsSP.show_no_network)
