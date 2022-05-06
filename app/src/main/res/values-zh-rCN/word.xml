@@ -38,4 +38,11 @@
     <string name="latest_version">最新版本</string>
     <string name="checking_for_updates">检查更新中</string>
     <string name="update_log">更新日志</string>
+    <string name="preset_rule">预置规则</string>
+    <string name="webview_rules">WebView 规则集</string>
+    <string name="tbsx5_rules">TBS X5 规则集</string>
+    <string name="ucu4_rules">UC U4 规则集</string>
+    <string name="crosswalk_rules">CrossWalk 规则集</string>
+    <string name="xweb_rules">XWeb 规则集</string>
+    <string name="standard_s">标准 %s</string>
 </resources>

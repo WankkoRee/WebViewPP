@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     app:layout_constraintStart_toEndOf="@id/app_toolbar_back"
-                    app:layout_constraintEnd_toStartOf="@id/app_toolbar_menu"
+                    app:layout_constraintEnd_toStartOf="@id/app_toolbar_preset"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
 
@@ -56,13 +56,28 @@
                     android:textSize="18sp"
                     android:text=""
                     />
+                <TextView android:id="@+id/app_toolbar_preset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    app:layout_constraintEnd_toStartOf="@id/app_toolbar_menu"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    app:drawableStartCompat="@drawable/ic_round_auto_awesome_24"
+                    app:drawableTint="@color/textPrimary"
+                    android:tooltipText="@string/preset_rule"
+                    android:contentDescription="@string/preset_rule"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    />
                 <TextView android:id="@+id/app_toolbar_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
 
                     app:drawableStartCompat="@drawable/ic_round_more_vert_24"
                     app:drawableTint="@color/textPrimary"

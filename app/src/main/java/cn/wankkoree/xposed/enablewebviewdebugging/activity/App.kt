@@ -19,6 +19,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityOptionsCompat
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
+import cn.wankkoree.xposed.enablewebviewdebugging.ValueAlreadyExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.ValueNotExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
 import cn.wankkoree.xposed.enablewebviewdebugging.data.*
@@ -65,6 +66,195 @@ class App : AppCompatActivity() {
 
         viewBinding.appToolbarBack.setOnClickListener {
             finishAfterTransition()
+        }
+        viewBinding.appToolbarPreset.setOnClickListener {
+            PopupMenu(this, it).run {
+                menuInflater.inflate(R.menu.app_toolbar_preset, menu)
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        // TODO: 添加更多 hook 方法
+                        R.id.app_toolbar_preset_webview -> {
+                            modulePrefs("apps_$pkg").run {
+                                (getString(R.string.standard_s, getString(R.string.webview_rules)) + " " + "hookWebView").let { ruleName ->
+                                    try {
+                                        put(AppSP.hooks, ruleName)
+                                        putList("hook_entry_$ruleName", listOf(
+                                            "hookWebView",
+                                            "android.webkit.WebView",
+                                            "getSettings",
+                                            "setWebContentsDebuggingEnabled",
+                                            "setJavaScriptEnabled",
+                                            "loadUrl",
+                                            "setWebViewClient",
+                                        ))
+                                    } catch (_: ValueAlreadyExistedInSet) {
+                                        toast?.cancel()
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast!!.show()
+                                    }
+                                }
+                                (getString(R.string.standard_s, getString(R.string.webview_rules)) + " " + "hookWebViewClient").let { ruleName ->
+                                    try {
+                                        put(AppSP.hooks, ruleName)
+                                        putList("hook_entry_$ruleName", listOf(
+                                            "hookWebViewClient",
+                                            "android.webkit.WebView",
+                                            "android.webkit.WebViewClient",
+                                            "onPageFinished",
+                                            "evaluateJavascript",
+                                            "android.webkit.ValueCallback",
+                                        ))
+                                    } catch (_: ValueAlreadyExistedInSet) {
+                                        toast?.cancel()
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast!!.show()
+                                    }
+                                }
+                            }
+                        }
+                        R.id.app_toolbar_preset_tbsx5 -> {
+                            modulePrefs("apps_$pkg").run {
+                                (getString(R.string.standard_s, getString(R.string.tbsx5_rules)) + " " + "hookWebView").let { ruleName ->
+                                    try {
+                                        put(AppSP.hooks, ruleName)
+                                        putList("hook_entry_$ruleName", listOf(
+                                            "hookWebView",
+                                            "com.tencent.smtt.sdk.WebView",
+                                            "getSettings",
+                                            "setWebContentsDebuggingEnabled",
+                                            "setJavaScriptEnabled",
+                                            "loadUrl",
+                                            "setWebViewClient",
+                                        ))
+                                    } catch (_: ValueAlreadyExistedInSet) {
+                                        toast?.cancel()
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast!!.show()
+                                    }
+                                }
+                                (getString(R.string.standard_s, getString(R.string.tbsx5_rules)) + " " + "hookWebViewClient").let { ruleName ->
+                                    try {
+                                        put(AppSP.hooks, ruleName)
+                                        putList("hook_entry_$ruleName", listOf(
+                                            "hookWebViewClient",
+                                            "com.tencent.smtt.sdk.WebView",
+                                            "com.tencent.smtt.sdk.WebViewClient",
+                                            "onPageFinished",
+                                            "evaluateJavascript",
+                                            "com.tencent.smtt.sdk.ValueCallback",
+                                        ))
+                                    } catch (_: ValueAlreadyExistedInSet) {
+                                        toast?.cancel()
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast!!.show()
+                                    }
+                                }
+                            }
+                        }
+                        R.id.app_toolbar_preset_ucu4 -> {
+                            modulePrefs("apps_$pkg").run {
+                                (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "hookWebView").let { ruleName ->
+                                    try {
+                                        put(AppSP.hooks, ruleName)
+                                        putList("hook_entry_$ruleName", listOf(
+                                            "hookWebView",
+                                            "com.uc.webview.export.WebView",
+                                            "getSettings",
+                                            "setWebContentsDebuggingEnabled",
+                                            "setJavaScriptEnabled",
+                                            "loadUrl",
+                                            "setWebViewClient",
+                                        ))
+                                    } catch (_: ValueAlreadyExistedInSet) {
+                                        toast?.cancel()
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast!!.show()
+                                    }
+                                }
+                                (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "hookWebViewClient").let { ruleName ->
+                                    try {
+                                        put(AppSP.hooks, ruleName)
+                                        putList("hook_entry_$ruleName", listOf(
+                                            "hookWebViewClient",
+                                            "com.uc.webview.export.WebView",
+                                            "com.alipay.mobile.nebulauc.impl.UCWebViewClient",
+                                            "onPageFinished",
+                                            "evaluateJavascript",
+                                            "android.webkit.ValueCallback",
+                                        ))
+                                    } catch (_: ValueAlreadyExistedInSet) {
+                                        toast?.cancel()
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast!!.show()
+                                    }
+                                }
+                                (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "replaceNebulaUCSDK").let { ruleName ->
+                                    try {
+                                        put(AppSP.hooks, ruleName)
+                                        putList("hook_entry_$ruleName", listOf(
+                                            "replaceNebulaUCSDK",
+                                            "com.alipay.mobile.nebulauc.impl.UcServiceSetup",
+                                            "updateUCVersionAndSdcardPath",
+                                            "sInitUcFromSdcardPath",
+                                        ))
+                                    } catch (_: ValueAlreadyExistedInSet) {
+                                        toast?.cancel()
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast!!.show()
+                                    }
+                                }
+                            }
+                        }
+                        R.id.app_toolbar_preset_crosswalk -> {
+                            modulePrefs("apps_$pkg").run {
+                                (getString(R.string.standard_s, getString(R.string.crosswalk_rules)) + " " + "hookCrossWalk").let { ruleName ->
+                                    try {
+                                        put(AppSP.hooks, ruleName)
+                                        putList("hook_entry_$ruleName", listOf(
+                                            "hookCrossWalk",
+                                            "org.xwalk.core.XWalkView",
+                                            "getSettings",
+                                            "setJavaScriptEnabled",
+                                            "loadUrl",
+                                            "setResourceClient",
+                                            "org.xwalk.core.XWalkPreferences",
+                                            "setValue",
+                                        ))
+                                    } catch (_: ValueAlreadyExistedInSet) {
+                                        toast?.cancel()
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast!!.show()
+                                    }
+                                }
+                                (getString(R.string.standard_s, getString(R.string.crosswalk_rules)) + " " + "hookWebViewClient").let { ruleName ->
+                                    try {
+                                        put(AppSP.hooks, ruleName)
+                                        putList("hook_entry_$ruleName", listOf(
+                                            "hookWebViewClient",
+                                            "org.xwalk.core.XWalkView",
+                                            "org.xwalk.core.XWalkResourceClient",
+                                            "onLoadFinished",
+                                            "evaluateJavascript",
+                                            "android.webkit.ValueCallback",
+                                        ))
+                                    } catch (_: ValueAlreadyExistedInSet) {
+                                        toast?.cancel()
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast!!.show()
+                                    }
+                                }
+                            }
+                        }
+                        R.id.app_toolbar_preset_xweb -> {
+                            toast?.cancel()
+                            toast = Toast.makeText(this@App, getString(R.string.xweb_currently_has_no_standard_implementation_so_no_standard_rules_is_provided_please_use_the_cloud_rules), Toast.LENGTH_SHORT)
+                            toast!!.show()
+                        }
+                    }
+                    true
+                }
+                show()
+            }
         }
         viewBinding.appToolbarMenu.setOnClickListener {
             PopupMenu(this, it).run {

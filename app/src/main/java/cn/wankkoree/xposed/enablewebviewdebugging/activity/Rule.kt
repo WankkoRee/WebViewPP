@@ -236,7 +236,7 @@ class Rule : AppCompatActivity() {
                     } catch (_: ValueAlreadyExistedInSet) {
                         if (ruleName == null || ruleName != name) { // 新建 or 修改名称
                             toast?.cancel()
-                            toast = Toast.makeText(this@Rule, getString(R.string.s_already_exists).format(getString(R.string.rule_name)), Toast.LENGTH_SHORT)
+                            toast = Toast.makeText(this@Rule, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$name" """), Toast.LENGTH_SHORT)
                             toast!!.show()
                             return@setOnClickListener
                         }
