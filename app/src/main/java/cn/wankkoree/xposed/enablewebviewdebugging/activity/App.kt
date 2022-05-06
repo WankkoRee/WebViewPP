@@ -111,6 +111,7 @@ class App : AppCompatActivity() {
                                     }
                                 }
                             }
+                            refresh()
                         }
                         R.id.app_toolbar_preset_tbsx5 -> {
                             modulePrefs("apps_$pkg").run {
@@ -150,6 +151,7 @@ class App : AppCompatActivity() {
                                     }
                                 }
                             }
+                            refresh()
                         }
                         R.id.app_toolbar_preset_ucu4 -> {
                             modulePrefs("apps_$pkg").run {
@@ -204,6 +206,7 @@ class App : AppCompatActivity() {
                                     }
                                 }
                             }
+                            refresh()
                         }
                         R.id.app_toolbar_preset_crosswalk -> {
                             modulePrefs("apps_$pkg").run {
@@ -244,6 +247,7 @@ class App : AppCompatActivity() {
                                     }
                                 }
                             }
+                            refresh()
                         }
                         R.id.app_toolbar_preset_xweb -> {
                             toast?.cancel()
