@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.icu.text.Collator
 import android.os.Bundle
@@ -150,6 +151,7 @@ class Apps : AppCompatActivity() {
                         app.packageName,
                         app.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 1,
                         app.requestedPermissions == null || !app.requestedPermissions.contains("android.permission.INTERNET"),
+                        !app.applicationInfo.enabled,
                         get(AppSP.is_enabled),
                         hooks.size,
                         hooks.fold(0) { sum, hash ->  sum + getInt("hook_times_$hash", 0) },
@@ -272,6 +274,11 @@ class Apps : AppCompatActivity() {
             holder.iconView.contentDescription = filteredData[position].name
             holder.iconView.drawable.mutate().colorFilter = if (filteredData[position].isEnabled) null else grayColorFilter
             holder.nameView.text = filteredData[position].name
+            holder.nameView.paintFlags =
+                if (filteredData[position].isFreezed)
+                    holder.nameView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                else
+                    holder.nameView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             holder.versionView.text = context!!.getString(R.string.version_format).format(filteredData[position].versionName, filteredData[position].versionCode)
             holder.packageView.text = filteredData[position].pkg
             holder.stateView.text = context!!.getString(R.string.applistitem_num).format(context!!.getString(if (filteredData[position].isEnabled) R.string.enabled else R.string.disabled), filteredData[position].ruleNumbers, filteredData[position].hookTimes)
@@ -299,6 +306,7 @@ class Apps : AppCompatActivity() {
             val pkg: String,
             val isSystemApp: Boolean,
             val isNoNetwork: Boolean,
+            val isFreezed: Boolean,
             var isEnabled: Boolean,
             var ruleNumbers: Int,
             var hookTimes: Int,
