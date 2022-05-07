@@ -189,7 +189,7 @@ class Apps : AppCompatActivity() {
             val viewHolder = ViewHolder(view)
             view.setOnClickListener {
                 val intent = Intent(context, App::class.java)
-                intent.putExtra("pkg", filteredData[viewHolder.p].pkg)
+                intent.putExtra(Intent.EXTRA_PACKAGE_NAME, filteredData[viewHolder.p].pkg)
                 intent.putExtra("p", viewHolder.p)
                 context!!.appResultContract.launch(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(context!!,
                     androidx.core.util.Pair(viewHolder.iconView, "targetAppIcon"),

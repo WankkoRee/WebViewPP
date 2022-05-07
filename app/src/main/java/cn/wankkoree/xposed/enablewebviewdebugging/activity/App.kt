@@ -49,7 +49,7 @@ class App : AppCompatActivity() {
         viewBinding = AppBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        pkg = intent.getStringExtra("pkg")!!
+        pkg = intent.getStringExtra(Intent.EXTRA_PACKAGE_NAME)!!
         val app = packageManager.getPackageInfo(pkg, PackageManager.GET_META_DATA)
         icon = app.applicationInfo.loadIcon(packageManager)
         name = app.applicationInfo.loadLabel(packageManager) as String

@@ -31,7 +31,13 @@
             android:exported="false" />
         <activity
             android:name=".activity.App"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SHOW_APP_INFO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.Rule"
             android:exported="false" />
