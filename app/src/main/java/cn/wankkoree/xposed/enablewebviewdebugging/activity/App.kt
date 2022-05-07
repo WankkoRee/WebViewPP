@@ -1,9 +1,11 @@
 package cn.wankkoree.xposed.enablewebviewdebugging.activity
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.transition.Slide
@@ -265,6 +267,16 @@ class App : AppCompatActivity() {
                 menuInflater.inflate(R.menu.app_toolbar_menu, menu)
                 setOnMenuItemClickListener {
                     when (it.itemId) {
+                        R.id.app_toolbar_menu_configure_in_other_apps -> {
+                            Intent.createChooser(Intent(Intent.ACTION_SHOW_APP_INFO).putExtra(Intent.EXTRA_PACKAGE_NAME, pkg), getString(R.string.configure_in_other_apps)).also {
+                                it.putExtra(Intent.EXTRA_EXCLUDE_COMPONENTS, arrayOf(ComponentName.createRelative(applicationContext, this@App.javaClass.name)))
+                                it.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(
+                                    Intent("android.settings.APPLICATION_DETAILS_SETTINGS", Uri.parse("package:$pkg")), // 系统设置
+                                    Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$pkg")).setPackage("com.coolapk.market"), // 酷安
+                                ))
+                                startActivity(it)
+                            }
+                        }
                         R.id.app_toolbar_menu_reset -> {
                             AlertDialog.Builder(this@App).run {
                                 setMessage(R.string.do_you_really_reset_this_application_hooking_rules)

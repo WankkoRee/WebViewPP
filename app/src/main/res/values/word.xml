@@ -49,4 +49,5 @@
     <string name="crosswalk_rules">CrossWalk Rules</string>
     <string name="xweb_rules">XWeb Rules</string>
     <string name="standard_s">Standard %s</string>
+    <string name="configure_in_other_apps">Configure In Other Apps</string>
 </resources>

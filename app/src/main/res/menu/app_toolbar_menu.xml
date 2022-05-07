@@ -3,6 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/app_toolbar_menu_configure_in_other_apps"
+        android:title="@string/configure_in_other_apps"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/app_toolbar_menu_reset"
         android:title="@string/reset"
         app:showAsAction="never"/>

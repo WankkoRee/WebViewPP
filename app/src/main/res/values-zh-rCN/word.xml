@@ -45,4 +45,5 @@
     <string name="crosswalk_rules">CrossWalk 规则集</string>
     <string name="xweb_rules">XWeb 规则集</string>
     <string name="standard_s">标准 %s</string>
+    <string name="configure_in_other_apps">在其他应用中配置</string>
 </resources>
