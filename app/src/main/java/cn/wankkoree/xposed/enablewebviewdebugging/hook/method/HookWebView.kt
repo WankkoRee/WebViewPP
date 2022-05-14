@@ -65,37 +65,7 @@ fun PackageParam.hookWebView (
                 }
 
                 if (!webSettingsClassHashSet.contains(webSettings.javaClass.name)) {
-                    webSettings.javaClass.hook(isUseAppClassLoader = false) {
-                        injectMember {
-                            allMethods(name = Method_setJavaScriptEnabled)
-                            beforeHook {
-                                if (args[0] != true) {
-                                    if (Main.debug) loggerD(msg = "${instanceClass.name}.setJavaScriptEnabled(${args[0]} -> true)")
-                                    args(0).set(true)
-                                }
-                            }
-                        }.result {
-                            onNoSuchMemberFailure {
-                                loggerE(msg = "Hook.Member.NoSuchMember at hookWebView\uD83D\uDC49<init>\uD83D\uDC49setJavaScriptEnabled", e = it)
-                            }
-                            onHookingFailure {
-                                loggerE(msg = "Hook.Member.HookFailure at hookWebView\uD83D\uDC49<init>\uD83D\uDC49setJavaScriptEnabled", e = it)
-                            }
-                            onHooked {
-                                loggerI(msg = "Hook.Member.Ended at hookWebView\uD83D\uDC49<init>\uD83D\uDC49setJavaScriptEnabled as [$it]")
-                            }
-                            onConductFailure { hookParam, it ->
-                                loggerE(msg = "Hook.Member.ConductFailure at hookWebView\uD83D\uDC49<init>\uD83D\uDC49setJavaScriptEnabled(${hookParam.args.joinToString(", ")})", e = it)
-                            }
-                        }
-                    }.result {
-                        onHookClassNotFoundFailure {
-                            loggerE(msg = "Hook.Class.NotFound at hookWebView\uD83D\uDC49$Class_WebView\uD83D\uDC49${webSettings.javaClass.name}", e = it)
-                        }
-                        onPrepareHook {
-                            loggerI(msg = "Hook.Class.Started at hookWebView\uD83D\uDC49$Class_WebView\uD83D\uDC49${webSettings.javaClass.name}")
-                        }
-                    }
+                    hookWebSettings(webSettings.javaClass, Method_setJavaScriptEnabled)
                     webSettingsClassHashSet.add(webSettings.javaClass.name)
                 }
             }
@@ -191,6 +161,46 @@ fun PackageParam.hookWebView (
         }
         onPrepareHook {
             loggerI(msg = "Hook.Class.Started at hookWebView\uD83D\uDC49$Class_WebView")
+        }
+    }
+}
+/** Hook WebSettings类，实现：
+ *
+ * webSettings().setJavaScriptEnabled(true)
+ **/
+fun PackageParam.hookWebSettings(
+    Class_WebSettings: Class<*>,
+    Method_setJavaScriptEnabled: String,
+) {
+    Class_WebSettings.hook(isUseAppClassLoader = false) {
+        injectMember {
+            allMethods(name = Method_setJavaScriptEnabled)
+            beforeHook {
+                if (args[0] != true) {
+                    if (Main.debug) loggerD(msg = "${instanceClass.name}.setJavaScriptEnabled(${args[0]} -> true)")
+                    args(0).set(true)
+                }
+            }
+        }.result {
+            onNoSuchMemberFailure {
+                loggerE(msg = "Hook.Member.NoSuchMember at hookWebSettings\uD83D\uDC49setJavaScriptEnabled", e = it)
+            }
+            onHookingFailure {
+                loggerE(msg = "Hook.Member.HookFailure at hookWebSettings\uD83D\uDC49setJavaScriptEnabled", e = it)
+            }
+            onHooked {
+                loggerI(msg = "Hook.Member.Ended at hookWebSettings\uD83D\uDC49setJavaScriptEnabled as [$it]")
+            }
+            onConductFailure { hookParam, it ->
+                loggerE(msg = "Hook.Member.ConductFailure at hookWebSettings\uD83D\uDC49setJavaScriptEnabled(${hookParam.args.joinToString(", ")})", e = it)
+            }
+        }
+    }.result {
+        onHookClassNotFoundFailure {
+            loggerE(msg = "Hook.Class.NotFound at hookWebSettings\uD83D\uDC49${Class_WebSettings.name}", e = it)
+        }
+        onPrepareHook {
+            loggerI(msg = "Hook.Class.Started at hookWebSettings\uD83D\uDC49${Class_WebSettings.name}")
         }
     }
 }
