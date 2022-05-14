@@ -23,7 +23,6 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
-        resConfigs "zh-rCN","en","xxhdpi"
 
         signingConfig signingConfigs.release
     }
@@ -47,7 +46,8 @@ android {
     buildFeatures {
         viewBinding true
     }
-    
+    namespace 'cn.wankkoree.test.tbsx5'
+
     applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "${defaultConfig.applicationId}-${defaultConfig.versionName}(${defaultConfig.versionCode})-${variant.buildType.name}.apk"
@@ -57,7 +57,7 @@ android {
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.android.material:material:1.6.0'
 
     implementation 'com.tencent.tbs:tbssdk:54002-beta'
 }
