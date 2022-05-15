@@ -117,36 +117,36 @@
                         app:layout_constraintStart_toEndOf="@id/main_status_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/main_version_text"
+                        app:layout_constraintBottom_toTopOf="@id/main_xposed_text"
 
                         style="@style/ThemeComponentTextViewPrimary"
                         android:textSize="16sp"
                         android:text="@string/disabled"
                         />
-                    <TextView android:id="@+id/main_version_text"
+                    <TextView android:id="@+id/main_xposed_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/main_status_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/main_status_text"
-                        app:layout_constraintBottom_toTopOf="@id/main_xposed_text"
+                        app:layout_constraintBottom_toTopOf="@id/main_version_text"
 
                         style="@style/ThemeComponentTextViewSecondary"
                         android:textSize="12sp"
-                        android:text="@string/main_version_text"
+                        android:text="@string/main_xposed_text"
                         />
-                    <TextView android:id="@+id/main_xposed_text"
+                    <TextView android:id="@+id/main_version_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/main_status_icon"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/main_version_text"
+                        app:layout_constraintTop_toBottomOf="@id/main_xposed_text"
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
                         android:textSize="12sp"
-                        android:text="@string/main_xposed_text"
+                        android:text="@string/main_version_text"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
