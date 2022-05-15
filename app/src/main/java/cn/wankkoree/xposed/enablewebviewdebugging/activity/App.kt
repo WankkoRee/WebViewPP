@@ -55,7 +55,7 @@ class App : AppCompatActivity() {
         val app = packageManager.getPackageInfo(pkg, PackageManager.GET_META_DATA)
         icon = app.applicationInfo.loadIcon(packageManager)
         name = app.applicationInfo.loadLabel(packageManager) as String
-        versionName = app.versionName
+        versionName = app.versionName ?: ""
         versionCode = app.versionCode
 
         viewBinding.appToolbarName.text = name

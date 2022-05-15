@@ -146,7 +146,7 @@ class Apps : AppCompatActivity() {
                     AppListItemAdapter.AppListItem(
                         app.applicationInfo.loadIcon(packageManager),
                         app.applicationInfo.loadLabel(packageManager) as String,
-                        app.versionName,
+                        app.versionName ?: "",
                         app.versionCode,
                         app.packageName,
                         app.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 1,
