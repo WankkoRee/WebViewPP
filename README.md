@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="216" src="docs/logo.svg" alt="logo" />
+  <img width="216" src="https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging/master/docs/logo.svg" alt="logo" />
 </div>
 
 ----
@@ -17,17 +17,17 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4,
 
 ## Tutorial / 新手指南
 
-- [简体中文](docs/Tutorial_zh-CN.md)
+- [简体中文](https://github.com/WankkoRee/EnableWebViewDebugging/blob/master/docs/Tutorial_zh-CN.md)
 
 ## ScreenShots / 应用截图
 
 <div align="center">
-  <img width="256" src="docs/Screenshot_main.png" />
-  <img width="256" src="docs/Screenshot_apps.png" />
-  <img width="256" src="docs/Screenshot_app.png" />
-  <img width="256" src="docs/Screenshot_rule.png" />
-  <img width="256" src="docs/Screenshot_resources.png" />
-  <img width="256" src="docs/Screenshot_advance.png" />
+  <img width="256" src="https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging/master/docs/Screenshot_main.png" />
+  <img width="256" src="https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging/master/docs/Screenshot_apps.png" />
+  <img width="256" src="https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging/master/docs/Screenshot_app.png" />
+  <img width="256" src="https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging/master/docs/Screenshot_rule.png" />
+  <img width="256" src="https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging/master/docs/Screenshot_resources.png" />
+  <img width="256" src="https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging/master/docs/Screenshot_advance.png" />
 </div>
 
 ## Support Engine / 内核支持情况
