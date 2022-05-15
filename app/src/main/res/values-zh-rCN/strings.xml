@@ -12,7 +12,7 @@
     <string name="resources_vconsole_download">下载 vConsole</string>
     <string name="resources_vconsole_local">本地版本: %s</string>
     <string name="resources_nebulaucsdk_download">下载 UC 调试内核</string>
-    <string name="applistitem_num">%1$s，配置了 %2$d 条规则，生效了 %3$d 次</string>
+    <string name="applistitem_num">%1$s，配置了 %2$d 条规则</string>
     <string name="apps_show_system_app">显示系统应用</string>
     <string name="apps_show_no_network">显示无网络权限</string>
     <string name="advance_yuki_version_text">YukiHookAPI 版本: %s(%d)</string>

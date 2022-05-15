@@ -8,7 +8,6 @@ import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.icu.text.Collator
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -155,7 +154,6 @@ class Apps : AppCompatActivity() {
                         !app.applicationInfo.enabled,
                         get(AppSP.is_enabled),
                         hooks.size,
-                        hooks.fold(0) { sum, hash ->  sum + getInt("hook_times_$hash", 0) },
                     )
                 }
                 appList.add(appItem)
@@ -165,7 +163,6 @@ class Apps : AppCompatActivity() {
                     adapter.init(
                         appList.sortedWith(
                             compareByDescending<AppListItemAdapter.AppListItem>{it.isEnabled}
-                                .thenByDescending{it.hookTimes}
                                 .thenByDescending{it.ruleNumbers}
                                 .thenBy{it.isSystemApp}
                                 .thenBy(Collator.getInstance()){it.name}
@@ -214,7 +211,6 @@ class Apps : AppCompatActivity() {
                             oldItem.versionName == newItem.versionName &&
                             oldItem.versionCode == newItem.versionCode &&
                             oldItem.ruleNumbers == newItem.ruleNumbers &&
-                            oldItem.hookTimes == newItem.hookTimes &&
                             oldItem.isSystemApp == newItem.isSystemApp &&
                             oldItem.isNoNetwork == newItem.isNoNetwork
                 }
@@ -243,7 +239,6 @@ class Apps : AppCompatActivity() {
                         filteredData.add(p, raw)
                         if (partialRefresh) {
                             notifyItemInserted(p)
-                            Log.i("WankkoRee", "notifyItemInserted(${p})")
                         }
                         p++
                     }
@@ -252,7 +247,6 @@ class Apps : AppCompatActivity() {
                         filteredData.removeAt(p)
                         if (partialRefresh) {
                             notifyItemRemoved(p)
-                            Log.i("WankkoRee", "notifyItemRemoved(${p})")
                         }
                     } else {
                         p++
@@ -275,7 +269,7 @@ class Apps : AppCompatActivity() {
                     holder.nameView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             holder.versionView.text = context!!.getString(R.string.version_format).format(filteredData[position].versionName, filteredData[position].versionCode)
             holder.packageView.text = filteredData[position].pkg
-            holder.stateView.text = context!!.getString(R.string.applistitem_num).format(context!!.getString(if (filteredData[position].isEnabled) R.string.enabled else R.string.disabled), filteredData[position].ruleNumbers, filteredData[position].hookTimes)
+            holder.stateView.text = context!!.getString(R.string.applistitem_num).format(context!!.getString(if (filteredData[position].isEnabled) R.string.enabled else R.string.disabled), filteredData[position].ruleNumbers)
             holder.isSystemAppView.color = context!!.getColor(if (!filteredData[position].isSystemApp) R.color.backgroundSuccess else R.color.backgroundError)
             holder.isSystemAppView.text = context!!.getString(if (!filteredData[position].isSystemApp) R.string.user_application else R.string.system_application)
             holder.isNoNetworkView.color = context!!.getColor(if (!filteredData[position].isNoNetwork) R.color.backgroundSuccess else R.color.backgroundError)
@@ -302,7 +296,6 @@ class Apps : AppCompatActivity() {
                 val hooks = getSet(AppSP.hooks)
                 filteredData[p].isEnabled = get(AppSP.is_enabled)
                 filteredData[p].ruleNumbers = hooks.size
-                filteredData[p].hookTimes = hooks.fold(0) { sum, hash ->  sum + getInt("hook_times_$hash", 0) }
             }
             notifyItemChanged(p)
         }
@@ -318,7 +311,6 @@ class Apps : AppCompatActivity() {
             val isFreezed: Boolean,
             var isEnabled: Boolean,
             var ruleNumbers: Int,
-            var hookTimes: Int,
         )
 
         inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
