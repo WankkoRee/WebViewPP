@@ -1,0 +1,40 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 108 108">
+    <defs>
+        <clipPath id="circle">
+            <path d="M 54 27 A 27 27 90 0 1 54 81 A 27 27 90 0 1 54 27 Z"/>
+        </clipPath>
+    </defs>
+    <path
+        d="M 16 0 L 92 0 C 100 0 108 8 108 16 L 108 92 C 108 100 100 108 92 108 L 16 108 C 8 108 0 100 0 92 L 0 16 C 0 8 8 0 16 0 Z"
+        fill="#ffffff"/>
+    <path
+        d="M 54 27 A 27 27 90 0 1 54 81 A 27 27 90 0 1 54 27 Z"
+        fill="#ffffff"/>
+    <g clip-path="url(#circle)">
+        <path
+            id="path_2"
+            d="M 65 60.35 C 54 41.35 65 22.35 98 41.35 L 98 98.35 L 43 98.35 L 43 98.35 C 76 79.35 65 60.35 43 60.35 Z"
+            fill="#ffec99"/>
+    </g>
+    <g clip-path="url(#circle)">
+        <g
+            transform="rotate(120 54 54)">
+            <path
+                d="M 65 60.35 C 54 41.35 65 22.35 98 41.35 L 98 98.35 L 43 98.35 L 43 98.35 C 76 79.35 65 60.35 43 60.35 Z"
+                fill="#8ce99a"/>
+        </g>
+    </g>
+    <g clip-path="url(#circle)">
+        <g
+            transform="rotate(240 54 54)">
+            <path
+                d="M 65 60.35 C 54 41.35 65 22.35 98 41.35 L 98 98.35 L 43 98.35 L 43 98.35 C 76 79.35 65 60.35 43 60.35 Z"
+                fill="#ff8787"/>
+        </g>
+    </g>
+    <path
+        d="M 54 46 A 1 1 0 0 0 54 62 A 1 1 0 0 0 54 46 Z"
+        fill="#ffffff"/>
+</svg>
