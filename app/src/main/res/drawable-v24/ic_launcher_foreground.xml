@@ -6,19 +6,24 @@
     <clip-path
         android:pathData="M 54 27 A 27 27 90 0 1 54 81 A 27 27 90 0 1 54 27 Z" />
     <path
-        android:fillColor="#77ffffff"
+        android:fillColor="#fff"
         android:pathData="M 54 27 A 27 27 90 0 1 54 81 A 27 27 90 0 1 54 27 Z" />
+    <group android:rotation="0" android:pivotX="54" android:pivotY="54">
+        <path
+            android:fillColor="#ffec99"
+            android:pathData="M 65 60.35 C 54 41.35 65 22.35 98 41.35 L 98 98.35 L 43 98.35 L 43 98.35 C 76 79.35 65 60.35 43 60.35 Z" />
+    </group>
+    <group android:rotation="120" android:pivotX="54" android:pivotY="54">
+        <path
+            android:fillColor="#8ce99a"
+            android:pathData="M 65 60.35 C 54 41.35 65 22.35 98 41.35 L 98 98.35 L 43 98.35 L 43 98.35 C 76 79.35 65 60.35 43 60.35 Z" />
+    </group>
+    <group android:rotation="240" android:pivotX="54" android:pivotY="54">
+        <path
+            android:fillColor="#ff8787"
+            android:pathData="M 65 60.35 C 54 41.35 65 22.35 98 41.35 L 98 98.35 L 43 98.35 L 43 98.35 C 76 79.35 65 60.35 43 60.35 Z" />
+    </group>
     <path
-        android:fillColor="#77ff0000"
-        android:pathData="M 54 45 L 81 45 L 81 27 L 27 27 L 46.2 58.5 Z" />
-    <path
-        android:fillColor="#7700ff00"
-        android:pathData="M 46.2 58.5 L 27 27 L 27 81 L 49.5 81 L 61.8 58.5 Z" />
-    <path
-        android:fillColor="#77ffff00"
-        android:pathData="M 61.8 58.5 L 49.5 81 L 81 81 L 81 45 L 54 45 Z" />
-    <path
-        android:fillColor="#77ffffff"
-        android:pathData="M 54 45 A 9 9 90 0 1 61.8 58.5 A 9 9 90 0 1 46.2 58.5 A 9 9 90 0 1 54 45 Z" />
-
+        android:fillColor="#fff"
+        android:pathData="M 54 45.9 A 8.1 8.1 90 0 1 61.02 58.05 A 8.1 8.1 90 0 1 46.98 58.05 A 8.1 8.1 90 0 1 54 45.9 Z" />
 </vector>
