@@ -43,7 +43,7 @@ class Main: AppCompatActivity() {
         setContentView(viewBinding.root)
 
         viewBinding.mainToolbarIcon.setImageDrawable(packageManager.getApplicationIcon(BuildConfig.APPLICATION_ID))
-        viewBinding.mainVersionText.text = getString(R.string.main_version_text).format(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
+        viewBinding.mainVersionText.text = getString(R.string.main_version_text).format("${BuildConfig.VERSION_NAME}-${BuildConfig.BUILD_TYPE}", BuildConfig.VERSION_CODE)
         if (isModuleActive) {
             viewBinding.mainStatusCard.backgroundTintList = colorStateSingle((getColor(R.color.backgroundSuccess) or 0xff000000.toInt()) and 0x77ffffff)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.mainStatusCard.outlineSpotShadowColor = getColor(R.color.backgroundSuccess)

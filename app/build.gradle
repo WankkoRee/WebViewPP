@@ -36,7 +36,6 @@ android {
             shrinkResources  true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            versionNameSuffix '-release'
         }
         dev {
             debuggable false
@@ -46,7 +45,6 @@ android {
             zipAlignEnabled false
             shrinkResources  false
             signingConfig signingConfigs.release
-            versionNameSuffix '-dev'
         }
         debug {
             debuggable true
@@ -55,7 +53,6 @@ android {
             minifyEnabled false
             zipAlignEnabled false
             shrinkResources  false
-            versionNameSuffix '-debug'
         }
     }
 
