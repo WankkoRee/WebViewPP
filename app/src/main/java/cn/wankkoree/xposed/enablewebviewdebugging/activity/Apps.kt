@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.icu.text.Collator
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -188,8 +189,7 @@ class Apps : AppCompatActivity() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             context = parent.context as Apps
             val view = LayoutInflater.from(context).inflate(R.layout.component_applistitem, parent, false)
-            val viewHolder = ViewHolder(view)
-            return viewHolder
+            return ViewHolder(view)
         }
 
         fun init(data: List<AppListItemAdapter.AppListItem>, showSystemApp: Boolean, showNoNetwork: Boolean, isSearching: Boolean, searchText: String) {
@@ -241,13 +241,19 @@ class Apps : AppCompatActivity() {
                 if (p >= filteredData.size || raw.pkg != filteredData[p].pkg) {
                     if (canShow) {
                         filteredData.add(p, raw)
-                        if (partialRefresh) notifyItemInserted(p)
+                        if (partialRefresh) {
+                            notifyItemInserted(p)
+                            Log.i("WankkoRee", "notifyItemInserted(${p})")
+                        }
                         p++
                     }
                 } else {
                     if (!canShow) {
                         filteredData.removeAt(p)
-                        if (partialRefresh) notifyItemRemoved(p)
+                        if (partialRefresh) {
+                            notifyItemRemoved(p)
+                            Log.i("WankkoRee", "notifyItemRemoved(${p})")
+                        }
                     } else {
                         p++
                     }
@@ -258,7 +264,6 @@ class Apps : AppCompatActivity() {
         override fun getItemCount(): Int = filteredData.size
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.p = position
             holder.iconView.setImageDrawable(filteredData[position].icon)
             holder.iconView.contentDescription = filteredData[position].name
             holder.iconView.drawable.mutate().colorFilter = if (filteredData[position].isEnabled) null else grayColorFilter
@@ -277,9 +282,12 @@ class Apps : AppCompatActivity() {
             holder.isNoNetworkView.text = context!!.getString(if (!filteredData[position].isNoNetwork) R.string.need_network else R.string.no_network)
 
             holder.itemView.setOnClickListener {
+                val p = filteredData.indexOfFirst { al ->
+                    al.pkg == (it.findViewById(R.id.component_applistitem_package) as TextView).text
+                }
                 val intent = Intent(context, App::class.java)
-                intent.putExtra(Intent.EXTRA_PACKAGE_NAME, filteredData[holder.p].pkg)
-                intent.putExtra("p", holder.p)
+                intent.putExtra(Intent.EXTRA_PACKAGE_NAME, filteredData[p].pkg)
+                intent.putExtra("p", p)
                 context!!.appResultContract.launch(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(context!!,
                     androidx.core.util.Pair(holder.iconView, "targetAppIcon"),
                     androidx.core.util.Pair(holder.nameView, "targetAppName"),
@@ -314,7 +322,6 @@ class Apps : AppCompatActivity() {
         )
 
         inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-            var p = 0
             val iconView: ImageView = view.findViewById(R.id.component_applistitem_icon)
             val nameView: TextView = view.findViewById(R.id.component_applistitem_name)
             val versionView: TextView = view.findViewById(R.id.component_applistitem_version)
