@@ -19,6 +19,13 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4,
 
 - [简体中文](https://github.com/WankkoRee/EnableWebViewDebugging/blob/master/docs/Tutorial_zh-CN.md)
 
+## Contacts / 联络
+
+- Telegram Group: [Enable WebView Debugging > Chat [zh/NSFW]](https://t.me/EnableWebViewDebuggingChat)
+- Telegram Channel: [Enable WebView Debugging > UPDATES](https://t.me/EnableWebViewDebugging)
+- GitHub Issue: [Issues · WankkoRee/EnableWebViewDebugging](https://github.com/WankkoRee/EnableWebViewDebugging/issues)
+- E-Mail: [wkr@wkr.moe](mailto:wkr@wkr.moe)
+
 ## ScreenShots / 应用截图
 
 <div align="center">
