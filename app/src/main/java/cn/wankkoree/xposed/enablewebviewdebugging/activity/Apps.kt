@@ -189,17 +189,6 @@ class Apps : AppCompatActivity() {
             context = parent.context as Apps
             val view = LayoutInflater.from(context).inflate(R.layout.component_applistitem, parent, false)
             val viewHolder = ViewHolder(view)
-            view.setOnClickListener {
-                val intent = Intent(context, App::class.java)
-                intent.putExtra(Intent.EXTRA_PACKAGE_NAME, filteredData[viewHolder.p].pkg)
-                intent.putExtra("p", viewHolder.p)
-                context!!.appResultContract.launch(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(context!!,
-                    androidx.core.util.Pair(viewHolder.iconView, "targetAppIcon"),
-                    androidx.core.util.Pair(viewHolder.nameView, "targetAppName"),
-                    androidx.core.util.Pair(viewHolder.versionView, "targetAppVersion"),
-                    androidx.core.util.Pair(viewHolder.packageView, "targetAppPackage"),
-                ))
-            }
             return viewHolder
         }
 
@@ -286,6 +275,18 @@ class Apps : AppCompatActivity() {
             holder.isSystemAppView.text = context!!.getString(if (!filteredData[position].isSystemApp) R.string.user_application else R.string.system_application)
             holder.isNoNetworkView.color = context!!.getColor(if (!filteredData[position].isNoNetwork) R.color.backgroundSuccess else R.color.backgroundError)
             holder.isNoNetworkView.text = context!!.getString(if (!filteredData[position].isNoNetwork) R.string.need_network else R.string.no_network)
+
+            holder.itemView.setOnClickListener {
+                val intent = Intent(context, App::class.java)
+                intent.putExtra(Intent.EXTRA_PACKAGE_NAME, filteredData[holder.p].pkg)
+                intent.putExtra("p", holder.p)
+                context!!.appResultContract.launch(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(context!!,
+                    androidx.core.util.Pair(holder.iconView, "targetAppIcon"),
+                    androidx.core.util.Pair(holder.nameView, "targetAppName"),
+                    androidx.core.util.Pair(holder.versionView, "targetAppVersion"),
+                    androidx.core.util.Pair(holder.packageView, "targetAppPackage"),
+                ))
+            }
         }
 
         fun update(p: Int) {
