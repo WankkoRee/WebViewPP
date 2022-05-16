@@ -430,12 +430,47 @@ class App : AppCompatActivity() {
                 try {
                     v.code = when (hookEntry[0]) {
                         // TODO: 添加更多 hook 方法
-                        "hookWebView" -> getString(R.string.code_hookWebView).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4], hookEntry[5], hookEntry[6])
-                        "hookWebViewClient" -> getString(R.string.code_hookWebViewClient).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4], hookEntry[5])
-                        "replaceNebulaUCSDK" -> getString(R.string.code_replaceNebulaUCSDK).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3])
-                        "hookCrossWalk" -> getString(R.string.code_hookCrossWalk).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4], hookEntry[5], hookEntry[6], hookEntry[7])
-                        "hookXWebPreferences" -> getString(R.string.code_hookXWebPreferences).format(ruleName, hookEntry[1], hookEntry[2])
-                        "hookXWebView" -> getString(R.string.code_hookXWebView).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4], hookEntry[5], hookEntry[6])
+                        "hookWebView" -> getString(R.string.code_hookFunction, ruleName, "hookWebView", arrayOf(
+                            getString(R.string.code_hookParam, "Class_WebView", hookEntry[1]),
+                            getString(R.string.code_hookParam, "Method_getSettings", hookEntry[2]),
+                            getString(R.string.code_hookParam, "Method_setWebContentsDebuggingEnabled", hookEntry[3]),
+                            getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", hookEntry[4]),
+                            getString(R.string.code_hookParam, "Method_loadUrl", hookEntry[5]),
+                            getString(R.string.code_hookParam, "Method_setWebViewClient", hookEntry[6]),
+                        ).joinToString(""))
+                        "hookWebViewClient" -> getString(R.string.code_hookFunction, ruleName, "hookWebViewClient", arrayOf(
+                            getString(R.string.code_hookParam, "Class_WebView", hookEntry[1]),
+                            getString(R.string.code_hookParam, "Class_WebViewClient", hookEntry[2]),
+                            getString(R.string.code_hookParam, "Method_onPageFinished", hookEntry[3]),
+                            getString(R.string.code_hookParam, "Method_evaluateJavascript", hookEntry[4]),
+                            getString(R.string.code_hookParam, "Class_ValueCallback", hookEntry[5]),
+                        ).joinToString(""))
+                        "replaceNebulaUCSDK" -> getString(R.string.code_hookFunction, ruleName, "replaceNebulaUCSDK", arrayOf(
+                            getString(R.string.code_hookParam, "Class_UcServiceSetup", hookEntry[1]),
+                            getString(R.string.code_hookParam, "Method_updateUCVersionAndSdcardPath", hookEntry[2]),
+                            getString(R.string.code_hookParam, "Field_sInitUcFromSdcardPath", hookEntry[3]),
+                        ).joinToString(""))
+                        "hookCrossWalk" -> getString(R.string.code_hookFunction, ruleName, "hookCrossWalk", arrayOf(
+                            getString(R.string.code_hookParam, "Class_XWalkView", hookEntry[1]),
+                            getString(R.string.code_hookParam, "Method_getSettings", hookEntry[2]),
+                            getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", hookEntry[3]),
+                            getString(R.string.code_hookParam, "Method_loadUrl", hookEntry[4]),
+                            getString(R.string.code_hookParam, "Method_setResourceClient", hookEntry[5]),
+                            getString(R.string.code_hookParam, "Class_XWalkPreferences", hookEntry[6]),
+                            getString(R.string.code_hookParam, "Method_setValue", hookEntry[7]),
+                        ).joinToString(""))
+                        "hookXWebPreferences" -> getString(R.string.code_hookFunction, ruleName, "hookXWebPreferences", arrayOf(
+                            getString(R.string.code_hookParam, "Class_XWebPreferences", hookEntry[1]),
+                            getString(R.string.code_hookParam, "Method_setValue", hookEntry[2]),
+                        ).joinToString(""))
+                        "hookXWebView" -> getString(R.string.code_hookFunction, ruleName, "hookXWebView", arrayOf(
+                            getString(R.string.code_hookParam, "Class_XWebView", hookEntry[1]),
+                            getString(R.string.code_hookParam, "Method_initWebviewCoreInternal", hookEntry[2]),
+                            getString(R.string.code_hookParam, "Method_isXWalk", hookEntry[3]),
+                            getString(R.string.code_hookParam, "Method_isPinus", hookEntry[4]),
+                            getString(R.string.code_hookParam, "Method_isX5", hookEntry[5]),
+                            getString(R.string.code_hookParam, "Method_isSys", hookEntry[6]),
+                        ).joinToString(""))
                         else -> getString(R.string.unknown_hook_method)
                     }
                 } catch (e: Exception) {
