@@ -253,6 +253,11 @@ class Rule : AppCompatActivity() {
                 toast = Toast.makeText(this@Rule, getString(R.string.s_cannot_be_empty).format(getString(R.string.rule_name)), Toast.LENGTH_SHORT)
                 toast!!.show()
                 return@setOnClickListener
+            } else if (name.contains('|')) {
+                toast?.cancel()
+                toast = Toast.makeText(this@Rule, getString(R.string.s_cannot_contains_vertical).format(getString(R.string.rule_name)), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
             } else {
                 with(modulePrefs("apps_$pkg")) {
                     try {
