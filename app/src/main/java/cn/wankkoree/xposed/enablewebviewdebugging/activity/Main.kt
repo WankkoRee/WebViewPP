@@ -184,7 +184,7 @@ class Main: AppCompatActivity() {
                         toast!!.show()
                     } else {
                         toast?.cancel()
-                        toast = Toast.makeText(this@Main, getString(R.string.your_version_is_higher_than_the_latest_version_it_may_be_a_withdrawn_version_or_an_internal_beta_version), Toast.LENGTH_SHORT)
+                        toast = Toast.makeText(this@Main, getString(R.string.your_version_is_higher_than_the_latest_version_it_may_be_a_withdrawn_version_or_a_prerelease_version), Toast.LENGTH_SHORT)
                         toast!!.show()
                     }
                 }

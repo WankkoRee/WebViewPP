@@ -17,7 +17,7 @@
     <string name="author_of_this_module">Author of this module.</string>
     <string name="it_is_checked_that_there_is_a_new_version_do_you_want_to_download_it">It is checked that there is a new version. Do you want to download it?</string>
     <string name="is_the_latest_version">Is the latest version.</string>
-    <string name="your_version_is_higher_than_the_latest_version_it_may_be_a_withdrawn_version_or_an_internal_beta_version">Your version is higher than the latest version. It may be a withdrawn version or an internal beta version.</string>
+    <string name="your_version_is_higher_than_the_latest_version_it_may_be_a_withdrawn_version_or_a_prerelease_version">Your version is higher than the latest version. It may be a withdrawn version or a prerelease version.</string>
     <string name="if_you_find_this_project_useful_please_star_this_project">If you find this project useful, please star this project.</string>
     <string name="xweb_currently_has_no_standard_implementation_so_no_standard_rules_is_provided_please_use_the_cloud_rules">XWeb currently has no standard implementation, so no standard rules is provided. please use the cloud rules.</string>
 </resources>
