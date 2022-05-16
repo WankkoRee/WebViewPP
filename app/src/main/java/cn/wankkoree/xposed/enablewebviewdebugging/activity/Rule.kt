@@ -49,6 +49,7 @@ class Rule : AppCompatActivity() {
             "replaceNebulaUCSDK",
             "hookCrossWalk",
             "hookXWebPreferences",
+            "hookXWebView",
         )).apply {
             setDropDownViewResource(R.layout.component_spinneritem)
         }
@@ -187,6 +188,31 @@ class Rule : AppCompatActivity() {
                                     }
                                     dialogBinding.dialogCloudrulesRules.addView(v)
                                 }
+                                if (rules.hookXWebView != null) for (hookRule in rules.hookXWebView) {
+                                    val v = Code(this@Rule)
+                                    v.code = getString(R.string.code_hookXWebView).format(
+                                        hookRule.name,
+                                        hookRule.Class_XWebView,
+                                        hookRule.Method_initWebviewCoreInternal,
+                                        hookRule.Method_isXWalk,
+                                        hookRule.Method_isPinus,
+                                        hookRule.Method_isX5,
+                                        hookRule.Method_isSys,
+                                    )
+                                    v.isClickable = true
+                                    v.setOnClickListener {
+                                        viewBinding.ruleHookMethod.setSelection(5)
+                                        viewBinding.ruleName.setText(hookRule.name)
+                                        viewBinding.ruleHookXWebViewClassClassXWebView.setText(hookRule.Class_XWebView)
+                                        viewBinding.ruleHookXWebViewMethodInitWebviewCoreInternal.setText(hookRule.Method_initWebviewCoreInternal)
+                                        viewBinding.ruleHookXWebViewMethodIsXWalk.setText(hookRule.Method_isXWalk)
+                                        viewBinding.ruleHookXWebViewMethodIsPinus.setText(hookRule.Method_isPinus)
+                                        viewBinding.ruleHookXWebViewMethodIsX5.setText(hookRule.Method_isX5)
+                                        viewBinding.ruleHookXWebViewMethodIsSys.setText(hookRule.Method_isSys)
+                                        dialog.cancel()
+                                    }
+                                    dialogBinding.dialogCloudrulesRules.addView(v)
+                                }
                             } else {
                                 toast?.cancel()
                                 toast = Toast.makeText(this@Rule, getString(R.string.pull_failed).format(pkg+' '+version+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), Toast.LENGTH_SHORT)
@@ -289,6 +315,15 @@ class Rule : AppCompatActivity() {
                             viewBinding.ruleHookXWebPreferencesClassXWebPreferences.text.toString(),
                             viewBinding.ruleHookXWebPreferencesMethodSetValue.text.toString(),
                         )
+                        "hookXWebView" -> listOf(
+                            "hookXWebView",
+                            viewBinding.ruleHookXWebViewClassClassXWebView.text.toString(),
+                            viewBinding.ruleHookXWebViewMethodInitWebviewCoreInternal.text.toString(),
+                            viewBinding.ruleHookXWebViewMethodIsXWalk.text.toString(),
+                            viewBinding.ruleHookXWebViewMethodIsPinus.text.toString(),
+                            viewBinding.ruleHookXWebViewMethodIsX5.text.toString(),
+                            viewBinding.ruleHookXWebViewMethodIsSys.text.toString(),
+                        )
                         else -> {
                             Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method))
                             emptyList()
@@ -309,6 +344,7 @@ class Rule : AppCompatActivity() {
                         viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
                         viewBinding.ruleHookCrossWalk.visibility = View.GONE
                         viewBinding.ruleHookXWebPreferences.visibility = View.GONE
+                        viewBinding.ruleHookXWebView.visibility = View.GONE
                         if (viewBinding.ruleHookWebViewClassWebView.text!!.isEmpty()) viewBinding.ruleHookWebViewClassWebView.setText("android.webkit.WebView")
                         if (viewBinding.ruleHookWebViewMethodGetSettings.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodGetSettings.setText("getSettings")
                         if (viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.setText("setWebContentsDebuggingEnabled")
@@ -322,6 +358,7 @@ class Rule : AppCompatActivity() {
                         viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
                         viewBinding.ruleHookCrossWalk.visibility = View.GONE
                         viewBinding.ruleHookXWebPreferences.visibility = View.GONE
+                        viewBinding.ruleHookXWebView.visibility = View.GONE
                         if (viewBinding.ruleHookWebViewClientClassWebView.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassWebView.setText("android.webkit.WebView")
                         if (viewBinding.ruleHookWebViewClientClassWebViewClient.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassWebViewClient.setText("android.webkit.WebViewClient")
                         if (viewBinding.ruleHookWebViewClientMethodOnPageFinished.text!!.isEmpty()) viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText("onPageFinished")
@@ -334,6 +371,7 @@ class Rule : AppCompatActivity() {
                         viewBinding.ruleReplaceNebulaUCSDK.visibility = View.VISIBLE
                         viewBinding.ruleHookCrossWalk.visibility = View.GONE
                         viewBinding.ruleHookXWebPreferences.visibility = View.GONE
+                        viewBinding.ruleHookXWebView.visibility = View.GONE
                         if (viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.text!!.isEmpty()) viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.setText("com.alipay.mobile.nebulauc.impl.UcServiceSetup")
                         if (viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.text!!.isEmpty()) viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.setText("updateUCVersionAndSdcardPath")
                         if (viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.text!!.isEmpty()) viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.setText("sInitUcFromSdcardPath")
@@ -344,6 +382,7 @@ class Rule : AppCompatActivity() {
                         viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
                         viewBinding.ruleHookCrossWalk.visibility = View.VISIBLE
                         viewBinding.ruleHookXWebPreferences.visibility = View.GONE
+                        viewBinding.ruleHookXWebView.visibility = View.GONE
                         if (viewBinding.ruleHookCrossWalkClassXWalkView.text!!.isEmpty()) viewBinding.ruleHookCrossWalkClassXWalkView.setText("org.xwalk.core.XWalkView")
                         if (viewBinding.ruleHookCrossWalkMethodGetSettings.text!!.isEmpty()) viewBinding.ruleHookCrossWalkMethodGetSettings.setText("getSettings")
                         if (viewBinding.ruleHookCrossWalkMethodSetJavaScriptEnabled.text!!.isEmpty()) viewBinding.ruleHookCrossWalkMethodSetJavaScriptEnabled.setText("setJavaScriptEnabled")
@@ -358,8 +397,23 @@ class Rule : AppCompatActivity() {
                         viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
                         viewBinding.ruleHookCrossWalk.visibility = View.GONE
                         viewBinding.ruleHookXWebPreferences.visibility = View.VISIBLE
+                        viewBinding.ruleHookXWebView.visibility = View.GONE
                         if (viewBinding.ruleHookXWebPreferencesClassXWebPreferences.text!!.isEmpty()) viewBinding.ruleHookXWebPreferencesClassXWebPreferences.setText("org.xwalk.core.XWalkPreferences")
                         if (viewBinding.ruleHookXWebPreferencesMethodSetValue.text!!.isEmpty()) viewBinding.ruleHookXWebPreferencesMethodSetValue.setText("setValue")
+                    }
+                    "hookXWebView" -> {
+                        viewBinding.ruleHookWebView.visibility = View.GONE
+                        viewBinding.ruleHookWebViewClient.visibility = View.GONE
+                        viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
+                        viewBinding.ruleHookCrossWalk.visibility = View.GONE
+                        viewBinding.ruleHookXWebPreferences.visibility = View.GONE
+                        viewBinding.ruleHookXWebView.visibility = View.VISIBLE
+                        if (viewBinding.ruleHookXWebViewClassClassXWebView.text!!.isEmpty()) viewBinding.ruleHookXWebViewClassClassXWebView.setText("com.tencent.xweb.WebView")
+                        if (viewBinding.ruleHookXWebViewMethodInitWebviewCoreInternal.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodInitWebviewCoreInternal.setText("initWebviewCoreInternal")
+                        if (viewBinding.ruleHookXWebViewMethodIsXWalk.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsXWalk.setText("isXWalk")
+                        if (viewBinding.ruleHookXWebViewMethodIsPinus.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsPinus.setText("isPinus")
+                        if (viewBinding.ruleHookXWebViewMethodIsX5.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsX5.setText("isX5")
+                        if (viewBinding.ruleHookXWebViewMethodIsSys.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsSys.setText("isSys")
                     }
                     else -> {
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method))
@@ -441,6 +495,24 @@ class Rule : AppCompatActivity() {
         viewBinding.ruleHookXWebPreferencesMethodSetValue.doAfterTextChanged {
             refreshCode()
         }
+        viewBinding.ruleHookXWebViewClassClassXWebView.doAfterTextChanged {
+            refreshCode()
+        }
+        viewBinding.ruleHookXWebViewMethodInitWebviewCoreInternal.doAfterTextChanged {
+            refreshCode()
+        }
+        viewBinding.ruleHookXWebViewMethodIsXWalk.doAfterTextChanged {
+            refreshCode()
+        }
+        viewBinding.ruleHookXWebViewMethodIsPinus.doAfterTextChanged {
+            refreshCode()
+        }
+        viewBinding.ruleHookXWebViewMethodIsX5.doAfterTextChanged {
+            refreshCode()
+        }
+        viewBinding.ruleHookXWebViewMethodIsSys.doAfterTextChanged {
+            refreshCode()
+        }
         refresh()
     }
 
@@ -492,6 +564,15 @@ class Rule : AppCompatActivity() {
                         viewBinding.ruleHookXWebPreferencesMethodSetValue.setText(hookEntry[2])
                         viewBinding.ruleHookMethod.setSelection(4)
                     }
+                    "hookXWebView" -> {
+                        viewBinding.ruleHookXWebViewClassClassXWebView.setText(hookEntry[1])
+                        viewBinding.ruleHookXWebViewMethodInitWebviewCoreInternal.setText(hookEntry[2])
+                        viewBinding.ruleHookXWebViewMethodIsXWalk.setText(hookEntry[3])
+                        viewBinding.ruleHookXWebViewMethodIsPinus.setText(hookEntry[4])
+                        viewBinding.ruleHookXWebViewMethodIsX5.setText(hookEntry[5])
+                        viewBinding.ruleHookXWebViewMethodIsSys.setText(hookEntry[6])
+                        viewBinding.ruleHookMethod.setSelection(5)
+                    }
                 }
             }
         }
@@ -537,6 +618,15 @@ class Rule : AppCompatActivity() {
                 viewBinding.ruleName.text.toString(),
                 viewBinding.ruleHookXWebPreferencesClassXWebPreferences.text.toString(),
                 viewBinding.ruleHookXWebPreferencesMethodSetValue.text.toString(),
+            )
+            "hookXWebView" -> getString(R.string.code_hookXWebView).format(
+                viewBinding.ruleName.text.toString(),
+                viewBinding.ruleHookXWebViewClassClassXWebView.text.toString(),
+                viewBinding.ruleHookXWebViewMethodInitWebviewCoreInternal.text.toString(),
+                viewBinding.ruleHookXWebViewMethodIsXWalk.text.toString(),
+                viewBinding.ruleHookXWebViewMethodIsPinus.text.toString(),
+                viewBinding.ruleHookXWebViewMethodIsX5.text.toString(),
+                viewBinding.ruleHookXWebViewMethodIsSys.text.toString(),
             )
             else -> getString(R.string.unknown_hook_method)
         }

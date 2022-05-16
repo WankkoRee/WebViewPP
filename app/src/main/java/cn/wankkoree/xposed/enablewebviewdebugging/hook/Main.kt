@@ -111,6 +111,16 @@ class Main : YukiHookXposedInitProxy {
                         Method_setValue = hookEntry[2],
                     )
                 }
+                "hookXWebView" -> {
+                    hookXWebView(
+                        Class_XWebView = hookEntry[1],
+                        Method_initWebviewCoreInternal = hookEntry[2],
+                        Method_isXWalk = hookEntry[3],
+                        Method_isPinus = hookEntry[4],
+                        Method_isX5 = hookEntry[5],
+                        Method_isSys = hookEntry[6],
+                    )
+                }
                 else -> {
                     loggerE(msg = "Unknown Hook Method: ${hookEntry[0]}")
                 }

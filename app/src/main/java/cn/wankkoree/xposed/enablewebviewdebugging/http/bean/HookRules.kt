@@ -13,6 +13,8 @@ data class HookRules (
     val hookCrossWalk: List<HookCrossWalk>?,
     @SerializedName("hookXWebPreferences")
     val hookXWebPreferences: List<HookXWebPreferences>?,
+    @SerializedName("hookXWebView")
+    val hookXWebView: List<HookXWebView>?,
 ) {
     class HookRuleWebView (
         @SerializedName("name")
@@ -79,5 +81,21 @@ data class HookRules (
         val Class_XWebPreferences: String,
         @SerializedName("Method_setValue")
         val Method_setValue: String,
+    )
+    class HookXWebView (
+        @SerializedName("name")
+        val name: String,
+        @SerializedName("Class_XWebView")
+        val Class_XWebView: String,
+        @SerializedName("Method_initWebviewCoreInternal")
+        val Method_initWebviewCoreInternal: String,
+        @SerializedName("Method_isXWalk")
+        val Method_isXWalk: String,
+        @SerializedName("Method_isPinus")
+        val Method_isPinus: String,
+        @SerializedName("Method_isX5")
+        val Method_isX5: String,
+        @SerializedName("Method_isSys")
+        val Method_isSys: String,
     )
 }

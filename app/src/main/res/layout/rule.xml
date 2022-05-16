@@ -554,6 +554,114 @@
                         />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+            <LinearLayout android:id="@+id/rule_hookXWebView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
+                    android:transitionGroup="true"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookXWebView_Class_Class_XWebView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:background="@color/transparent"
+                        android:hint="Class_XWebView"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
+                    android:transitionGroup="true"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookXWebView_Method_initWebviewCoreInternal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:background="@color/transparent"
+                        android:hint="Method_initWebviewCoreInternal"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
+                    android:transitionGroup="true"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookXWebView_Method_isXWalk"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:background="@color/transparent"
+                        android:hint="Method_isXWalk"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
+                    android:transitionGroup="true"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookXWebView_Method_isPinus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:background="@color/transparent"
+                        android:hint="Method_isPinus"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
+                    android:transitionGroup="true"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookXWebView_Method_isX5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:background="@color/transparent"
+                        android:hint="Method_isX5"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+
+                    app:boxBackgroundColor="@color/transparent"
+                    android:transitionGroup="true"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookXWebView_Method_isSys"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:background="@color/transparent"
+                        android:hint="Method_isSys"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

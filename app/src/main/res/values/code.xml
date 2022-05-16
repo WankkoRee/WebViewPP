@@ -34,4 +34,12 @@
     \t<font color="#1098ad">Class_XWebPreferences</font> = <font color="#339af0">%2$s</font><br/>
     \t<font color="#1098ad">Method_setValue</font> = <font color="#339af0">%3$s</font><br/>
     )]]></string>
+    <string name="code_hookXWebView" translatable="false"><![CDATA[<font color="#b197fc">hook</font> <font color="#ffc078">%1$s</font> : <font color="#38d9a9">hookXWebView</font> (<br/>
+    \t<font color="#1098ad">Class_XWebView</font> = <font color="#339af0">%2$s</font><br/>
+    \t<font color="#1098ad">Method_initWebviewCoreInternal</font> = <font color="#339af0">%3$s</font><br/>
+    \t<font color="#1098ad">Method_isXWalk</font> = <font color="#339af0">%3$s</font><br/>
+    \t<font color="#1098ad">Method_isPinus</font> = <font color="#339af0">%3$s</font><br/>
+    \t<font color="#1098ad">Method_isX5</font> = <font color="#339af0">%3$s</font><br/>
+    \t<font color="#1098ad">Method_isSys</font> = <font color="#339af0">%3$s</font><br/>
+    )]]></string>
 </resources>

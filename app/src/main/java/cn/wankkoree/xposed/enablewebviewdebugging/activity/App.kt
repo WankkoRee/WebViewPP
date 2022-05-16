@@ -435,6 +435,7 @@ class App : AppCompatActivity() {
                         "replaceNebulaUCSDK" -> getString(R.string.code_replaceNebulaUCSDK).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3])
                         "hookCrossWalk" -> getString(R.string.code_hookCrossWalk).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4], hookEntry[5], hookEntry[6], hookEntry[7])
                         "hookXWebPreferences" -> getString(R.string.code_hookXWebPreferences).format(ruleName, hookEntry[1], hookEntry[2])
+                        "hookXWebView" -> getString(R.string.code_hookXWebView).format(ruleName, hookEntry[1], hookEntry[2], hookEntry[3], hookEntry[4], hookEntry[5], hookEntry[6])
                         else -> getString(R.string.unknown_hook_method)
                     }
                 } catch (e: Exception) {
