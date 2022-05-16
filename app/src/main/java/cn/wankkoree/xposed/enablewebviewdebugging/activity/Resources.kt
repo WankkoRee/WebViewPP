@@ -91,7 +91,7 @@ class Resources : AppCompatActivity() {
                 toast?.cancel()
                 toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
                 toast!!.show()
-                modulePrefs.run {
+                with(modulePrefs) {
                     name("resources_vConsole_$version")
                     putString("vConsole", vConsoleStr)
                     name("resources")
@@ -129,7 +129,7 @@ class Resources : AppCompatActivity() {
                 toast?.cancel()
                 toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
                 toast!!.show()
-                modulePrefs.run {
+                with(modulePrefs) {
                     name("resources_nebulaUCSDK_$version")
                     putString("nebulaUCSDK_arm64-v8a", Base64.encodeToString(nebulaUCSDKArm64V8aBin, Base64.NO_WRAP))
                     putString("nebulaUCSDK_armeabi-v7a", Base64.encodeToString(nebulaUCSDKArmeabiV7aBin, Base64.NO_WRAP))
@@ -152,19 +152,19 @@ class Resources : AppCompatActivity() {
     private fun refresh() {
         val vConsoleVersions: HashSet<String>
         val nebulaUCSDKVersions: HashSet<String>
-        modulePrefs("resources").run {
+        with(modulePrefs("resources")) {
             vConsoleVersions = getSet(ResourcesSP.vConsole_versions)
             nebulaUCSDKVersions = getSet(ResourcesSP.nebulaUCSDK_versions)
         }
-        viewBinding.resourcesVconsoleLocal.run {
+        viewBinding.resourcesVconsoleLocal.apply {
             removeAllViews()
             vConsoleVersions.forEach { vConsoleVersion ->
-                addView(Tag(context).also {
-                    it.text = vConsoleVersion
-                    it.color = getColor(R.color.backgroundInfo)
-                    it.setOnLongClickListener { t ->
+                addView(Tag(context).apply {
+                    text = vConsoleVersion
+                    color = getColor(R.color.backgroundInfo)
+                    setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        modulePrefs.run {
+                        with(modulePrefs) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -189,15 +189,15 @@ class Resources : AppCompatActivity() {
                 })
             }
         }
-        viewBinding.resourcesNebulaucsdkLocal.run {
+        viewBinding.resourcesNebulaucsdkLocal.apply {
             removeAllViews()
             nebulaUCSDKVersions.forEach { nebulaUCSDKVersion ->
-                addView(Tag(context).also {
-                    it.text = nebulaUCSDKVersion
-                    it.color = getColor(R.color.backgroundInfo)
-                    it.setOnLongClickListener { t ->
+                addView(Tag(context).apply {
+                    text = nebulaUCSDKVersion
+                    color = getColor(R.color.backgroundInfo)
+                    setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        modulePrefs.run {
+                        with(modulePrefs) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")

@@ -26,46 +26,42 @@ class Advance: AppCompatActivity() {
         viewBinding = AdvanceBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        viewBinding.advanceLicense.let {
-            it.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL)
-            it.setMultiScreen(0.75f)
-            it.setPageTransformer(false, UltraDepthScaleTransformer())
-            val adapter = LicenseAdapter(arrayListOf<View>().apply {
-                add(License(this@Advance).also {
-                    val icon = AppCompatResources.getDrawable(this@Advance, R.mipmap.wankkoree)!!
-                    it.icon = icon
-                    it.title = getString(R.string.wankko_ree)
-                    it.desc = getString(R.string.author_of_this_module)
-                    it.color = getPrimaryColor(icon, this@Advance).first
-                    it.setOnClickListener {
+        viewBinding.advanceLicense.apply {
+            setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL)
+            setMultiScreen(0.75f)
+            setPageTransformer(false, UltraDepthScaleTransformer())
+            adapter = LicenseAdapter(arrayListOf<View>(
+                License(this@Advance).apply {
+                    icon = AppCompatResources.getDrawable(this@Advance, R.mipmap.wankkoree)
+                    title = getString(R.string.wankko_ree)
+                    desc = getString(R.string.author_of_this_module)
+                    color = getPrimaryColor(icon!!, this@Advance).first
+                    setOnClickListener {
                         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/WankkoRee")))
                     }
-                })
-                add(License(this@Advance).also {
-                    val icon = AppCompatResources.getDrawable(this@Advance, R.mipmap.yuki_hook_api)!!
-                    it.icon = icon
-                    it.title = getString(R.string.yuki_hook_api)
-                    it.desc = getString(R.string.this_module_is_constructed_using_yukihookapi) + "\n" + getString(R.string.advance_yuki_version_text).format(YukiHookAPI.API_VERSION_NAME, YukiHookAPI.API_VERSION_CODE)
-                    it.color = getPrimaryColor(icon, this@Advance).first
-                    it.setOnClickListener {
+                },
+                License(this@Advance).apply {
+                    icon = AppCompatResources.getDrawable(this@Advance, R.mipmap.yuki_hook_api)
+                    title = getString(R.string.yuki_hook_api)
+                    desc = getString(R.string.this_module_is_constructed_using_yukihookapi) + "\n" + getString(R.string.advance_yuki_version_text).format(YukiHookAPI.API_VERSION_NAME, YukiHookAPI.API_VERSION_CODE)
+                    color = getPrimaryColor(icon!!, this@Advance).first
+                    setOnClickListener {
                         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/fankes/YukiHookAPI")))
                     }
-                })
-                add(License(this@Advance).also {
-                    val icon = packageManager.getApplicationIcon(BuildConfig.APPLICATION_ID)
-                    it.icon = icon
-                    it.title = getString(R.string.app_name)
-                    it.desc = getString(R.string.app_description)
-                    it.color = getPrimaryColor(icon, this@Advance).first
-                    it.setOnClickListener {
+                },
+                License(this@Advance).apply {
+                    icon = packageManager.getApplicationIcon(BuildConfig.APPLICATION_ID)
+                    title = getString(R.string.app_name)
+                    desc = getString(R.string.app_description)
+                    color = getPrimaryColor(icon!!, this@Advance).first
+                    setOnClickListener {
                         toast?.cancel()
                         toast = Toast.makeText(this@Advance, getString(R.string.if_you_find_this_project_useful_please_star_this_project), Toast.LENGTH_SHORT)
                         toast!!.show()
                         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/WankkoRee/EnableWebViewDebugging")))
                     }
-                })
-            })
-            it.adapter = adapter
+                },
+            ))
         }
 
         viewBinding.advanceToolbarBack.setOnClickListener {

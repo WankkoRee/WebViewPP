@@ -11,10 +11,9 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.palette.graphics.Palette
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 
-val grayColorFilter: ColorMatrixColorFilter = ColorMatrix().run {
+val grayColorFilter = ColorMatrixColorFilter(ColorMatrix().apply {
     setSaturation(0f)
-    ColorMatrixColorFilter(this)
-}
+})
 
 fun colorStateSingle(color: Int): ColorStateList = ColorStateList(arrayOf(intArrayOf()), intArrayOf(color))
 

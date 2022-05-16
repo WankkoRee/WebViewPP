@@ -47,19 +47,17 @@ fun PackageParam.hookCrossWalk (
                     }
                 }.get(webView).call()
 
-                findClass(Class_XWalkPreferences).normalClass!!.let { XWalkPreferences ->
-                    XWalkPreferences.method {
-                        name(Method_setValue)
-                        param(StringType, BooleanType)
-                    }.result {
-                        onNoSuchMethod {
-                            loggerE(msg = "Hook.Method.NoSuchMethod at hookCrossWalk\uD83D\uDC49<init>\uD83D\uDC49setValue", e = it)
-                        }
-                        if (Main.debug) loggerD(msg = "${instanceClass.name}.setValue(XWalkPreferences.REMOTE_DEBUGGING, true)")
-                        get().call("remote-debugging", true)
-                        if (Main.debug) loggerD(msg = "${instanceClass.name}.setValue(XWalkPreferences.ENABLE_JAVASCRIPT, true)")
-                        get().call("enable-javascript", true)
+                findClass(Class_XWalkPreferences).normalClass!!.method {
+                    name(Method_setValue)
+                    param(StringType, BooleanType)
+                }.result {
+                    onNoSuchMethod {
+                        loggerE(msg = "Hook.Method.NoSuchMethod at hookCrossWalk\uD83D\uDC49<init>\uD83D\uDC49setValue", e = it)
                     }
+                    if (Main.debug) loggerD(msg = "${instanceClass.name}.setValue(XWalkPreferences.REMOTE_DEBUGGING, true)")
+                    get().call("remote-debugging", true)
+                    if (Main.debug) loggerD(msg = "${instanceClass.name}.setValue(XWalkPreferences.ENABLE_JAVASCRIPT, true)")
+                    get().call("enable-javascript", true)
                 }
 
                 if (Main.debug) loggerD(msg = "${instanceClass.name} new().getSettings().setJavaScriptEnabled(true)")

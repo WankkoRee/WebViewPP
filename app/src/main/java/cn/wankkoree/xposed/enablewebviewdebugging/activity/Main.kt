@@ -74,15 +74,15 @@ class Main: AppCompatActivity() {
                 toast!!.show()
                 return@setOnClickListener
             }
-            PopupMenu(this@Main, it).run {
+            PopupMenu(this@Main, it).apply {
                 menuInflater.inflate(R.menu.main_toolbar_menu, menu)
                 setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.main_toolbar_menu_reset -> {
-                            AlertDialog.Builder(this@Main).run {
+                            AlertDialog.Builder(this@Main).apply {
                                 setMessage(R.string.do_you_really_reset_all_configurations)
                                 setPositiveButton(R.string.confirm) { _, _ ->
-                                    modulePrefs.run {
+                                    with(modulePrefs) {
                                         name("apps").getSet(AppsSP.enabled).forEach { pkg ->
                                             name("apps_$pkg").clear()
                                         }
@@ -101,9 +101,7 @@ class Main: AppCompatActivity() {
                                     refresh()
                                 }
                                 setNegativeButton(R.string.cancel) { _, _ -> }
-                                create()
-                                show()
-                            }
+                            }.create().show()
                         }
                         R.id.main_toolbar_menu_advance -> {
                             val intent = Intent(this@Main, Advance::class.java)
@@ -112,8 +110,7 @@ class Main: AppCompatActivity() {
                     }
                     true
                 }
-                show()
-            }
+            }.show()
         }
         viewBinding.mainStatusCard.setOnClickListener {
             checkUpdate()
@@ -169,20 +166,18 @@ class Main: AppCompatActivity() {
             }
             if (latestStr != null) {
                 val latest = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create().fromJson(latestStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.github.RepoRelease::class.java)
-                Regex("^([0-9]+?)-(.+)\$").matchEntire(latest.tag_name)!!.groupValues.let {
+                Regex("^([0-9]+?)-(.+)\$").matchEntire(latest.tag_name)!!.groupValues.also {
                     val latestCode = it[1].toInt()
                     val latestName = it[2]
                     if (latestCode > BuildConfig.VERSION_CODE) {
-                        AlertDialog.Builder(this@Main).run {
+                        AlertDialog.Builder(this@Main).apply {
                             setTitle(R.string.it_is_checked_that_there_is_a_new_version_do_you_want_to_download_it)
                             setMessage(getString(R.string.latest_version) + ":\n" + getString(R.string.version_format).format(latestName, latestCode) + "\n\n" + getString(R.string.update_log) + ":\n" + latest.body)
                             setPositiveButton(R.string.confirm) { _, _ ->
                                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(latest.html_url)))
                             }
                             setNegativeButton(R.string.cancel) { _, _ -> }
-                            create()
-                            show()
-                        }
+                        }.create().show()
                     } else if (latestCode == BuildConfig.VERSION_CODE) {
                         toast?.cancel()
                         toast = Toast.makeText(this@Main, getString(R.string.is_the_latest_version), Toast.LENGTH_SHORT)

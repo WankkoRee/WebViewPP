@@ -32,20 +32,24 @@ class Main : YukiHookXposedInitProxy {
             return@encase // 不 hook 憨批 MIUI 等会被重复 hook 的情况
         }
         if (packageName == BuildConfig.APPLICATION_ID) {
-            loggerI(msg = "do not hook self")
+            loggerD(msg = "do not hook self")
             return@encase // 不 hook 自己
         }
         if (packageName == "com.android.webview" || packageName == "com.google.android.webview") {
-            loggerI(msg = "do not hook webview library")
+            loggerW(msg = "do not hook webview library")
             return@encase // 不 hook WebView 本身
         }
-        loggerI(msg = "hook $packageName which run in $processName")
+
+        loggerI(msg = "Welcome to EnableWebViewDebugging ${BuildConfig.VERSION_NAME}-${BuildConfig.BUILD_TYPE}(${BuildConfig.VERSION_CODE})!")
 
         val pref = prefs("apps_$packageName")
         if (!pref.get(AppSP.is_enabled)) {
             loggerI(msg = "$packageName hooking not enabled")
             return@encase // 目标 App 的 Hook 未启用
         }
+
+        loggerI(msg = "hook $packageName which run in $processName")
+
         val cpuArch = with(appInfo.nativeLibraryDir) {
             when {
                 endsWith("arm64") -> "arm64-v8a"

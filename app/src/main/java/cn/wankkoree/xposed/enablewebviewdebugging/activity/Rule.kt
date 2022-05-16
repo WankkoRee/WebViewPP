@@ -43,181 +43,185 @@ class Rule : AppCompatActivity() {
         version = intent.getStringExtra("version")!!
 
         // TODO: 添加更多 hook 方法
-        ArrayAdapter(this@Rule, R.layout.component_spinneritem, arrayOf("hookWebView", "hookWebViewClient", "replaceNebulaUCSDK", "hookCrossWalk", "hookXWebPreferences")).also { adapter ->
-            adapter.setDropDownViewResource(R.layout.component_spinneritem)
-            viewBinding.ruleHookMethod.adapter = adapter
+        viewBinding.ruleHookMethod.adapter = ArrayAdapter(this@Rule, R.layout.component_spinneritem, arrayOf(
+            "hookWebView",
+            "hookWebViewClient",
+            "replaceNebulaUCSDK",
+            "hookCrossWalk",
+            "hookXWebPreferences",
+        )).apply {
+            setDropDownViewResource(R.layout.component_spinneritem)
         }
 
         viewBinding.ruleToolbarBack.setOnClickListener {
             finishAfterTransition()
         }
         viewBinding.ruleToolbarCloud.setOnClickListener {
-            AlertDialog.Builder(this@Rule).run {
-                val dialogBinding = DialogCloudrulesBinding.inflate(layoutInflater)
+            val dialogBinding = DialogCloudrulesBinding.inflate(layoutInflater)
+            AlertDialog.Builder(this@Rule).apply {
                 setView(dialogBinding.root)
-                show().let { dialog ->
-                    dialogBinding.dialogCloudrulesVersions.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                        override fun onNothingSelected(parent: AdapterView<*>?) { }
-                        override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                            val version = dialogBinding.dialogCloudrulesVersions.adapter.getItem(p) as String
-                            lifecycleScope.launch(Dispatchers.Main) {
-                                val rulesStr = try {
-                                    Http.get("https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master/rules/$pkg/$version.json")
-                                } catch(e: Exception) {
-                                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(pkg+' '+getString(R.string.cloud_rules)), e)
-                                    null
+            }.show().also { dialog ->
+                dialogBinding.dialogCloudrulesVersions.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) { }
+                    override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                        val version = dialogBinding.dialogCloudrulesVersions.adapter.getItem(p) as String
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            val rulesStr = try {
+                                Http.get("https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master/rules/$pkg/$version.json")
+                            } catch(e: Exception) {
+                                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(pkg+' '+getString(R.string.cloud_rules)), e)
+                                null
+                            }
+                            if (rulesStr != null) {
+                                dialogBinding.dialogCloudrulesRules.removeAllViews()
+                                val rules = Gson().fromJson(rulesStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.HookRules::class.java)
+                                // TODO: 添加更多 hook 方法
+                                if (rules.hookWebView != null) for (hookRule in rules.hookWebView) {
+                                    val v = Code(this@Rule)
+                                    v.code = getString(R.string.code_hookWebView).format(
+                                        hookRule.name,
+                                        hookRule.Class_WebView,
+                                        hookRule.Method_getSettings,
+                                        hookRule.Method_setWebContentsDebuggingEnabled,
+                                        hookRule.Method_setJavaScriptEnabled,
+                                        hookRule.Method_loadUrl,
+                                        hookRule.Method_setWebViewClient,
+                                    )
+                                    v.isClickable = true
+                                    v.setOnClickListener {
+                                        viewBinding.ruleHookMethod.setSelection(0)
+                                        viewBinding.ruleName.setText(hookRule.name)
+                                        viewBinding.ruleHookWebViewClassWebView.setText(hookRule.Class_WebView)
+                                        viewBinding.ruleHookWebViewMethodGetSettings.setText(hookRule.Method_getSettings)
+                                        viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.setText(hookRule.Method_setWebContentsDebuggingEnabled)
+                                        viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.setText(hookRule.Method_setJavaScriptEnabled)
+                                        viewBinding.ruleHookWebViewMethodLoadUrl.setText(hookRule.Method_loadUrl)
+                                        viewBinding.ruleHookWebViewMethodSetWebViewClient.setText(hookRule.Method_setWebViewClient)
+                                        dialog.cancel()
+                                    }
+                                    dialogBinding.dialogCloudrulesRules.addView(v)
                                 }
-                                if (rulesStr != null) {
-                                    dialogBinding.dialogCloudrulesRules.removeAllViews()
-                                    val rules = Gson().fromJson(rulesStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.HookRules::class.java)
-                                    // TODO: 添加更多 hook 方法
-                                    if (rules.hookWebView != null) for (hookRule in rules.hookWebView) {
-                                        val v = Code(this@Rule)
-                                        v.code = getString(R.string.code_hookWebView).format(
-                                            hookRule.name,
-                                            hookRule.Class_WebView,
-                                            hookRule.Method_getSettings,
-                                            hookRule.Method_setWebContentsDebuggingEnabled,
-                                            hookRule.Method_setJavaScriptEnabled,
-                                            hookRule.Method_loadUrl,
-                                            hookRule.Method_setWebViewClient,
-                                        )
-                                        v.isClickable = true
-                                        v.setOnClickListener {
-                                            viewBinding.ruleHookMethod.setSelection(0)
-                                            viewBinding.ruleName.setText(hookRule.name)
-                                            viewBinding.ruleHookWebViewClassWebView.setText(hookRule.Class_WebView)
-                                            viewBinding.ruleHookWebViewMethodGetSettings.setText(hookRule.Method_getSettings)
-                                            viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.setText(hookRule.Method_setWebContentsDebuggingEnabled)
-                                            viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.setText(hookRule.Method_setJavaScriptEnabled)
-                                            viewBinding.ruleHookWebViewMethodLoadUrl.setText(hookRule.Method_loadUrl)
-                                            viewBinding.ruleHookWebViewMethodSetWebViewClient.setText(hookRule.Method_setWebViewClient)
-                                            dialog.cancel()
-                                        }
-                                        dialogBinding.dialogCloudrulesRules.addView(v)
+                                if (rules.hookWebViewClient != null) for (hookRule in rules.hookWebViewClient) {
+                                    val v = Code(this@Rule)
+                                    v.code = getString(R.string.code_hookWebViewClient).format(
+                                        hookRule.name,
+                                        hookRule.Class_WebView,
+                                        hookRule.Class_WebViewClient,
+                                        hookRule.Method_onPageFinished,
+                                        hookRule.Method_evaluateJavascript,
+                                        hookRule.Class_ValueCallback,
+                                    )
+                                    v.isClickable = true
+                                    v.setOnClickListener {
+                                        viewBinding.ruleHookMethod.setSelection(1)
+                                        viewBinding.ruleName.setText(hookRule.name)
+                                        viewBinding.ruleHookWebViewClientClassWebView.setText(hookRule.Class_WebView)
+                                        viewBinding.ruleHookWebViewClientClassWebViewClient.setText(hookRule.Class_WebViewClient)
+                                        viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText(hookRule.Method_onPageFinished)
+                                        viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText(hookRule.Method_evaluateJavascript)
+                                        viewBinding.ruleHookWebViewClientClassValueCallback.setText(hookRule.Class_ValueCallback)
+                                        dialog.cancel()
                                     }
-                                    if (rules.hookWebViewClient != null) for (hookRule in rules.hookWebViewClient) {
-                                        val v = Code(this@Rule)
-                                        v.code = getString(R.string.code_hookWebViewClient).format(
-                                            hookRule.name,
-                                            hookRule.Class_WebView,
-                                            hookRule.Class_WebViewClient,
-                                            hookRule.Method_onPageFinished,
-                                            hookRule.Method_evaluateJavascript,
-                                            hookRule.Class_ValueCallback,
-                                        )
-                                        v.isClickable = true
-                                        v.setOnClickListener {
-                                            viewBinding.ruleHookMethod.setSelection(1)
-                                            viewBinding.ruleName.setText(hookRule.name)
-                                            viewBinding.ruleHookWebViewClientClassWebView.setText(hookRule.Class_WebView)
-                                            viewBinding.ruleHookWebViewClientClassWebViewClient.setText(hookRule.Class_WebViewClient)
-                                            viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText(hookRule.Method_onPageFinished)
-                                            viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText(hookRule.Method_evaluateJavascript)
-                                            viewBinding.ruleHookWebViewClientClassValueCallback.setText(hookRule.Class_ValueCallback)
-                                            dialog.cancel()
-                                        }
-                                        dialogBinding.dialogCloudrulesRules.addView(v)
-                                    }
-                                    if (rules.replaceNebulaUCSDK != null) for (hookRule in rules.replaceNebulaUCSDK) {
-                                        val v = Code(this@Rule)
-                                        v.code = getString(R.string.code_replaceNebulaUCSDK).format(
-                                            hookRule.name,
-                                            hookRule.Class_UcServiceSetup,
-                                            hookRule.Method_updateUCVersionAndSdcardPath,
-                                            hookRule.Field_sInitUcFromSdcardPath,
-                                        )
-                                        v.isClickable = true
-                                        v.setOnClickListener {
-                                            viewBinding.ruleHookMethod.setSelection(2)
-                                            viewBinding.ruleName.setText(hookRule.name)
-                                            viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.setText(hookRule.Class_UcServiceSetup)
-                                            viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.setText(hookRule.Method_updateUCVersionAndSdcardPath)
-                                            viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.setText(hookRule.Field_sInitUcFromSdcardPath)
-                                            dialog.cancel()
-                                        }
-                                        dialogBinding.dialogCloudrulesRules.addView(v)
-                                    }
-                                    if (rules.hookCrossWalk != null) for (hookRule in rules.hookCrossWalk) {
-                                        val v = Code(this@Rule)
-                                        v.code = getString(R.string.code_hookCrossWalk).format(
-                                            hookRule.name,
-                                            hookRule.Class_XWalkView,
-                                            hookRule.Method_getSettings,
-                                            hookRule.Method_setJavaScriptEnabled,
-                                            hookRule.Method_loadUrl,
-                                            hookRule.Method_setResourceClient,
-                                            hookRule.Class_XWalkPreferences,
-                                            hookRule.Method_setValue,
-                                        )
-                                        v.isClickable = true
-                                        v.setOnClickListener {
-                                            viewBinding.ruleHookMethod.setSelection(3)
-                                            viewBinding.ruleName.setText(hookRule.name)
-                                            viewBinding.ruleHookCrossWalkClassXWalkView.setText(hookRule.Class_XWalkView)
-                                            viewBinding.ruleHookCrossWalkMethodGetSettings.setText(hookRule.Method_getSettings)
-                                            viewBinding.ruleHookCrossWalkMethodSetJavaScriptEnabled.setText(hookRule.Method_setJavaScriptEnabled)
-                                            viewBinding.ruleHookCrossWalkMethodLoadUrl.setText(hookRule.Method_loadUrl)
-                                            viewBinding.ruleHookCrossWalkMethodSetResourceClient.setText(hookRule.Method_setResourceClient)
-                                            viewBinding.ruleHookCrossWalkClassXWalkPreferences.setText(hookRule.Class_XWalkPreferences)
-                                            viewBinding.ruleHookCrossWalkMethodSetValue.setText(hookRule.Method_setValue)
-                                            dialog.cancel()
-                                        }
-                                        dialogBinding.dialogCloudrulesRules.addView(v)
-                                    }
-                                    if (rules.hookXWebPreferences != null) for (hookRule in rules.hookXWebPreferences) {
-                                        val v = Code(this@Rule)
-                                        v.code = getString(R.string.code_hookXWebPreferences).format(
-                                            hookRule.name,
-                                            hookRule.Class_XWebPreferences,
-                                            hookRule.Method_setValue,
-                                        )
-                                        v.isClickable = true
-                                        v.setOnClickListener {
-                                            viewBinding.ruleHookMethod.setSelection(4)
-                                            viewBinding.ruleName.setText(hookRule.name)
-                                            viewBinding.ruleHookXWebPreferencesClassXWebPreferences.setText(hookRule.Class_XWebPreferences)
-                                            viewBinding.ruleHookXWebPreferencesMethodSetValue.setText(hookRule.Method_setValue)
-                                            dialog.cancel()
-                                        }
-                                        dialogBinding.dialogCloudrulesRules.addView(v)
-                                    }
-                                } else {
-                                    toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(pkg+' '+version+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), Toast.LENGTH_SHORT)
-                                    toast!!.show()
-                                    dialog.cancel()
+                                    dialogBinding.dialogCloudrulesRules.addView(v)
                                 }
+                                if (rules.replaceNebulaUCSDK != null) for (hookRule in rules.replaceNebulaUCSDK) {
+                                    val v = Code(this@Rule)
+                                    v.code = getString(R.string.code_replaceNebulaUCSDK).format(
+                                        hookRule.name,
+                                        hookRule.Class_UcServiceSetup,
+                                        hookRule.Method_updateUCVersionAndSdcardPath,
+                                        hookRule.Field_sInitUcFromSdcardPath,
+                                    )
+                                    v.isClickable = true
+                                    v.setOnClickListener {
+                                        viewBinding.ruleHookMethod.setSelection(2)
+                                        viewBinding.ruleName.setText(hookRule.name)
+                                        viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.setText(hookRule.Class_UcServiceSetup)
+                                        viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.setText(hookRule.Method_updateUCVersionAndSdcardPath)
+                                        viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.setText(hookRule.Field_sInitUcFromSdcardPath)
+                                        dialog.cancel()
+                                    }
+                                    dialogBinding.dialogCloudrulesRules.addView(v)
+                                }
+                                if (rules.hookCrossWalk != null) for (hookRule in rules.hookCrossWalk) {
+                                    val v = Code(this@Rule)
+                                    v.code = getString(R.string.code_hookCrossWalk).format(
+                                        hookRule.name,
+                                        hookRule.Class_XWalkView,
+                                        hookRule.Method_getSettings,
+                                        hookRule.Method_setJavaScriptEnabled,
+                                        hookRule.Method_loadUrl,
+                                        hookRule.Method_setResourceClient,
+                                        hookRule.Class_XWalkPreferences,
+                                        hookRule.Method_setValue,
+                                    )
+                                    v.isClickable = true
+                                    v.setOnClickListener {
+                                        viewBinding.ruleHookMethod.setSelection(3)
+                                        viewBinding.ruleName.setText(hookRule.name)
+                                        viewBinding.ruleHookCrossWalkClassXWalkView.setText(hookRule.Class_XWalkView)
+                                        viewBinding.ruleHookCrossWalkMethodGetSettings.setText(hookRule.Method_getSettings)
+                                        viewBinding.ruleHookCrossWalkMethodSetJavaScriptEnabled.setText(hookRule.Method_setJavaScriptEnabled)
+                                        viewBinding.ruleHookCrossWalkMethodLoadUrl.setText(hookRule.Method_loadUrl)
+                                        viewBinding.ruleHookCrossWalkMethodSetResourceClient.setText(hookRule.Method_setResourceClient)
+                                        viewBinding.ruleHookCrossWalkClassXWalkPreferences.setText(hookRule.Class_XWalkPreferences)
+                                        viewBinding.ruleHookCrossWalkMethodSetValue.setText(hookRule.Method_setValue)
+                                        dialog.cancel()
+                                    }
+                                    dialogBinding.dialogCloudrulesRules.addView(v)
+                                }
+                                if (rules.hookXWebPreferences != null) for (hookRule in rules.hookXWebPreferences) {
+                                    val v = Code(this@Rule)
+                                    v.code = getString(R.string.code_hookXWebPreferences).format(
+                                        hookRule.name,
+                                        hookRule.Class_XWebPreferences,
+                                        hookRule.Method_setValue,
+                                    )
+                                    v.isClickable = true
+                                    v.setOnClickListener {
+                                        viewBinding.ruleHookMethod.setSelection(4)
+                                        viewBinding.ruleName.setText(hookRule.name)
+                                        viewBinding.ruleHookXWebPreferencesClassXWebPreferences.setText(hookRule.Class_XWebPreferences)
+                                        viewBinding.ruleHookXWebPreferencesMethodSetValue.setText(hookRule.Method_setValue)
+                                        dialog.cancel()
+                                    }
+                                    dialogBinding.dialogCloudrulesRules.addView(v)
+                                }
+                            } else {
+                                toast?.cancel()
+                                toast = Toast.makeText(this@Rule, getString(R.string.pull_failed).format(pkg+' '+version+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), Toast.LENGTH_SHORT)
+                                toast!!.show()
+                                dialog.cancel()
                             }
                         }
                     }
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        val versionsStr = try {
-                            Http.get("https://api.github.com/repos/WankkoRee/EnableWebViewDebugging-Rules/contents/rules/$pkg")
-                        } catch(e: Exception) {
-                            Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(pkg+' '+getString(R.string.cloud_rules)), e)
-                            null
-                        }
-                        if (versionsStr != null) {
-                            val versions = Gson().fromJson(versionsStr, Array<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.github.RepoContent>::class.java)
-                            val adapter = ArrayAdapter(context, R.layout.component_spinneritem, versions.map{ it.name.substringBeforeLast(".json") })
-                            adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                            dialogBinding.dialogCloudrulesVersions.adapter = adapter
-                            val p = adapter.getPosition(version)
-                            if (p >= 0)
-                                dialogBinding.dialogCloudrulesVersions.setSelection(p)
-                            else {
-                                dialogBinding.dialogCloudrulesVersions.setSelection(0)
-                                toast?.cancel()
-                                toast = Toast.makeText(context, getString(R.string.no_matching_version), Toast.LENGTH_SHORT)
-                                toast!!.show()
-                            }
-                        } else {
+                }
+                lifecycleScope.launch(Dispatchers.Main) {
+                    val versionsStr = try {
+                        Http.get("https://api.github.com/repos/WankkoRee/EnableWebViewDebugging-Rules/contents/rules/$pkg")
+                    } catch(e: Exception) {
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(pkg+' '+getString(R.string.cloud_rules)), e)
+                        null
+                    }
+                    if (versionsStr != null) {
+                        val versions = Gson().fromJson(versionsStr, Array<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.github.RepoContent>::class.java)
+                        val adapter = ArrayAdapter(dialog.context, R.layout.component_spinneritem, versions.map{ it.name.substringBeforeLast(".json") })
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        dialogBinding.dialogCloudrulesVersions.adapter = adapter
+                        val p = adapter.getPosition(version)
+                        if (p >= 0)
+                            dialogBinding.dialogCloudrulesVersions.setSelection(p)
+                        else {
+                            dialogBinding.dialogCloudrulesVersions.setSelection(0)
                             toast?.cancel()
-                            toast = Toast.makeText(context, getString(R.string.pull_failed).format(pkg+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), Toast.LENGTH_SHORT)
+                            toast = Toast.makeText(this@Rule, getString(R.string.no_matching_version), Toast.LENGTH_SHORT)
                             toast!!.show()
-                            dialog.cancel()
                         }
+                    } else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@Rule, getString(R.string.pull_failed).format(pkg+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        dialog.cancel()
                     }
                 }
             }
@@ -230,7 +234,7 @@ class Rule : AppCompatActivity() {
                 toast!!.show()
                 return@setOnClickListener
             } else {
-                modulePrefs("apps_$pkg").run {
+                with(modulePrefs("apps_$pkg")) {
                     try {
                         put(AppSP.hooks, name)
                     } catch (_: ValueAlreadyExistedInSet) {
@@ -446,7 +450,7 @@ class Rule : AppCompatActivity() {
             viewBinding.ruleHookMethod.setSelection(0)
         } else {
             viewBinding.ruleName.setText(ruleName)
-            modulePrefs("apps_$pkg").run {
+            with(modulePrefs("apps_$pkg")) {
                 val hookEntry = getList<String>("hook_entry_$ruleName")
                 when (hookEntry[0]) {
                     // TODO: 添加更多 hook 方法

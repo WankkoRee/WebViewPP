@@ -69,15 +69,15 @@ class App : AppCompatActivity() {
         viewBinding.appToolbarBack.setOnClickListener {
             finishAfterTransition()
         }
-        viewBinding.appToolbarPreset.setOnClickListener {
-            PopupMenu(this, it).run {
+        viewBinding.appToolbarPreset.setOnClickListener { v ->
+            PopupMenu(this, v).apply {
                 menuInflater.inflate(R.menu.app_toolbar_preset, menu)
                 setOnMenuItemClickListener {
                     when (it.itemId) {
                         // TODO: 添加更多 hook 方法
                         R.id.app_toolbar_preset_webview -> {
-                            modulePrefs("apps_$pkg").run {
-                                (getString(R.string.standard_s, getString(R.string.webview_rules)) + " " + "hookWebView").let { ruleName ->
+                            with(modulePrefs("apps_$pkg")) {
+                                (getString(R.string.standard_s, getString(R.string.webview_rules)) + " " + "hookWebView").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
                                         putList("hook_entry_$ruleName", listOf(
@@ -95,7 +95,7 @@ class App : AppCompatActivity() {
                                         toast!!.show()
                                     }
                                 }
-                                (getString(R.string.standard_s, getString(R.string.webview_rules)) + " " + "hookWebViewClient").let { ruleName ->
+                                (getString(R.string.standard_s, getString(R.string.webview_rules)) + " " + "hookWebViewClient").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
                                         putList("hook_entry_$ruleName", listOf(
@@ -116,8 +116,8 @@ class App : AppCompatActivity() {
                             refresh()
                         }
                         R.id.app_toolbar_preset_tbsx5 -> {
-                            modulePrefs("apps_$pkg").run {
-                                (getString(R.string.standard_s, getString(R.string.tbsx5_rules)) + " " + "hookWebView").let { ruleName ->
+                            with(modulePrefs("apps_$pkg")) {
+                                (getString(R.string.standard_s, getString(R.string.tbsx5_rules)) + " " + "hookWebView").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
                                         putList("hook_entry_$ruleName", listOf(
@@ -135,7 +135,7 @@ class App : AppCompatActivity() {
                                         toast!!.show()
                                     }
                                 }
-                                (getString(R.string.standard_s, getString(R.string.tbsx5_rules)) + " " + "hookWebViewClient").let { ruleName ->
+                                (getString(R.string.standard_s, getString(R.string.tbsx5_rules)) + " " + "hookWebViewClient").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
                                         putList("hook_entry_$ruleName", listOf(
@@ -156,8 +156,8 @@ class App : AppCompatActivity() {
                             refresh()
                         }
                         R.id.app_toolbar_preset_ucu4 -> {
-                            modulePrefs("apps_$pkg").run {
-                                (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "hookWebView").let { ruleName ->
+                            with(modulePrefs("apps_$pkg")) {
+                                (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "hookWebView").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
                                         putList("hook_entry_$ruleName", listOf(
@@ -175,7 +175,7 @@ class App : AppCompatActivity() {
                                         toast!!.show()
                                     }
                                 }
-                                (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "hookWebViewClient").let { ruleName ->
+                                (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "hookWebViewClient").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
                                         putList("hook_entry_$ruleName", listOf(
@@ -192,7 +192,7 @@ class App : AppCompatActivity() {
                                         toast!!.show()
                                     }
                                 }
-                                (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "replaceNebulaUCSDK").let { ruleName ->
+                                (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "replaceNebulaUCSDK").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
                                         putList("hook_entry_$ruleName", listOf(
@@ -211,8 +211,8 @@ class App : AppCompatActivity() {
                             refresh()
                         }
                         R.id.app_toolbar_preset_crosswalk -> {
-                            modulePrefs("apps_$pkg").run {
-                                (getString(R.string.standard_s, getString(R.string.crosswalk_rules)) + " " + "hookCrossWalk").let { ruleName ->
+                            with(modulePrefs("apps_$pkg")) {
+                                (getString(R.string.standard_s, getString(R.string.crosswalk_rules)) + " " + "hookCrossWalk").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
                                         putList("hook_entry_$ruleName", listOf(
@@ -231,7 +231,7 @@ class App : AppCompatActivity() {
                                         toast!!.show()
                                     }
                                 }
-                                (getString(R.string.standard_s, getString(R.string.crosswalk_rules)) + " " + "hookWebViewClient").let { ruleName ->
+                                (getString(R.string.standard_s, getString(R.string.crosswalk_rules)) + " " + "hookWebViewClient").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
                                         putList("hook_entry_$ruleName", listOf(
@@ -259,41 +259,39 @@ class App : AppCompatActivity() {
                     }
                     true
                 }
-                show()
-            }
+            }.show()
         }
         viewBinding.appToolbarMenu.setOnClickListener {
-            PopupMenu(this, it).run {
+            PopupMenu(this, it).apply {
                 menuInflater.inflate(R.menu.app_toolbar_menu, menu)
                 setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.app_toolbar_menu_configure_in_other_apps -> {
-                            Intent.createChooser(Intent(Intent.ACTION_SHOW_APP_INFO).putExtra(Intent.EXTRA_PACKAGE_NAME, pkg), getString(R.string.configure_in_other_apps)).also {
-                                it.putExtra(Intent.EXTRA_EXCLUDE_COMPONENTS, arrayOf(ComponentName.createRelative(applicationContext, this@App.javaClass.name)))
-                                it.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(
+                            startActivity(Intent.createChooser(
+                                Intent(Intent.ACTION_SHOW_APP_INFO).putExtra(Intent.EXTRA_PACKAGE_NAME, pkg),
+                                getString(R.string.configure_in_other_apps)
+                            ).apply {
+                                putExtra(Intent.EXTRA_EXCLUDE_COMPONENTS, arrayOf(ComponentName.createRelative(applicationContext, this@App.javaClass.name)))
+                                putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(
                                     Intent("android.settings.APPLICATION_DETAILS_SETTINGS", Uri.parse("package:$pkg")), // 系统设置
                                     Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$pkg")).setPackage("com.coolapk.market"), // 酷安
                                 ))
-                                startActivity(it)
-                            }
+                            })
                         }
                         R.id.app_toolbar_menu_reset -> {
-                            AlertDialog.Builder(this@App).run {
+                            AlertDialog.Builder(this@App).apply {
                                 setMessage(R.string.do_you_really_reset_this_application_hooking_rules)
                                 setPositiveButton(R.string.confirm) { _, _ ->
                                     reset()
                                     refresh()
                                 }
                                 setNegativeButton(R.string.cancel) { _, _ -> }
-                                create()
-                                show()
-                            }
+                            }.create().show()
                         }
                     }
                     true
                 }
-                show()
-            }
+            }.show()
         }
         viewBinding.appCard.setOnClickListener {
             val state = modulePrefs("apps_$pkg").run {
@@ -311,9 +309,9 @@ class App : AppCompatActivity() {
             refresh()
         }
         viewBinding.appHooksAdd.setOnClickListener {
-            ruleResultContract.launch(Intent(this@App, Rule::class.java).also {
-                it.putExtra("pkg", pkg)
-                it.putExtra("version", getString(R.string.version_format).format(versionName, versionCode))
+            ruleResultContract.launch(Intent(this@App, Rule::class.java).apply {
+                putExtra("pkg", pkg)
+                putExtra("version", getString(R.string.version_format).format(versionName, versionCode))
             }, ActivityOptionsCompat.makeSceneTransitionAnimation(this))
         }
         viewBinding.appResourcesVconsoleCard.setOnLongClickListener {
@@ -373,22 +371,19 @@ class App : AppCompatActivity() {
     }
 
     private fun refresh() {
-        modulePrefs.run {
+        with(modulePrefs) {
             name("resources")
-            val vConsoleAdapter = getSet(ResourcesSP.vConsole_versions).let {
-                val adapter = ArrayAdapter(this@App, R.layout.component_spinneritem, it.toArray())
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.appResourcesVconsoleVersion.adapter = adapter
-                adapter
+            val vConsoleAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.vConsole_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
             }
-            val nebulaUCSDKAdapter = getSet(ResourcesSP.nebulaUCSDK_versions).let {
-                val adapter = ArrayAdapter(this@App, R.layout.component_spinneritem, it.toArray())
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.appResourcesNebulaucsdkVersion.adapter = adapter
-                adapter
+            viewBinding.appResourcesVconsoleVersion.adapter = vConsoleAdapter
+            val nebulaUCSDKAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.nebulaUCSDK_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
             }
+            viewBinding.appResourcesNebulaucsdkVersion.adapter = nebulaUCSDKAdapter
+
             name("apps_$pkg")
-            get(AppSP.is_enabled).let {
+            get(AppSP.is_enabled).also {
                 val iconTemp = icon.mutate().also { d ->
                     d.colorFilter = if (it) null else grayColorFilter
                 }
@@ -400,7 +395,7 @@ class App : AppCompatActivity() {
                 viewBinding.appVersion.setTextColor(c.second)
                 viewBinding.appPackage.setTextColor(c.second)
             }
-            get(AppSP.vConsole).let {
+            get(AppSP.vConsole).also {
                 viewBinding.appResourcesVconsoleCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsoleCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesVconsoleVersion.visibility = if (it) View.VISIBLE else View.GONE
@@ -414,7 +409,7 @@ class App : AppCompatActivity() {
                     })
                 }
             }
-            get(AppSP.nebulaUCSDK).let {
+            get(AppSP.nebulaUCSDK).also {
                 viewBinding.appResourcesNebulaucsdkCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesNebulaucsdkCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesNebulaucsdkVersion.visibility = if (it) View.VISIBLE else View.GONE
@@ -451,26 +446,24 @@ class App : AppCompatActivity() {
                 }
                 v.isClickable = true
                 v.setOnClickListener {
-                    ruleResultContract.launch(Intent(this@App, Rule::class.java).also {
-                        it.putExtra("pkg", pkg)
-                        it.putExtra("version", getString(R.string.version_format).format(versionName, versionCode))
-                        it.putExtra("rule_name", ruleName)
+                    ruleResultContract.launch(Intent(this@App, Rule::class.java).apply {
+                        putExtra("pkg", pkg)
+                        putExtra("version", getString(R.string.version_format).format(versionName, versionCode))
+                        putExtra("rule_name", ruleName)
                     }, ActivityOptionsCompat.makeSceneTransitionAnimation(this@App, it, "targetRule"))
                 }
                 v.setOnLongClickListener {
-                    AlertDialog.Builder(this@App).run {
+                    AlertDialog.Builder(this@App).apply {
                         setMessage(R.string.do_you_really_delete_this_rule)
                         setPositiveButton(R.string.confirm) { _, _ ->
-                            modulePrefs("apps_$pkg").run {
+                            with(modulePrefs("apps_$pkg")) {
                                 remove(AppSP.hooks, ruleName)
                                 remove("hook_entry_$ruleName")
                             }
                             refresh()
                         }
                         setNegativeButton(R.string.cancel) { _, _ -> }
-                        create()
-                        show()
-                    }
+                    }.create().show()
                     true
                 }
                 viewBinding.appHooksList.addView(v)
