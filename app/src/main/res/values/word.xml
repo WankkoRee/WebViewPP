@@ -50,4 +50,6 @@
     <string name="xweb_rules">XWeb Rules</string>
     <string name="standard_s">Standard %s</string>
     <string name="configure_in_other_apps">Configure In Other Apps</string>
+    <string name="rule_remark">Rule Remark</string>
+    <string name="please_reset">Please Reset</string>
 </resources>

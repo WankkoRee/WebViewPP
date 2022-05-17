@@ -26,6 +26,8 @@ import cn.wankkoree.xposed.enablewebviewdebugging.ValueNotExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
 import cn.wankkoree.xposed.enablewebviewdebugging.data.*
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.AppBinding
+import cn.wankkoree.xposed.enablewebviewdebugging.http.bean.HookRules
+import com.google.gson.Gson
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 
 class App : AppCompatActivity() {
@@ -80,15 +82,16 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.webview_rules)) + " " + "hookWebView").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putList("hook_entry_$ruleName", listOf(
+                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
                                             "hookWebView",
+                                            "",
                                             "android.webkit.WebView",
                                             "getSettings",
                                             "setWebContentsDebuggingEnabled",
                                             "setJavaScriptEnabled",
                                             "loadUrl",
                                             "setWebViewClient",
-                                        ))
+                                        )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
                                         toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
@@ -98,14 +101,15 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.webview_rules)) + " " + "hookWebViewClient").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putList("hook_entry_$ruleName", listOf(
+                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
+                                            "",
                                             "android.webkit.WebView",
                                             "android.webkit.WebViewClient",
                                             "onPageFinished",
                                             "evaluateJavascript",
                                             "android.webkit.ValueCallback",
-                                        ))
+                                        )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
                                         toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
@@ -120,15 +124,16 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.tbsx5_rules)) + " " + "hookWebView").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putList("hook_entry_$ruleName", listOf(
+                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
                                             "hookWebView",
+                                            "",
                                             "com.tencent.smtt.sdk.WebView",
                                             "getSettings",
                                             "setWebContentsDebuggingEnabled",
                                             "setJavaScriptEnabled",
                                             "loadUrl",
                                             "setWebViewClient",
-                                        ))
+                                        )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
                                         toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
@@ -138,14 +143,15 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.tbsx5_rules)) + " " + "hookWebViewClient").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putList("hook_entry_$ruleName", listOf(
+                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
+                                            "",
                                             "com.tencent.smtt.sdk.WebView",
                                             "com.tencent.smtt.sdk.WebViewClient",
                                             "onPageFinished",
                                             "evaluateJavascript",
                                             "com.tencent.smtt.sdk.ValueCallback",
-                                        ))
+                                        )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
                                         toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
@@ -160,15 +166,16 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "hookWebView").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putList("hook_entry_$ruleName", listOf(
+                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
                                             "hookWebView",
+                                            "",
                                             "com.uc.webview.export.WebView",
                                             "getSettings",
                                             "setWebContentsDebuggingEnabled",
                                             "setJavaScriptEnabled",
                                             "loadUrl",
                                             "setWebViewClient",
-                                        ))
+                                        )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
                                         toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
@@ -178,14 +185,15 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "hookWebViewClient").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putList("hook_entry_$ruleName", listOf(
+                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
+                                            "",
                                             "com.uc.webview.export.WebView",
                                             "com.alipay.mobile.nebulauc.impl.UCWebViewClient",
                                             "onPageFinished",
                                             "evaluateJavascript",
                                             "android.webkit.ValueCallback",
-                                        ))
+                                        )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
                                         toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
@@ -195,12 +203,13 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "replaceNebulaUCSDK").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putList("hook_entry_$ruleName", listOf(
+                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.ReplaceNebulaUCSDK(
                                             "replaceNebulaUCSDK",
+                                            "",
                                             "com.alipay.mobile.nebulauc.impl.UcServiceSetup",
                                             "updateUCVersionAndSdcardPath",
                                             "sInitUcFromSdcardPath",
-                                        ))
+                                        )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
                                         toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
@@ -215,8 +224,9 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.crosswalk_rules)) + " " + "hookCrossWalk").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putList("hook_entry_$ruleName", listOf(
+                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookCrossWalk(
                                             "hookCrossWalk",
+                                            "",
                                             "org.xwalk.core.XWalkView",
                                             "getSettings",
                                             "setJavaScriptEnabled",
@@ -224,7 +234,7 @@ class App : AppCompatActivity() {
                                             "setResourceClient",
                                             "org.xwalk.core.XWalkPreferences",
                                             "setValue",
-                                        ))
+                                        )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
                                         toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
@@ -234,14 +244,15 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.crosswalk_rules)) + " " + "hookWebViewClient").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putList("hook_entry_$ruleName", listOf(
+                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
+                                            "",
                                             "org.xwalk.core.XWalkView",
                                             "org.xwalk.core.XWalkResourceClient",
                                             "onLoadFinished",
                                             "evaluateJavascript",
                                             "android.webkit.ValueCallback",
-                                        ))
+                                        )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
                                         toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
@@ -426,57 +437,77 @@ class App : AppCompatActivity() {
             viewBinding.appHooksList.removeAllViews()
             getSet(AppSP.hooks).forEach { ruleName ->
                 val v = Code(this@App)
-                val hookEntry = getList<String>("hook_entry_$ruleName")
+                val hookJson = getString("hook_entry_$ruleName", "{}")
                 try {
-                    v.code = when (hookEntry[0]) {
+                    when(Gson().fromJson(hookJson, HookRules.HookRule::class.java).name) {
                         // TODO: 添加更多 hook 方法
-                        "hookWebView" -> getString(R.string.code_hookFunction, ruleName, "hookWebView", arrayOf(
-                            getString(R.string.code_hookParam, "Class_WebView", hookEntry[1]),
-                            getString(R.string.code_hookParam, "Method_getSettings", hookEntry[2]),
-                            getString(R.string.code_hookParam, "Method_setWebContentsDebuggingEnabled", hookEntry[3]),
-                            getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", hookEntry[4]),
-                            getString(R.string.code_hookParam, "Method_loadUrl", hookEntry[5]),
-                            getString(R.string.code_hookParam, "Method_setWebViewClient", hookEntry[6]),
-                        ).joinToString(""))
-                        "hookWebViewClient" -> getString(R.string.code_hookFunction, ruleName, "hookWebViewClient", arrayOf(
-                            getString(R.string.code_hookParam, "Class_WebView", hookEntry[1]),
-                            getString(R.string.code_hookParam, "Class_WebViewClient", hookEntry[2]),
-                            getString(R.string.code_hookParam, "Method_onPageFinished", hookEntry[3]),
-                            getString(R.string.code_hookParam, "Method_evaluateJavascript", hookEntry[4]),
-                            getString(R.string.code_hookParam, "Class_ValueCallback", hookEntry[5]),
-                        ).joinToString(""))
-                        "replaceNebulaUCSDK" -> getString(R.string.code_hookFunction, ruleName, "replaceNebulaUCSDK", arrayOf(
-                            getString(R.string.code_hookParam, "Class_UcServiceSetup", hookEntry[1]),
-                            getString(R.string.code_hookParam, "Method_updateUCVersionAndSdcardPath", hookEntry[2]),
-                            getString(R.string.code_hookParam, "Field_sInitUcFromSdcardPath", hookEntry[3]),
-                        ).joinToString(""))
-                        "hookCrossWalk" -> getString(R.string.code_hookFunction, ruleName, "hookCrossWalk", arrayOf(
-                            getString(R.string.code_hookParam, "Class_XWalkView", hookEntry[1]),
-                            getString(R.string.code_hookParam, "Method_getSettings", hookEntry[2]),
-                            getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", hookEntry[3]),
-                            getString(R.string.code_hookParam, "Method_loadUrl", hookEntry[4]),
-                            getString(R.string.code_hookParam, "Method_setResourceClient", hookEntry[5]),
-                            getString(R.string.code_hookParam, "Class_XWalkPreferences", hookEntry[6]),
-                            getString(R.string.code_hookParam, "Method_setValue", hookEntry[7]),
-                        ).joinToString(""))
-                        "hookXWebPreferences" -> getString(R.string.code_hookFunction, ruleName, "hookXWebPreferences", arrayOf(
-                            getString(R.string.code_hookParam, "Class_XWebPreferences", hookEntry[1]),
-                            getString(R.string.code_hookParam, "Method_setValue", hookEntry[2]),
-                        ).joinToString(""))
-                        "hookXWebView" -> getString(R.string.code_hookFunction, ruleName, "hookXWebView", arrayOf(
-                            getString(R.string.code_hookParam, "Class_XWebView", hookEntry[1]),
-                            getString(R.string.code_hookParam, "Method_initWebviewCoreInternal", hookEntry[2]),
-                            getString(R.string.code_hookParam, "Method_isXWalk", hookEntry[3]),
-                            getString(R.string.code_hookParam, "Method_isPinus", hookEntry[4]),
-                            getString(R.string.code_hookParam, "Method_isX5", hookEntry[5]),
-                            getString(R.string.code_hookParam, "Method_isSys", hookEntry[6]),
-                        ).joinToString(""))
-                        else -> getString(R.string.unknown_hook_method)
+                        "hookWebView" -> {
+                            val hookEntry = Gson().fromJson(hookJson, HookRules.HookRuleWebView::class.java)
+                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != null && hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
+                                getString(R.string.code_hookParam, "Class_WebView", hookEntry.Class_WebView),
+                                getString(R.string.code_hookParam, "Method_getSettings", hookEntry.Method_getSettings),
+                                getString(R.string.code_hookParam, "Method_setWebContentsDebuggingEnabled", hookEntry.Method_setWebContentsDebuggingEnabled),
+                                getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", hookEntry.Method_setJavaScriptEnabled),
+                                getString(R.string.code_hookParam, "Method_loadUrl", hookEntry.Method_loadUrl),
+                                getString(R.string.code_hookParam, "Method_setWebViewClient", hookEntry.Method_setWebViewClient),
+                            ).joinToString(""))
+                        }
+                        "hookWebViewClient" -> {
+                            val hookEntry = Gson().fromJson(hookJson, HookRules.HookRuleWebViewClient::class.java)
+                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != null && hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
+                                getString(R.string.code_hookParam, "Class_WebView", hookEntry.Class_WebView),
+                                getString(R.string.code_hookParam, "Class_WebViewClient", hookEntry.Class_WebViewClient),
+                                getString(R.string.code_hookParam, "Method_onPageFinished", hookEntry.Method_onPageFinished),
+                                getString(R.string.code_hookParam, "Method_evaluateJavascript", hookEntry.Method_evaluateJavascript),
+                                getString(R.string.code_hookParam, "Class_ValueCallback", hookEntry.Class_ValueCallback),
+                            ).joinToString(""))
+                        }
+                        "replaceNebulaUCSDK" -> {
+                            val hookEntry = Gson().fromJson(hookJson, HookRules.ReplaceNebulaUCSDK::class.java)
+                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != null && hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
+                                getString(R.string.code_hookParam, "Class_UcServiceSetup", hookEntry.Class_UcServiceSetup),
+                                getString(R.string.code_hookParam, "Method_updateUCVersionAndSdcardPath", hookEntry.Method_updateUCVersionAndSdcardPath),
+                                getString(R.string.code_hookParam, "Field_sInitUcFromSdcardPath", hookEntry.Field_sInitUcFromSdcardPath),
+                            ).joinToString(""))
+                        }
+                        "hookCrossWalk" -> {
+                            val hookEntry = Gson().fromJson(hookJson, HookRules.HookCrossWalk::class.java)
+                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != null && hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
+                                getString(R.string.code_hookParam, "Class_XWalkView", hookEntry.Class_XWalkView),
+                                getString(R.string.code_hookParam, "Method_getSettings", hookEntry.Method_getSettings),
+                                getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", hookEntry.Method_setJavaScriptEnabled),
+                                getString(R.string.code_hookParam, "Method_loadUrl", hookEntry.Method_loadUrl),
+                                getString(R.string.code_hookParam, "Method_setResourceClient", hookEntry.Method_setResourceClient),
+                                getString(R.string.code_hookParam, "Class_XWalkPreferences", hookEntry.Class_XWalkPreferences),
+                                getString(R.string.code_hookParam, "Method_setValue", hookEntry.Method_setValue),
+                            ).joinToString(""))
+                        }
+                        "hookXWebPreferences" -> {
+                            val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebPreferences::class.java)
+                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != null && hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
+                                getString(R.string.code_hookParam, "Class_XWebPreferences", hookEntry.Class_XWebPreferences),
+                                getString(R.string.code_hookParam, "Method_setValue", hookEntry.Method_setValue),
+                            ).joinToString(""))
+                        }
+                        "hookXWebView" -> {
+                            val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebView::class.java)
+                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != null && hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
+                                getString(R.string.code_hookParam, "Class_XWebView", hookEntry.Class_XWebView),
+                                getString(R.string.code_hookParam, "Method_initWebviewCoreInternal", hookEntry.Method_initWebviewCoreInternal),
+                                getString(R.string.code_hookParam, "Method_isXWalk", hookEntry.Method_isXWalk),
+                                getString(R.string.code_hookParam, "Method_isPinus", hookEntry.Method_isPinus),
+                                getString(R.string.code_hookParam, "Method_isX5", hookEntry.Method_isX5),
+                                getString(R.string.code_hookParam, "Method_isSys", hookEntry.Method_isSys),
+                            ).joinToString(""))
+                        }
+                        else -> {
+                            v.code = getString(R.string.unknown_hook_method)
+                        }
                     }
                 } catch (e: Exception) {
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
                     toast?.cancel()
-                    toast = Toast.makeText(this@App, getString(R.string.parse_failed), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(this@App, getString(R.string.parse_failed)+"\n"+getString(R.string.please_reset), Toast.LENGTH_SHORT)
                     toast!!.show()
                     return@forEach // continue
                 }

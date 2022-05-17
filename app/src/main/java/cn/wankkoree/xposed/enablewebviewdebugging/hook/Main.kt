@@ -6,6 +6,8 @@ import cn.wankkoree.xposed.enablewebviewdebugging.data.getList
 import cn.wankkoree.xposed.enablewebviewdebugging.data.getSet
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.debug.*
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.method.*
+import cn.wankkoree.xposed.enablewebviewdebugging.http.bean.HookRules
+import com.google.gson.Gson
 import com.highcapable.yukihookapi.YukiHookAPI
 import com.highcapable.yukihookapi.annotation.xposed.InjectYukiHookWithXposed
 import com.highcapable.yukihookapi.hook.xposed.proxy.YukiHookXposedInitProxy
@@ -64,66 +66,79 @@ class Main : YukiHookXposedInitProxy {
         loggerI(msg = "loading rules")
 
         pref.getSet(AppSP.hooks).forEach { name ->
-            val hookEntry = pref.getList<String>("hook_entry_$name")
-            when (hookEntry[0]) {
-                // TODO: 添加更多 hook 方法
-                "hookWebView" -> {
-                    hookWebView(
-                        Class_WebView = hookEntry[1],
-                        Method_getSettings = hookEntry[2],
-                        Method_setWebContentsDebuggingEnabled = hookEntry[3],
-                        Method_setJavaScriptEnabled = hookEntry[4],
-                        Method_loadUrl = hookEntry[5],
-                        Method_setWebViewClient = hookEntry[6],
-                    )
+            val hookJson = pref.getString("hook_entry_$name", "{}")
+            try {
+                when(val hookMethod = Gson().fromJson(hookJson, HookRules.HookRule::class.java).name) {
+                    // TODO: 添加更多 hook 方法
+                    "hookWebView" -> {
+                        val hookEntry = Gson().fromJson(hookJson, HookRules.HookRuleWebView::class.java)
+                        hookWebView(
+                            Class_WebView = hookEntry.Class_WebView,
+                            Method_getSettings = hookEntry.Method_getSettings,
+                            Method_setWebContentsDebuggingEnabled = hookEntry.Method_setWebContentsDebuggingEnabled,
+                            Method_setJavaScriptEnabled = hookEntry.Method_setJavaScriptEnabled,
+                            Method_loadUrl = hookEntry.Method_loadUrl,
+                            Method_setWebViewClient = hookEntry.Method_setWebViewClient,
+                        )
+                    }
+                    "hookWebViewClient" -> {
+                        val hookEntry = Gson().fromJson(hookJson, HookRules.HookRuleWebViewClient::class.java)
+                        hookWebViewClient(
+                            Class_WebView = hookEntry.Class_WebView,
+                            Class_WebViewClient = hookEntry.Class_WebViewClient,
+                            Method_onPageFinished = hookEntry.Method_onPageFinished,
+                            Method_evaluateJavascript = hookEntry.Method_evaluateJavascript,
+                            Class_ValueCallback = hookEntry.Class_ValueCallback,
+                        )
+                    }
+                    "replaceNebulaUCSDK" -> {
+                        if (cpuArch != null) {
+                            val hookEntry = Gson().fromJson(hookJson, HookRules.ReplaceNebulaUCSDK::class.java)
+                            replaceNebulaUCSDK(
+                                Class_UcServiceSetup = hookEntry.Class_UcServiceSetup,
+                                Method_updateUCVersionAndSdcardPath = hookEntry.Method_updateUCVersionAndSdcardPath,
+                                Field_sInitUcFromSdcardPath = hookEntry.Field_sInitUcFromSdcardPath,
+                                cpuArch = cpuArch,
+                            )
+                        }
+                    }
+                    "hookCrossWalk" -> {
+                        val hookEntry = Gson().fromJson(hookJson, HookRules.HookCrossWalk::class.java)
+                        hookCrossWalk(
+                            Class_XWalkView = hookEntry.Class_XWalkView,
+                            Method_getSettings = hookEntry.Method_getSettings,
+                            Method_setJavaScriptEnabled = hookEntry.Method_setJavaScriptEnabled,
+                            Method_loadUrl = hookEntry.Method_loadUrl,
+                            Method_setResourceClient = hookEntry.Method_setResourceClient,
+                            Class_XWalkPreferences = hookEntry.Class_XWalkPreferences,
+                            Method_setValue = hookEntry.Method_setValue,
+                        )
+                    }
+                    "hookXWebPreferences" -> {
+                        val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebPreferences::class.java)
+                        hookXWebPreferences(
+                            Class_XWebPreferences = hookEntry.Class_XWebPreferences,
+                            Method_setValue = hookEntry.Method_setValue,
+                        )
+                    }
+                    "hookXWebView" -> {
+                        val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebView::class.java)
+                        hookXWebView(
+                            Class_XWebView = hookEntry.Class_XWebView,
+                            Method_initWebviewCoreInternal = hookEntry.Method_initWebviewCoreInternal,
+                            Method_isXWalk = hookEntry.Method_isXWalk,
+                            Method_isPinus = hookEntry.Method_isPinus,
+                            Method_isX5 = hookEntry.Method_isX5,
+                            Method_isSys = hookEntry.Method_isSys,
+                        )
+                    }
+                    else -> {
+                        loggerE(msg = "Unknown Hook Method: $hookMethod")
+                    }
                 }
-                "hookWebViewClient" -> {
-                    hookWebViewClient(
-                        Class_WebView = hookEntry[1],
-                        Class_WebViewClient = hookEntry[2],
-                        Method_onPageFinished = hookEntry[3],
-                        Method_evaluateJavascript = hookEntry[4],
-                        Class_ValueCallback = hookEntry[5],
-                    )
-                }
-                "replaceNebulaUCSDK" -> {
-                    if (cpuArch != null) replaceNebulaUCSDK(
-                        Class_UcServiceSetup = hookEntry[1],
-                        Method_updateUCVersionAndSdcardPath = hookEntry[2],
-                        Field_sInitUcFromSdcardPath = hookEntry[3],
-                        cpuArch,
-                    )
-                }
-                "hookCrossWalk" -> {
-                    hookCrossWalk(
-                        Class_XWalkView = hookEntry[1],
-                        Method_getSettings = hookEntry[2],
-                        Method_setJavaScriptEnabled = hookEntry[3],
-                        Method_loadUrl = hookEntry[4],
-                        Method_setResourceClient = hookEntry[5],
-                        Class_XWalkPreferences = hookEntry[6],
-                        Method_setValue = hookEntry[7],
-                    )
-                }
-                "hookXWebPreferences" -> {
-                    hookXWebPreferences(
-                        Class_XWebPreferences = hookEntry[1],
-                        Method_setValue = hookEntry[2],
-                    )
-                }
-                "hookXWebView" -> {
-                    hookXWebView(
-                        Class_XWebView = hookEntry[1],
-                        Method_initWebviewCoreInternal = hookEntry[2],
-                        Method_isXWalk = hookEntry[3],
-                        Method_isPinus = hookEntry[4],
-                        Method_isX5 = hookEntry[5],
-                        Method_isSys = hookEntry[6],
-                    )
-                }
-                else -> {
-                    loggerE(msg = "Unknown Hook Method: ${hookEntry[0]}")
-                }
+            } catch (e: Exception) {
+                loggerE(msg = "Parse Failed!", e = e)
+                return@forEach // continue
             }
         }
     }

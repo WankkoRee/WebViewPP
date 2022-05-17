@@ -16,9 +16,17 @@ data class HookRules (
     @SerializedName("hookXWebView")
     val hookXWebView: List<HookXWebView>?,
 ) {
+    class HookRule (
+        @SerializedName("name")
+        val name: String,
+        @SerializedName("remark")
+        val remark: String,
+    )
     class HookRuleWebView (
         @SerializedName("name")
         val name: String,
+        @SerializedName("remark")
+        val remark: String,
         @SerializedName("Class_WebView")
         val Class_WebView: String,
         @SerializedName("Method_getSettings")
@@ -35,6 +43,8 @@ data class HookRules (
     class HookRuleWebViewClient (
         @SerializedName("name")
         val name: String,
+        @SerializedName("remark")
+        val remark: String,
         @SerializedName("Class_WebView")
         val Class_WebView: String,
         @SerializedName("Class_WebViewClient")
@@ -49,6 +59,8 @@ data class HookRules (
     class ReplaceNebulaUCSDK (
         @SerializedName("name")
         val name: String,
+        @SerializedName("remark")
+        val remark: String,
         @SerializedName("Class_UcServiceSetup")
         val Class_UcServiceSetup: String,
         @SerializedName("Method_updateUCVersionAndSdcardPath")
@@ -59,6 +71,8 @@ data class HookRules (
     class HookCrossWalk (
         @SerializedName("name")
         val name: String,
+        @SerializedName("remark")
+        val remark: String,
         @SerializedName("Class_XWalkView")
         val Class_XWalkView: String,
         @SerializedName("Method_getSettings")
@@ -77,6 +91,8 @@ data class HookRules (
     class HookXWebPreferences (
         @SerializedName("name")
         val name: String,
+        @SerializedName("remark")
+        val remark: String,
         @SerializedName("Class_XWebPreferences")
         val Class_XWebPreferences: String,
         @SerializedName("Method_setValue")
@@ -85,6 +101,8 @@ data class HookRules (
     class HookXWebView (
         @SerializedName("name")
         val name: String,
+        @SerializedName("remark")
+        val remark: String,
         @SerializedName("Class_XWebView")
         val Class_XWebView: String,
         @SerializedName("Method_initWebviewCoreInternal")

@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--TODO: 添加更多 hook 方法-->
-    <string name="code_hookFunction" translatable="false"><![CDATA[<font color="#b197fc">hook</font> <font color="#ffc078">%1$s</font> : <font color="#38d9a9">%2$s</font> (<br/>
-    %3$s
-    )]]></string>
-    <string name="code_hookParam" translatable="false"><![CDATA[\t<font color="#1098ad">%1$s</font> = <font color="#339af0">%2$s</font><br/>]]></string>
+    <string name="code_hookFunction" translatable="false"><![CDATA[
+    %1$s
+    <font color="#b197fc">hook</font> <font color="#ffc078">%2$s</font> : <font color="#38d9a9">%3$s</font> (<br/>
+        %4$s
+    )
+]]></string>
+    <string name="code_hookParam" translatable="false"><![CDATA[
+    \t<font color="#1098ad">%1$s</font> = <font color="#339af0">%2$s</font><br/>
+]]></string>
+    <string name="code_hookRemark" translatable="false"><![CDATA[
+    <font color="#8c8c8c">/*<br/>
+    %1$s<br/>
+    */</font><br/>
+]]></string>
 </resources>
