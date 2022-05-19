@@ -52,4 +52,6 @@
     <string name="configure_in_other_apps">Configure In Other Apps</string>
     <string name="rule_remark">Rule Remark</string>
     <string name="please_reset">Please Reset</string>
+    <string name="github" translatable="false">GitHub</string>
+    <string name="telegram" translatable="false">Telegram</string>
 </resources>
