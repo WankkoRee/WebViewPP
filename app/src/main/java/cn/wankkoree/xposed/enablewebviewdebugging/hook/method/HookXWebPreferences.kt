@@ -32,7 +32,7 @@ fun PackageParam.hookXWebPreferences (
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookXWebPreferences\uD83D\uDC49<init>\uD83D\uDC49setValue", e = it)
                     }
                 }.get(xWebPreferences).apply {
-                    if (Main.debug) loggerD(msg = "${instanceClass.name} new().setValue(XWalkPreferences.REMOTE_DEBUGGING, true), $packageName, $processName")
+                    if (Main.debug) loggerD(msg = "${instanceClass.name} new().setValue(XWalkPreferences.REMOTE_DEBUGGING, true)")
                     call("remote-debugging", true)
                     if (Main.debug) loggerD(msg = "${instanceClass.name} new().setValue(XWalkPreferences.ENABLE_JAVASCRIPT, true)")
                     call("enable-javascript", true)
