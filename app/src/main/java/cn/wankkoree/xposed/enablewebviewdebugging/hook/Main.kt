@@ -2,7 +2,7 @@ package cn.wankkoree.xposed.enablewebviewdebugging.hook
 
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.data.AppSP
-import cn.wankkoree.xposed.enablewebviewdebugging.data.getList
+import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP
 import cn.wankkoree.xposed.enablewebviewdebugging.data.getSet
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.debug.*
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.method.*
@@ -17,6 +17,7 @@ import com.highcapable.yukihookapi.hook.log.*
 class Main : YukiHookXposedInitProxy {
     companion object {
         val debug = BuildConfig.DEBUG || BuildConfig.BUILD_TYPE == "dev"
+        var mProcessName = ""
     }
 
     override fun onInit() = YukiHookAPI.configs {
@@ -27,30 +28,31 @@ class Main : YukiHookXposedInitProxy {
     }
 
     override fun onHook() = YukiHookAPI.encase {
-        YukiHookAPI.Configs.debugTag = "EnableWebViewDebugging<$packageName>"
-
-        if (packageName != processName && !processName.startsWith("$packageName:")) { // 不为主进程和私有进程 TODO: 判断公有进程
-            loggerI(msg = "do not hook other application process")
-            return@encase // 不 hook 憨批 MIUI 等会被重复 hook 的情况
-        }
-        if (packageName == BuildConfig.APPLICATION_ID) {
-            loggerD(msg = "do not hook self")
-            return@encase // 不 hook 自己
-        }
-        if (packageName == "com.android.webview" || packageName == "com.google.android.webview") {
-            loggerW(msg = "do not hook webview library")
-            return@encase // 不 hook WebView 本身
-        }
+        mProcessName = processName.substringBefore(':')
 
         loggerI(msg = "Welcome to EnableWebViewDebugging ${BuildConfig.VERSION_NAME}-${BuildConfig.BUILD_TYPE}(${BuildConfig.VERSION_CODE})!")
 
-        val pref = prefs("apps_$packageName")
+        if (packageName != mProcessName) { // 不为主进程和私有进程 TODO: 判断公有进程
+            loggerI(msg = "do not hook other application process：$mProcessName")
+            return@encase // 不 hook 憨批 MIUI 等会被重复 hook 的情况
+        }
+        if (mProcessName == BuildConfig.APPLICATION_ID) {
+            loggerI(msg = "do not hook self：$mProcessName")
+            return@encase // 不 hook 自己
+        }
+        if (mProcessName == "com.android.webview" || mProcessName == "com.google.android.webview") {
+            loggerW(msg = "do not hook webview library：$mProcessName")
+            return@encase // 不 hook WebView 本身
+        }
+        val pref = prefs("apps_$mProcessName")
         if (!pref.get(AppSP.is_enabled)) {
-            loggerI(msg = "$packageName hooking not enabled")
+            loggerI(msg = "$mProcessName hooking not enabled")
             return@encase // 目标 App 的 Hook 未启用
         }
 
-        loggerI(msg = "hook $packageName which run in $processName")
+        YukiHookAPI.Configs.debugTag = "EnableWebViewDebugging<$packageName>"
+
+        loggerI(msg = "hook $mProcessName which run in $processName")
 
         val cpuArch = with(appInfo.nativeLibraryDir) {
             when {

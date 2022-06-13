@@ -24,11 +24,11 @@ fun PackageParam.replaceNebulaUCSDK (
             allMethods(Method_updateUCVersionAndSdcardPath)
             afterHook {
                 if (Main.debug) loggerD(msg = "${instanceClass.name}.updateUCVersionAndSdcardPath({sInitUcFromSdcardPath=\$nebulaUCSDK})")
-                if (prefs("apps_$packageName").get(AppSP.nebulaUCSDK)) {
+                if (prefs("apps_${Main.mProcessName}").get(AppSP.nebulaUCSDK)) {
                     File(appContext.getExternalFilesDir("nebulaUCSDK"), "libWebViewCore_ri_7z_uc.so").also {
                         if (!it.exists()) {
                             val nebulaUCSDK = Base64.decode(
-                                prefs("resources_nebulaUCSDK_${prefs("apps_$packageName").get(AppSP.nebulaUCSDK_version)}").getString("nebulaUCSDK_$cpuArch"),
+                                prefs("resources_nebulaUCSDK_${prefs("apps_${Main.mProcessName}").get(AppSP.nebulaUCSDK_version)}").getString("nebulaUCSDK_$cpuArch"),
                                 Base64.NO_WRAP
                             )
                             it.writeBytes(nebulaUCSDK)

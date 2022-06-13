@@ -36,9 +36,9 @@ fun PackageParam.hookWebViewClient (
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookWebViewClient\uD83D\uDC49onPageFinished\uD83D\uDC49evaluateJavascript", e = it)
                     }
                     get(webView).call(
-                        "javascript:" + (if (prefs("apps_$packageName").get(AppSP.vConsole)) {
+                        "javascript:" + (if (prefs("apps_${Main.mProcessName}").get(AppSP.vConsole)) {
                             "if (typeof vConsole === 'undefined'){" +
-                                    "   ${prefs("resources_vConsole_${prefs("apps_$packageName").get(AppSP.vConsole_version)}").getString("vConsole")};" +
+                                    "   ${prefs("resources_vConsole_${prefs("apps_${Main.mProcessName}").get(AppSP.vConsole_version)}").getString("vConsole")};" +
                                     "   var vConsole=new VConsole();" + // 创建全局变量以供用户使用
                                     "   document.getElementById('__vconsole').style.zIndex=2147483647;" + // 将 vConsole 提升到最顶层
                                     "}"
