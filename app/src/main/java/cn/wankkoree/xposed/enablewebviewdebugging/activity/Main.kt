@@ -21,9 +21,10 @@ import cn.wankkoree.xposed.enablewebviewdebugging.data.getSet
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.MainBinding
 import cn.wankkoree.xposed.enablewebviewdebugging.http.Http
 import com.google.gson.GsonBuilder
-import com.highcapable.yukihookapi.hook.xposed.YukiHookModuleStatus
-import com.highcapable.yukihookapi.hook.factory.isModuleActive
-import com.highcapable.yukihookapi.hook.factory.isTaiChiModuleActive
+import com.highcapable.yukihookapi.YukiHookAPI.Status.executorName
+import com.highcapable.yukihookapi.YukiHookAPI.Status.executorVersion
+import com.highcapable.yukihookapi.YukiHookAPI.Status.isModuleActive
+import com.highcapable.yukihookapi.YukiHookAPI.Status.isTaiChiModuleActive
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -52,8 +53,8 @@ class Main: AppCompatActivity() {
             viewBinding.mainStatusText.text = getString(R.string.enabled)
             viewBinding.mainXposedText.visibility = View.VISIBLE
             when {
-                YukiHookModuleStatus.executorVersion > 0 -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format("${YukiHookModuleStatus.executorName}(API ${YukiHookModuleStatus.executorVersion})")
-                isTaiChiModuleActive -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format(YukiHookModuleStatus.executorName)
+                executorVersion > 0 -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format("${executorName}(API ${executorVersion})")
+                isTaiChiModuleActive -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format(executorName)
                 else -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format(getString(R.string.unknown))
             }
         } else {

@@ -10,11 +10,11 @@ import cn.wankkoree.xposed.enablewebviewdebugging.http.bean.HookRules
 import com.google.gson.Gson
 import com.highcapable.yukihookapi.YukiHookAPI
 import com.highcapable.yukihookapi.annotation.xposed.InjectYukiHookWithXposed
-import com.highcapable.yukihookapi.hook.xposed.proxy.YukiHookXposedInitProxy
+import com.highcapable.yukihookapi.hook.xposed.proxy.IYukiHookXposedInit
 import com.highcapable.yukihookapi.hook.log.*
 
-@InjectYukiHookWithXposed
-class Main : YukiHookXposedInitProxy {
+@InjectYukiHookWithXposed(entryClassName = "Entry", isUsingResourcesHook = false)
+class Main : IYukiHookXposedInit {
     companion object {
         val debug = BuildConfig.DEBUG || BuildConfig.BUILD_TYPE == "dev"
         var mProcessName = ""
