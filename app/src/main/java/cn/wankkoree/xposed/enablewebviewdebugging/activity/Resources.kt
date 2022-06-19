@@ -34,6 +34,7 @@ class Resources : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.Main) {
             refresh()
 
+            viewBinding.resourcesVconsoleDownload.isEnabled = false
             val vConsoleVersionStr = try {
                 Http.get("https://data.jsdelivr.com/v1/package/npm/vconsole")
             } catch(e: Exception) {
@@ -46,12 +47,14 @@ class Resources : AppCompatActivity() {
                 adapter.setDropDownViewResource(R.layout.component_spinneritem)
                 viewBinding.resourcesVconsoleVersion.adapter = adapter
                 viewBinding.resourcesVconsoleVersion.setSelection(adapter.getPosition(vConsoleVersion.tags.latest))
+                viewBinding.resourcesVconsoleDownload.isEnabled = true
             } else {
                 toast?.cancel()
                 toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole)), Toast.LENGTH_SHORT)
                 toast!!.show()
             }
 
+            viewBinding.resourcesNebulaucsdkDownload.isEnabled = false
             val nebulaUCSDKVersionStr = try {
                 Http.get("https://api.github.com/repos/WankkoRee/EnableWebViewDebugging-Rules/contents/resources/nebulaucsdk")
             } catch(e: Exception) {
@@ -64,6 +67,7 @@ class Resources : AppCompatActivity() {
                 adapter.setDropDownViewResource(R.layout.component_spinneritem)
                 viewBinding.resourcesNebulaucsdkVersion.adapter = adapter
                 viewBinding.resourcesNebulaucsdkVersion.setSelection(0)
+                viewBinding.resourcesNebulaucsdkDownload.isEnabled = true
             } else {
                 toast?.cancel()
                 toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), Toast.LENGTH_SHORT)
