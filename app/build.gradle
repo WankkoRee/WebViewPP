@@ -22,8 +22,8 @@ android {
         applicationId "cn.wankkoree.xposed.enablewebviewdebugging"
         minSdk 27
         targetSdk 32
-        versionCode 9
-        versionName 'v2.1.0'
+        versionCode 10
+        versionName 'v2.1.1'
     }
 
     buildTypes {
