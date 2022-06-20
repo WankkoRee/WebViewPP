@@ -105,8 +105,8 @@ data class HookRules (
         val remark: String,
         @SerializedName("Class_XWebView")
         val Class_XWebView: String,
-        @SerializedName("Method_initWebviewCoreInternal")
-        val Method_initWebviewCoreInternal: String,
+        @SerializedName("Method_initWebviewCore")
+        val Method_initWebviewCore: String,
         @SerializedName("Method_isXWalk")
         val Method_isXWalk: String,
         @SerializedName("Method_isPinus")

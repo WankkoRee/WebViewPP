@@ -493,7 +493,7 @@ class App : AppCompatActivity() {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebView::class.java)
                             v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != null && hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
                                 getString(R.string.code_hookParam, "Class_XWebView", hookEntry.Class_XWebView),
-                                getString(R.string.code_hookParam, "Method_initWebviewCoreInternal", hookEntry.Method_initWebviewCoreInternal),
+                                getString(R.string.code_hookParam, "Method_initWebviewCore", hookEntry.Method_initWebviewCore),
                                 getString(R.string.code_hookParam, "Method_isXWalk", hookEntry.Method_isXWalk),
                                 getString(R.string.code_hookParam, "Method_isPinus", hookEntry.Method_isPinus),
                                 getString(R.string.code_hookParam, "Method_isX5", hookEntry.Method_isX5),

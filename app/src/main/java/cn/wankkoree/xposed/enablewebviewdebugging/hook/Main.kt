@@ -127,7 +127,7 @@ class Main : IYukiHookXposedInit {
                         val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebView::class.java)
                         hookXWebView(
                             Class_XWebView = hookEntry.Class_XWebView,
-                            Method_initWebviewCoreInternal = hookEntry.Method_initWebviewCoreInternal,
+                            Method_initWebviewCore = hookEntry.Method_initWebviewCore,
                             Method_isXWalk = hookEntry.Method_isXWalk,
                             Method_isPinus = hookEntry.Method_isPinus,
                             Method_isX5 = hookEntry.Method_isX5,

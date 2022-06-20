@@ -602,12 +602,12 @@
                     app:boxBackgroundColor="@color/transparent"
                     android:transitionGroup="true"
                     >
-                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookXWebView_Method_initWebviewCoreInternal"
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/rule_hookXWebView_Method_initWebviewCore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
                         android:background="@color/transparent"
-                        android:hint="Method_initWebviewCoreInternal"
+                        android:hint="Method_initWebviewCore"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
