@@ -53,9 +53,8 @@ class Main: AppCompatActivity() {
             viewBinding.mainStatusText.text = getString(R.string.enabled)
             viewBinding.mainXposedText.visibility = View.VISIBLE
             when {
-                executorVersion > 0 -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format("${executorName}(API ${executorVersion})")
-                isTaiChiModuleActive -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format(executorName)
-                else -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format(getString(R.string.unknown))
+                executorVersion != -1 -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format("${executorName}(API ${executorVersion})")
+                else -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format(executorName)
             }
         } else {
             viewBinding.mainStatusCard.backgroundTintList = colorStateSingle((getColor(R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
