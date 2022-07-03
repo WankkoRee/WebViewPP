@@ -352,6 +352,114 @@ class App : AppCompatActivity() {
                 modulePrefs("apps_$pkg").put(AppSP.vConsole_version, viewBinding.appResourcesVconsoleVersion.adapter.getItem(p) as String)
             }
         }
+        viewBinding.appResourcesVconsolePluginSourcesCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesVconsolePluginSourcesCard.setOnClickListener {
+            if (viewBinding.appResourcesVconsolePluginSourcesVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.vConsole_plugin_sources)
+                put(AppSP.vConsole_plugin_sources, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesVconsolePluginSourcesVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.vConsole_plugin_sources_version, viewBinding.appResourcesVconsolePluginSourcesVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesVconsolePluginStatsCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesVconsolePluginStatsCard.setOnClickListener {
+            if (viewBinding.appResourcesVconsolePluginStatsVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.vConsole_plugin_stats)
+                put(AppSP.vConsole_plugin_stats, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesVconsolePluginStatsVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.vConsole_plugin_stats_version, viewBinding.appResourcesVconsolePluginStatsVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesVconsolePluginVueDevtoolsCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesVconsolePluginVueDevtoolsCard.setOnClickListener {
+            if (viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.vConsole_plugin_vue_devtools)
+                put(AppSP.vConsole_plugin_vue_devtools, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.vConsole_plugin_vue_devtools_version, viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesVconsolePluginOutputlogCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesVconsolePluginOutputlogCard.setOnClickListener {
+            if (viewBinding.appResourcesVconsolePluginOutputlogVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.vConsole_plugin_outputlog)
+                put(AppSP.vConsole_plugin_outputlog, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesVconsolePluginOutputlogVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.vConsole_plugin_outputlog_version, viewBinding.appResourcesVconsolePluginOutputlogVersion.adapter.getItem(p) as String)
+            }
+        }
         viewBinding.appResourcesErudaCard.setOnLongClickListener {
             this@App.resourcesResultContract.launch(Unit)
             true
@@ -377,6 +485,303 @@ class App : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
                 modulePrefs("apps_$pkg").put(AppSP.eruda_version, viewBinding.appResourcesErudaVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesErudaPluginFpsCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesErudaPluginFpsCard.setOnClickListener {
+            if (viewBinding.appResourcesErudaPluginFpsVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.eruda_plugin_fps)
+                put(AppSP.eruda_plugin_fps, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesErudaPluginFpsVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_fps_version, viewBinding.appResourcesErudaPluginFpsVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesErudaPluginFeaturesCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesErudaPluginFeaturesCard.setOnClickListener {
+            if (viewBinding.appResourcesErudaPluginFeaturesVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.eruda_plugin_features)
+                put(AppSP.eruda_plugin_features, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesErudaPluginFeaturesVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_features_version, viewBinding.appResourcesErudaPluginFeaturesVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesErudaPluginTimingCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesErudaPluginTimingCard.setOnClickListener {
+            if (viewBinding.appResourcesErudaPluginTimingVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.eruda_plugin_timing)
+                put(AppSP.eruda_plugin_timing, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesErudaPluginTimingVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_timing_version, viewBinding.appResourcesErudaPluginTimingVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesErudaPluginMemoryCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesErudaPluginMemoryCard.setOnClickListener {
+            if (viewBinding.appResourcesErudaPluginMemoryVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.eruda_plugin_memory)
+                put(AppSP.eruda_plugin_memory, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesErudaPluginMemoryVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_memory_version, viewBinding.appResourcesErudaPluginMemoryVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesErudaPluginCodeCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesErudaPluginCodeCard.setOnClickListener {
+            if (viewBinding.appResourcesErudaPluginCodeVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.eruda_plugin_code)
+                put(AppSP.eruda_plugin_code, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesErudaPluginCodeVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_code_version, viewBinding.appResourcesErudaPluginCodeVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesErudaPluginBenchmarkCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesErudaPluginBenchmarkCard.setOnClickListener {
+            if (viewBinding.appResourcesErudaPluginBenchmarkVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.eruda_plugin_fps)
+                put(AppSP.eruda_plugin_fps, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesErudaPluginBenchmarkVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_fps_version, viewBinding.appResourcesErudaPluginBenchmarkVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesErudaPluginBenchmarkCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesErudaPluginBenchmarkCard.setOnClickListener {
+            if (viewBinding.appResourcesErudaPluginBenchmarkVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.eruda_plugin_benchmark)
+                put(AppSP.eruda_plugin_benchmark, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesErudaPluginBenchmarkVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_benchmark_version, viewBinding.appResourcesErudaPluginBenchmarkVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesErudaPluginGeolocationCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesErudaPluginGeolocationCard.setOnClickListener {
+            if (viewBinding.appResourcesErudaPluginGeolocationVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.eruda_plugin_geolocation)
+                put(AppSP.eruda_plugin_geolocation, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesErudaPluginGeolocationVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_geolocation_version, viewBinding.appResourcesErudaPluginGeolocationVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesErudaPluginDomCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesErudaPluginDomCard.setOnClickListener {
+            if (viewBinding.appResourcesErudaPluginDomVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.eruda_plugin_dom)
+                put(AppSP.eruda_plugin_dom, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesErudaPluginDomVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_dom_version, viewBinding.appResourcesErudaPluginDomVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesErudaPluginOrientationCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesErudaPluginOrientationCard.setOnClickListener {
+            if (viewBinding.appResourcesErudaPluginOrientationVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.eruda_plugin_orientation)
+                put(AppSP.eruda_plugin_orientation, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesErudaPluginOrientationVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_orientation_version, viewBinding.appResourcesErudaPluginOrientationVersion.adapter.getItem(p) as String)
+            }
+        }
+        viewBinding.appResourcesErudaPluginTouchesCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesErudaPluginTouchesCard.setOnClickListener {
+            if (viewBinding.appResourcesErudaPluginTouchesVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.eruda_plugin_touches)
+                put(AppSP.eruda_plugin_touches, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesErudaPluginTouchesVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_touches_version, viewBinding.appResourcesErudaPluginTouchesVersion.adapter.getItem(p) as String)
             }
         }
         viewBinding.appResourcesNebulaucsdkCard.setOnLongClickListener {
@@ -415,10 +820,66 @@ class App : AppCompatActivity() {
                 setDropDownViewResource(R.layout.component_spinneritem)
             }
             viewBinding.appResourcesVconsoleVersion.adapter = vConsoleAdapter
+            val vConsolePluginSourcesAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.vConsole_plugin_sources_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesVconsolePluginSourcesVersion.adapter = vConsolePluginSourcesAdapter
+            val vConsolePluginStatsAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.vConsole_plugin_stats_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesVconsolePluginStatsVersion.adapter = vConsolePluginStatsAdapter
+            val vConsolePluginVueDevtoolsAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.vConsole_plugin_vue_devtools_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.adapter = vConsolePluginVueDevtoolsAdapter
+            val vConsolePluginOutputlogAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.vConsole_plugin_outputlog_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesVconsolePluginOutputlogVersion.adapter = vConsolePluginOutputlogAdapter
             val erudaAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.eruda_versions).toArray()).apply {
                 setDropDownViewResource(R.layout.component_spinneritem)
             }
             viewBinding.appResourcesErudaVersion.adapter = erudaAdapter
+            val erudaPluginFpsAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.eruda_plugin_fps_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesErudaPluginFpsVersion.adapter = erudaPluginFpsAdapter
+            val erudaPluginFeaturesAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.eruda_plugin_features_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesErudaPluginFeaturesVersion.adapter = erudaPluginFeaturesAdapter
+            val erudaPluginTimingAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.eruda_plugin_timing_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesErudaPluginTimingVersion.adapter = erudaPluginTimingAdapter
+            val erudaPluginMemoryAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.eruda_plugin_memory_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesErudaPluginMemoryVersion.adapter = erudaPluginMemoryAdapter
+            val erudaPluginCodeAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.eruda_plugin_code_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesErudaPluginCodeVersion.adapter = erudaPluginCodeAdapter
+            val erudaPluginBenchmarkAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.eruda_plugin_benchmark_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesErudaPluginBenchmarkVersion.adapter = erudaPluginBenchmarkAdapter
+            val erudaPluginGeolocationAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.eruda_plugin_geolocation_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesErudaPluginGeolocationVersion.adapter = erudaPluginGeolocationAdapter
+            val erudaPluginDomAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.eruda_plugin_dom_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesErudaPluginDomVersion.adapter = erudaPluginDomAdapter
+            val erudaPluginOrientationAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.eruda_plugin_orientation_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesErudaPluginOrientationVersion.adapter = erudaPluginOrientationAdapter
+            val erudaPluginTouchesAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.eruda_plugin_touches_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesErudaPluginTouchesVersion.adapter = erudaPluginTouchesAdapter
             val nebulaUCSDKAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.nebulaUCSDK_versions).toArray()).apply {
                 setDropDownViewResource(R.layout.component_spinneritem)
             }
@@ -451,6 +912,62 @@ class App : AppCompatActivity() {
                     })
                 }
             }
+            get(AppSP.vConsole_plugin_sources).also {
+                viewBinding.appResourcesVconsolePluginSourcesCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsolePluginSourcesCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesVconsolePluginSourcesVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = vConsolePluginSourcesAdapter.getPosition(get(AppSP.vConsole_plugin_sources_version))
+                    viewBinding.appResourcesVconsolePluginSourcesVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.vConsole_plugin_stats).also {
+                viewBinding.appResourcesVconsolePluginStatsCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsolePluginStatsCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesVconsolePluginStatsVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = vConsolePluginStatsAdapter.getPosition(get(AppSP.vConsole_plugin_stats_version))
+                    viewBinding.appResourcesVconsolePluginStatsVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.vConsole_plugin_vue_devtools).also {
+                viewBinding.appResourcesVconsolePluginVueDevtoolsCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsolePluginVueDevtoolsCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = vConsolePluginVueDevtoolsAdapter.getPosition(get(AppSP.vConsole_plugin_vue_devtools_version))
+                    viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.vConsole_plugin_outputlog).also {
+                viewBinding.appResourcesVconsolePluginOutputlogCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsolePluginOutputlogCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesVconsolePluginOutputlogVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = vConsolePluginOutputlogAdapter.getPosition(get(AppSP.vConsole_plugin_outputlog_version))
+                    viewBinding.appResourcesVconsolePluginOutputlogVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
             get(AppSP.eruda).also {
                 viewBinding.appResourcesErudaCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
@@ -458,6 +975,146 @@ class App : AppCompatActivity() {
                 if (it) {
                     val p = erudaAdapter.getPosition(get(AppSP.eruda_version))
                     viewBinding.appResourcesErudaVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.eruda_plugin_fps).also {
+                viewBinding.appResourcesErudaPluginFpsCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginFpsCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginFpsVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = erudaPluginFpsAdapter.getPosition(get(AppSP.eruda_plugin_fps_version))
+                    viewBinding.appResourcesErudaPluginFpsVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.eruda_plugin_features).also {
+                viewBinding.appResourcesErudaPluginFeaturesCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginFeaturesCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginFeaturesVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = erudaPluginFeaturesAdapter.getPosition(get(AppSP.eruda_plugin_features_version))
+                    viewBinding.appResourcesErudaPluginFeaturesVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.eruda_plugin_timing).also {
+                viewBinding.appResourcesErudaPluginTimingCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginTimingCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginTimingVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = erudaPluginTimingAdapter.getPosition(get(AppSP.eruda_plugin_timing_version))
+                    viewBinding.appResourcesErudaPluginTimingVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.eruda_plugin_memory).also {
+                viewBinding.appResourcesErudaPluginMemoryCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginMemoryCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginMemoryVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = erudaPluginMemoryAdapter.getPosition(get(AppSP.eruda_plugin_memory_version))
+                    viewBinding.appResourcesErudaPluginMemoryVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.eruda_plugin_code).also {
+                viewBinding.appResourcesErudaPluginCodeCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginCodeCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginCodeVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = erudaPluginCodeAdapter.getPosition(get(AppSP.eruda_plugin_code_version))
+                    viewBinding.appResourcesErudaPluginCodeVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.eruda_plugin_benchmark).also {
+                viewBinding.appResourcesErudaPluginBenchmarkCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginBenchmarkCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginBenchmarkVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = erudaPluginBenchmarkAdapter.getPosition(get(AppSP.eruda_plugin_benchmark_version))
+                    viewBinding.appResourcesErudaPluginBenchmarkVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.eruda_plugin_geolocation).also {
+                viewBinding.appResourcesErudaPluginGeolocationCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginGeolocationCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginGeolocationVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = erudaPluginGeolocationAdapter.getPosition(get(AppSP.eruda_plugin_geolocation_version))
+                    viewBinding.appResourcesErudaPluginGeolocationVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.eruda_plugin_dom).also {
+                viewBinding.appResourcesErudaPluginDomCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginDomCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginDomVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = erudaPluginDomAdapter.getPosition(get(AppSP.eruda_plugin_dom_version))
+                    viewBinding.appResourcesErudaPluginDomVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.eruda_plugin_orientation).also {
+                viewBinding.appResourcesErudaPluginOrientationCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginOrientationCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginOrientationVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = erudaPluginOrientationAdapter.getPosition(get(AppSP.eruda_plugin_orientation_version))
+                    viewBinding.appResourcesErudaPluginOrientationVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.eruda_plugin_touches).also {
+                viewBinding.appResourcesErudaPluginTouchesCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginTouchesCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginTouchesVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = erudaPluginTouchesAdapter.getPosition(get(AppSP.eruda_plugin_touches_version))
+                    viewBinding.appResourcesErudaPluginTouchesVersion.setSelection(if (p >= 0) p else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()

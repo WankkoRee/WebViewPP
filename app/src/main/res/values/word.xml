@@ -9,7 +9,21 @@
     <string name="enabled">Enabled</string>
     <string name="back">Back</string>
     <string name="vconsole" translatable="false">vConsole</string>
+    <string name="vconsole_plugin_sources">vConsole Plugin: sources</string>
+    <string name="vconsole_plugin_stats">vConsole Plugin: stats</string>
+    <string name="vconsole_plugin_vue_devtools">vConsole Plugin: vue-devtools</string>
+    <string name="vconsole_plugin_outputlog">vConsole Plugin: outputlog</string>
     <string name="eruda" translatable="false">Eruda</string>
+    <string name="eruda_plugin_fps">Eruda Plugin: fps</string>
+    <string name="eruda_plugin_features">Eruda Plugin: features</string>
+    <string name="eruda_plugin_timing">Eruda Plugin: timing</string>
+    <string name="eruda_plugin_memory">Eruda Plugin: memory</string>
+    <string name="eruda_plugin_code">Eruda Plugin: code</string>
+    <string name="eruda_plugin_benchmark">Eruda Plugin: benchmark</string>
+    <string name="eruda_plugin_geolocation">Eruda Plugin: geolocation</string>
+    <string name="eruda_plugin_dom">Eruda Plugin: dom</string>
+    <string name="eruda_plugin_orientation">Eruda Plugin: orientation</string>
+    <string name="eruda_plugin_touches">Eruda Plugin: touches</string>
     <string name="nebulaucsdk">NebulaUCSDK</string>
     <string name="none">None</string>
     <string name="download_started">Download Started</string>
