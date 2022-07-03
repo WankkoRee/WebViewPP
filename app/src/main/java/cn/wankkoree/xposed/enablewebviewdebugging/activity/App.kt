@@ -910,6 +910,16 @@ class App : AppCompatActivity() {
                         toast!!.show()
                         0
                     })
+
+                    viewBinding.appResourcesVconsolePluginSourcesCard.visibility = View.VISIBLE
+                    viewBinding.appResourcesVconsolePluginStatsCard.visibility = View.VISIBLE
+                    viewBinding.appResourcesVconsolePluginVueDevtoolsCard.visibility = View.VISIBLE
+                    viewBinding.appResourcesVconsolePluginOutputlogCard.visibility = View.VISIBLE
+                } else {
+                    viewBinding.appResourcesVconsolePluginSourcesCard.visibility = View.GONE
+                    viewBinding.appResourcesVconsolePluginStatsCard.visibility = View.GONE
+                    viewBinding.appResourcesVconsolePluginVueDevtoolsCard.visibility = View.GONE
+                    viewBinding.appResourcesVconsolePluginOutputlogCard.visibility = View.GONE
                 }
             }
             get(AppSP.vConsole_plugin_sources).also {
@@ -980,6 +990,28 @@ class App : AppCompatActivity() {
                         toast!!.show()
                         0
                     })
+
+                    viewBinding.appResourcesErudaPluginFpsCard.visibility = View.VISIBLE
+                    viewBinding.appResourcesErudaPluginFeaturesCard.visibility = View.VISIBLE
+                    viewBinding.appResourcesErudaPluginTimingCard.visibility = View.VISIBLE
+                    viewBinding.appResourcesErudaPluginMemoryCard.visibility = View.VISIBLE
+                    viewBinding.appResourcesErudaPluginCodeCard.visibility = View.VISIBLE
+                    viewBinding.appResourcesErudaPluginBenchmarkCard.visibility = View.VISIBLE
+                    viewBinding.appResourcesErudaPluginGeolocationCard.visibility = View.VISIBLE
+                    viewBinding.appResourcesErudaPluginDomCard.visibility = View.VISIBLE
+                    viewBinding.appResourcesErudaPluginOrientationCard.visibility = View.VISIBLE
+                    viewBinding.appResourcesErudaPluginTouchesCard.visibility = View.VISIBLE
+                } else {
+                    viewBinding.appResourcesErudaPluginFpsCard.visibility = View.GONE
+                    viewBinding.appResourcesErudaPluginFeaturesCard.visibility = View.GONE
+                    viewBinding.appResourcesErudaPluginTimingCard.visibility = View.GONE
+                    viewBinding.appResourcesErudaPluginMemoryCard.visibility = View.GONE
+                    viewBinding.appResourcesErudaPluginCodeCard.visibility = View.GONE
+                    viewBinding.appResourcesErudaPluginBenchmarkCard.visibility = View.GONE
+                    viewBinding.appResourcesErudaPluginGeolocationCard.visibility = View.GONE
+                    viewBinding.appResourcesErudaPluginDomCard.visibility = View.GONE
+                    viewBinding.appResourcesErudaPluginOrientationCard.visibility = View.GONE
+                    viewBinding.appResourcesErudaPluginTouchesCard.visibility = View.GONE
                 }
             }
             get(AppSP.eruda_plugin_fps).also {
