@@ -8,6 +8,8 @@ object AppSP {
     //val "hook_entry_$name" = PrefsData("hook_entry_$name", "{}") // Hook 规则的 Json
     val vConsole = PrefsData("vConsole", false)
     val vConsole_version = PrefsData("vConsole_version", "")
+    val eruda = PrefsData("eruda", false)
+    val eruda_version = PrefsData("eruda_version", "")
     val nebulaUCSDK = PrefsData("nebulaUCSDK", false)
     val nebulaUCSDK_version = PrefsData("nebulaUCSDK_version", "")
 }

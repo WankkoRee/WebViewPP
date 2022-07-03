@@ -53,7 +53,7 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4,
 
 ## To do / 计划
 
-- [ ] 增加注入`Eruda`
+- [x] 增加注入`Eruda`
 - [ ] 增加注入`Chii`
 
 ## Credits / 感谢

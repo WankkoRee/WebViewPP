@@ -54,6 +54,26 @@ class Resources : AppCompatActivity() {
                 toast!!.show()
             }
 
+            viewBinding.resourcesErudaDownload.isEnabled = false
+            val erudaVersionStr = try {
+                Http.get("https://data.jsdelivr.com/v1/package/npm/eruda")
+            } catch(e: Exception) {
+                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda)), e)
+                null
+            }
+            if (erudaVersionStr != null) {
+                val erudaVersion = Gson().fromJson(erudaVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
+                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, erudaVersion.versions)
+                adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                viewBinding.resourcesErudaVersion.adapter = adapter
+                viewBinding.resourcesErudaVersion.setSelection(adapter.getPosition(erudaVersion.tags.latest))
+                viewBinding.resourcesErudaDownload.isEnabled = true
+            } else {
+                toast?.cancel()
+                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda)), Toast.LENGTH_SHORT)
+                toast!!.show()
+            }
+
             viewBinding.resourcesNebulaucsdkDownload.isEnabled = false
             val nebulaUCSDKVersionStr = try {
                 Http.get("https://api.github.com/repos/WankkoRee/EnableWebViewDebugging-Rules/contents/resources/nebulaucsdk")
@@ -79,6 +99,7 @@ class Resources : AppCompatActivity() {
             finish()
         }
         viewBinding.resourcesVconsoleCard.setOnClickListener { tips() }
+        viewBinding.resourcesErudaCard.setOnClickListener { tips() }
         viewBinding.resourcesNebulaucsdkCard.setOnClickListener { tips() }
         viewBinding.resourcesVconsoleDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
             val version = viewBinding.resourcesVconsoleVersion.selectedItem as String
@@ -100,6 +121,38 @@ class Resources : AppCompatActivity() {
                     putString("vConsole", vConsoleStr)
                     name("resources")
                     try { put(ResourcesSP.vConsole_versions, version) } catch (e: ValueAlreadyExistedInSet) {
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    }
+                }
+                refresh()
+            } else {
+                toast?.cancel()
+                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
+                toast!!.show()
+            }
+        } }
+        viewBinding.resourcesErudaDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            val version = viewBinding.resourcesErudaVersion.selectedItem as String
+            toast?.cancel()
+            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.eruda)}$version", Toast.LENGTH_SHORT)
+            toast!!.show()
+            val erudaStr = try {
+                Http.get("https://cdn.jsdelivr.net/npm/eruda@$version/eruda.js")
+            } catch(e: Exception) {
+                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
+                null
+            }
+            if (erudaStr != null) {
+                toast?.cancel()
+                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
+                toast!!.show()
+                with(modulePrefs) {
+                    name("resources_eruda_$version")
+                    putString("eruda", erudaStr)
+                    name("resources")
+                    try { put(ResourcesSP.eruda_versions, version) } catch (e: ValueAlreadyExistedInSet) {
                         toast?.cancel()
                         toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
                         toast!!.show()
@@ -155,9 +208,11 @@ class Resources : AppCompatActivity() {
 
     private fun refresh() {
         val vConsoleVersions: HashSet<String>
+        val erudaVersions: HashSet<String>
         val nebulaUCSDKVersions: HashSet<String>
         with(modulePrefs("resources")) {
             vConsoleVersions = getSet(ResourcesSP.vConsole_versions)
+            erudaVersions = getSet(ResourcesSP.eruda_versions)
             nebulaUCSDKVersions = getSet(ResourcesSP.nebulaUCSDK_versions)
         }
         viewBinding.resourcesVconsoleLocal.apply {
@@ -183,6 +238,39 @@ class Resources : AppCompatActivity() {
                             remove(ResourcesSP.vConsole_versions, version)
                             name("resources_vConsole_$version")
                             remove("vConsole")
+                        }
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.delete_completed), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        refresh()
+                        true
+                    }
+                })
+            }
+        }
+        viewBinding.resourcesErudaLocal.apply {
+            removeAllViews()
+            erudaVersions.forEach { erudaVersion ->
+                addView(Tag(context).apply {
+                    text = erudaVersion
+                    color = getColor(R.color.backgroundInfo)
+                    setOnLongClickListener { t ->
+                        val version = (t as Tag).text as String
+                        with(modulePrefs) {
+                            name("apps")
+                            getSet(AppsSP.enabled).forEach { pkg ->
+                                name("apps_$pkg")
+                                if (get(AppSP.eruda) && get(AppSP.eruda_version) == version) {
+                                    toast?.cancel()
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast!!.show()
+                                    return@setOnLongClickListener true
+                                }
+                            }
+                            name("resources")
+                            remove(ResourcesSP.eruda_versions, version)
+                            name("resources_eruda_$version")
+                            remove("eruda")
                         }
                         toast?.cancel()
                         toast = Toast.makeText(context, getString(R.string.delete_completed), Toast.LENGTH_SHORT)

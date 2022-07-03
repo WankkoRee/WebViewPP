@@ -9,6 +9,7 @@
     <string name="enabled">Enabled</string>
     <string name="back">Back</string>
     <string name="vconsole" translatable="false">vConsole</string>
+    <string name="eruda" translatable="false">Eruda</string>
     <string name="nebulaucsdk">NebulaUCSDK</string>
     <string name="none">None</string>
     <string name="download_started">Download Started</string>

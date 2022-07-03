@@ -134,6 +134,67 @@
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView android:id="@+id/resources_eruda_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+
+                style="@style/ThemeComponentCardView"
+                >
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    >
+                    <TextView android:id="@+id/resources_eruda_download"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+
+                        app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
+                        app:drawableTint="@color/textPrimary"
+                        android:tooltipText="@string/resources_eruda_download"
+                        android:contentDescription="@string/resources_eruda_download"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        />
+                    <TextView android:id="@+id/resources_eruda_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_local"
+
+                        style="@style/ThemeComponentTextViewPrimary"
+                        android:textSize="16sp"
+                        android:text="@string/eruda"
+                        />
+                    <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_local"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_text"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_version"
+                        app:flexWrap="wrap"
+                        />
+                    <Spinner android:id="@+id/resources_eruda_version"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_local"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView android:id="@+id/resources_nebulaucsdk_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

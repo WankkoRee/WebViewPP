@@ -352,6 +352,33 @@ class App : AppCompatActivity() {
                 modulePrefs("apps_$pkg").put(AppSP.vConsole_version, viewBinding.appResourcesVconsoleVersion.adapter.getItem(p) as String)
             }
         }
+        viewBinding.appResourcesErudaCard.setOnLongClickListener {
+            this@App.resourcesResultContract.launch(Unit)
+            true
+        }
+        viewBinding.appResourcesErudaCard.setOnClickListener {
+            if (viewBinding.appResourcesErudaVersion.adapter.count == 0) {
+                toast?.cancel()
+                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
+                toast!!.show()
+                return@setOnClickListener
+            }
+            val state = modulePrefs("apps_$pkg").run {
+                val state = !get(AppSP.eruda)
+                put(AppSP.eruda, state)
+                state
+            }
+            toast?.cancel()
+            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
+            toast!!.show()
+            refresh()
+        }
+        viewBinding.appResourcesErudaVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+            override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
+                modulePrefs("apps_$pkg").put(AppSP.eruda_version, viewBinding.appResourcesErudaVersion.adapter.getItem(p) as String)
+            }
+        }
         viewBinding.appResourcesNebulaucsdkCard.setOnLongClickListener {
             this@App.resourcesResultContract.launch(Unit)
             true
@@ -388,6 +415,10 @@ class App : AppCompatActivity() {
                 setDropDownViewResource(R.layout.component_spinneritem)
             }
             viewBinding.appResourcesVconsoleVersion.adapter = vConsoleAdapter
+            val erudaAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.eruda_versions).toArray()).apply {
+                setDropDownViewResource(R.layout.component_spinneritem)
+            }
+            viewBinding.appResourcesErudaVersion.adapter = erudaAdapter
             val nebulaUCSDKAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.nebulaUCSDK_versions).toArray()).apply {
                 setDropDownViewResource(R.layout.component_spinneritem)
             }
@@ -413,6 +444,20 @@ class App : AppCompatActivity() {
                 if (it) {
                     val p = vConsoleAdapter.getPosition(get(AppSP.vConsole_version))
                     viewBinding.appResourcesVconsoleVersion.setSelection(if (p >= 0) p else {
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                        0
+                    })
+                }
+            }
+            get(AppSP.eruda).also {
+                viewBinding.appResourcesErudaCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaVersion.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    val p = erudaAdapter.getPosition(get(AppSP.eruda_version))
+                    viewBinding.appResourcesErudaVersion.setSelection(if (p >= 0) p else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()

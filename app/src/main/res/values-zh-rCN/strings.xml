@@ -10,7 +10,7 @@
     <string name="main_resources_text">Hook 资源管理</string>
     <string name="main_resources_desc">在这管理一些可供载入的资源，如 vConsole</string>
     <string name="resources_vconsole_download">下载 vConsole</string>
-    <string name="resources_vconsole_local">本地版本: %s</string>
+    <string name="resources_eruda_download">下载 Eruda</string>
     <string name="resources_nebulaucsdk_download">下载 UC 调试内核</string>
     <string name="applistitem_num">%1$s，配置了 %2$d 条规则</string>
     <string name="apps_show_system_app">显示系统应用</string>

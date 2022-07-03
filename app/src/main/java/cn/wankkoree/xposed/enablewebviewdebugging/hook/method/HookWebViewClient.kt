@@ -12,7 +12,7 @@ import com.highcapable.yukihookapi.hook.type.java.StringType
 
 /** Hook WebViewClient类，实现：
  *
- * webViewClient.onPageFinished({webView.evaluateJavascript($vConsole)})
+ * webViewClient.onPageFinished({webView.evaluateJavascript($vConsole+$eruda)})
  **/
 fun PackageParam.hookWebViewClient (
     Class_WebView: String = "android.webkit.WebView",
@@ -27,7 +27,7 @@ fun PackageParam.hookWebViewClient (
             beforeHook {
                 val webView = args[0]
 
-                if (Main.debug) loggerD(msg = "${instanceClass.name}.onPageFinished({webView.evaluateJavascript(\$vConsole)})")
+                if (Main.debug) loggerD(msg = "${instanceClass.name}.onPageFinished({webView.evaluateJavascript(\$vConsole+\$eruda)})")
                 findClass(Class_WebView).normalClass!!.method {
                     name = Method_evaluateJavascript
                     param(StringType, Class_ValueCallback)
@@ -35,15 +35,28 @@ fun PackageParam.hookWebViewClient (
                     onNoSuchMethod {
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookWebViewClient\uD83D\uDC49onPageFinished\uD83D\uDC49evaluateJavascript", e = it)
                     }
-                    get(webView).call(
-                        "javascript:" + (if (prefs("apps_${Main.mProcessName}").get(AppSP.vConsole)) {
-                            "if (typeof vConsole === 'undefined'){" +
-                                    "   ${prefs("resources_vConsole_${prefs("apps_${Main.mProcessName}").get(AppSP.vConsole_version)}").getString("vConsole")};" +
-                                    "   var vConsole=new VConsole();" + // 创建全局变量以供用户使用
-                                    "   document.getElementById('__vconsole').style.zIndex=2147483647;" + // 将 vConsole 提升到最顶层
-                                    "}"
-                        } else ""), null
-                    )
+                    if (prefs("apps_${Main.mProcessName}").get(AppSP.vConsole)) {
+                        get(webView).call(
+                            "javascript:" +
+                            "if (typeof vConsole === 'undefined'){\n" +
+                            "   ${prefs("resources_vConsole_${prefs("apps_${Main.mProcessName}").get(AppSP.vConsole_version)}").getString("vConsole")};\n" +
+                            "   var vConsole=new VConsole();\n" + // 创建全局变量以供用户使用
+                            "   document.getElementById('__vconsole').style.zIndex=2147483647;\n" + // 将 vConsole 提升到最顶层
+                            "}\n"
+                            , null
+                        )
+                    }
+                    if (prefs("apps_${Main.mProcessName}").get(AppSP.eruda)) {
+                        get(webView).call(
+                            "javascript:" +
+                            "if (typeof eruda === 'undefined'){\n" +
+                            "   ${prefs("resources_eruda_${prefs("apps_${Main.mProcessName}").get(AppSP.eruda_version)}").getString("eruda")};\n" +
+                            "   eruda.init();\n" +
+                            "   eruda._shadowRoot.getElementById('eruda').style.zIndex=2147483647;\n" + // 将 eruda 提升到最顶层
+                            "}\n"
+                            , null
+                        )
+                    }
                 }
             }
         }.result {

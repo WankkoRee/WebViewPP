@@ -10,7 +10,7 @@
     <string name="main_resources_text">Hooking Resources Manager</string>
     <string name="main_resources_desc">Manage some loadable resources here, such as vConsole</string>
     <string name="resources_vconsole_download">Download vConsole</string>
-    <string name="resources_vconsole_local">Local Version: %s</string>
+    <string name="resources_eruda_download">Download Eruda</string>
     <string name="resources_nebulaucsdk_download">Download NebulaUCSDK</string>
     <string name="applistitem_num">%1$s, %2$d rules</string>
     <string name="apps_show_system_app">Show System Applications</string>
