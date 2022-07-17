@@ -29,6 +29,7 @@
     <string name="download_started">Download Started</string>
     <string name="download_completed">Download Completed</string>
     <string name="download_failed">Download Failed</string>
+    <string name="download_canceled">Download Canceled</string>
     <string name="pull_failed">Pull %s Failed</string>
     <string name="refresh">Refresh</string>
     <string name="user_application">User Application</string>
@@ -68,5 +69,14 @@
     <string name="rule_remark">Rule Remark</string>
     <string name="please_reset">Please Reset</string>
     <string name="github" translatable="false">GitHub</string>
+    <string name="email">E-Mail</string>
     <string name="telegram" translatable="false">Telegram</string>
+    <string name="data_source">Data Source</string>
+    <string name="custom">Custom</string>
+    <string name="fastgit" translatable="false">FastGit</string>
+    <string name="test">Test</string>
+    <string name="available">Available</string>
+    <string name="unavailable">Unavailable</string>
+    <string name="unknown_checked_radio_button_id">Unknown Checked Radio Button Id</string>
+    <string name="download">Download</string>
 </resources>

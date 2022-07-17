@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -13,14 +14,25 @@ import cn.wankkoree.xposed.enablewebviewdebugging.R
 import cn.wankkoree.xposed.enablewebviewdebugging.ValueAlreadyExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Tag
 import cn.wankkoree.xposed.enablewebviewdebugging.data.*
+import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP.data_source
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ResourcesBinding
-import cn.wankkoree.xposed.enablewebviewdebugging.http.Http
-import com.google.gson.Gson
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.core.requests.CancellableRequest
+import com.github.kittinunf.fuel.gson.responseObject
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
+import com.highcapable.yukihookapi.hook.xposed.prefs.data.PrefsData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class Resources : AppCompatActivity() {
+    enum class DownloadState {
+        Downloading, Succeed, Failed
+    }
+    companion object {
+        val downloadTasks : HashMap<Int, List<CancellableRequest>> = HashMap()
+        val downloadStates : HashMap<Int, Triple<MutableList<Enum<DownloadState>>, MutableList<Long>, MutableList<Long>>> = HashMap()
+    }
+
     private lateinit var viewBinding: ResourcesBinding
     private var toast: Toast? = null
     private lateinit var context: Context
@@ -35,344 +47,299 @@ class Resources : AppCompatActivity() {
             refresh()
 
             viewBinding.resourcesVconsoleDownload.isEnabled = false
-            val vConsoleVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/vconsole")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole)), e)
-                null
-            }
-            if (vConsoleVersionStr != null) {
-                val vConsoleVersion = Gson().fromJson(vConsoleVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, vConsoleVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesVconsoleVersion.adapter = adapter
-                viewBinding.resourcesVconsoleVersion.setSelection(adapter.getPosition(vConsoleVersion.tags.latest))
-                viewBinding.resourcesVconsoleDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesVconsoleVersion.adapter = adapter
+                        viewBinding.resourcesVconsoleVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesVconsoleDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesVconsolePluginSourcesDownload.isEnabled = false
-            val vConsolePluginSourcesVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/vconsole-sources")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_sources)), e)
-                null
-            }
-            if (vConsolePluginSourcesVersionStr != null) {
-                val vConsolePluginSourcesVersion = Gson().fromJson(vConsolePluginSourcesVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, vConsolePluginSourcesVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesVconsolePluginSourcesVersion.adapter = adapter
-                viewBinding.resourcesVconsolePluginSourcesVersion.setSelection(adapter.getPosition(vConsolePluginSourcesVersion.tags.latest))
-                viewBinding.resourcesVconsolePluginSourcesDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_sources)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole-sources")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesVconsolePluginSourcesVersion.adapter = adapter
+                        viewBinding.resourcesVconsolePluginSourcesVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesVconsolePluginSourcesDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_sources)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_sources)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesVconsolePluginStatsDownload.isEnabled = false
-            val vConsolePluginStatsVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/vconsole-stats-plugin")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_stats)), e)
-                null
-            }
-            if (vConsolePluginStatsVersionStr != null) {
-                val vConsolePluginStatsVersion = Gson().fromJson(vConsolePluginStatsVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, vConsolePluginStatsVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesVconsolePluginStatsVersion.adapter = adapter
-                viewBinding.resourcesVconsolePluginStatsVersion.setSelection(adapter.getPosition(vConsolePluginStatsVersion.tags.latest))
-                viewBinding.resourcesVconsolePluginStatsDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_stats)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole-stats-plugin")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesVconsolePluginStatsVersion.adapter = adapter
+                        viewBinding.resourcesVconsolePluginStatsVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesVconsolePluginStatsDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_stats)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_stats)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesVconsolePluginVueDevtoolsDownload.isEnabled = false
-            val vConsolePluginVueDevtoolsVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/vue-vconsole-devtools")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_vue_devtools)), e)
-                null
-            }
-            if (vConsolePluginVueDevtoolsVersionStr != null) {
-                val vConsolePluginVueDevtoolsVersion = Gson().fromJson(vConsolePluginVueDevtoolsVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, vConsolePluginVueDevtoolsVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesVconsolePluginVueDevtoolsVersion.adapter = adapter
-                viewBinding.resourcesVconsolePluginVueDevtoolsVersion.setSelection(adapter.getPosition(vConsolePluginVueDevtoolsVersion.tags.latest))
-                viewBinding.resourcesVconsolePluginVueDevtoolsDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_vue_devtools)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/vue-vconsole-devtools")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesVconsolePluginVueDevtoolsVersion.adapter = adapter
+                        viewBinding.resourcesVconsolePluginVueDevtoolsVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesVconsolePluginVueDevtoolsDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_vue_devtools)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_vue_devtools)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesVconsolePluginOutputlogDownload.isEnabled = false
-            val vConsolePluginOutputlogVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/vconsole-outputlog-plugin")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_outputlog)), e)
-                null
-            }
-            if (vConsolePluginOutputlogVersionStr != null) {
-                val vConsolePluginOutputlogVersion = Gson().fromJson(vConsolePluginOutputlogVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, vConsolePluginOutputlogVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesVconsolePluginOutputlogVersion.adapter = adapter
-                viewBinding.resourcesVconsolePluginOutputlogVersion.setSelection(adapter.getPosition(vConsolePluginOutputlogVersion.tags.latest))
-                viewBinding.resourcesVconsolePluginOutputlogDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_outputlog)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole-outputlog-plugin")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesVconsolePluginOutputlogVersion.adapter = adapter
+                        viewBinding.resourcesVconsolePluginOutputlogVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesVconsolePluginOutputlogDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_outputlog)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_outputlog)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesErudaDownload.isEnabled = false
-            val erudaVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/eruda")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda)), e)
-                null
-            }
-            if (erudaVersionStr != null) {
-                val erudaVersion = Gson().fromJson(erudaVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, erudaVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesErudaVersion.adapter = adapter
-                viewBinding.resourcesErudaVersion.setSelection(adapter.getPosition(erudaVersion.tags.latest))
-                viewBinding.resourcesErudaDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesErudaVersion.adapter = adapter
+                        viewBinding.resourcesErudaVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesErudaDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesErudaPluginFpsDownload.isEnabled = false
-            val erudaPluginFpsVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/eruda-fps")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_fps)), e)
-                null
-            }
-            if (erudaPluginFpsVersionStr != null) {
-                val erudaPluginFpsVersion = Gson().fromJson(erudaPluginFpsVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, erudaPluginFpsVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesErudaPluginFpsVersion.adapter = adapter
-                viewBinding.resourcesErudaPluginFpsVersion.setSelection(adapter.getPosition(erudaPluginFpsVersion.tags.latest))
-                viewBinding.resourcesErudaPluginFpsDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_fps)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-fps")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesErudaPluginFpsVersion.adapter = adapter
+                        viewBinding.resourcesErudaPluginFpsVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesErudaPluginFpsDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_fps)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_fps)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesErudaPluginFeaturesDownload.isEnabled = false
-            val erudaPluginFeaturesVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/eruda-features")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_features)), e)
-                null
-            }
-            if (erudaPluginFeaturesVersionStr != null) {
-                val erudaPluginFeaturesVersion = Gson().fromJson(erudaPluginFeaturesVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, erudaPluginFeaturesVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesErudaPluginFeaturesVersion.adapter = adapter
-                viewBinding.resourcesErudaPluginFeaturesVersion.setSelection(adapter.getPosition(erudaPluginFeaturesVersion.tags.latest))
-                viewBinding.resourcesErudaPluginFeaturesDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_features)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-features")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesErudaPluginFeaturesVersion.adapter = adapter
+                        viewBinding.resourcesErudaPluginFeaturesVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesErudaPluginFeaturesDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_features)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_features)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesErudaPluginTimingDownload.isEnabled = false
-            val erudaPluginTimingVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/eruda-timing")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_timing)), e)
-                null
-            }
-            if (erudaPluginTimingVersionStr != null) {
-                val erudaPluginTimingVersion = Gson().fromJson(erudaPluginTimingVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, erudaPluginTimingVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesErudaPluginTimingVersion.adapter = adapter
-                viewBinding.resourcesErudaPluginTimingVersion.setSelection(adapter.getPosition(erudaPluginTimingVersion.tags.latest))
-                viewBinding.resourcesErudaPluginTimingDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_timing)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-timing")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesErudaPluginTimingVersion.adapter = adapter
+                        viewBinding.resourcesErudaPluginTimingVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesErudaPluginTimingDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_timing)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_timing)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesErudaPluginMemoryDownload.isEnabled = false
-            val erudaPluginMemoryVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/eruda-memory")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_memory)), e)
-                null
-            }
-            if (erudaPluginMemoryVersionStr != null) {
-                val erudaPluginMemoryVersion = Gson().fromJson(erudaPluginMemoryVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, erudaPluginMemoryVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesErudaPluginMemoryVersion.adapter = adapter
-                viewBinding.resourcesErudaPluginMemoryVersion.setSelection(adapter.getPosition(erudaPluginMemoryVersion.tags.latest))
-                viewBinding.resourcesErudaPluginMemoryDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_memory)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-memory")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesErudaPluginMemoryVersion.adapter = adapter
+                        viewBinding.resourcesErudaPluginMemoryVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesErudaPluginMemoryDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_memory)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_memory)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesErudaPluginCodeDownload.isEnabled = false
-            val erudaPluginCodeVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/eruda-code")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_code)), e)
-                null
-            }
-            if (erudaPluginCodeVersionStr != null) {
-                val erudaPluginCodeVersion = Gson().fromJson(erudaPluginCodeVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, erudaPluginCodeVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesErudaPluginCodeVersion.adapter = adapter
-                viewBinding.resourcesErudaPluginCodeVersion.setSelection(adapter.getPosition(erudaPluginCodeVersion.tags.latest))
-                viewBinding.resourcesErudaPluginCodeDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_code)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-code")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesErudaPluginCodeVersion.adapter = adapter
+                        viewBinding.resourcesErudaPluginCodeVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesErudaPluginCodeDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_code)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_code)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesErudaPluginBenchmarkDownload.isEnabled = false
-            val erudaPluginBenchmarkVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/eruda-benchmark")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_benchmark)), e)
-                null
-            }
-            if (erudaPluginBenchmarkVersionStr != null) {
-                val erudaPluginBenchmarkVersion = Gson().fromJson(erudaPluginBenchmarkVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, erudaPluginBenchmarkVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesErudaPluginBenchmarkVersion.adapter = adapter
-                viewBinding.resourcesErudaPluginBenchmarkVersion.setSelection(adapter.getPosition(erudaPluginBenchmarkVersion.tags.latest))
-                viewBinding.resourcesErudaPluginBenchmarkDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_benchmark)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-benchmark")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesErudaPluginBenchmarkVersion.adapter = adapter
+                        viewBinding.resourcesErudaPluginBenchmarkVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesErudaPluginBenchmarkDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_benchmark)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_benchmark)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesErudaPluginGeolocationDownload.isEnabled = false
-            val erudaPluginGeolocationVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/eruda-geolocation")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_geolocation)), e)
-                null
-            }
-            if (erudaPluginGeolocationVersionStr != null) {
-                val erudaPluginGeolocationVersion = Gson().fromJson(erudaPluginGeolocationVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, erudaPluginGeolocationVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesErudaPluginGeolocationVersion.adapter = adapter
-                viewBinding.resourcesErudaPluginGeolocationVersion.setSelection(adapter.getPosition(erudaPluginGeolocationVersion.tags.latest))
-                viewBinding.resourcesErudaPluginGeolocationDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_geolocation)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-geolocation")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesErudaPluginGeolocationVersion.adapter = adapter
+                        viewBinding.resourcesErudaPluginGeolocationVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesErudaPluginGeolocationDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_geolocation)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_geolocation)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesErudaPluginDomDownload.isEnabled = false
-            val erudaPluginDomVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/eruda-dom")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_dom)), e)
-                null
-            }
-            if (erudaPluginDomVersionStr != null) {
-                val erudaPluginDomVersion = Gson().fromJson(erudaPluginDomVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, erudaPluginDomVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesErudaPluginDomVersion.adapter = adapter
-                viewBinding.resourcesErudaPluginDomVersion.setSelection(adapter.getPosition(erudaPluginDomVersion.tags.latest))
-                viewBinding.resourcesErudaPluginDomDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_dom)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-dom")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesErudaPluginDomVersion.adapter = adapter
+                        viewBinding.resourcesErudaPluginDomVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesErudaPluginDomDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_dom)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_dom)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesErudaPluginOrientationDownload.isEnabled = false
-            val erudaPluginOrientationVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/eruda-orientation")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_orientation)), e)
-                null
-            }
-            if (erudaPluginOrientationVersionStr != null) {
-                val erudaPluginOrientationVersion = Gson().fromJson(erudaPluginOrientationVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, erudaPluginOrientationVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesErudaPluginOrientationVersion.adapter = adapter
-                viewBinding.resourcesErudaPluginOrientationVersion.setSelection(adapter.getPosition(erudaPluginOrientationVersion.tags.latest))
-                viewBinding.resourcesErudaPluginOrientationDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_orientation)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-orientation")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesErudaPluginOrientationVersion.adapter = adapter
+                        viewBinding.resourcesErudaPluginOrientationVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesErudaPluginOrientationDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_orientation)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_orientation)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesErudaPluginTouchesDownload.isEnabled = false
-            val erudaPluginTouchesVersionStr = try {
-                Http.get("https://data.jsdelivr.com/v1/package/npm/eruda-touches")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_touches)), e)
-                null
-            }
-            if (erudaPluginTouchesVersionStr != null) {
-                val erudaPluginTouchesVersion = Gson().fromJson(erudaPluginTouchesVersionStr, cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, erudaPluginTouchesVersion.versions)
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesErudaPluginTouchesVersion.adapter = adapter
-                viewBinding.resourcesErudaPluginTouchesVersion.setSelection(adapter.getPosition(erudaPluginTouchesVersion.tags.latest))
-                viewBinding.resourcesErudaPluginTouchesDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_touches)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-touches")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                    result.fold({
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesErudaPluginTouchesVersion.adapter = adapter
+                        viewBinding.resourcesErudaPluginTouchesVersion.setSelection(adapter.getPosition(it.tags.latest))
+                        viewBinding.resourcesErudaPluginTouchesDownload.isEnabled = true
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_touches)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_touches)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
 
             viewBinding.resourcesNebulaucsdkDownload.isEnabled = false
-            val nebulaUCSDKVersionStr = try {
-                Http.get("https://api.github.com/repos/WankkoRee/EnableWebViewDebugging-Rules/contents/resources/nebulaucsdk")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), e)
-                null
-            }
-            if (nebulaUCSDKVersionStr != null) {
-                val nebulaUCSDKVersion = Gson().fromJson(nebulaUCSDKVersionStr, Array<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.github.RepoContent>::class.java)
-                val adapter = ArrayAdapter(context, R.layout.component_spinneritem, nebulaUCSDKVersion.map{ it.name })
-                adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                viewBinding.resourcesNebulaucsdkVersion.adapter = adapter
-                viewBinding.resourcesNebulaucsdkVersion.setSelection(0)
-                viewBinding.resourcesNebulaucsdkDownload.isEnabled = true
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+            Fuel.get("${modulePrefs("module").get(data_source)}/resources/nebulaucsdk/metadata.json")
+                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.Metadata> { _, _, result ->
+                    result.fold({ metadata ->
+                        metadata.versions
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), e)
+                        null
+                    }).also {
+                        if (it == null) {
+                            toast?.cancel()
+                            toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), Toast.LENGTH_SHORT)
+                            toast!!.show()
+                            return@also
+                        }
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it)
+                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                        viewBinding.resourcesNebulaucsdkVersion.adapter = adapter
+                        viewBinding.resourcesNebulaucsdkVersion.setSelection(0)
+                        viewBinding.resourcesNebulaucsdkDownload.isEnabled = true
+                    }
+                }
         }
 
         viewBinding.resourcesToolbarBack.setOnClickListener {
@@ -395,557 +362,379 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesErudaPluginOrientationCard.setOnClickListener { tips() }
         viewBinding.resourcesErudaPluginTouchesCard.setOnClickListener { tips() }
         viewBinding.resourcesNebulaucsdkCard.setOnClickListener { tips() }
-        viewBinding.resourcesVconsoleDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+
+        fun downloadResources (
+            view: View,
+            progressBar: android.widget.ProgressBar,
+            progressText: android.widget.TextView,
+            downloadButton: android.widget.TextView,
+            name: String,
+            version: String,
+            hashSetPref: PrefsData<HashSet<String>>,
+            tasks: List<Pair<String, String>>,
+            base64: Boolean = false,
+        ) {
+            downloadTasks[view.id].also { downloadTask ->
+                if (downloadTask != null) {
+                    downloadStates.remove(view.id)
+                    downloadTasks.remove(view.id)
+
+                    downloadTask.forEach { it.cancel() }
+
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.download_canceled), Toast.LENGTH_SHORT)
+                    toast!!.show()
+
+                    progressBar.visibility = View.GONE
+                    progressText.visibility = View.GONE
+
+                    downloadButton.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawableCompat(R.drawable.ic_round_cloud_download_24), null, null, null)
+                    downloadButton.tooltipText = getString(R.string.download)
+                    downloadButton.contentDescription = getString(R.string.download)
+
+                    return
+                }
+            }
+
+            downloadButton.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawableCompat(R.drawable.ic_round_cancel_24), null, null, null)
+            downloadButton.contentDescription = getString(R.string.cancel)
+            downloadButton.tooltipText = getString(R.string.cancel)
+
+
+            progressBar.visibility = View.VISIBLE
+            progressText.visibility = View.VISIBLE
+
+            progressBar.progress = 0
+            progressText.text = ""
+
+            toast?.cancel()
+            toast = Toast.makeText(context, getString(R.string.download_started), Toast.LENGTH_SHORT)
+            toast!!.show()
+
+            downloadStates[view.id] = Triple(
+                MutableList(tasks.size) { DownloadState.Downloading },
+                MutableList(tasks.size) { 0 },
+                MutableList(tasks.size) { 0 }
+            )
+
+            downloadTasks[view.id] = tasks.mapIndexed { i, task ->
+                Fuel.get(task.first)
+                    .responseProgress { readBytes, totalBytes ->
+                        val downloadState = downloadStates[view.id] ?: return@responseProgress
+
+                        downloadState.second[i] = readBytes
+                        downloadState.third[i] = totalBytes
+
+                        // 统一处理
+                        val allReadBytes = downloadState.second.sum()
+                        val allTotalBytes = downloadState.third.sum()
+                        val progress = allReadBytes.toFloat() / allTotalBytes.toFloat() * 100
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            progressBar.progress = (progress * 10).toInt()
+                            progressText.text = "${allReadBytes.autoUnitByte()}/${allTotalBytes.autoUnitByte()} (${progress.round(2)}%)"
+                        }
+                    }
+                    .response { _, _, result ->
+                        val downloadState = downloadStates[view.id] ?: return@response
+
+                        result.fold({
+                            with(modulePrefs) {
+                                name("resources_${name}_${version}")
+                                putString(task.second, if (base64) Base64.encodeToString(it, Base64.NO_WRAP) else String(it))
+                                downloadState.first[i] = DownloadState.Succeed
+                            }
+                        }, { e ->
+                            downloadState.first[i] = DownloadState.Failed
+                            Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
+                        })
+
+                        // 统一处理
+                        if (!downloadState.first.contains(DownloadState.Downloading)) { // 所有下载任务已结束
+                            if (!downloadState.first.contains(DownloadState.Failed)) { // 所有下载任务已成功
+                                with(modulePrefs) {
+                                    name("resources")
+                                    try { put(hashSetPref, version) } catch (_: ValueAlreadyExistedInSet) {}
+                                }
+                                toast?.cancel()
+                                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
+                                toast!!.show()
+                                refresh()
+                            } else { // 有失败的下载任务
+                                toast?.cancel()
+                                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
+                                toast!!.show()
+                            }
+                            downloadStates.remove(view.id)
+                            downloadTasks.remove(view.id)
+                            progressBar.visibility = View.GONE
+                            progressText.visibility = View.GONE
+                            downloadButton.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawableCompat(R.drawable.ic_round_cloud_download_24), null, null, null)
+                            downloadButton.tooltipText = getString(R.string.download)
+                            downloadButton.contentDescription = getString(R.string.download)
+
+                        }
+                    }
+            }
+        }
+
+        viewBinding.resourcesVconsoleDownload.setOnClickListener {
             val version = viewBinding.resourcesVconsoleVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.vconsole)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val vConsoleStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/vconsole@$version/dist/vconsole.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (vConsoleStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_vConsole_$version")
-                    putString("vConsole", vConsoleStr)
-                    name("resources")
-                    try { put(ResourcesSP.vConsole_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesVconsolePluginSourcesDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesVconsoleProgressBar,
+                viewBinding.resourcesVconsoleProgressText,
+                viewBinding.resourcesVconsoleDownload,
+                "vConsole",
+                version,
+                ResourcesSP.vConsole_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/vconsole@$version/dist/vconsole.min.js", "vConsole"),
+                ),
+            )
+        }
+        viewBinding.resourcesVconsolePluginSourcesDownload.setOnClickListener {
             val version = viewBinding.resourcesVconsolePluginSourcesVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.vconsole_plugin_sources)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val vConsolePluginSourcesStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/vconsole-sources@$version/dist/vconsole-sources.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (vConsolePluginSourcesStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_vConsole_plugin_sources_$version")
-                    putString("vConsole_plugin_sources", vConsolePluginSourcesStr)
-                    name("resources")
-                    try { put(ResourcesSP.vConsole_plugin_sources_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesVconsolePluginStatsDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesVconsolePluginSourcesProgressBar,
+                viewBinding.resourcesVconsolePluginSourcesProgressText,
+                viewBinding.resourcesVconsolePluginSourcesDownload,
+                "vConsole_plugin_sources",
+                version,
+                ResourcesSP.vConsole_plugin_sources_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/vconsole-sources@$version/dist/vconsole-sources.min.js", "vConsole_plugin_sources"),
+                ),
+            )
+        }
+        viewBinding.resourcesVconsolePluginStatsDownload.setOnClickListener {
             val version = viewBinding.resourcesVconsolePluginStatsVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.vconsole_plugin_stats)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val vConsolePluginStatsStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/vconsole-stats-plugin@$version/dist/vconsole-stats-plugin.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (vConsolePluginStatsStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_vConsole_plugin_stats_$version")
-                    putString("vConsole_plugin_stats", vConsolePluginStatsStr)
-                    name("resources")
-                    try { put(ResourcesSP.vConsole_plugin_stats_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesVconsolePluginVueDevtoolsDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesVconsolePluginStatsProgressBar,
+                viewBinding.resourcesVconsolePluginStatsProgressText,
+                viewBinding.resourcesVconsolePluginStatsDownload,
+                "vConsole_plugin_stats",
+                version,
+                ResourcesSP.vConsole_plugin_stats_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/vconsole-stats-plugin@$version/dist/vconsole-stats-plugin.min.js", "vConsole_plugin_stats"),
+                ),
+            )
+        }
+        viewBinding.resourcesVconsolePluginVueDevtoolsDownload.setOnClickListener {
             val version = viewBinding.resourcesVconsolePluginVueDevtoolsVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.vconsole_plugin_vue_devtools)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val vConsolePluginVueDevtoolsStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/vue-vconsole-devtools@$version/dist/vue_plugin.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (vConsolePluginVueDevtoolsStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_vConsole_plugin_vue_devtools_$version")
-                    putString("vConsole_plugin_vue_devtools", vConsolePluginVueDevtoolsStr)
-                    name("resources")
-                    try { put(ResourcesSP.vConsole_plugin_vue_devtools_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesVconsolePluginOutputlogDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesVconsolePluginVueDevtoolsProgressBar,
+                viewBinding.resourcesVconsolePluginVueDevtoolsProgressText,
+                viewBinding.resourcesVconsolePluginVueDevtoolsDownload,
+                "vConsole_plugin_vue_devtools",
+                version,
+                ResourcesSP.vConsole_plugin_vue_devtools_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/vue-vconsole-devtools@$version/dist/vue_plugin.js", "vConsole_plugin_vue_devtools"),
+                ),
+            )
+        }
+        viewBinding.resourcesVconsolePluginOutputlogDownload.setOnClickListener {
             val version = viewBinding.resourcesVconsolePluginOutputlogVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.vconsole_plugin_outputlog)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val vConsolePluginOutputlogStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/vconsole-outputlog-plugin@$version/dist/vconsole-outputlog-plugin.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (vConsolePluginOutputlogStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_vConsole_plugin_outputlog_$version")
-                    putString("vConsole_plugin_outputlog", vConsolePluginOutputlogStr)
-                    name("resources")
-                    try { put(ResourcesSP.vConsole_plugin_outputlog_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesErudaDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesVconsolePluginOutputlogProgressBar,
+                viewBinding.resourcesVconsolePluginOutputlogProgressText,
+                viewBinding.resourcesVconsolePluginOutputlogDownload,
+                "vConsole_plugin_outputlog",
+                version,
+                ResourcesSP.vConsole_plugin_outputlog_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/vconsole-outputlog-plugin@$version/dist/vconsole-outputlog-plugin.min.js", "vConsole_plugin_outputlog"),
+                ),
+            )
+        }
+        viewBinding.resourcesErudaDownload.setOnClickListener {
             val version = viewBinding.resourcesErudaVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.eruda)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val erudaStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/eruda@$version/eruda.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (erudaStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_eruda_$version")
-                    putString("eruda", erudaStr)
-                    name("resources")
-                    try { put(ResourcesSP.eruda_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesErudaPluginFpsDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesErudaProgressBar,
+                viewBinding.resourcesErudaProgressText,
+                viewBinding.resourcesErudaDownload,
+                "eruda",
+                version,
+                ResourcesSP.eruda_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/eruda@$version/eruda.js", "eruda"),
+                ),
+            )
+        }
+        viewBinding.resourcesErudaPluginFpsDownload.setOnClickListener {
             val version = viewBinding.resourcesErudaPluginFpsVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.eruda_plugin_fps)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val erudaPluginFpsStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/eruda-fps@$version/eruda-fps.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (erudaPluginFpsStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_eruda_plugin_fps_$version")
-                    putString("eruda_plugin_fps", erudaPluginFpsStr)
-                    name("resources")
-                    try { put(ResourcesSP.eruda_plugin_fps_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesErudaPluginFeaturesDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesErudaPluginFpsProgressBar,
+                viewBinding.resourcesErudaPluginFpsProgressText,
+                viewBinding.resourcesErudaPluginFpsDownload,
+                "eruda_plugin_fps",
+                version,
+                ResourcesSP.eruda_plugin_fps_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/eruda-fps@$version/eruda-fps.min.js", "eruda_plugin_fps"),
+                ),
+            )
+        }
+        viewBinding.resourcesErudaPluginFeaturesDownload.setOnClickListener {
             val version = viewBinding.resourcesErudaPluginFeaturesVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.eruda_plugin_features)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val erudaPluginFeaturesStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/eruda-features@$version/eruda-features.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (erudaPluginFeaturesStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_eruda_plugin_features_$version")
-                    putString("eruda_plugin_features", erudaPluginFeaturesStr)
-                    name("resources")
-                    try { put(ResourcesSP.eruda_plugin_features_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesErudaPluginTimingDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesErudaPluginFeaturesProgressBar,
+                viewBinding.resourcesErudaPluginFeaturesProgressText,
+                viewBinding.resourcesErudaPluginFeaturesDownload,
+                "eruda_plugin_features",
+                version,
+                ResourcesSP.eruda_plugin_features_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/eruda-features@$version/eruda-features.min.js", "eruda_plugin_features"),
+                ),
+            )
+        }
+        viewBinding.resourcesErudaPluginTimingDownload.setOnClickListener {
             val version = viewBinding.resourcesErudaPluginTimingVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.eruda_plugin_timing)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val erudaPluginTimingStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/eruda-timing@$version/eruda-timing.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (erudaPluginTimingStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_eruda_plugin_timing_$version")
-                    putString("eruda_plugin_timing", erudaPluginTimingStr)
-                    name("resources")
-                    try { put(ResourcesSP.eruda_plugin_timing_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesErudaPluginMemoryDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesErudaPluginTimingProgressBar,
+                viewBinding.resourcesErudaPluginTimingProgressText,
+                viewBinding.resourcesErudaPluginTimingDownload,
+                "eruda_plugin_timing",
+                version,
+                ResourcesSP.eruda_plugin_timing_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/eruda-timing@$version/eruda-timing.min.js", "eruda_plugin_timing"),
+                ),
+            )
+        }
+        viewBinding.resourcesErudaPluginMemoryDownload.setOnClickListener {
             val version = viewBinding.resourcesErudaPluginMemoryVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.eruda_plugin_memory)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val erudaPluginMemoryStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/eruda-memory@$version/eruda-memory.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (erudaPluginMemoryStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_eruda_plugin_memory_$version")
-                    putString("eruda_plugin_memory", erudaPluginMemoryStr)
-                    name("resources")
-                    try { put(ResourcesSP.eruda_plugin_memory_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesErudaPluginCodeDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesErudaPluginMemoryProgressBar,
+                viewBinding.resourcesErudaPluginMemoryProgressText,
+                viewBinding.resourcesErudaPluginMemoryDownload,
+                "eruda_plugin_memory",
+                version,
+                ResourcesSP.eruda_plugin_memory_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/eruda-memory@$version/eruda-memory.min.js", "eruda_plugin_memory"),
+                ),
+            )
+        }
+        viewBinding.resourcesErudaPluginCodeDownload.setOnClickListener {
             val version = viewBinding.resourcesErudaPluginCodeVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.eruda_plugin_code)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val erudaPluginCodeStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/eruda-code@$version/eruda-code.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (erudaPluginCodeStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_eruda_plugin_code_$version")
-                    putString("eruda_plugin_code", erudaPluginCodeStr)
-                    name("resources")
-                    try { put(ResourcesSP.eruda_plugin_code_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesErudaPluginBenchmarkDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesErudaPluginCodeProgressBar,
+                viewBinding.resourcesErudaPluginCodeProgressText,
+                viewBinding.resourcesErudaPluginCodeDownload,
+                "eruda_plugin_code",
+                version,
+                ResourcesSP.eruda_plugin_code_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/eruda-code@$version/eruda-code.min.js", "eruda_plugin_code"),
+                ),
+            )
+        }
+        viewBinding.resourcesErudaPluginBenchmarkDownload.setOnClickListener {
             val version = viewBinding.resourcesErudaPluginBenchmarkVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.eruda_plugin_benchmark)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val erudaPluginBenchmarkStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/eruda-benchmark@$version/eruda-benchmark.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (erudaPluginBenchmarkStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_eruda_plugin_benchmark_$version")
-                    putString("eruda_plugin_benchmark", erudaPluginBenchmarkStr)
-                    name("resources")
-                    try { put(ResourcesSP.eruda_plugin_benchmark_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesErudaPluginGeolocationDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesErudaPluginBenchmarkProgressBar,
+                viewBinding.resourcesErudaPluginBenchmarkProgressText,
+                viewBinding.resourcesErudaPluginBenchmarkDownload,
+                "eruda_plugin_benchmark",
+                version,
+                ResourcesSP.eruda_plugin_benchmark_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/eruda-benchmark@$version/eruda-benchmark.min.js", "eruda_plugin_benchmark"),
+                ),
+            )
+        }
+        viewBinding.resourcesErudaPluginGeolocationDownload.setOnClickListener {
             val version = viewBinding.resourcesErudaPluginGeolocationVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.eruda_plugin_geolocation)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val erudaPluginGeolocationStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/eruda-geolocation@$version/eruda-geolocation.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (erudaPluginGeolocationStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_eruda_plugin_geolocation_$version")
-                    putString("eruda_plugin_geolocation", erudaPluginGeolocationStr)
-                    name("resources")
-                    try { put(ResourcesSP.eruda_plugin_geolocation_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesErudaPluginDomDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesErudaPluginGeolocationProgressBar,
+                viewBinding.resourcesErudaPluginGeolocationProgressText,
+                viewBinding.resourcesErudaPluginGeolocationDownload,
+                "eruda_plugin_geolocation",
+                version,
+                ResourcesSP.eruda_plugin_geolocation_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/eruda-geolocation@$version/eruda-geolocation.min.js", "eruda_plugin_geolocation"),
+                ),
+            )
+        }
+        viewBinding.resourcesErudaPluginDomDownload.setOnClickListener {
             val version = viewBinding.resourcesErudaPluginDomVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.eruda_plugin_dom)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val erudaPluginDomStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/eruda-dom@$version/eruda-dom.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (erudaPluginDomStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_eruda_plugin_dom_$version")
-                    putString("eruda_plugin_dom", erudaPluginDomStr)
-                    name("resources")
-                    try { put(ResourcesSP.eruda_plugin_dom_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesErudaPluginOrientationDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesErudaPluginDomProgressBar,
+                viewBinding.resourcesErudaPluginDomProgressText,
+                viewBinding.resourcesErudaPluginDomDownload,
+                "eruda_plugin_dom",
+                version,
+                ResourcesSP.eruda_plugin_dom_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/eruda-dom@$version/eruda-dom.min.js", "eruda_plugin_dom"),
+                ),
+            )
+        }
+        viewBinding.resourcesErudaPluginOrientationDownload.setOnClickListener {
             val version = viewBinding.resourcesErudaPluginOrientationVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.eruda_plugin_orientation)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val erudaPluginOrientationStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/eruda-orientation@$version/eruda-orientation.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (erudaPluginOrientationStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_eruda_plugin_orientation_$version")
-                    putString("eruda_plugin_orientation", erudaPluginOrientationStr)
-                    name("resources")
-                    try { put(ResourcesSP.eruda_plugin_orientation_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesErudaPluginTouchesDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesErudaPluginOrientationProgressBar,
+                viewBinding.resourcesErudaPluginOrientationProgressText,
+                viewBinding.resourcesErudaPluginOrientationDownload,
+                "eruda_plugin_orientation",
+                version,
+                ResourcesSP.eruda_plugin_orientation_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/eruda-orientation@$version/eruda-orientation.min.js", "eruda_plugin_orientation"),
+                ),
+            )
+        }
+        viewBinding.resourcesErudaPluginTouchesDownload.setOnClickListener {
             val version = viewBinding.resourcesErudaPluginTouchesVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.eruda_plugin_touches)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val erudaPluginTouchesStr = try {
-                Http.get("https://cdn.jsdelivr.net/npm/eruda-touches@$version/eruda-touches.min.js")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (erudaPluginTouchesStr != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_eruda_plugin_touches_$version")
-                    putString("eruda_plugin_touches", erudaPluginTouchesStr)
-                    name("resources")
-                    try { put(ResourcesSP.eruda_plugin_touches_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
-        viewBinding.resourcesNebulaucsdkDownload.setOnClickListener { lifecycleScope.launch(Dispatchers.Main) {
+            downloadResources(
+                it,
+                viewBinding.resourcesErudaPluginTouchesProgressBar,
+                viewBinding.resourcesErudaPluginTouchesProgressText,
+                viewBinding.resourcesErudaPluginTouchesDownload,
+                "eruda_plugin_touches",
+                version,
+                ResourcesSP.eruda_plugin_touches_versions,
+                listOf(
+                    Pair("https://cdn.jsdelivr.net/npm/eruda-touches@$version/eruda-touches.min.js", "eruda_plugin_touches"),
+                ),
+            )
+        }
+
+        viewBinding.resourcesNebulaucsdkDownload.setOnClickListener {
             val version = viewBinding.resourcesNebulaucsdkVersion.selectedItem as String
-            toast?.cancel()
-            toast = Toast.makeText(context, "${getString(R.string.download_started)} ${getString(R.string.nebulaucsdk)}$version", Toast.LENGTH_SHORT)
-            toast!!.show()
-            val nebulaUCSDKArm64V8aBin = try {
-                Http.getBytes("https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master/resources/nebulaucsdk/$version/arm64-v8a.so")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            val nebulaUCSDKArmeabiV7aBin = try {
-                Http.getBytes("https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master/resources/nebulaucsdk/$version/armeabi-v7a.so")
-            } catch(e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
-                null
-            }
-            if (nebulaUCSDKArm64V8aBin != null && nebulaUCSDKArmeabiV7aBin != null) {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT)
-                toast!!.show()
-                with(modulePrefs) {
-                    name("resources_nebulaUCSDK_$version")
-                    putString("nebulaUCSDK_arm64-v8a", Base64.encodeToString(nebulaUCSDKArm64V8aBin, Base64.NO_WRAP))
-                    putString("nebulaUCSDK_armeabi-v7a", Base64.encodeToString(nebulaUCSDKArmeabiV7aBin, Base64.NO_WRAP))
-                    name("resources")
-                    try { put(ResourcesSP.nebulaUCSDK_versions, version) } catch (e: ValueAlreadyExistedInSet) {
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.the_target_version_already_exists_it_will_be_overwritten), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    }
-                }
-                refresh()
-            } else {
-                toast?.cancel()
-                toast = Toast.makeText(context, getString(R.string.download_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
-        } }
+            downloadResources(
+                it,
+                viewBinding.resourcesNebulaucsdkProgressBar,
+                viewBinding.resourcesNebulaucsdkProgressText,
+                viewBinding.resourcesNebulaucsdkDownload,
+                "nebulaUCSDK",
+                version,
+                ResourcesSP.nebulaUCSDK_versions,
+                listOf(
+                    Pair("${modulePrefs("module").get(data_source)}/resources/nebulaucsdk/$version/arm64-v8a.so", "nebulaUCSDK_arm64-v8a"),
+                    Pair("${modulePrefs("module").get(data_source)}/resources/nebulaucsdk/$version/armeabi-v7a.so", "nebulaUCSDK_armeabi-v7a"),
+                ),
+                base64 = true
+            )
+        }
     }
 
     private fun refresh() {

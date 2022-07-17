@@ -71,6 +71,55 @@
             android:paddingVertical="8dp"
             android:orientation="vertical"
             >
+            <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/advance_setting_data_source"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                >
+                <TextView android:id="@+id/advance_setting_data_source_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/advance_setting_data_source_desc"
+
+                    style="@style/ThemeComponentTextViewPrimary"
+                    android:textSize="@dimen/textAppearanceBodyLarge"
+                    android:text="@string/data_source"
+                    />
+                <TextView android:id="@+id/advance_setting_data_source_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/advance_setting_data_source_title"
+                    app:layout_constraintBottom_toTopOf="@id/advance_setting_data_source_value"
+
+                    style="@style/ThemeComponentTextViewSecondary"
+                    android:textSize="@dimen/textAppearanceLabelLarge"
+                    android:text="@string/advance_setting_data_source_desc"
+                    />
+                <TextView android:id="@+id/advance_setting_data_source_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/advance_setting_data_source_desc"
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    style="@style/ThemeComponentTextViewPrimary"
+                    android:textSize="@dimen/textAppearanceLabelLarge"
+                    android:textAlignment="textEnd"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:ellipsize="middle"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.cardview.widget.CardView android:id="@+id/advance_license_author_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

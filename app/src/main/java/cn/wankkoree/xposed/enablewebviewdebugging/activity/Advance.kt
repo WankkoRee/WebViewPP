@@ -4,15 +4,22 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
+import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP.data_source
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.AdvanceBinding
+import cn.wankkoree.xposed.enablewebviewdebugging.databinding.DialogDataSourceBinding
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.gson.responseObject
 import com.highcapable.yukihookapi.YukiHookAPI
+import com.highcapable.yukihookapi.hook.factory.modulePrefs
 
 class Advance: AppCompatActivity() {
     private lateinit var viewBinding: AdvanceBinding
@@ -22,6 +29,81 @@ class Advance: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding = AdvanceBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        viewBinding.advanceSettingDataSource.setOnClickListener {
+            val dialogBinding = DialogDataSourceBinding.inflate(layoutInflater)
+            AlertDialog.Builder(this@Advance).apply {
+                val dataSource = modulePrefs("module").get(data_source)
+                when (dataSource) {
+                    "https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master" -> dialogBinding.dialogDataSource.check(dialogBinding.dialogDataSourceGithub.id)
+                    "https://raw.fastgit.org/WankkoRee/EnableWebViewDebugging-Rules/master" -> dialogBinding.dialogDataSource.check(dialogBinding.dialogDataSourceFastgit.id)
+                    else -> {
+                        dialogBinding.dialogDataSource.check(dialogBinding.dialogDataSourceCustom.id)
+                        dialogBinding.dialogDataSourceCustomValue.visibility = View.VISIBLE
+                    }
+                }
+                dialogBinding.dialogDataSourceCustomValue.setText(dataSource)
+                setView(dialogBinding.root)
+            }.show().also { dialog ->
+                dialogBinding.dialogDataSource.setOnCheckedChangeListener { _, checkedId ->
+                    when (checkedId) {
+                        dialogBinding.dialogDataSourceGithub.id -> {
+                            dialogBinding.dialogDataSourceCustomValue.visibility = View.GONE
+                        }
+                        dialogBinding.dialogDataSourceFastgit.id -> {
+                            dialogBinding.dialogDataSourceCustomValue.visibility = View.GONE
+                        }
+                        dialogBinding.dialogDataSourceCustom.id -> {
+                            dialogBinding.dialogDataSourceCustomValue.visibility = View.VISIBLE
+                        }
+                    }
+                }
+                dialogBinding.dialogDataSourceTest.setOnClickListener TestEvent@ {
+                    val dataSource = when (dialogBinding.dialogDataSource.checkedRadioButtonId) {
+                        dialogBinding.dialogDataSourceGithub.id -> "https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master"
+                        dialogBinding.dialogDataSourceFastgit.id -> "https://raw.fastgit.org/WankkoRee/EnableWebViewDebugging-Rules/master"
+                        dialogBinding.dialogDataSourceCustom.id -> dialogBinding.dialogDataSourceCustomValue.text.toString()
+                        else -> {
+                            toast?.cancel()
+                            toast = Toast.makeText(this@Advance, getString(R.string.unknown_checked_radio_button_id), Toast.LENGTH_SHORT)
+                            toast!!.show()
+                            null
+                        }
+                    } ?: return@TestEvent
+                    Fuel.get("$dataSource/rules/rules.json")
+                        .responseObject<List<String>> { _, _, result ->
+                            result.fold({
+                                toast?.cancel()
+                                toast = Toast.makeText(this@Advance, getString(R.string.available), Toast.LENGTH_SHORT)
+                                toast!!.show()
+                            }, {
+                                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unavailable), it)
+                                toast?.cancel()
+                                toast = Toast.makeText(this@Advance, getString(R.string.unavailable), Toast.LENGTH_SHORT)
+                                toast!!.show()
+                            })
+                        }
+                }
+                dialogBinding.dialogDataSourceCancel.setOnClickListener {
+                    dialog.cancel()
+                }
+                dialogBinding.dialogDataSourceSave.setOnClickListener {
+                    when (dialogBinding.dialogDataSource.checkedRadioButtonId) {
+                        dialogBinding.dialogDataSourceGithub.id -> {
+                            modulePrefs("module").put(data_source, "https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master")
+                        }
+                        dialogBinding.dialogDataSourceFastgit.id -> {
+                            modulePrefs("module").put(data_source, "https://raw.fastgit.org/WankkoRee/EnableWebViewDebugging-Rules/master")
+                        }
+                        dialogBinding.dialogDataSourceCustom.id -> {
+                            modulePrefs("module").put(data_source, dialogBinding.dialogDataSourceCustomValue.text.toString())
+                        }
+                    }
+                    refresh()
+                    dialog.cancel()
+                }
+            }
+        }
 
         getPrimaryColor(viewBinding.advanceLicenseAuthorIcon.drawable, this@Advance).first.also {
             viewBinding.advanceLicenseAuthorCard.backgroundTintList = colorStateSingle((it or 0xff000000.toInt()) and 0x33ffffff)
@@ -60,6 +142,14 @@ class Advance: AppCompatActivity() {
 
         viewBinding.advanceToolbarBack.setOnClickListener {
             finish()
+        }
+
+        refresh()
+    }
+
+    private fun refresh() {
+        with(modulePrefs("module")) {
+            viewBinding.advanceSettingDataSourceValue.text = get(data_source)
         }
     }
 

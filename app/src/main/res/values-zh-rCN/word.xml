@@ -27,6 +27,7 @@
     <string name="download_started">开始下载</string>
     <string name="download_completed">下载完成</string>
     <string name="download_failed">下载失败</string>
+    <string name="download_canceled">取消下载</string>
     <string name="pull_failed">拉取 %s 失败</string>
     <string name="refresh">刷新</string>
     <string name="user_application">用户应用</string>
@@ -43,7 +44,7 @@
     <string name="rule_editer">规则编辑器</string>
     <string name="save">保存</string>
     <string name="rule_name">规则名称</string>
-    <string name="unknown_hook_method">未知 Hook 方法</string>
+    <string name="unknown_hook_method">未知的 Hook 方法</string>
     <string name="parse_failed">解析失败</string>
     <string name="cloud_rules">云端规则</string>
     <string name="no_matching_version">无匹配版本</string>
@@ -62,4 +63,12 @@
     <string name="configure_in_other_apps">在其他应用中配置</string>
     <string name="rule_remark">规则注释</string>
     <string name="please_reset">请重置</string>
+    <string name="email">电子邮箱</string>
+    <string name="data_source">数据源</string>
+    <string name="custom">自定义</string>
+    <string name="test">测试</string>
+    <string name="available">可用</string>
+    <string name="unavailable">不可用</string>
+    <string name="unknown_checked_radio_button_id">未知的被选单选按钮 Id</string>
+    <string name="download">下载</string>
 </resources>

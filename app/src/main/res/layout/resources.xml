@@ -99,8 +99,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_vconsole_download"
-                        android:contentDescription="@string/resources_vconsole_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -129,11 +129,37 @@
                     <Spinner android:id="@+id/resources_vconsole_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_vconsole_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_vconsole_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_vconsole_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_vconsole_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_vconsole_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_vconsole_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_vconsole_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_vconsole_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -162,8 +188,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_vconsole_plugin_sources_download"
-                        android:contentDescription="@string/resources_vconsole_plugin_sources_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -192,11 +218,37 @@
                     <Spinner android:id="@+id/resources_vconsole_plugin_sources_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_sources_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_sources_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_sources_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_vconsole_plugin_sources_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_sources_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_sources_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_sources_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_vconsole_plugin_sources_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_sources_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_sources_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -225,8 +277,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_vconsole_plugin_stats_download"
-                        android:contentDescription="@string/resources_vconsole_plugin_stats_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -255,11 +307,37 @@
                     <Spinner android:id="@+id/resources_vconsole_plugin_stats_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_stats_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_stats_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_stats_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_vconsole_plugin_stats_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_stats_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_stats_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_stats_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_vconsole_plugin_stats_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_stats_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_stats_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -288,8 +366,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_vconsole_plugin_vue_devtools_download"
-                        android:contentDescription="@string/resources_vconsole_plugin_vue_devtools_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -318,11 +396,37 @@
                     <Spinner android:id="@+id/resources_vconsole_plugin_vue_devtools_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_vue_devtools_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_vue_devtools_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_vue_devtools_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_vconsole_plugin_vue_devtools_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_vue_devtools_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_vue_devtools_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_vue_devtools_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_vconsole_plugin_vue_devtools_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_vue_devtools_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_vue_devtools_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -351,8 +455,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_vconsole_plugin_outputlog_download"
-                        android:contentDescription="@string/resources_vconsole_plugin_outputlog_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -381,11 +485,37 @@
                     <Spinner android:id="@+id/resources_vconsole_plugin_outputlog_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_outputlog_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_outputlog_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_outputlog_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_vconsole_plugin_outputlog_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_outputlog_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_outputlog_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_outputlog_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_vconsole_plugin_outputlog_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_outputlog_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_outputlog_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -414,8 +544,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_eruda_download"
-                        android:contentDescription="@string/resources_eruda_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -444,11 +574,37 @@
                     <Spinner android:id="@+id/resources_eruda_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_eruda_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_eruda_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -477,8 +633,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_eruda_plugin_fps_download"
-                        android:contentDescription="@string/resources_eruda_plugin_fps_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -507,11 +663,37 @@
                     <Spinner android:id="@+id/resources_eruda_plugin_fps_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_fps_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_fps_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_fps_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_eruda_plugin_fps_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_fps_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_fps_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_fps_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_eruda_plugin_fps_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_fps_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_fps_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -540,8 +722,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_eruda_plugin_features_download"
-                        android:contentDescription="@string/resources_eruda_plugin_features_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -570,11 +752,37 @@
                     <Spinner android:id="@+id/resources_eruda_plugin_features_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_features_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_features_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_features_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_eruda_plugin_features_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_features_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_features_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_features_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_eruda_plugin_features_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_features_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_features_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -603,8 +811,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_eruda_plugin_timing_download"
-                        android:contentDescription="@string/resources_eruda_plugin_timing_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -633,11 +841,37 @@
                     <Spinner android:id="@+id/resources_eruda_plugin_timing_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_timing_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_timing_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_timing_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_eruda_plugin_timing_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_timing_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_timing_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_timing_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_eruda_plugin_timing_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_timing_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_timing_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -666,8 +900,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_eruda_plugin_memory_download"
-                        android:contentDescription="@string/resources_eruda_plugin_memory_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -696,11 +930,37 @@
                     <Spinner android:id="@+id/resources_eruda_plugin_memory_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_memory_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_memory_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_memory_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_eruda_plugin_memory_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_memory_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_memory_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_memory_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_eruda_plugin_memory_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_memory_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_memory_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -729,8 +989,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_eruda_plugin_code_download"
-                        android:contentDescription="@string/resources_eruda_plugin_code_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -763,7 +1023,34 @@
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_code_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_code_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_code_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_eruda_plugin_code_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_code_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_code_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_code_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_eruda_plugin_code_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_code_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_code_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -792,8 +1079,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_eruda_plugin_benchmark_download"
-                        android:contentDescription="@string/resources_eruda_plugin_benchmark_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -822,11 +1109,37 @@
                     <Spinner android:id="@+id/resources_eruda_plugin_benchmark_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_benchmark_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_benchmark_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_benchmark_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_eruda_plugin_benchmark_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_benchmark_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_benchmark_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_benchmark_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_eruda_plugin_benchmark_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_benchmark_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_benchmark_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -855,8 +1168,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_eruda_plugin_geolocation_download"
-                        android:contentDescription="@string/resources_eruda_plugin_geolocation_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -885,11 +1198,37 @@
                     <Spinner android:id="@+id/resources_eruda_plugin_geolocation_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_geolocation_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_geolocation_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_geolocation_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_eruda_plugin_geolocation_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_geolocation_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_geolocation_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_geolocation_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_eruda_plugin_geolocation_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_geolocation_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_geolocation_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -918,8 +1257,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_eruda_plugin_dom_download"
-                        android:contentDescription="@string/resources_eruda_plugin_dom_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -948,11 +1287,37 @@
                     <Spinner android:id="@+id/resources_eruda_plugin_dom_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_dom_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_dom_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_dom_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_eruda_plugin_dom_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_dom_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_dom_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_dom_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_eruda_plugin_dom_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_dom_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_dom_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -981,8 +1346,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_eruda_plugin_orientation_download"
-                        android:contentDescription="@string/resources_eruda_plugin_orientation_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -1011,11 +1376,37 @@
                     <Spinner android:id="@+id/resources_eruda_plugin_orientation_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_orientation_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_orientation_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_orientation_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_eruda_plugin_orientation_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_orientation_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_orientation_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_orientation_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_eruda_plugin_orientation_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_orientation_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_orientation_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -1044,8 +1435,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_eruda_plugin_touches_download"
-                        android:contentDescription="@string/resources_eruda_plugin_touches_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -1074,11 +1465,37 @@
                     <Spinner android:id="@+id/resources_eruda_plugin_touches_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_touches_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_touches_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_touches_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_eruda_plugin_touches_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_touches_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_touches_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_touches_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_eruda_plugin_touches_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_touches_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_touches_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -1107,8 +1524,8 @@
 
                         app:drawableStartCompat="@drawable/ic_round_cloud_download_24"
                         app:drawableTint="@color/textPrimary"
-                        android:tooltipText="@string/resources_nebulaucsdk_download"
-                        android:contentDescription="@string/resources_nebulaucsdk_download"
+                        android:tooltipText="@string/download"
+                        android:contentDescription="@string/download"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
@@ -1137,11 +1554,37 @@
                     <Spinner android:id="@+id/resources_nebulaucsdk_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/resources_nebulaucsdk_download"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/resources_nebulaucsdk_local"
+                        app:layout_constraintBottom_toTopOf="@id/resources_nebulaucsdk_progress_bar"
+                        app:layout_goneMarginBottom="16dp"
+                        />
+                    <ProgressBar android:id="@+id/resources_nebulaucsdk_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/resources_nebulaucsdk_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_nebulaucsdk_version"
+                        app:layout_constraintBottom_toTopOf="@id/resources_nebulaucsdk_progress_text"
+
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:max="1000"
+                        android:visibility="gone"
+                        />
+                    <TextView android:id="@+id/resources_nebulaucsdk_progress_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintStart_toEndOf="@id/resources_nebulaucsdk_download"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resources_nebulaucsdk_progress_bar"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        style="@style/ThemeComponentTextViewSecondary"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:visibility="gone"
+                        android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>

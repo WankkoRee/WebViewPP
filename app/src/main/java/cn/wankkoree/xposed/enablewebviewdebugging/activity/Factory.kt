@@ -34,3 +34,12 @@ fun getPrimaryColor(d: Drawable, context: Context): Triple<Int, Int, Int> {
 }
 
 fun Context.getDrawableCompat(resId: Int) = AppCompatResources.getDrawable(this@getDrawableCompat, resId)
+
+fun Long.autoUnitByte() : String = when (this@autoUnitByte) {
+    in 0 until 1024 -> "${this@autoUnitByte} B"
+    in 1024 until 1024*1024 -> "${(this@autoUnitByte / 1024.0).round(2)} KB"
+    in 1024*1024 until 1024*1024*1024 -> "${(this@autoUnitByte / 1048576.0).round(2)} MB"
+    else -> "${(this@autoUnitByte / 1073741824.0).round(2)} GB"
+}
+
+fun Number.round(scale: Int) : String = String.format("%.${scale}f", this@round)

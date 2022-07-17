@@ -93,5 +93,9 @@ dependencies {
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+    implementation 'com.github.kittinunf.fuel:fuel:2.3.1'
+    implementation 'com.github.kittinunf.fuel:fuel-android:2.3.1'
+    implementation 'com.github.kittinunf.fuel:fuel-gson:2.3.1'
     implementation 'com.google.code.gson:gson:2.9.0'
+    implementation "io.noties.markwon:core:4.6.2"
 }

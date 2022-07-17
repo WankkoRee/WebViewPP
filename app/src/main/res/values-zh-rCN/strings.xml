@@ -9,25 +9,10 @@
     <string name="main_donate_desc_text">你的打赏就是我开发的最大动力</string>
     <string name="main_resources_text">Hook 资源管理</string>
     <string name="main_resources_desc">在这管理一些可供载入的资源，如 vConsole</string>
-    <string name="resources_vconsole_download">下载 vConsole</string>
-    <string name="resources_vconsole_plugin_sources_download">下载 vConsole 插件: sources</string>
-    <string name="resources_vconsole_plugin_stats_download">下载 vConsole 插件: stats</string>
-    <string name="resources_vconsole_plugin_vue_devtools_download">下载 vConsole 插件: vue-devtools</string>
-    <string name="resources_vconsole_plugin_outputlog_download">下载 vConsole 插件: outputlog</string>
-    <string name="resources_eruda_download">下载 Eruda</string>
-    <string name="resources_eruda_plugin_fps_download">下载 Eruda 插件: fps</string>
-    <string name="resources_eruda_plugin_features_download">下载 Eruda 插件: features</string>
-    <string name="resources_eruda_plugin_timing_download">下载 Eruda 插件: timing</string>
-    <string name="resources_eruda_plugin_memory_download">下载 Eruda 插件: memory</string>
-    <string name="resources_eruda_plugin_code_download">下载 Eruda 插件: code</string>
-    <string name="resources_eruda_plugin_benchmark_download">下载 Eruda 插件: benchmark</string>
-    <string name="resources_eruda_plugin_geolocation_download">下载 Eruda 插件: geolocation</string>
-    <string name="resources_eruda_plugin_dom_download">下载 Eruda 插件: dom</string>
-    <string name="resources_eruda_plugin_orientation_download">下载 Eruda 插件: orientation</string>
-    <string name="resources_eruda_plugin_touches_download">下载 Eruda 插件: touches</string>
-    <string name="resources_nebulaucsdk_download">下载 UC 调试内核</string>
     <string name="applistitem_num">%1$s，配置了 %2$d 条规则</string>
     <string name="apps_show_system_app">显示系统应用</string>
     <string name="apps_show_no_network">显示无网络权限</string>
     <string name="advance_yuki_version_text">YukiHookAPI 版本: %s(%d)</string>
+    <string name="advance_setting_data_source_desc">用于拉取云端规则、拉取部分 Hook 资源等</string>
+    <string name="dialog_data_source_desc">GitHub 更适合全球用户使用；FastGit 更适合中国大陆用户使用。当然，你也可以使用其他自定义数据源。</string>
 </resources>

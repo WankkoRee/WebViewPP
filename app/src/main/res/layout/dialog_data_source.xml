@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        style="@style/ThemeComponentTextViewPrimary"
+        android:textSize="@dimen/textAppearanceTitleLarge"
+        android:text="@string/data_source"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        style="@style/ThemeComponentTextViewSecondary"
+        android:textSize="@dimen/textAppearanceLabelLarge"
+        android:text="@string/dialog_data_source_desc"
+        />
+    <RadioGroup android:id="@+id/dialog_data_source"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <androidx.appcompat.widget.AppCompatRadioButton android:id="@+id/dialog_data_source_github"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/github"
+            />
+        <androidx.appcompat.widget.AppCompatRadioButton android:id="@+id/dialog_data_source_fastgit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fastgit"
+            />
+        <androidx.appcompat.widget.AppCompatRadioButton android:id="@+id/dialog_data_source_custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/custom"
+            />
+    </RadioGroup>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <com.google.android.material.textfield.TextInputEditText android:id="@+id/dialog_data_source_custom_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+
+            android:background="@color/transparent"
+            android:hint="@string/data_source"
+            android:singleLine="true"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <androidx.appcompat.widget.AppCompatButton android:id="@+id/dialog_data_source_test"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            style="?android:attr/borderlessButtonStyle"
+            android:text="@string/test"
+            />
+        <androidx.appcompat.widget.AppCompatButton android:id="@+id/dialog_data_source_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/dialog_data_source_save"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            style="?android:attr/borderlessButtonStyle"
+            android:text="@string/cancel"
+            />
+        <androidx.appcompat.widget.AppCompatButton android:id="@+id/dialog_data_source_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            style="?android:attr/borderlessButtonStyle"
+            android:text="@string/save"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
