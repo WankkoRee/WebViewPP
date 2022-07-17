@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textAppearanceDisplayLarge">57sp</dimen>
+    <dimen name="textAppearanceDisplayMedium">45sp</dimen>
+    <dimen name="textAppearanceDisplaySmall">36sp</dimen>
+
+    <dimen name="textAppearanceHeadlineLarge">32sp</dimen>
+    <dimen name="textAppearanceHeadlineMedium">28sp</dimen>
+    <dimen name="textAppearanceHeadlineSmall">24sp</dimen>
+
+    <dimen name="textAppearanceTitleLarge">22sp</dimen>
+    <dimen name="textAppearanceTitleMedium">16sp</dimen>
+    <dimen name="textAppearanceTitleSmall">14sp</dimen>
+
+    <dimen name="textAppearanceBodyLarge">16sp</dimen>
+    <dimen name="textAppearanceBodyMedium">14sp</dimen>
+    <dimen name="textAppearanceBodySmall">12sp</dimen>
+
+    <dimen name="textAppearanceLabelLarge">14sp</dimen>
+    <dimen name="textAppearanceLabelMedium">12sp</dimen>
+    <dimen name="textAppearanceLabelSmall">11sp</dimen>
+</resources>

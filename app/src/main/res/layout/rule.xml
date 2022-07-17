@@ -53,7 +53,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
 
                     style="@style/ThemeComponentTextViewPrimary"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/textAppearanceTitleLarge"
                     android:text="@string/rule_editer"
                     />
                 <TextView android:id="@+id/rule_toolbar_cloud"

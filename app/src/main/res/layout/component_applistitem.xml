@@ -4,71 +4,81 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
-    android:clickable="true" >
-    <ImageView
-        android:id="@+id/component_applistitem_icon"
+    android:clickable="true"
+    >
+    <ImageView android:id="@+id/component_applistitem_icon"
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:layout_marginStart="8dp"
         android:layout_marginVertical="8dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-    <TextView
-        style="@style/ThemeComponentTextViewPrimary"
-        android:textSize="16sp"
-        android:id="@+id/component_applistitem_name"
-        android:layout_width="wrap_content"
+        />
+    <TextView android:id="@+id/component_applistitem_name"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
+        app:layout_constraintStart_toEndOf="@id/component_applistitem_icon"
+        app:layout_constraintEnd_toStartOf="@id/component_applistitem_version"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/component_applistitem_package"
-        app:layout_constraintStart_toEndOf="@id/component_applistitem_icon" />
-    <TextView
-        style="@style/ThemeComponentTextViewSecondary"
-        android:textSize="12sp"
-        android:id="@+id/component_applistitem_package"
+
+        style="@style/ThemeComponentTextViewPrimary"
+        android:textSize="@dimen/textAppearanceBodyLarge"
+        android:lines="1"
+        android:ellipsize="middle"
+        />
+    <TextView android:id="@+id/component_applistitem_package"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
+        app:layout_constraintStart_toEndOf="@id/component_applistitem_icon"
+        app:layout_constraintEnd_toStartOf="@id/component_applistitem_is_system_app"
         app:layout_constraintTop_toBottomOf="@id/component_applistitem_name"
         app:layout_constraintBottom_toTopOf="@id/component_applistitem_state"
-        app:layout_constraintStart_toEndOf="@id/component_applistitem_icon"
-        app:layout_constraintEnd_toEndOf="parent" />
-    <TextView
+
         style="@style/ThemeComponentTextViewSecondary"
-        android:textSize="12sp"
-        android:id="@+id/component_applistitem_state"
+        android:textSize="@dimen/textAppearanceLabelLarge"
+        android:lines="1"
+        android:ellipsize="middle"
+        />
+    <TextView android:id="@+id/component_applistitem_state"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
+        app:layout_constraintStart_toEndOf="@id/component_applistitem_icon"
+        app:layout_constraintEnd_toStartOf="@id/component_applistitem_is_no_network"
         app:layout_constraintTop_toBottomOf="@id/component_applistitem_package"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/component_applistitem_icon"
-        app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
         style="@style/ThemeComponentTextViewSecondary"
-        android:textSize="12sp"
-        android:id="@+id/component_applistitem_version"
+        android:textSize="@dimen/textAppearanceLabelLarge"
+        />
+    <TextView android:id="@+id/component_applistitem_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/component_applistitem_is_system_app"
-        app:layout_constraintEnd_toEndOf="parent" />
-    <cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Tag
-        android:id="@+id/component_applistitem_is_system_app"
+
+        style="@style/ThemeComponentTextViewSecondary"
+        android:textSize="@dimen/textAppearanceLabelLarge"
+        android:lines="1"
+        />
+    <cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Tag android:id="@+id/component_applistitem_is_system_app"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/component_applistitem_version"
         app:layout_constraintBottom_toTopOf="@id/component_applistitem_is_no_network"
-        app:layout_constraintEnd_toEndOf="parent" />
-    <cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Tag
-        android:id="@+id/component_applistitem_is_no_network"
+        />
+    <cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Tag android:id="@+id/component_applistitem_is_no_network"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/component_applistitem_is_system_app"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,7 +53,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
 
                     style="@style/ThemeComponentTextViewPrimary"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/textAppearanceTitleLarge"
                     android:text="@string/main_resources_text"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -114,7 +114,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/vconsole"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_vconsole_local"
@@ -177,7 +177,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_sources_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/vconsole_plugin_sources"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_vconsole_plugin_sources_local"
@@ -240,7 +240,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_stats_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/vconsole_plugin_stats"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_vconsole_plugin_stats_local"
@@ -303,7 +303,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_vue_devtools_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/vconsole_plugin_vue_devtools"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_vconsole_plugin_vue_devtools_local"
@@ -366,7 +366,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_outputlog_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/vconsole_plugin_outputlog"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_vconsole_plugin_outputlog_local"
@@ -429,7 +429,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_local"
@@ -492,7 +492,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_fps_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_fps"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_fps_local"
@@ -555,7 +555,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_features_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_features"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_features_local"
@@ -618,7 +618,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_timing_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_timing"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_timing_local"
@@ -681,7 +681,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_memory_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_memory"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_memory_local"
@@ -744,7 +744,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_code_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_code"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_code_local"
@@ -807,7 +807,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_benchmark_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_benchmark"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_benchmark_local"
@@ -870,7 +870,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_geolocation_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_geolocation"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_geolocation_local"
@@ -933,7 +933,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_dom_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_dom"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_dom_local"
@@ -996,7 +996,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_orientation_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_orientation"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_orientation_local"
@@ -1059,7 +1059,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_touches_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_touches"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_touches_local"
@@ -1122,7 +1122,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_nebulaucsdk_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/nebulaucsdk"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_nebulaucsdk_local"

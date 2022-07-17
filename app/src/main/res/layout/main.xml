@@ -49,7 +49,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
 
                     style="@style/ThemeComponentTextViewPrimary"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/textAppearanceTitleLarge"
                     android:text="@string/app_name"
                     />
                 <TextView android:id="@+id/main_toolbar_menu"
@@ -120,7 +120,7 @@
                         app:layout_constraintBottom_toTopOf="@id/main_xposed_text"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/disabled"
                         />
                     <TextView android:id="@+id/main_xposed_text"
@@ -132,7 +132,7 @@
                         app:layout_constraintBottom_toTopOf="@id/main_version_text"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
                         android:text="@string/main_xposed_text"
                         />
                     <TextView android:id="@+id/main_version_text"
@@ -145,7 +145,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
                         android:text="@string/main_version_text"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -185,7 +185,7 @@
                         app:layout_constraintBottom_toTopOf="@id/main_apps_num"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/main_apps_text"
                         />
                     <TextView android:id="@+id/main_apps_num"
@@ -198,7 +198,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
                         android:text="@string/main_apps_num"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -238,7 +238,7 @@
                         app:layout_constraintBottom_toTopOf="@id/main_resources_desc"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/main_resources_text"
                         />
                     <TextView android:id="@+id/main_resources_desc"
@@ -251,7 +251,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
                         android:text="@string/main_resources_desc"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -293,7 +293,7 @@
                         app:layout_constraintBottom_toTopOf="@id/main_donate_desc_text"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/donate"
                         />
                     <TextView android:id="@+id/main_donate_desc_text"
@@ -306,7 +306,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
                         android:text="@string/main_donate_desc_text"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>

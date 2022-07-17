@@ -54,7 +54,7 @@
                     android:visibility="visible"
 
                     style="@style/ThemeComponentTextViewPrimary"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/textAppearanceTitleLarge"
                     android:text="@string/main_apps_text"
                     />
                 <androidx.appcompat.widget.AppCompatEditText android:id="@+id/apps_toolbar_search"

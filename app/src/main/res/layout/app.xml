@@ -53,7 +53,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
 
                     style="@style/ThemeComponentTextViewPrimary"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/textAppearanceTitleLarge"
                     android:text=""
                     />
                 <TextView android:id="@+id/app_toolbar_preset"
@@ -118,7 +118,6 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="16dp"
                     >
                     <ImageView android:id="@+id/app_icon" android:transitionName="targetAppIcon"
                         android:layout_width="42dp"
@@ -134,35 +133,54 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         app:layout_constraintStart_toEndOf="@id/app_icon"
+                        app:layout_constraintEnd_toStartOf="@id/app_version"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/app_package"
+                        app:layout_constraintBottom_toTopOf="@id/app_line_1"
+                        app:layout_constraintHorizontal_weight="2"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:lines="1"
+                        android:ellipsize="middle"
                         />
                     <TextView android:id="@+id/app_version" android:transitionName="targetAppVersion"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toEndOf="@id/app_text"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/app_package"
+                        app:layout_constraintBottom_toTopOf="@id/app_line_1"
+                        app:layout_constraintHorizontal_weight="1"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:lines="1"
+                        android:ellipsize="middle"
+                        android:textAlignment="textEnd"
+                        />
+                    <androidx.constraintlayout.widget.Barrier android:id="@+id/app_line_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="bottom"
+                        app:constraint_referenced_ids="app_text,app_version"
                         />
                     <TextView android:id="@+id/app_package" android:transitionName="targetAppPackage"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/app_icon"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/app_text"
+                        app:layout_constraintTop_toBottomOf="@id/app_line_1"
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:lines="1"
+                        android:ellipsize="middle"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -216,7 +234,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_vconsole_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/vconsole"
                         />
                     <Spinner android:id="@+id/app_resources_vconsole_version"
@@ -254,7 +272,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_vconsole_plugin_sources_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/vconsole_plugin_sources"
                         />
                     <Spinner android:id="@+id/app_resources_vconsole_plugin_sources_version"
@@ -292,7 +310,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_vconsole_plugin_stats_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/vconsole_plugin_stats"
                         />
                     <Spinner android:id="@+id/app_resources_vconsole_plugin_stats_version"
@@ -330,7 +348,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_vconsole_plugin_vue_devtools_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/vconsole_plugin_vue_devtools"
                         />
                     <Spinner android:id="@+id/app_resources_vconsole_plugin_vue_devtools_version"
@@ -368,7 +386,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_vconsole_plugin_outputlog_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/vconsole_plugin_outputlog"
                         />
                     <Spinner android:id="@+id/app_resources_vconsole_plugin_outputlog_version"
@@ -406,7 +424,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_eruda_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda"
                         />
                     <Spinner android:id="@+id/app_resources_eruda_version"
@@ -444,7 +462,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_eruda_plugin_fps_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_fps"
                         />
                     <Spinner android:id="@+id/app_resources_eruda_plugin_fps_version"
@@ -482,7 +500,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_eruda_plugin_features_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_features"
                         />
                     <Spinner android:id="@+id/app_resources_eruda_plugin_features_version"
@@ -520,7 +538,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_eruda_plugin_timing_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_timing"
                         />
                     <Spinner android:id="@+id/app_resources_eruda_plugin_timing_version"
@@ -558,7 +576,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_eruda_plugin_memory_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_memory"
                         />
                     <Spinner android:id="@+id/app_resources_eruda_plugin_memory_version"
@@ -596,7 +614,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_eruda_plugin_code_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_code"
                         />
                     <Spinner android:id="@+id/app_resources_eruda_plugin_code_version"
@@ -634,7 +652,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_eruda_plugin_benchmark_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_benchmark"
                         />
                     <Spinner android:id="@+id/app_resources_eruda_plugin_benchmark_version"
@@ -672,7 +690,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_eruda_plugin_geolocation_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_geolocation"
                         />
                     <Spinner android:id="@+id/app_resources_eruda_plugin_geolocation_version"
@@ -710,7 +728,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_eruda_plugin_dom_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_dom"
                         />
                     <Spinner android:id="@+id/app_resources_eruda_plugin_dom_version"
@@ -748,7 +766,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_eruda_plugin_orientation_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_orientation"
                         />
                     <Spinner android:id="@+id/app_resources_eruda_plugin_orientation_version"
@@ -786,7 +804,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_eruda_plugin_touches_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_touches"
                         />
                     <Spinner android:id="@+id/app_resources_eruda_plugin_touches_version"
@@ -824,7 +842,7 @@
                         app:layout_constraintBottom_toTopOf="@id/app_resources_nebulaucsdk_version"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/textAppearanceBodyLarge"
                         android:text="@string/nebulaucsdk"
                         />
                     <Spinner android:id="@+id/app_resources_nebulaucsdk_version"
