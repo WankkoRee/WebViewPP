@@ -898,18 +898,23 @@ class App : AppCompatActivity() {
                 viewBinding.appVersion.setTextColor(c.second)
                 viewBinding.appPackage.setTextColor(c.second)
             }
+
+            name("apps_$pkg")
             get(AppSP.vConsole).also {
                 viewBinding.appResourcesVconsoleCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsoleCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesVconsoleVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = vConsoleAdapter.getPosition(get(AppSP.vConsole_version))
-                    viewBinding.appResourcesVconsoleVersion.setSelection(if (p >= 0) p else {
+                    val last = vConsoleAdapter.getPosition(get(AppSP.vConsole_version))
+                    if (last >= 0) viewBinding.appResourcesVconsoleVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = vConsoleAdapter.getPosition(get(ResourcesSP.vConsole_latest))
+                        viewBinding.appResourcesVconsoleVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
 
                     viewBinding.appResourcesVconsolePluginSourcesCard.visibility = View.VISIBLE
                     viewBinding.appResourcesVconsolePluginStatsCard.visibility = View.VISIBLE
@@ -922,74 +927,94 @@ class App : AppCompatActivity() {
                     viewBinding.appResourcesVconsolePluginOutputlogCard.visibility = View.GONE
                 }
             }
+            name("apps_$pkg")
             get(AppSP.vConsole_plugin_sources).also {
                 viewBinding.appResourcesVconsolePluginSourcesCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsolePluginSourcesCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesVconsolePluginSourcesVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = vConsolePluginSourcesAdapter.getPosition(get(AppSP.vConsole_plugin_sources_version))
-                    viewBinding.appResourcesVconsolePluginSourcesVersion.setSelection(if (p >= 0) p else {
+                    val last = vConsolePluginSourcesAdapter.getPosition(get(AppSP.vConsole_plugin_sources_version))
+                    if (last >= 0) viewBinding.appResourcesVconsolePluginSourcesVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = vConsolePluginSourcesAdapter.getPosition(get(ResourcesSP.vConsole_plugin_sources_latest))
+                        viewBinding.appResourcesVconsolePluginSourcesVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.vConsole_plugin_stats).also {
                 viewBinding.appResourcesVconsolePluginStatsCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsolePluginStatsCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesVconsolePluginStatsVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = vConsolePluginStatsAdapter.getPosition(get(AppSP.vConsole_plugin_stats_version))
-                    viewBinding.appResourcesVconsolePluginStatsVersion.setSelection(if (p >= 0) p else {
+                    val last = vConsolePluginStatsAdapter.getPosition(get(AppSP.vConsole_plugin_stats_version))
+                    if (last >= 0) viewBinding.appResourcesVconsolePluginStatsVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = vConsolePluginStatsAdapter.getPosition(get(ResourcesSP.vConsole_plugin_stats_latest))
+                        viewBinding.appResourcesVconsolePluginStatsVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.vConsole_plugin_vue_devtools).also {
                 viewBinding.appResourcesVconsolePluginVueDevtoolsCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsolePluginVueDevtoolsCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = vConsolePluginVueDevtoolsAdapter.getPosition(get(AppSP.vConsole_plugin_vue_devtools_version))
-                    viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.setSelection(if (p >= 0) p else {
+                    val last = vConsolePluginVueDevtoolsAdapter.getPosition(get(AppSP.vConsole_plugin_vue_devtools_version))
+                    if (last >= 0) viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = vConsolePluginVueDevtoolsAdapter.getPosition(get(ResourcesSP.vConsole_plugin_vue_devtools_latest))
+                        viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.vConsole_plugin_outputlog).also {
                 viewBinding.appResourcesVconsolePluginOutputlogCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsolePluginOutputlogCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesVconsolePluginOutputlogVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = vConsolePluginOutputlogAdapter.getPosition(get(AppSP.vConsole_plugin_outputlog_version))
-                    viewBinding.appResourcesVconsolePluginOutputlogVersion.setSelection(if (p >= 0) p else {
+                    val last = vConsolePluginOutputlogAdapter.getPosition(get(AppSP.vConsole_plugin_outputlog_version))
+                    if (last >= 0) viewBinding.appResourcesVconsolePluginOutputlogVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = vConsolePluginOutputlogAdapter.getPosition(get(ResourcesSP.vConsole_plugin_outputlog_latest))
+                        viewBinding.appResourcesVconsolePluginOutputlogVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.eruda).also {
                 viewBinding.appResourcesErudaCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesErudaVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = erudaAdapter.getPosition(get(AppSP.eruda_version))
-                    viewBinding.appResourcesErudaVersion.setSelection(if (p >= 0) p else {
+                    val last = erudaAdapter.getPosition(get(AppSP.eruda_version))
+                    if (last >= 0) viewBinding.appResourcesErudaVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = erudaAdapter.getPosition(get(ResourcesSP.eruda_latest))
+                        viewBinding.appResourcesErudaVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
 
                     viewBinding.appResourcesErudaPluginFpsCard.visibility = View.VISIBLE
                     viewBinding.appResourcesErudaPluginFeaturesCard.visibility = View.VISIBLE
@@ -1014,160 +1039,205 @@ class App : AppCompatActivity() {
                     viewBinding.appResourcesErudaPluginTouchesCard.visibility = View.GONE
                 }
             }
+            name("apps_$pkg")
             get(AppSP.eruda_plugin_fps).also {
                 viewBinding.appResourcesErudaPluginFpsCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginFpsCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesErudaPluginFpsVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = erudaPluginFpsAdapter.getPosition(get(AppSP.eruda_plugin_fps_version))
-                    viewBinding.appResourcesErudaPluginFpsVersion.setSelection(if (p >= 0) p else {
+                    val last = erudaPluginFpsAdapter.getPosition(get(AppSP.eruda_plugin_fps_version))
+                    if (last >= 0) viewBinding.appResourcesErudaPluginFpsVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = erudaPluginFpsAdapter.getPosition(get(ResourcesSP.eruda_plugin_fps_latest))
+                        viewBinding.appResourcesErudaPluginFpsVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.eruda_plugin_features).also {
                 viewBinding.appResourcesErudaPluginFeaturesCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginFeaturesCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesErudaPluginFeaturesVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = erudaPluginFeaturesAdapter.getPosition(get(AppSP.eruda_plugin_features_version))
-                    viewBinding.appResourcesErudaPluginFeaturesVersion.setSelection(if (p >= 0) p else {
+                    val last = erudaPluginFeaturesAdapter.getPosition(get(AppSP.eruda_plugin_features_version))
+                    if (last >= 0) viewBinding.appResourcesErudaPluginFeaturesVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = erudaPluginFeaturesAdapter.getPosition(get(ResourcesSP.eruda_plugin_features_latest))
+                        viewBinding.appResourcesErudaPluginFeaturesVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.eruda_plugin_timing).also {
                 viewBinding.appResourcesErudaPluginTimingCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginTimingCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesErudaPluginTimingVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = erudaPluginTimingAdapter.getPosition(get(AppSP.eruda_plugin_timing_version))
-                    viewBinding.appResourcesErudaPluginTimingVersion.setSelection(if (p >= 0) p else {
+                    val last = erudaPluginTimingAdapter.getPosition(get(AppSP.eruda_plugin_timing_version))
+                    if (last >= 0) viewBinding.appResourcesErudaPluginTimingVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = erudaPluginTimingAdapter.getPosition(get(ResourcesSP.eruda_plugin_timing_latest))
+                        viewBinding.appResourcesErudaPluginTimingVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.eruda_plugin_memory).also {
                 viewBinding.appResourcesErudaPluginMemoryCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginMemoryCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesErudaPluginMemoryVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = erudaPluginMemoryAdapter.getPosition(get(AppSP.eruda_plugin_memory_version))
-                    viewBinding.appResourcesErudaPluginMemoryVersion.setSelection(if (p >= 0) p else {
+                    val last = erudaPluginMemoryAdapter.getPosition(get(AppSP.eruda_plugin_memory_version))
+                    if (last >= 0) viewBinding.appResourcesErudaPluginMemoryVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = erudaPluginMemoryAdapter.getPosition(get(ResourcesSP.eruda_plugin_memory_latest))
+                        viewBinding.appResourcesErudaPluginMemoryVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.eruda_plugin_code).also {
                 viewBinding.appResourcesErudaPluginCodeCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginCodeCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesErudaPluginCodeVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = erudaPluginCodeAdapter.getPosition(get(AppSP.eruda_plugin_code_version))
-                    viewBinding.appResourcesErudaPluginCodeVersion.setSelection(if (p >= 0) p else {
+                    val last = erudaPluginCodeAdapter.getPosition(get(AppSP.eruda_plugin_code_version))
+                    if (last >= 0) viewBinding.appResourcesErudaPluginCodeVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = erudaPluginCodeAdapter.getPosition(get(ResourcesSP.eruda_plugin_code_latest))
+                        viewBinding.appResourcesErudaPluginCodeVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.eruda_plugin_benchmark).also {
                 viewBinding.appResourcesErudaPluginBenchmarkCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginBenchmarkCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesErudaPluginBenchmarkVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = erudaPluginBenchmarkAdapter.getPosition(get(AppSP.eruda_plugin_benchmark_version))
-                    viewBinding.appResourcesErudaPluginBenchmarkVersion.setSelection(if (p >= 0) p else {
+                    val last = erudaPluginBenchmarkAdapter.getPosition(get(AppSP.eruda_plugin_benchmark_version))
+                    if (last >= 0) viewBinding.appResourcesErudaPluginBenchmarkVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = erudaPluginBenchmarkAdapter.getPosition(get(ResourcesSP.eruda_plugin_benchmark_latest))
+                        viewBinding.appResourcesErudaPluginBenchmarkVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.eruda_plugin_geolocation).also {
                 viewBinding.appResourcesErudaPluginGeolocationCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginGeolocationCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesErudaPluginGeolocationVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = erudaPluginGeolocationAdapter.getPosition(get(AppSP.eruda_plugin_geolocation_version))
-                    viewBinding.appResourcesErudaPluginGeolocationVersion.setSelection(if (p >= 0) p else {
+                    val last = erudaPluginGeolocationAdapter.getPosition(get(AppSP.eruda_plugin_geolocation_version))
+                    if (last >= 0) viewBinding.appResourcesErudaPluginGeolocationVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = erudaPluginGeolocationAdapter.getPosition(get(ResourcesSP.eruda_plugin_geolocation_latest))
+                        viewBinding.appResourcesErudaPluginGeolocationVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.eruda_plugin_dom).also {
                 viewBinding.appResourcesErudaPluginDomCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginDomCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesErudaPluginDomVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = erudaPluginDomAdapter.getPosition(get(AppSP.eruda_plugin_dom_version))
-                    viewBinding.appResourcesErudaPluginDomVersion.setSelection(if (p >= 0) p else {
+                    val last = erudaPluginDomAdapter.getPosition(get(AppSP.eruda_plugin_dom_version))
+                    if (last >= 0) viewBinding.appResourcesErudaPluginDomVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = erudaPluginDomAdapter.getPosition(get(ResourcesSP.eruda_plugin_dom_latest))
+                        viewBinding.appResourcesErudaPluginDomVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.eruda_plugin_orientation).also {
                 viewBinding.appResourcesErudaPluginOrientationCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginOrientationCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesErudaPluginOrientationVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = erudaPluginOrientationAdapter.getPosition(get(AppSP.eruda_plugin_orientation_version))
-                    viewBinding.appResourcesErudaPluginOrientationVersion.setSelection(if (p >= 0) p else {
+                    val last = erudaPluginOrientationAdapter.getPosition(get(AppSP.eruda_plugin_orientation_version))
+                    if (last >= 0) viewBinding.appResourcesErudaPluginOrientationVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = erudaPluginOrientationAdapter.getPosition(get(ResourcesSP.eruda_plugin_orientation_latest))
+                        viewBinding.appResourcesErudaPluginOrientationVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.eruda_plugin_touches).also {
                 viewBinding.appResourcesErudaPluginTouchesCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginTouchesCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesErudaPluginTouchesVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = erudaPluginTouchesAdapter.getPosition(get(AppSP.eruda_plugin_touches_version))
-                    viewBinding.appResourcesErudaPluginTouchesVersion.setSelection(if (p >= 0) p else {
+                    val last = erudaPluginTouchesAdapter.getPosition(get(AppSP.eruda_plugin_touches_version))
+                    if (last >= 0) viewBinding.appResourcesErudaPluginTouchesVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = erudaPluginTouchesAdapter.getPosition(get(ResourcesSP.eruda_plugin_touches_latest))
+                        viewBinding.appResourcesErudaPluginTouchesVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+            name("apps_$pkg")
             get(AppSP.nebulaUCSDK).also {
                 viewBinding.appResourcesNebulaucsdkCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesNebulaucsdkCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
                 viewBinding.appResourcesNebulaucsdkVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
-                    val p = nebulaUCSDKAdapter.getPosition(get(AppSP.nebulaUCSDK_version))
-                    viewBinding.appResourcesNebulaucsdkVersion.setSelection(if (p >= 0) p else {
+                    val last = nebulaUCSDKAdapter.getPosition(get(AppSP.nebulaUCSDK_version))
+                    if (last >= 0) viewBinding.appResourcesNebulaucsdkVersion.setSelection(last)
+                    else {
                         toast?.cancel()
                         toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
                         toast!!.show()
-                        0
-                    })
+                        name("resources")
+                        val latest = nebulaUCSDKAdapter.getPosition(get(ResourcesSP.nebulaUCSDK_latest))
+                        viewBinding.appResourcesNebulaucsdkVersion.setSelection(if (latest >= 0) latest else 0)
+                    }
                 }
             }
+
             viewBinding.appHooksList.removeAllViews()
             getSet(AppSP.hooks).forEach { ruleName ->
                 val v = Code(this@App)

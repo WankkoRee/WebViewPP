@@ -55,6 +55,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesVconsoleVersion.adapter = adapter
                         viewBinding.resourcesVconsoleVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesVconsoleDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.vConsole_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole)), e)
                         toast?.cancel()
@@ -72,6 +73,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesVconsolePluginSourcesVersion.adapter = adapter
                         viewBinding.resourcesVconsolePluginSourcesVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesVconsolePluginSourcesDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.vConsole_plugin_sources_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_sources)), e)
                         toast?.cancel()
@@ -89,6 +91,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesVconsolePluginStatsVersion.adapter = adapter
                         viewBinding.resourcesVconsolePluginStatsVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesVconsolePluginStatsDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.vConsole_plugin_stats_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_stats)), e)
                         toast?.cancel()
@@ -106,6 +109,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesVconsolePluginVueDevtoolsVersion.adapter = adapter
                         viewBinding.resourcesVconsolePluginVueDevtoolsVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesVconsolePluginVueDevtoolsDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.vConsole_plugin_vue_devtools_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_vue_devtools)), e)
                         toast?.cancel()
@@ -123,6 +127,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesVconsolePluginOutputlogVersion.adapter = adapter
                         viewBinding.resourcesVconsolePluginOutputlogVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesVconsolePluginOutputlogDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.vConsole_plugin_outputlog_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_outputlog)), e)
                         toast?.cancel()
@@ -140,6 +145,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesErudaVersion.adapter = adapter
                         viewBinding.resourcesErudaVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesErudaDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.eruda_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda)), e)
                         toast?.cancel()
@@ -157,6 +163,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesErudaPluginFpsVersion.adapter = adapter
                         viewBinding.resourcesErudaPluginFpsVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesErudaPluginFpsDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_fps_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_fps)), e)
                         toast?.cancel()
@@ -174,6 +181,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesErudaPluginFeaturesVersion.adapter = adapter
                         viewBinding.resourcesErudaPluginFeaturesVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesErudaPluginFeaturesDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_features_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_features)), e)
                         toast?.cancel()
@@ -191,6 +199,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesErudaPluginTimingVersion.adapter = adapter
                         viewBinding.resourcesErudaPluginTimingVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesErudaPluginTimingDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_timing_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_timing)), e)
                         toast?.cancel()
@@ -208,6 +217,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesErudaPluginMemoryVersion.adapter = adapter
                         viewBinding.resourcesErudaPluginMemoryVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesErudaPluginMemoryDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_memory_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_memory)), e)
                         toast?.cancel()
@@ -225,6 +235,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesErudaPluginCodeVersion.adapter = adapter
                         viewBinding.resourcesErudaPluginCodeVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesErudaPluginCodeDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_code_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_code)), e)
                         toast?.cancel()
@@ -242,6 +253,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesErudaPluginBenchmarkVersion.adapter = adapter
                         viewBinding.resourcesErudaPluginBenchmarkVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesErudaPluginBenchmarkDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_benchmark_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_benchmark)), e)
                         toast?.cancel()
@@ -259,6 +271,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesErudaPluginGeolocationVersion.adapter = adapter
                         viewBinding.resourcesErudaPluginGeolocationVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesErudaPluginGeolocationDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_geolocation_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_geolocation)), e)
                         toast?.cancel()
@@ -276,6 +289,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesErudaPluginDomVersion.adapter = adapter
                         viewBinding.resourcesErudaPluginDomVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesErudaPluginDomDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_dom_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_dom)), e)
                         toast?.cancel()
@@ -293,6 +307,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesErudaPluginOrientationVersion.adapter = adapter
                         viewBinding.resourcesErudaPluginOrientationVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesErudaPluginOrientationDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_orientation_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_orientation)), e)
                         toast?.cancel()
@@ -310,6 +325,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesErudaPluginTouchesVersion.adapter = adapter
                         viewBinding.resourcesErudaPluginTouchesVersion.setSelection(adapter.getPosition(it.tags.latest))
                         viewBinding.resourcesErudaPluginTouchesDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_touches_latest, it.tags.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_touches)), e)
                         toast?.cancel()
@@ -327,6 +343,7 @@ class Resources : AppCompatActivity() {
                         viewBinding.resourcesNebulaucsdkVersion.adapter = adapter
                         viewBinding.resourcesNebulaucsdkVersion.setSelection(adapter.getPosition(metadata.latest))
                         viewBinding.resourcesNebulaucsdkDownload.isEnabled = true
+                        modulePrefs("resources").put(ResourcesSP.nebulaUCSDK_latest, metadata.latest)
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), e)
                         toast?.cancel()
