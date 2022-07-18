@@ -322,23 +322,17 @@ class Resources : AppCompatActivity() {
             Fuel.get("${modulePrefs("module").get(data_source)}/resources/nebulaucsdk/metadata.json")
                 .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.Metadata> { _, _, result ->
                     result.fold({ metadata ->
-                        metadata.versions
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), e)
-                        null
-                    }).also {
-                        if (it == null) {
-                            toast?.cancel()
-                            toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), Toast.LENGTH_SHORT)
-                            toast!!.show()
-                            return@also
-                        }
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it)
+                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, metadata.versions)
                         adapter.setDropDownViewResource(R.layout.component_spinneritem)
                         viewBinding.resourcesNebulaucsdkVersion.adapter = adapter
-                        viewBinding.resourcesNebulaucsdkVersion.setSelection(0)
+                        viewBinding.resourcesNebulaucsdkVersion.setSelection(adapter.getPosition(metadata.latest))
                         viewBinding.resourcesNebulaucsdkDownload.isEnabled = true
-                    }
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
                 }
         }
 

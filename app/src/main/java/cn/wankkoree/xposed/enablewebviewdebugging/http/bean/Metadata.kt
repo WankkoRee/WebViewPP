@@ -8,4 +8,6 @@ data class Metadata (
     val remark: String,
     @SerializedName("versions")
     val versions: List<String>,
+    @SerializedName("latest")
+    val latest: String,
 )
