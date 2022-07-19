@@ -15,7 +15,7 @@ import cn.wankkoree.xposed.enablewebviewdebugging.R
 import cn.wankkoree.xposed.enablewebviewdebugging.data.AppsSP
 import cn.wankkoree.xposed.enablewebviewdebugging.data.ResourcesSP
 import cn.wankkoree.xposed.enablewebviewdebugging.data.getSet
-import cn.wankkoree.xposed.enablewebviewdebugging.databinding.MainBinding
+import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ActivityMainBinding
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -29,7 +29,7 @@ import java.net.URLEncoder
 
 class Main: AppCompatActivity() {
 
-    private lateinit var viewBinding: MainBinding
+    private lateinit var viewBinding: ActivityMainBinding
     private var toast: Toast? = null
     private val appsResultContract = registerForActivityResult(AppsResultContract()) {
         refresh()
@@ -38,7 +38,7 @@ class Main: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewBinding = MainBinding.inflate(layoutInflater)
+        viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
         markdown = Markwon.create(this@Main)
 

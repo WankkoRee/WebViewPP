@@ -13,7 +13,7 @@ import cn.wankkoree.xposed.enablewebviewdebugging.ValueAlreadyExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
 import cn.wankkoree.xposed.enablewebviewdebugging.data.*
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.DialogCloudRulesBinding
-import cn.wankkoree.xposed.enablewebviewdebugging.databinding.RuleBinding
+import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ActivityRuleBinding
 import cn.wankkoree.xposed.enablewebviewdebugging.http.bean.HookRules
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
@@ -22,7 +22,7 @@ import com.google.gson.Gson
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 
 class Rule : AppCompatActivity() {
-    private lateinit var viewBinding: RuleBinding
+    private lateinit var viewBinding: ActivityRuleBinding
     private var toast: Toast? = null
 
     private lateinit var pkg: String
@@ -33,7 +33,7 @@ class Rule : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.enterTransition = Slide()
         window.exitTransition = Slide()
-        viewBinding = RuleBinding.inflate(layoutInflater)
+        viewBinding = ActivityRuleBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
         pkg = intent.getStringExtra("pkg")!!

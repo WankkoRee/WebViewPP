@@ -15,7 +15,7 @@ import cn.wankkoree.xposed.enablewebviewdebugging.ValueAlreadyExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Tag
 import cn.wankkoree.xposed.enablewebviewdebugging.data.*
 import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP.data_source
-import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ResourcesBinding
+import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ActivityResourcesBinding
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.requests.CancellableRequest
 import com.github.kittinunf.fuel.gson.responseObject
@@ -33,13 +33,13 @@ class Resources : AppCompatActivity() {
         val downloadStates : HashMap<Int, Triple<MutableList<Enum<DownloadState>>, MutableList<Long>, MutableList<Long>>> = HashMap()
     }
 
-    private lateinit var viewBinding: ResourcesBinding
+    private lateinit var viewBinding: ActivityResourcesBinding
     private var toast: Toast? = null
     private lateinit var context: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewBinding = ResourcesBinding.inflate(layoutInflater)
+        viewBinding = ActivityResourcesBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
         context = this
 

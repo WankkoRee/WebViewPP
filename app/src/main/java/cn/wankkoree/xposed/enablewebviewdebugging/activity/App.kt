@@ -23,14 +23,14 @@ import cn.wankkoree.xposed.enablewebviewdebugging.ValueAlreadyExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.ValueNotExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
 import cn.wankkoree.xposed.enablewebviewdebugging.data.*
-import cn.wankkoree.xposed.enablewebviewdebugging.databinding.AppBinding
+import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ActivityAppBinding
 import cn.wankkoree.xposed.enablewebviewdebugging.http.bean.HookRules
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 
 class App : AppCompatActivity() {
-    private lateinit var viewBinding: AppBinding
+    private lateinit var viewBinding: ActivityAppBinding
     private var toast: Toast? = null
     private val ruleResultContract = registerForActivityResult(RuleResultContract()) {
         refresh()
@@ -49,7 +49,7 @@ class App : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.enterTransition = Slide()
         window.exitTransition = Slide()
-        viewBinding = AppBinding.inflate(layoutInflater)
+        viewBinding = ActivityAppBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
         pkg = intent.getStringExtra(Intent.EXTRA_PACKAGE_NAME)!!

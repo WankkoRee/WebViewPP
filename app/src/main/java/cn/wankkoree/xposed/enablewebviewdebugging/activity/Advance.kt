@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP.data_source
-import cn.wankkoree.xposed.enablewebviewdebugging.databinding.AdvanceBinding
+import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ActivityAdvanceBinding
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.DialogDataSourceBinding
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
@@ -20,12 +20,12 @@ import com.highcapable.yukihookapi.YukiHookAPI
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 
 class Advance: AppCompatActivity() {
-    private lateinit var viewBinding: AdvanceBinding
+    private lateinit var viewBinding: ActivityAdvanceBinding
     private var toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewBinding = AdvanceBinding.inflate(layoutInflater)
+        viewBinding = ActivityAdvanceBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
         viewBinding.advanceSettingDataSource.setOnClickListener {

@@ -30,13 +30,13 @@ import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Tag
 import cn.wankkoree.xposed.enablewebviewdebugging.data.AppSP
 import cn.wankkoree.xposed.enablewebviewdebugging.data.AppsSP
 import cn.wankkoree.xposed.enablewebviewdebugging.data.getSet
-import cn.wankkoree.xposed.enablewebviewdebugging.databinding.AppsBinding
+import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ActivityAppsBinding
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class Apps : AppCompatActivity() {
-    private lateinit var viewBinding: AppsBinding
+    private lateinit var viewBinding: ActivityAppsBinding
     private var toast: Toast? = null
     private val appResultContract = registerForActivityResult(AppResultContract()) {
         adapter.update(it)
@@ -47,7 +47,7 @@ class Apps : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewBinding = AppsBinding.inflate(layoutInflater)
+        viewBinding = ActivityAppsBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
         viewBinding.appsLoading.setColorSchemeColors(getColor(R.color.backgroundSuccess), getColor(R.color.backgroundInfo), getColor(R.color.backgroundError))
