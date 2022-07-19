@@ -2,15 +2,12 @@ package cn.wankkoree.xposed.enablewebviewdebugging.activity
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager.widget.PagerAdapter
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP.data_source
@@ -18,6 +15,7 @@ import cn.wankkoree.xposed.enablewebviewdebugging.databinding.AdvanceBinding
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.DialogDataSourceBinding
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.highcapable.yukihookapi.YukiHookAPI
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 
@@ -32,37 +30,51 @@ class Advance: AppCompatActivity() {
 
         viewBinding.advanceSettingDataSource.setOnClickListener {
             val dialogBinding = DialogDataSourceBinding.inflate(layoutInflater)
-            AlertDialog.Builder(this@Advance).apply {
+            MaterialAlertDialogBuilder(this@Advance).apply {
+                setTitle(getString(R.string.data_source))
+                setNeutralButton(getString(R.string.test), null)
+                setNegativeButton(getString(R.string.cancel)) { _, _ -> }
+                setPositiveButton(getString(R.string.save), null)
+
                 val dataSource = modulePrefs("module").get(data_source)
                 when (dataSource) {
                     "https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master" -> dialogBinding.dialogDataSource.check(dialogBinding.dialogDataSourceGithub.id)
                     "https://raw.fastgit.org/WankkoRee/EnableWebViewDebugging-Rules/master" -> dialogBinding.dialogDataSource.check(dialogBinding.dialogDataSourceFastgit.id)
                     else -> {
                         dialogBinding.dialogDataSource.check(dialogBinding.dialogDataSourceCustom.id)
-                        dialogBinding.dialogDataSourceCustomValue.visibility = View.VISIBLE
+                        dialogBinding.dialogDataSourceCustomInput.visibility = View.VISIBLE
                     }
                 }
-                dialogBinding.dialogDataSourceCustomValue.setText(dataSource)
+                dialogBinding.dialogDataSourceCustomInputValue.setText(dataSource)
                 setView(dialogBinding.root)
             }.show().also { dialog ->
                 dialogBinding.dialogDataSource.setOnCheckedChangeListener { _, checkedId ->
                     when (checkedId) {
                         dialogBinding.dialogDataSourceGithub.id -> {
-                            dialogBinding.dialogDataSourceCustomValue.visibility = View.GONE
+                            dialogBinding.dialogDataSourceCustomInput.visibility = View.GONE
                         }
                         dialogBinding.dialogDataSourceFastgit.id -> {
-                            dialogBinding.dialogDataSourceCustomValue.visibility = View.GONE
+                            dialogBinding.dialogDataSourceCustomInput.visibility = View.GONE
                         }
                         dialogBinding.dialogDataSourceCustom.id -> {
-                            dialogBinding.dialogDataSourceCustomValue.visibility = View.VISIBLE
+                            dialogBinding.dialogDataSourceCustomInput.visibility = View.VISIBLE
                         }
                     }
                 }
-                dialogBinding.dialogDataSourceTest.setOnClickListener TestEvent@ {
+                dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener TestEvent@ {
                     val dataSource = when (dialogBinding.dialogDataSource.checkedRadioButtonId) {
                         dialogBinding.dialogDataSourceGithub.id -> "https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master"
                         dialogBinding.dialogDataSourceFastgit.id -> "https://raw.fastgit.org/WankkoRee/EnableWebViewDebugging-Rules/master"
-                        dialogBinding.dialogDataSourceCustom.id -> dialogBinding.dialogDataSourceCustomValue.text.toString()
+                        dialogBinding.dialogDataSourceCustom.id -> dialogBinding.dialogDataSourceCustomInputValue.text.let {
+                            if (it == null || (!it.startsWith("http://", true) && !it.startsWith("https://", true))) {
+                                toast?.cancel()
+                                toast = Toast.makeText(this@Advance, getString(R.string.unavailable), Toast.LENGTH_SHORT)
+                                toast!!.show()
+                                null
+                            } else {
+                                it.toString()
+                            }
+                        }
                         else -> {
                             toast?.cancel()
                             toast = Toast.makeText(this@Advance, getString(R.string.unknown_checked_radio_button_id), Toast.LENGTH_SHORT)
@@ -70,6 +82,7 @@ class Advance: AppCompatActivity() {
                             null
                         }
                     } ?: return@TestEvent
+                    Log.e(null, dataSource)
                     Fuel.get("$dataSource/rules/rules.json")
                         .responseObject<List<String>> { _, _, result ->
                             result.fold({
@@ -84,10 +97,7 @@ class Advance: AppCompatActivity() {
                             })
                         }
                 }
-                dialogBinding.dialogDataSourceCancel.setOnClickListener {
-                    dialog.cancel()
-                }
-                dialogBinding.dialogDataSourceSave.setOnClickListener {
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                     when (dialogBinding.dialogDataSource.checkedRadioButtonId) {
                         dialogBinding.dialogDataSourceGithub.id -> {
                             modulePrefs("module").put(data_source, "https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master")
@@ -96,7 +106,7 @@ class Advance: AppCompatActivity() {
                             modulePrefs("module").put(data_source, "https://raw.fastgit.org/WankkoRee/EnableWebViewDebugging-Rules/master")
                         }
                         dialogBinding.dialogDataSourceCustom.id -> {
-                            modulePrefs("module").put(data_source, dialogBinding.dialogDataSourceCustomValue.text.toString())
+                            modulePrefs("module").put(data_source, dialogBinding.dialogDataSourceCustomInputValue.text.toString())
                         }
                     }
                     refresh()
@@ -105,10 +115,7 @@ class Advance: AppCompatActivity() {
             }
         }
 
-        getPrimaryColor(viewBinding.advanceLicenseAuthorIcon.drawable, this@Advance).first.also {
-            viewBinding.advanceLicenseAuthorCard.backgroundTintList = colorStateSingle((it or 0xff000000.toInt()) and 0x33ffffff)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.advanceLicenseAuthorCard.outlineSpotShadowColor = it
-        }
+        viewBinding.advanceLicenseAuthorCard.setCardBackgroundColor((getPrimaryColor(viewBinding.advanceLicenseAuthorIcon.drawable, this@Advance).first or 0xff000000.toInt()) and 0x33ffffff)
         viewBinding.advanceLicenseAuthorButtonGithub.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/WankkoRee")))
         }
@@ -116,20 +123,14 @@ class Advance: AppCompatActivity() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("mailto://wkr@wkr.moe")))
         }
 
+        viewBinding.advanceLicenseYukiCard.setCardBackgroundColor((getPrimaryColor(viewBinding.advanceLicenseYukiIcon.drawable, this@Advance).first or 0xff000000.toInt()) and 0x33ffffff)
         viewBinding.advanceLicenseYukiDesc.text = getString(R.string.this_module_is_constructed_using_yukihookapi) + "\n" + getString(R.string.advance_yuki_version_text).format(YukiHookAPI.API_VERSION_NAME, YukiHookAPI.API_VERSION_CODE)
-        getPrimaryColor(viewBinding.advanceLicenseYukiIcon.drawable, this@Advance).first.also {
-            viewBinding.advanceLicenseYukiCard.backgroundTintList = colorStateSingle((it or 0xff000000.toInt()) and 0x33ffffff)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.advanceLicenseYukiCard.outlineSpotShadowColor = it
-        }
         viewBinding.advanceLicenseYukiButtonGithub.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/fankes/YukiHookAPI")))
         }
 
+        viewBinding.advanceLicenseModuleCard.setCardBackgroundColor((getPrimaryColor(viewBinding.advanceLicenseModuleIcon.drawable, this@Advance).first or 0xff000000.toInt()) and 0x33ffffff)
         viewBinding.advanceLicenseModuleIcon.setImageDrawable(packageManager.getApplicationIcon(BuildConfig.APPLICATION_ID))
-        getPrimaryColor(viewBinding.advanceLicenseModuleIcon.drawable, this@Advance).first.also {
-            viewBinding.advanceLicenseModuleCard.backgroundTintList = colorStateSingle((it or 0xff000000.toInt()) and 0x33ffffff)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.advanceLicenseModuleCard.outlineSpotShadowColor = it
-        }
         viewBinding.advanceLicenseModuleButtonGithub.setOnClickListener {
             toast?.cancel()
             toast = Toast.makeText(this@Advance, getString(R.string.if_you_find_this_project_useful_please_star_this_project), Toast.LENGTH_SHORT)
@@ -150,24 +151,6 @@ class Advance: AppCompatActivity() {
     private fun refresh() {
         with(modulePrefs("module")) {
             viewBinding.advanceSettingDataSourceValue.text = get(data_source)
-        }
-    }
-
-    class LicenseAdapter(private val items: ArrayList<View>) : PagerAdapter() {
-        override fun getCount(): Int = items.size
-
-        override fun isViewFromObject(view: View, any: Any): Boolean {
-            return view == any
-        }
-
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            return items[position].also {
-                container.addView(it)
-            }
-        }
-
-        override fun destroyItem(container: ViewGroup, position: Int, any: Any) {
-            container.removeView(items[position])
         }
     }
 }

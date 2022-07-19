@@ -1,25 +1,23 @@
 package cn.wankkoree.xposed.enablewebviewdebugging.activity.component
 
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
+import com.google.android.material.textview.MaterialTextView
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 
-class Tag: LinearLayout {
+class Tag: LinearLayoutCompat {
     private var cardView: CardView? = null
-    private var textView: TextView? = null
+    private var textView: MaterialTextView? = null
 
     @ColorInt
     var color: Int? = null
         set(value) {
             field = value
             cardView?.setCardBackgroundColor(value!!)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) cardView?.outlineSpotShadowColor = value!!
         }
     var text: CharSequence? = null
         set(value) {

@@ -3,13 +3,11 @@ package cn.wankkoree.xposed.enablewebviewdebugging.activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
@@ -20,6 +18,7 @@ import cn.wankkoree.xposed.enablewebviewdebugging.data.getSet
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.MainBinding
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.GsonBuilder
 import com.highcapable.yukihookapi.YukiHookAPI.Status.executorName
 import com.highcapable.yukihookapi.YukiHookAPI.Status.executorVersion
@@ -46,8 +45,7 @@ class Main: AppCompatActivity() {
         viewBinding.mainToolbarIcon.setImageDrawable(packageManager.getApplicationIcon(BuildConfig.APPLICATION_ID))
         viewBinding.mainVersionText.text = getString(R.string.main_version_text).format("${BuildConfig.VERSION_NAME}-${BuildConfig.BUILD_TYPE}", BuildConfig.VERSION_CODE)
         if (isModuleActive) {
-            viewBinding.mainStatusCard.backgroundTintList = colorStateSingle((getColor(R.color.backgroundSuccess) or 0xff000000.toInt()) and 0x77ffffff)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.mainStatusCard.outlineSpotShadowColor = getColor(R.color.backgroundSuccess)
+            viewBinding.mainStatusCard.setCardBackgroundColor((getColor(R.color.backgroundSuccess) or 0xff000000.toInt()) and 0x77ffffff)
             viewBinding.mainStatusIcon.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawableCompat(R.drawable.ic_round_check_circle_24), null, null, null)
             viewBinding.mainStatusIcon.contentDescription = getString(R.string.enabled)
             viewBinding.mainStatusText.text = getString(R.string.enabled)
@@ -57,8 +55,7 @@ class Main: AppCompatActivity() {
                 else -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format(executorName)
             }
         } else {
-            viewBinding.mainStatusCard.backgroundTintList = colorStateSingle((getColor(R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.mainStatusCard.outlineSpotShadowColor = getColor(R.color.backgroundError)
+            viewBinding.mainStatusCard.setCardBackgroundColor((getColor(R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
             viewBinding.mainStatusIcon.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawableCompat(R.drawable.ic_round_cancel_24), null, null, null)
             viewBinding.mainStatusIcon.contentDescription = getString(R.string.disabled)
             viewBinding.mainStatusText.text = getString(R.string.disabled)
@@ -79,8 +76,10 @@ class Main: AppCompatActivity() {
                 setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.main_toolbar_menu_reset -> {
-                            AlertDialog.Builder(this@Main).apply {
+                            MaterialAlertDialogBuilder(this@Main).apply {
+                                setTitle(R.string.reset)
                                 setMessage(R.string.do_you_really_reset_all_configurations)
+                                setNegativeButton(R.string.cancel) { _, _ -> }
                                 setPositiveButton(R.string.confirm) { _, _ ->
                                     with(modulePrefs) {
                                         name("apps").getSet(AppsSP.enabled).forEach { pkg ->
@@ -100,8 +99,7 @@ class Main: AppCompatActivity() {
                                     toast!!.show()
                                     refresh()
                                 }
-                                setNegativeButton(R.string.cancel) { _, _ -> }
-                            }.create().show()
+                            }.show()
                         }
                         R.id.main_toolbar_menu_advance -> {
                             val intent = Intent(this@Main, Advance::class.java)
@@ -164,13 +162,13 @@ class Main: AppCompatActivity() {
                         val latestCode = it[1].toInt()
                         val latestName = it[2]
                         if (latestCode > BuildConfig.VERSION_CODE) {
-                            AlertDialog.Builder(this@Main).apply {
+                            MaterialAlertDialogBuilder(this@Main).apply {
                                 setTitle(R.string.it_is_checked_that_there_is_a_new_version_do_you_want_to_download_it)
                                 setMessage("123")
+                                setNegativeButton(R.string.cancel) { _, _ -> }
                                 setPositiveButton(R.string.confirm) { _, _ ->
                                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(latest.html_url)))
                                 }
-                                setNegativeButton(R.string.cancel) { _, _ -> }
                             }.show().also { dialog ->
                                 markdown.setMarkdown(
                                     dialog.findViewById(android.R.id.message)!!,

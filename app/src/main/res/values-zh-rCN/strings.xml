@@ -14,5 +14,6 @@
     <string name="apps_show_no_network">显示无网络权限</string>
     <string name="advance_yuki_version_text">YukiHookAPI 版本: %s(%d)</string>
     <string name="advance_setting_data_source_desc">用于拉取云端规则、拉取部分 Hook 资源等</string>
-    <string name="dialog_data_source_desc">GitHub 更适合全球用户使用；FastGit 更适合中国大陆用户使用。当然，你也可以使用其他自定义数据源。</string>
+    <string name="dialog_data_source_desc">GitHub 更适合全球用户使用。\nFastGit 更适合中国大陆用户使用。\n当然，你也可以使用其他自定义数据源。</string>
+    <string name="dialog_cloud_rules_desc">1. 选择与你设备上安装的 App 最接近的版本。\n2. 保存此版本的所有规则（如果了解各个规则的作用可以按需保存）。</string>
 </resources>

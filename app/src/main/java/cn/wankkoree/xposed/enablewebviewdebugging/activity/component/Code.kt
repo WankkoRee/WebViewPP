@@ -6,11 +6,11 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.HorizontalScrollView
-import android.widget.TextView
+import com.google.android.material.textview.MaterialTextView
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 
 class Code: HorizontalScrollView {
-    private lateinit var codeView: TextView
+    private lateinit var codeView: MaterialTextView
 
     var code: String = ""
         set(value) {

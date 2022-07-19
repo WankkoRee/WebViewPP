@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.transition.Slide
 import android.util.Log
@@ -15,7 +14,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityOptionsCompat
@@ -27,6 +25,7 @@ import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
 import cn.wankkoree.xposed.enablewebviewdebugging.data.*
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.AppBinding
 import cn.wankkoree.xposed.enablewebviewdebugging.http.bean.HookRules
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 
@@ -290,14 +289,15 @@ class App : AppCompatActivity() {
                             })
                         }
                         R.id.app_toolbar_menu_reset -> {
-                            AlertDialog.Builder(this@App).apply {
+                            MaterialAlertDialogBuilder(this@App).apply {
+                                setTitle(R.string.reset)
                                 setMessage(R.string.do_you_really_reset_this_application_hooking_rules)
+                                setNegativeButton(R.string.cancel) { _, _ -> }
                                 setPositiveButton(R.string.confirm) { _, _ ->
                                     reset()
                                     refresh()
                                 }
-                                setNegativeButton(R.string.cancel) { _, _ -> }
-                            }.create().show()
+                            }.show()
                         }
                     }
                     true
@@ -892,8 +892,7 @@ class App : AppCompatActivity() {
                 }
                 viewBinding.appIcon.setImageDrawable(iconTemp)
                 val c = getPrimaryColor(iconTemp, this@App)
-                viewBinding.appCard.backgroundTintList = colorStateSingle((c.third or 0xff000000.toInt()) and 0x33ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appCard.outlineSpotShadowColor = c.third
+                viewBinding.appCard.setCardBackgroundColor((c.third or 0xff000000.toInt()) and 0x33ffffff)
                 viewBinding.appText.setTextColor(c.first)
                 viewBinding.appVersion.setTextColor(c.second)
                 viewBinding.appPackage.setTextColor(c.second)
@@ -901,8 +900,7 @@ class App : AppCompatActivity() {
 
             name("apps_$pkg")
             get(AppSP.vConsole).also {
-                viewBinding.appResourcesVconsoleCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsoleCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesVconsoleCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesVconsoleVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = vConsoleAdapter.getPosition(get(AppSP.vConsole_version))
@@ -929,8 +927,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.vConsole_plugin_sources).also {
-                viewBinding.appResourcesVconsolePluginSourcesCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsolePluginSourcesCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesVconsolePluginSourcesCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesVconsolePluginSourcesVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = vConsolePluginSourcesAdapter.getPosition(get(AppSP.vConsole_plugin_sources_version))
@@ -947,8 +944,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.vConsole_plugin_stats).also {
-                viewBinding.appResourcesVconsolePluginStatsCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsolePluginStatsCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesVconsolePluginStatsCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesVconsolePluginStatsVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = vConsolePluginStatsAdapter.getPosition(get(AppSP.vConsole_plugin_stats_version))
@@ -965,8 +961,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.vConsole_plugin_vue_devtools).also {
-                viewBinding.appResourcesVconsolePluginVueDevtoolsCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsolePluginVueDevtoolsCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesVconsolePluginVueDevtoolsCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = vConsolePluginVueDevtoolsAdapter.getPosition(get(AppSP.vConsole_plugin_vue_devtools_version))
@@ -983,8 +978,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.vConsole_plugin_outputlog).also {
-                viewBinding.appResourcesVconsolePluginOutputlogCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesVconsolePluginOutputlogCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesVconsolePluginOutputlogCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesVconsolePluginOutputlogVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = vConsolePluginOutputlogAdapter.getPosition(get(AppSP.vConsole_plugin_outputlog_version))
@@ -1001,8 +995,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.eruda).also {
-                viewBinding.appResourcesErudaCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesErudaVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = erudaAdapter.getPosition(get(AppSP.eruda_version))
@@ -1041,8 +1034,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.eruda_plugin_fps).also {
-                viewBinding.appResourcesErudaPluginFpsCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginFpsCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginFpsCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesErudaPluginFpsVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = erudaPluginFpsAdapter.getPosition(get(AppSP.eruda_plugin_fps_version))
@@ -1059,8 +1051,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.eruda_plugin_features).also {
-                viewBinding.appResourcesErudaPluginFeaturesCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginFeaturesCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginFeaturesCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesErudaPluginFeaturesVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = erudaPluginFeaturesAdapter.getPosition(get(AppSP.eruda_plugin_features_version))
@@ -1077,8 +1068,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.eruda_plugin_timing).also {
-                viewBinding.appResourcesErudaPluginTimingCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginTimingCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginTimingCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesErudaPluginTimingVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = erudaPluginTimingAdapter.getPosition(get(AppSP.eruda_plugin_timing_version))
@@ -1095,8 +1085,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.eruda_plugin_memory).also {
-                viewBinding.appResourcesErudaPluginMemoryCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginMemoryCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginMemoryCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesErudaPluginMemoryVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = erudaPluginMemoryAdapter.getPosition(get(AppSP.eruda_plugin_memory_version))
@@ -1113,8 +1102,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.eruda_plugin_code).also {
-                viewBinding.appResourcesErudaPluginCodeCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginCodeCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginCodeCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesErudaPluginCodeVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = erudaPluginCodeAdapter.getPosition(get(AppSP.eruda_plugin_code_version))
@@ -1131,8 +1119,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.eruda_plugin_benchmark).also {
-                viewBinding.appResourcesErudaPluginBenchmarkCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginBenchmarkCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginBenchmarkCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesErudaPluginBenchmarkVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = erudaPluginBenchmarkAdapter.getPosition(get(AppSP.eruda_plugin_benchmark_version))
@@ -1149,8 +1136,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.eruda_plugin_geolocation).also {
-                viewBinding.appResourcesErudaPluginGeolocationCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginGeolocationCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginGeolocationCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesErudaPluginGeolocationVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = erudaPluginGeolocationAdapter.getPosition(get(AppSP.eruda_plugin_geolocation_version))
@@ -1167,8 +1153,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.eruda_plugin_dom).also {
-                viewBinding.appResourcesErudaPluginDomCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginDomCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginDomCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesErudaPluginDomVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = erudaPluginDomAdapter.getPosition(get(AppSP.eruda_plugin_dom_version))
@@ -1185,8 +1170,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.eruda_plugin_orientation).also {
-                viewBinding.appResourcesErudaPluginOrientationCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginOrientationCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginOrientationCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesErudaPluginOrientationVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = erudaPluginOrientationAdapter.getPosition(get(AppSP.eruda_plugin_orientation_version))
@@ -1203,8 +1187,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.eruda_plugin_touches).also {
-                viewBinding.appResourcesErudaPluginTouchesCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesErudaPluginTouchesCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesErudaPluginTouchesCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesErudaPluginTouchesVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = erudaPluginTouchesAdapter.getPosition(get(AppSP.eruda_plugin_touches_version))
@@ -1221,8 +1204,7 @@ class App : AppCompatActivity() {
             }
             name("apps_$pkg")
             get(AppSP.nebulaUCSDK).also {
-                viewBinding.appResourcesNebulaucsdkCard.backgroundTintList = colorStateSingle((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) viewBinding.appResourcesNebulaucsdkCard.outlineSpotShadowColor = getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError)
+                viewBinding.appResourcesNebulaucsdkCard.setCardBackgroundColor((getColor(if (it) R.color.backgroundSuccess else R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
                 viewBinding.appResourcesNebulaucsdkVersion.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     val last = nebulaUCSDKAdapter.getPosition(get(AppSP.nebulaUCSDK_version))
@@ -1324,8 +1306,10 @@ class App : AppCompatActivity() {
                     }, ActivityOptionsCompat.makeSceneTransitionAnimation(this@App, it, "targetRule"))
                 }
                 v.setOnLongClickListener {
-                    AlertDialog.Builder(this@App).apply {
+                    MaterialAlertDialogBuilder(this@App).apply {
+                        setTitle(getString(R.string.delete))
                         setMessage(R.string.do_you_really_delete_this_rule)
+                        setNegativeButton(R.string.cancel) { _, _ -> }
                         setPositiveButton(R.string.confirm) { _, _ ->
                             with(modulePrefs("apps_$pkg")) {
                                 remove(AppSP.hooks, ruleName)
@@ -1333,8 +1317,7 @@ class App : AppCompatActivity() {
                             }
                             refresh()
                         }
-                        setNegativeButton(R.string.cancel) { _, _ -> }
-                    }.create().show()
+                    }.show()
                     true
                 }
                 viewBinding.appHooksList.addView(v)

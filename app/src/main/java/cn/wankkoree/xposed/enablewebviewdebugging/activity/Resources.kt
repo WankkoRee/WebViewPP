@@ -43,315 +43,313 @@ class Resources : AppCompatActivity() {
         setContentView(viewBinding.root)
         context = this
 
-        lifecycleScope.launch(Dispatchers.Main) {
-            refresh()
+        refresh()
 
-            viewBinding.resourcesVconsoleDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesVconsoleVersion.adapter = adapter
-                        viewBinding.resourcesVconsoleVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesVconsoleDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.vConsole_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesVconsoleDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesVconsoleVersion.adapter = adapter
+                    viewBinding.resourcesVconsoleVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesVconsoleDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.vConsole_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesVconsolePluginSourcesDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole-sources")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesVconsolePluginSourcesVersion.adapter = adapter
-                        viewBinding.resourcesVconsolePluginSourcesVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesVconsolePluginSourcesDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.vConsole_plugin_sources_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_sources)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_sources)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesVconsolePluginSourcesDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole-sources")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesVconsolePluginSourcesVersion.adapter = adapter
+                    viewBinding.resourcesVconsolePluginSourcesVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesVconsolePluginSourcesDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.vConsole_plugin_sources_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_sources)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_sources)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesVconsolePluginStatsDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole-stats-plugin")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesVconsolePluginStatsVersion.adapter = adapter
-                        viewBinding.resourcesVconsolePluginStatsVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesVconsolePluginStatsDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.vConsole_plugin_stats_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_stats)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_stats)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesVconsolePluginStatsDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole-stats-plugin")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesVconsolePluginStatsVersion.adapter = adapter
+                    viewBinding.resourcesVconsolePluginStatsVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesVconsolePluginStatsDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.vConsole_plugin_stats_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_stats)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_stats)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesVconsolePluginVueDevtoolsDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/vue-vconsole-devtools")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesVconsolePluginVueDevtoolsVersion.adapter = adapter
-                        viewBinding.resourcesVconsolePluginVueDevtoolsVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesVconsolePluginVueDevtoolsDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.vConsole_plugin_vue_devtools_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_vue_devtools)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_vue_devtools)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesVconsolePluginVueDevtoolsDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/vue-vconsole-devtools")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesVconsolePluginVueDevtoolsVersion.adapter = adapter
+                    viewBinding.resourcesVconsolePluginVueDevtoolsVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesVconsolePluginVueDevtoolsDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.vConsole_plugin_vue_devtools_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_vue_devtools)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_vue_devtools)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesVconsolePluginOutputlogDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole-outputlog-plugin")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesVconsolePluginOutputlogVersion.adapter = adapter
-                        viewBinding.resourcesVconsolePluginOutputlogVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesVconsolePluginOutputlogDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.vConsole_plugin_outputlog_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_outputlog)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_outputlog)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesVconsolePluginOutputlogDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole-outputlog-plugin")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesVconsolePluginOutputlogVersion.adapter = adapter
+                    viewBinding.resourcesVconsolePluginOutputlogVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesVconsolePluginOutputlogDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.vConsole_plugin_outputlog_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_outputlog)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_outputlog)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesErudaDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesErudaVersion.adapter = adapter
-                        viewBinding.resourcesErudaVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesErudaDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.eruda_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesErudaDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesErudaVersion.adapter = adapter
+                    viewBinding.resourcesErudaVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesErudaDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.eruda_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesErudaPluginFpsDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-fps")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesErudaPluginFpsVersion.adapter = adapter
-                        viewBinding.resourcesErudaPluginFpsVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesErudaPluginFpsDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_fps_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_fps)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_fps)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesErudaPluginFpsDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-fps")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesErudaPluginFpsVersion.adapter = adapter
+                    viewBinding.resourcesErudaPluginFpsVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesErudaPluginFpsDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_fps_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_fps)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_fps)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesErudaPluginFeaturesDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-features")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesErudaPluginFeaturesVersion.adapter = adapter
-                        viewBinding.resourcesErudaPluginFeaturesVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesErudaPluginFeaturesDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_features_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_features)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_features)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesErudaPluginFeaturesDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-features")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesErudaPluginFeaturesVersion.adapter = adapter
+                    viewBinding.resourcesErudaPluginFeaturesVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesErudaPluginFeaturesDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_features_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_features)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_features)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesErudaPluginTimingDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-timing")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesErudaPluginTimingVersion.adapter = adapter
-                        viewBinding.resourcesErudaPluginTimingVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesErudaPluginTimingDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_timing_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_timing)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_timing)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesErudaPluginTimingDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-timing")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesErudaPluginTimingVersion.adapter = adapter
+                    viewBinding.resourcesErudaPluginTimingVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesErudaPluginTimingDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_timing_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_timing)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_timing)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesErudaPluginMemoryDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-memory")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesErudaPluginMemoryVersion.adapter = adapter
-                        viewBinding.resourcesErudaPluginMemoryVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesErudaPluginMemoryDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_memory_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_memory)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_memory)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesErudaPluginMemoryDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-memory")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesErudaPluginMemoryVersion.adapter = adapter
+                    viewBinding.resourcesErudaPluginMemoryVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesErudaPluginMemoryDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_memory_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_memory)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_memory)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesErudaPluginCodeDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-code")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesErudaPluginCodeVersion.adapter = adapter
-                        viewBinding.resourcesErudaPluginCodeVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesErudaPluginCodeDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_code_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_code)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_code)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesErudaPluginCodeDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-code")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesErudaPluginCodeVersion.adapter = adapter
+                    viewBinding.resourcesErudaPluginCodeVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesErudaPluginCodeDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_code_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_code)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_code)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesErudaPluginBenchmarkDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-benchmark")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesErudaPluginBenchmarkVersion.adapter = adapter
-                        viewBinding.resourcesErudaPluginBenchmarkVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesErudaPluginBenchmarkDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_benchmark_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_benchmark)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_benchmark)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesErudaPluginBenchmarkDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-benchmark")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesErudaPluginBenchmarkVersion.adapter = adapter
+                    viewBinding.resourcesErudaPluginBenchmarkVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesErudaPluginBenchmarkDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_benchmark_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_benchmark)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_benchmark)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesErudaPluginGeolocationDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-geolocation")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesErudaPluginGeolocationVersion.adapter = adapter
-                        viewBinding.resourcesErudaPluginGeolocationVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesErudaPluginGeolocationDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_geolocation_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_geolocation)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_geolocation)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesErudaPluginGeolocationDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-geolocation")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesErudaPluginGeolocationVersion.adapter = adapter
+                    viewBinding.resourcesErudaPluginGeolocationVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesErudaPluginGeolocationDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_geolocation_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_geolocation)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_geolocation)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesErudaPluginDomDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-dom")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesErudaPluginDomVersion.adapter = adapter
-                        viewBinding.resourcesErudaPluginDomVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesErudaPluginDomDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_dom_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_dom)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_dom)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesErudaPluginDomDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-dom")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesErudaPluginDomVersion.adapter = adapter
+                    viewBinding.resourcesErudaPluginDomVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesErudaPluginDomDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_dom_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_dom)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_dom)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesErudaPluginOrientationDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-orientation")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesErudaPluginOrientationVersion.adapter = adapter
-                        viewBinding.resourcesErudaPluginOrientationVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesErudaPluginOrientationDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_orientation_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_orientation)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_orientation)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesErudaPluginOrientationDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-orientation")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesErudaPluginOrientationVersion.adapter = adapter
+                    viewBinding.resourcesErudaPluginOrientationVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesErudaPluginOrientationDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_orientation_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_orientation)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_orientation)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesErudaPluginTouchesDownload.isEnabled = false
-            Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-touches")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
-                    result.fold({
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesErudaPluginTouchesVersion.adapter = adapter
-                        viewBinding.resourcesErudaPluginTouchesVersion.setSelection(adapter.getPosition(it.tags.latest))
-                        viewBinding.resourcesErudaPluginTouchesDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.eruda_plugin_touches_latest, it.tags.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_touches)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_touches)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
+        viewBinding.resourcesErudaPluginTouchesDownload.isEnabled = false
+        Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-touches")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.api.npm.Versions> { _, _, result ->
+                result.fold({
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesErudaPluginTouchesVersion.adapter = adapter
+                    viewBinding.resourcesErudaPluginTouchesVersion.setSelection(adapter.getPosition(it.tags.latest))
+                    viewBinding.resourcesErudaPluginTouchesDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_touches_latest, it.tags.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_touches)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_touches)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
-            viewBinding.resourcesNebulaucsdkDownload.isEnabled = false
-            Fuel.get("${modulePrefs("module").get(data_source)}/resources/nebulaucsdk/metadata.json")
-                .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.Metadata> { _, _, result ->
-                    result.fold({ metadata ->
-                        val adapter = ArrayAdapter(context, R.layout.component_spinneritem, metadata.versions)
-                        adapter.setDropDownViewResource(R.layout.component_spinneritem)
-                        viewBinding.resourcesNebulaucsdkVersion.adapter = adapter
-                        viewBinding.resourcesNebulaucsdkVersion.setSelection(adapter.getPosition(metadata.latest))
-                        viewBinding.resourcesNebulaucsdkDownload.isEnabled = true
-                        modulePrefs("resources").put(ResourcesSP.nebulaUCSDK_latest, metadata.latest)
-                    }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), Toast.LENGTH_SHORT)
-                        toast!!.show()
-                    })
-                }
-        }
+        viewBinding.resourcesNebulaucsdkDownload.isEnabled = false
+        Fuel.get("${modulePrefs("module").get(data_source)}/resources/nebulaucsdk/metadata.json")
+            .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.Metadata> { _, _, result ->
+                result.fold({ metadata ->
+                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, metadata.versions)
+                    adapter.setDropDownViewResource(R.layout.component_spinneritem)
+                    viewBinding.resourcesNebulaucsdkVersion.adapter = adapter
+                    viewBinding.resourcesNebulaucsdkVersion.setSelection(adapter.getPosition(metadata.latest))
+                    viewBinding.resourcesNebulaucsdkDownload.isEnabled = true
+                    modulePrefs("resources").put(ResourcesSP.nebulaUCSDK_latest, metadata.latest)
+                }, { e ->
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), e)
+                    toast?.cancel()
+                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), Toast.LENGTH_SHORT)
+                    toast!!.show()
+                })
+            }
 
         viewBinding.resourcesToolbarBack.setOnClickListener {
             finish()
@@ -376,9 +374,9 @@ class Resources : AppCompatActivity() {
 
         fun downloadResources (
             view: View,
-            progressBar: android.widget.ProgressBar,
-            progressText: android.widget.TextView,
-            downloadButton: android.widget.TextView,
+            progressBar: com.google.android.material.progressindicator.LinearProgressIndicator,
+            progressText: com.google.android.material.textview.MaterialTextView,
+            downloadButton: com.google.android.material.textview.MaterialTextView,
             name: String,
             version: String,
             hashSetPref: PrefsData<HashSet<String>>,

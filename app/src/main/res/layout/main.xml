@@ -13,22 +13,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
-        app:elevation="0dp"
         >
-        <androidx.appcompat.widget.Toolbar android:id="@+id/main_toolbar"
+        <com.google.android.material.appbar.MaterialToolbar android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:contentInsetStart="8dp"
             app:contentInsetEnd="8dp"
 
-            style="@style/ThemeComponentToolbar"
+            android:background="@color/background"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
-                <ImageView android:id="@+id/main_toolbar_icon"
+                <com.google.android.material.imageview.ShapeableImageView android:id="@+id/main_toolbar_icon"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintDimensionRatio="1:1"
@@ -38,8 +36,9 @@
                     app:layout_constraintBottom_toBottomOf="parent"
 
                     android:contentDescription="@string/logo"
+                    android:src="@mipmap/ic_launcher"
                     />
-                <TextView android:id="@+id/main_toolbar_name"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/main_toolbar_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -49,10 +48,10 @@
                     app:layout_constraintBottom_toBottomOf="parent"
 
                     style="@style/ThemeComponentTextViewPrimary"
-                    android:textSize="@dimen/textAppearanceTitleLarge"
+                    android:textAppearance="?textAppearanceTitleLarge"
                     android:text="@string/app_name"
                     />
-                <TextView android:id="@+id/main_toolbar_menu"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/main_toolbar_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -68,7 +67,7 @@
                     android:clickable="true"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
         android:layout_width="0dp"
@@ -78,27 +77,27 @@
         app:layout_constraintTop_toBottomOf="@id/main_appbar"
         app:layout_constraintBottom_toBottomOf="parent"
         >
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="8dp"
             android:orientation="vertical"
             >
-            <androidx.cardview.widget.CardView android:id="@+id/main_status_card"
+            <com.google.android.material.card.MaterialCardView android:id="@+id/main_status_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
 
-                style="@style/ThemeComponentCardView"
-                android:backgroundTintMode="src_over"
+                style="?attr/materialCardViewFilledStyle"
+                android:clickable="true"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/main_status_icon"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_status_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -110,60 +109,63 @@
                         app:drawableTint="@color/textPrimary"
                         android:contentDescription="@string/disabled"
                         />
-                    <TextView android:id="@+id/main_status_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_status_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         app:layout_constraintStart_toEndOf="@id/main_status_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/main_xposed_text"
+                        app:layout_constraintBottom_toTopOf="@id/main_version_text"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/disabled"
                         />
-                    <TextView android:id="@+id/main_xposed_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_version_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/main_status_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/main_status_text"
-                        app:layout_constraintBottom_toTopOf="@id/main_version_text"
+                        app:layout_constraintBottom_toTopOf="@id/main_xposed_text"
+                        app:layout_goneMarginBottom="16dp"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
-                        android:text="@string/main_xposed_text"
+                        android:textAppearance="?textAppearanceLabelLarge"
+                        android:text="@string/main_version_text"
                         />
-                    <TextView android:id="@+id/main_version_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_xposed_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         app:layout_constraintStart_toEndOf="@id/main_status_icon"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/main_xposed_text"
+                        app:layout_constraintTop_toBottomOf="@id/main_version_text"
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
-                        android:text="@string/main_version_text"
+                        android:textAppearance="?textAppearanceLabelLarge"
+                        android:text="@string/main_xposed_text"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/main_apps_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/main_apps_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
+                android:clickable="true"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/main_apps_icon"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_apps_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -175,7 +177,7 @@
                         app:drawableTint="@color/textPrimary"
                         android:contentDescription="@string/main_apps_text"
                         />
-                    <TextView android:id="@+id/main_apps_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_apps_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -185,10 +187,10 @@
                         app:layout_constraintBottom_toTopOf="@id/main_apps_num"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/main_apps_text"
                         />
-                    <TextView android:id="@+id/main_apps_num"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_apps_num"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -198,25 +200,27 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:text="@string/main_apps_num"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/main_resources_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/main_resources_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
+                android:clickable="true"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/main_resources_icon"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_resources_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -228,7 +232,7 @@
                         app:drawableTint="@color/textPrimary"
                         android:contentDescription="@string/main_resources_text"
                         />
-                    <TextView android:id="@+id/main_resources_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_resources_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -238,10 +242,10 @@
                         app:layout_constraintBottom_toTopOf="@id/main_resources_desc"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/main_resources_text"
                         />
-                    <TextView android:id="@+id/main_resources_desc"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_resources_desc"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -251,27 +255,27 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:text="@string/main_resources_desc"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/main_donate_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/main_donate_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
 
-                style="@style/ThemeComponentCardView"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="#00ffffff"
+                style="?attr/materialCardViewFilledStyle"
+                app:cardBackgroundColor="@color/background"
+                android:clickable="true"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/main_donate_icon"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_donate_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -283,7 +287,7 @@
                         app:drawableTint="@color/textPrimary"
                         android:contentDescription="@string/donate"
                         />
-                    <TextView android:id="@+id/main_donate_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_donate_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -293,10 +297,10 @@
                         app:layout_constraintBottom_toTopOf="@id/main_donate_desc_text"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/donate"
                         />
-                    <TextView android:id="@+id/main_donate_desc_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_donate_desc_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -306,11 +310,11 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:text="@string/main_donate_desc_text"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

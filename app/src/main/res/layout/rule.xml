@@ -13,22 +13,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
-        app:elevation="0dp"
         >
-        <androidx.appcompat.widget.Toolbar android:id="@+id/rule_toolbar"
+        <com.google.android.material.appbar.MaterialToolbar android:id="@+id/rule_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:contentInsetStart="8dp"
             app:contentInsetEnd="8dp"
 
-            style="@style/ThemeComponentToolbar"
+            android:background="@color/background"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
-                <TextView android:id="@+id/rule_toolbar_back"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/rule_toolbar_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -43,7 +41,7 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     />
-                <TextView android:id="@+id/rule_toolbar_name"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/rule_toolbar_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -53,10 +51,10 @@
                     app:layout_constraintBottom_toBottomOf="parent"
 
                     style="@style/ThemeComponentTextViewPrimary"
-                    android:textSize="@dimen/textAppearanceTitleLarge"
+                    android:textAppearance="?textAppearanceTitleLarge"
                     android:text="@string/rule_editer"
                     />
-                <TextView android:id="@+id/rule_toolbar_cloud"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/rule_toolbar_cloud"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -71,7 +69,7 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     />
-                <TextView android:id="@+id/rule_toolbar_save"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/rule_toolbar_save"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -87,7 +85,7 @@
                     android:clickable="true"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -95,7 +93,7 @@
         app:layout_constraintTop_toBottomOf="@id/rule_appbar"
         app:layout_constraintBottom_toBottomOf="parent"
         >
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="8dp"
@@ -114,8 +112,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:background="@color/transparent"
                     android:hint="@string/rule_name"
+                    android:inputType="text"
                     />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
@@ -131,7 +129,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:background="@color/transparent"
                     android:hint="@string/rule_remark"
                     />
             </com.google.android.material.textfield.TextInputLayout>
@@ -143,14 +140,23 @@
 
                 app:code=""
                 />
-            <Spinner android:id="@+id/rule_hook_method"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
-                />
+
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:hint="@string/rule_type"
+                >
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView android:id="@+id/rule_hook_method"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
             <!--TODO: 添加更多 hook 方法-->
-            <LinearLayout android:id="@+id/rule_hookWebView"
+            <androidx.appcompat.widget.LinearLayoutCompat android:id="@+id/rule_hookWebView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -168,8 +174,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Class_WebView"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -185,8 +191,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_getSettings"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -202,8 +208,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_setWebContentsDebuggingEnabled"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -219,8 +225,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_setJavaScriptEnabled"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -236,8 +242,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_loadUrl"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -253,12 +259,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_setWebViewClient"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout android:id="@+id/rule_hookWebViewClient"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat android:id="@+id/rule_hookWebViewClient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -276,8 +282,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Class_WebView"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -293,8 +299,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Class_WebViewClient"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -310,8 +316,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_onPageFinished"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -327,8 +333,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_evaluateJavascript"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -344,12 +350,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Class_ValueCallback"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout android:id="@+id/rule_replaceNebulaUCSDK"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat android:id="@+id/rule_replaceNebulaUCSDK"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -367,8 +373,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Class_UcServiceSetup"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -384,8 +390,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_updateUCVersionAndSdcardPath"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -401,12 +407,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Field_sInitUcFromSdcardPath"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout android:id="@+id/rule_hookCrossWalk"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat android:id="@+id/rule_hookCrossWalk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -424,8 +430,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Class_XWalkView"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -441,8 +447,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_getSettings"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -458,8 +464,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_setJavaScriptEnabled"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -475,8 +481,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_loadUrl"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -492,8 +498,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_setResourceClient"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -509,8 +515,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Class_XWalkPreferences"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -526,12 +532,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_setValue"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout android:id="@+id/rule_hookXWebPreferences"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat android:id="@+id/rule_hookXWebPreferences"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -549,8 +555,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Class_XWebPreferences"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -566,12 +572,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_setValue"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout android:id="@+id/rule_hookXWebView"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat android:id="@+id/rule_hookXWebView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -589,8 +595,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Class_XWebView"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -606,8 +612,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_initWebviewCore"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -623,8 +629,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_isXWalk"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -640,8 +646,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_isPinus"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -657,8 +663,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_isX5"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -674,11 +680,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/transparent"
                         android:hint="Method_isSys"
+                        android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-        </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

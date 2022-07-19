@@ -13,22 +13,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
-        app:elevation="0dp"
         >
-        <androidx.appcompat.widget.Toolbar android:id="@+id/resources_toolbar"
+        <com.google.android.material.appbar.MaterialToolbar android:id="@+id/resources_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:contentInsetStart="8dp"
             app:contentInsetEnd="8dp"
 
-            style="@style/ThemeComponentToolbar"
+            android:background="@color/background"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
-                <TextView android:id="@+id/resources_toolbar_back"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_toolbar_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -43,7 +41,7 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     />
-                <TextView android:id="@+id/resources_toolbar_name"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_toolbar_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -53,11 +51,11 @@
                     app:layout_constraintBottom_toBottomOf="parent"
 
                     style="@style/ThemeComponentTextViewPrimary"
-                    android:textSize="@dimen/textAppearanceTitleLarge"
+                    android:textAppearance="?textAppearanceTitleLarge"
                     android:text="@string/main_resources_text"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
         android:layout_width="0dp"
@@ -74,7 +72,7 @@
             app:orientation="horizontal"
             app:columnCount="2"
             >
-            <androidx.cardview.widget.CardView android:id="@+id/resources_vconsole_card"
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_vconsole_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -82,14 +80,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_vconsole_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -104,7 +103,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_vconsole_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -114,7 +113,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/vconsole"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_vconsole_local"
@@ -125,8 +124,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_vconsole_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_vconsole_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_download"
@@ -135,7 +136,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_vconsole_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_vconsole_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_download"
@@ -143,11 +144,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_vconsole_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -157,13 +158,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_vconsole_plugin_sources_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_vconsole_plugin_sources_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -171,14 +172,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_vconsole_plugin_sources_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_plugin_sources_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -193,7 +195,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_vconsole_plugin_sources_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_plugin_sources_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -203,7 +205,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_sources_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/vconsole_plugin_sources"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_vconsole_plugin_sources_local"
@@ -214,8 +216,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_sources_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_sources_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_vconsole_plugin_sources_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_vconsole_plugin_sources_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_sources_download"
@@ -224,7 +228,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_sources_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_vconsole_plugin_sources_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_vconsole_plugin_sources_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_sources_download"
@@ -232,11 +236,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_sources_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_sources_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_vconsole_plugin_sources_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_plugin_sources_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -246,13 +250,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_vconsole_plugin_stats_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_vconsole_plugin_stats_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -260,14 +264,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_vconsole_plugin_stats_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_plugin_stats_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -282,7 +287,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_vconsole_plugin_stats_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_plugin_stats_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -292,7 +297,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_stats_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/vconsole_plugin_stats"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_vconsole_plugin_stats_local"
@@ -303,8 +308,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_stats_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_stats_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_vconsole_plugin_stats_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_vconsole_plugin_stats_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_stats_download"
@@ -313,7 +320,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_stats_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_vconsole_plugin_stats_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_vconsole_plugin_stats_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_stats_download"
@@ -321,11 +328,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_stats_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_stats_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_vconsole_plugin_stats_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_plugin_stats_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -335,13 +342,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_vconsole_plugin_vue_devtools_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_vconsole_plugin_vue_devtools_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -349,14 +356,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_vconsole_plugin_vue_devtools_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_plugin_vue_devtools_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -371,7 +379,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_vconsole_plugin_vue_devtools_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_plugin_vue_devtools_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -381,7 +389,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_vue_devtools_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/vconsole_plugin_vue_devtools"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_vconsole_plugin_vue_devtools_local"
@@ -392,8 +400,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_vue_devtools_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_vue_devtools_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_vconsole_plugin_vue_devtools_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_vconsole_plugin_vue_devtools_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_vue_devtools_download"
@@ -402,7 +412,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_vue_devtools_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_vconsole_plugin_vue_devtools_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_vconsole_plugin_vue_devtools_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_vue_devtools_download"
@@ -410,11 +420,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_vue_devtools_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_vue_devtools_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_vconsole_plugin_vue_devtools_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_plugin_vue_devtools_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -424,13 +434,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_vconsole_plugin_outputlog_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_vconsole_plugin_outputlog_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -438,14 +448,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_vconsole_plugin_outputlog_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_plugin_outputlog_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -460,7 +471,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_vconsole_plugin_outputlog_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_plugin_outputlog_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -470,7 +481,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_outputlog_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/vconsole_plugin_outputlog"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_vconsole_plugin_outputlog_local"
@@ -481,8 +492,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_outputlog_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_outputlog_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_vconsole_plugin_outputlog_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_vconsole_plugin_outputlog_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_outputlog_download"
@@ -491,7 +504,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_outputlog_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_vconsole_plugin_outputlog_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_vconsole_plugin_outputlog_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_vconsole_plugin_outputlog_download"
@@ -499,11 +512,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_vconsole_plugin_outputlog_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_vconsole_plugin_outputlog_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_vconsole_plugin_outputlog_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_vconsole_plugin_outputlog_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -513,13 +526,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_eruda_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_eruda_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -527,14 +540,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_eruda_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -549,7 +563,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_eruda_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -559,7 +573,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/eruda"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_local"
@@ -570,8 +584,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_eruda_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_eruda_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_download"
@@ -580,7 +596,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_eruda_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_eruda_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_download"
@@ -588,11 +604,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_eruda_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -602,13 +618,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_eruda_plugin_fps_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_eruda_plugin_fps_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -616,14 +632,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_eruda_plugin_fps_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_fps_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -638,7 +655,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_fps_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_fps_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -648,7 +665,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_fps_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_fps"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_fps_local"
@@ -659,8 +676,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_fps_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_fps_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_eruda_plugin_fps_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_eruda_plugin_fps_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_fps_download"
@@ -669,7 +688,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_fps_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_eruda_plugin_fps_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_eruda_plugin_fps_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_fps_download"
@@ -677,11 +696,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_fps_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_fps_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_fps_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_fps_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -691,13 +710,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_eruda_plugin_features_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_eruda_plugin_features_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -705,14 +724,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_eruda_plugin_features_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_features_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -727,7 +747,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_features_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_features_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -737,7 +757,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_features_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_features"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_features_local"
@@ -748,8 +768,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_features_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_features_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_eruda_plugin_features_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_eruda_plugin_features_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_features_download"
@@ -758,7 +780,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_features_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_eruda_plugin_features_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_eruda_plugin_features_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_features_download"
@@ -766,11 +788,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_features_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_features_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_features_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_features_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -780,13 +802,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_eruda_plugin_timing_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_eruda_plugin_timing_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -794,14 +816,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_eruda_plugin_timing_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_timing_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -816,7 +839,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_timing_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_timing_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -826,7 +849,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_timing_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_timing"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_timing_local"
@@ -837,8 +860,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_timing_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_timing_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_eruda_plugin_timing_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_eruda_plugin_timing_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_timing_download"
@@ -847,7 +872,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_timing_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_eruda_plugin_timing_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_eruda_plugin_timing_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_timing_download"
@@ -855,11 +880,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_timing_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_timing_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_timing_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_timing_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -869,13 +894,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_eruda_plugin_memory_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_eruda_plugin_memory_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -883,14 +908,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_eruda_plugin_memory_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_memory_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -905,7 +931,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_memory_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_memory_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -915,7 +941,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_memory_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_memory"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_memory_local"
@@ -926,8 +952,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_memory_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_memory_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_eruda_plugin_memory_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_eruda_plugin_memory_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_memory_download"
@@ -936,7 +964,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_memory_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_eruda_plugin_memory_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_eruda_plugin_memory_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_memory_download"
@@ -944,11 +972,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_memory_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_memory_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_memory_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_memory_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -958,13 +986,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_eruda_plugin_code_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_eruda_plugin_code_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -972,14 +1000,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_eruda_plugin_code_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_code_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -994,7 +1023,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_code_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_code_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -1004,7 +1033,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_code_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_code"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_code_local"
@@ -1015,8 +1044,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_code_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_code_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_eruda_plugin_code_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_eruda_plugin_code_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -1026,7 +1057,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_code_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_eruda_plugin_code_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_eruda_plugin_code_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_code_download"
@@ -1034,11 +1065,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_code_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_code_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_code_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_code_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -1048,13 +1079,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_eruda_plugin_benchmark_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_eruda_plugin_benchmark_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -1062,14 +1093,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_eruda_plugin_benchmark_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_benchmark_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -1084,7 +1116,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_benchmark_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_benchmark_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -1094,7 +1126,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_benchmark_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_benchmark"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_benchmark_local"
@@ -1105,8 +1137,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_benchmark_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_benchmark_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_eruda_plugin_benchmark_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_eruda_plugin_benchmark_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_benchmark_download"
@@ -1115,7 +1149,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_benchmark_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_eruda_plugin_benchmark_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_eruda_plugin_benchmark_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_benchmark_download"
@@ -1123,11 +1157,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_benchmark_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_benchmark_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_benchmark_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_benchmark_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -1137,13 +1171,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_eruda_plugin_geolocation_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_eruda_plugin_geolocation_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -1151,14 +1185,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_eruda_plugin_geolocation_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_geolocation_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -1173,7 +1208,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_geolocation_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_geolocation_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -1183,7 +1218,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_geolocation_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_geolocation"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_geolocation_local"
@@ -1194,8 +1229,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_geolocation_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_geolocation_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_eruda_plugin_geolocation_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_eruda_plugin_geolocation_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_geolocation_download"
@@ -1204,7 +1241,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_geolocation_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_eruda_plugin_geolocation_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_eruda_plugin_geolocation_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_geolocation_download"
@@ -1212,11 +1249,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_geolocation_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_geolocation_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_geolocation_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_geolocation_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -1226,13 +1263,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_eruda_plugin_dom_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_eruda_plugin_dom_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -1240,14 +1277,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_eruda_plugin_dom_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_dom_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -1262,7 +1300,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_dom_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_dom_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -1272,7 +1310,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_dom_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_dom"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_dom_local"
@@ -1283,8 +1321,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_dom_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_dom_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_eruda_plugin_dom_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_eruda_plugin_dom_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_dom_download"
@@ -1293,7 +1333,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_dom_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_eruda_plugin_dom_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_eruda_plugin_dom_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_dom_download"
@@ -1301,11 +1341,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_dom_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_dom_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_dom_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_dom_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -1315,13 +1355,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_eruda_plugin_orientation_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_eruda_plugin_orientation_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -1329,14 +1369,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_eruda_plugin_orientation_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_orientation_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -1351,7 +1392,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_orientation_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_orientation_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -1361,7 +1402,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_orientation_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_orientation"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_orientation_local"
@@ -1372,8 +1413,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_orientation_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_orientation_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_eruda_plugin_orientation_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_eruda_plugin_orientation_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_orientation_download"
@@ -1382,7 +1425,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_orientation_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_eruda_plugin_orientation_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_eruda_plugin_orientation_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_orientation_download"
@@ -1390,11 +1433,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_orientation_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_orientation_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_orientation_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_orientation_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -1404,13 +1447,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_eruda_plugin_touches_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_eruda_plugin_touches_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -1418,14 +1461,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_eruda_plugin_touches_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_touches_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -1440,7 +1484,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_touches_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_touches_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -1450,7 +1494,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_touches_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/eruda_plugin_touches"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_eruda_plugin_touches_local"
@@ -1461,8 +1505,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_touches_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_touches_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_eruda_plugin_touches_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_eruda_plugin_touches_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_touches_download"
@@ -1471,7 +1517,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_touches_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_eruda_plugin_touches_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_eruda_plugin_touches_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_eruda_plugin_touches_download"
@@ -1479,11 +1525,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_eruda_plugin_touches_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_eruda_plugin_touches_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_eruda_plugin_touches_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_eruda_plugin_touches_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -1493,13 +1539,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/resources_nebulaucsdk_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/resources_nebulaucsdk_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -1507,14 +1553,15 @@
                 app:layout_columnWeight="1"
                 app:layout_gravity="fill"
 
-                style="@style/ThemeComponentCardView"
+                style="?attr/materialCardViewOutlinedStyle"
+                app:cardBackgroundColor="@color/background"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     >
-                    <TextView android:id="@+id/resources_nebulaucsdk_download"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_nebulaucsdk_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -1529,7 +1576,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         />
-                    <TextView android:id="@+id/resources_nebulaucsdk_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_nebulaucsdk_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -1539,7 +1586,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_nebulaucsdk_local"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:text="@string/nebulaucsdk"
                         />
                     <com.google.android.flexbox.FlexboxLayout android:id="@+id/resources_nebulaucsdk_local"
@@ -1550,8 +1597,10 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_nebulaucsdk_text"
                         app:layout_constraintBottom_toTopOf="@id/resources_nebulaucsdk_version"
                         app:flexWrap="wrap"
+                        app:showDivider="middle"
+                        app:dividerDrawable="@drawable/spacing_4dp"
                         />
-                    <Spinner android:id="@+id/resources_nebulaucsdk_version"
+                    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/resources_nebulaucsdk_version"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_nebulaucsdk_download"
@@ -1560,7 +1609,7 @@
                         app:layout_constraintBottom_toTopOf="@id/resources_nebulaucsdk_progress_bar"
                         app:layout_goneMarginBottom="16dp"
                         />
-                    <ProgressBar android:id="@+id/resources_nebulaucsdk_progress_bar"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@+id/resources_nebulaucsdk_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@id/resources_nebulaucsdk_download"
@@ -1568,11 +1617,11 @@
                         app:layout_constraintTop_toBottomOf="@id/resources_nebulaucsdk_version"
                         app:layout_constraintBottom_toTopOf="@id/resources_nebulaucsdk_progress_text"
 
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
                         android:max="1000"
                         android:visibility="gone"
+                        app:trackCornerRadius="2dp"
                         />
-                    <TextView android:id="@+id/resources_nebulaucsdk_progress_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/resources_nebulaucsdk_progress_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -1582,12 +1631,12 @@
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:visibility="gone"
                         android:typeface="monospace"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
         </androidx.gridlayout.widget.GridLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

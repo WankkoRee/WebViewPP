@@ -71,4 +71,7 @@
     <string name="unavailable">不可用</string>
     <string name="unknown_checked_radio_button_id">未知的被选单选按钮 Id</string>
     <string name="download">下载</string>
+    <string name="delete">删除</string>
+    <string name="version">版本</string>
+    <string name="rule_type">规则类型</string>
 </resources>

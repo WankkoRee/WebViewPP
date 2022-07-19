@@ -13,22 +13,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
-        app:elevation="0dp"
         >
-        <androidx.appcompat.widget.Toolbar android:id="@+id/advance_toolbar"
+        <com.google.android.material.appbar.MaterialToolbar android:id="@+id/advance_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:contentInsetStart="8dp"
             app:contentInsetEnd="8dp"
 
-            style="@style/ThemeComponentToolbar"
+            android:background="@color/background"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
-                <TextView android:id="@+id/advance_toolbar_back"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_toolbar_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -43,7 +41,7 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     />
-                <TextView android:id="@+id/advance_toolbar_name"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_toolbar_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -53,11 +51,11 @@
                     app:layout_constraintBottom_toBottomOf="parent"
 
                     style="@style/ThemeComponentTextViewPrimary"
-                    android:textSize="@dimen/textAppearanceTitleLarge"
+                    android:textAppearance="?textAppearanceTitleLarge"
                     android:text="@string/advance"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -65,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@id/advance_appbar"
         app:layout_constraintBottom_toBottomOf="parent"
         >
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="8dp"
@@ -80,7 +78,7 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
                 >
-                <TextView android:id="@+id/advance_setting_data_source_title"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_setting_data_source_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
@@ -89,10 +87,10 @@
                     app:layout_constraintBottom_toTopOf="@id/advance_setting_data_source_desc"
 
                     style="@style/ThemeComponentTextViewPrimary"
-                    android:textSize="@dimen/textAppearanceBodyLarge"
+                    android:textAppearance="?textAppearanceBodyLarge"
                     android:text="@string/data_source"
                     />
-                <TextView android:id="@+id/advance_setting_data_source_desc"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_setting_data_source_desc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
@@ -101,10 +99,10 @@
                     app:layout_constraintBottom_toTopOf="@id/advance_setting_data_source_value"
 
                     style="@style/ThemeComponentTextViewSecondary"
-                    android:textSize="@dimen/textAppearanceLabelLarge"
+                    android:textAppearance="?textAppearanceLabelLarge"
                     android:text="@string/advance_setting_data_source_desc"
                     />
-                <TextView android:id="@+id/advance_setting_data_source_value"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_setting_data_source_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
@@ -113,27 +111,25 @@
                     app:layout_constraintBottom_toBottomOf="parent"
 
                     style="@style/ThemeComponentTextViewPrimary"
-                    android:textSize="@dimen/textAppearanceLabelLarge"
+                    android:textAppearance="?textAppearanceLabelLarge"
                     android:textAlignment="textEnd"
                     android:lines="1"
-                    android:singleLine="true"
                     android:ellipsize="middle"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.cardview.widget.CardView android:id="@+id/advance_license_author_card"
+            <com.google.android.material.card.MaterialCardView android:id="@+id/advance_license_author_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
 
-                style="@style/ThemeComponentCardView"
-                android:backgroundTintMode="src_over"
+                style="?attr/materialCardViewFilledStyle"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     >
-                    <androidx.cardview.widget.CardView android:id="@+id/advance_license_author_icon_border"
+                    <com.google.android.material.imageview.ShapeableImageView android:id="@+id/advance_license_author_icon"
                         android:layout_width="108dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="16dp"
@@ -143,49 +139,41 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
 
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="#00ffffff"
-                        >
-                        <ImageView android:id="@+id/advance_license_author_icon"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-
-                            android:src="@mipmap/wankkoree"
-                            android:contentDescription="@string/wankko_ree"
-                            />
-                    </androidx.cardview.widget.CardView>
-                    <TextView android:id="@+id/advance_license_author_title"
+                        android:src="@mipmap/wankkoree"
+                        android:contentDescription="@string/wankko_ree"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Large"
+                        />
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_license_author_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="8dp"
-                        app:layout_constraintStart_toEndOf="@id/advance_license_author_icon_border"
+                        app:layout_constraintStart_toEndOf="@id/advance_license_author_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toTopOf="@id/advance_license_author_desc"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:textAlignment="center"
                         android:text="@string/wankko_ree"
                         />
-                    <TextView android:id="@+id/advance_license_author_desc"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_license_author_desc"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginVertical="8dp"
-                        app:layout_constraintStart_toEndOf="@id/advance_license_author_icon_border"
+                        app:layout_constraintStart_toEndOf="@id/advance_license_author_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/advance_license_author_title"
                         app:layout_constraintBottom_toTopOf="@id/advance_license_author_button"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:text="@string/author_of_this_module"
                         />
-                    <LinearLayout android:id="@+id/advance_license_author_button"
+                    <androidx.appcompat.widget.LinearLayoutCompat android:id="@+id/advance_license_author_button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="8dp"
@@ -194,12 +182,12 @@
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="16dp"
-                        app:layout_constraintStart_toEndOf="@id/advance_license_author_icon_border"
+                        app:layout_constraintStart_toEndOf="@id/advance_license_author_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/advance_license_author_desc"
                         app:layout_constraintBottom_toBottomOf="parent"
                         >
-                        <TextView android:id="@+id/advance_license_author_button_github"
+                        <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_license_author_button_github"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
@@ -212,7 +200,7 @@
                             android:background="?android:attr/selectableItemBackgroundBorderless"
                             android:clickable="true"
                             />
-                        <TextView android:id="@+id/advance_license_author_button_email"
+                        <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_license_author_button_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
@@ -225,23 +213,22 @@
                             android:background="?android:attr/selectableItemBackgroundBorderless"
                             android:clickable="true"
                             />
-                    </LinearLayout>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/advance_license_yuki_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/advance_license_yuki_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
 
-                style="@style/ThemeComponentCardView"
-                android:backgroundTintMode="src_over"
+                style="?attr/materialCardViewFilledStyle"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     >
-                    <androidx.cardview.widget.CardView android:id="@+id/advance_license_yuki_icon_border"
+                    <com.google.android.material.imageview.ShapeableImageView android:id="@+id/advance_license_yuki_icon"
                         android:layout_width="108dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="16dp"
@@ -251,49 +238,41 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
 
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="#00ffffff"
-                        >
-                        <ImageView android:id="@+id/advance_license_yuki_icon"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-
-                            android:src="@mipmap/yuki_hook_api"
-                            android:contentDescription="@string/yuki_hook_api"
-                            />
-                    </androidx.cardview.widget.CardView>
-                    <TextView android:id="@+id/advance_license_yuki_title"
+                        android:src="@mipmap/yuki_hook_api"
+                        android:contentDescription="@string/yuki_hook_api"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Large"
+                        />
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_license_yuki_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="8dp"
-                        app:layout_constraintStart_toEndOf="@id/advance_license_yuki_icon_border"
+                        app:layout_constraintStart_toEndOf="@id/advance_license_yuki_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toTopOf="@id/advance_license_yuki_desc"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:textAlignment="center"
                         android:text="@string/yuki_hook_api"
                         />
-                    <TextView android:id="@+id/advance_license_yuki_desc"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_license_yuki_desc"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginVertical="8dp"
-                        app:layout_constraintStart_toEndOf="@id/advance_license_yuki_icon_border"
+                        app:layout_constraintStart_toEndOf="@id/advance_license_yuki_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/advance_license_yuki_title"
                         app:layout_constraintBottom_toTopOf="@id/advance_license_yuki_button"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:text="@string/this_module_is_constructed_using_yukihookapi"
                         />
-                    <LinearLayout android:id="@+id/advance_license_yuki_button"
+                    <androidx.appcompat.widget.LinearLayoutCompat android:id="@+id/advance_license_yuki_button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="8dp"
@@ -302,12 +281,12 @@
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="16dp"
-                        app:layout_constraintStart_toEndOf="@id/advance_license_yuki_icon_border"
+                        app:layout_constraintStart_toEndOf="@id/advance_license_yuki_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/advance_license_yuki_desc"
                         app:layout_constraintBottom_toBottomOf="parent"
                         >
-                        <TextView android:id="@+id/advance_license_yuki_button_github"
+                        <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_license_yuki_button_github"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
@@ -320,23 +299,22 @@
                             android:background="?android:attr/selectableItemBackgroundBorderless"
                             android:clickable="true"
                             />
-                    </LinearLayout>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/advance_license_module_card"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/advance_license_module_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
 
-                style="@style/ThemeComponentCardView"
-                android:backgroundTintMode="src_over"
+                style="?attr/materialCardViewFilledStyle"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     >
-                    <androidx.cardview.widget.CardView android:id="@+id/advance_license_module_icon_border"
+                    <com.google.android.material.imageview.ShapeableImageView android:id="@+id/advance_license_module_icon"
                         android:layout_width="108dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="16dp"
@@ -346,49 +324,41 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
 
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="#00ffffff"
-                        >
-                        <ImageView android:id="@+id/advance_license_module_icon"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-
-                            android:src="@mipmap/ic_launcher"
-                            android:contentDescription="@string/app_name"
-                            />
-                    </androidx.cardview.widget.CardView>
-                    <TextView android:id="@+id/advance_license_module_title"
+                        android:src="@mipmap/ic_launcher"
+                        android:contentDescription="@string/app_name"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Large"
+                        />
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_license_module_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="8dp"
-                        app:layout_constraintStart_toEndOf="@id/advance_license_module_icon_border"
+                        app:layout_constraintStart_toEndOf="@id/advance_license_module_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toTopOf="@id/advance_license_module_desc"
 
                         style="@style/ThemeComponentTextViewPrimary"
-                        android:textSize="@dimen/textAppearanceBodyLarge"
+                        android:textAppearance="?textAppearanceBodyLarge"
                         android:textAlignment="center"
                         android:text="@string/app_name"
                         />
-                    <TextView android:id="@+id/advance_license_module_desc"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_license_module_desc"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginVertical="8dp"
-                        app:layout_constraintStart_toEndOf="@id/advance_license_module_icon_border"
+                        app:layout_constraintStart_toEndOf="@id/advance_license_module_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/advance_license_module_title"
                         app:layout_constraintBottom_toTopOf="@id/advance_license_module_button"
 
                         style="@style/ThemeComponentTextViewSecondary"
-                        android:textSize="@dimen/textAppearanceLabelLarge"
+                        android:textAppearance="?textAppearanceLabelLarge"
                         android:text="@string/app_description"
                         />
-                    <LinearLayout android:id="@+id/advance_license_module_button"
+                    <androidx.appcompat.widget.LinearLayoutCompat android:id="@+id/advance_license_module_button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="8dp"
@@ -397,12 +367,12 @@
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="16dp"
-                        app:layout_constraintStart_toEndOf="@id/advance_license_module_icon_border"
+                        app:layout_constraintStart_toEndOf="@id/advance_license_module_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/advance_license_module_desc"
                         app:layout_constraintBottom_toBottomOf="parent"
                         >
-                        <TextView android:id="@+id/advance_license_module_button_github"
+                        <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_license_module_button_github"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
@@ -415,7 +385,7 @@
                             android:background="?android:attr/selectableItemBackgroundBorderless"
                             android:clickable="true"
                             />
-                        <TextView android:id="@+id/advance_license_module_button_telegram"
+                        <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_license_module_button_telegram"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
@@ -428,9 +398,9 @@
                             android:background="?android:attr/selectableItemBackgroundBorderless"
                             android:clickable="true"
                             />
-                    </LinearLayout>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

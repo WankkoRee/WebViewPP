@@ -79,4 +79,7 @@
     <string name="unavailable">Unavailable</string>
     <string name="unknown_checked_radio_button_id">Unknown Checked Radio Button Id</string>
     <string name="download">Download</string>
+    <string name="delete">Delete</string>
+    <string name="version">Version</string>
+    <string name="rule_type">Rule Type</string>
 </resources>

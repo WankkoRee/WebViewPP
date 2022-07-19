@@ -13,22 +13,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
-        app:elevation="0dp"
         >
-        <androidx.appcompat.widget.Toolbar android:id="@+id/apps_toolbar"
+        <com.google.android.material.appbar.MaterialToolbar android:id="@+id/apps_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:contentInsetStart="8dp"
             app:contentInsetEnd="8dp"
 
-            style="@style/ThemeComponentToolbar"
+            android:background="@color/background"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
-                <TextView android:id="@+id/apps_toolbar_back"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/apps_toolbar_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -43,7 +41,7 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     />
-                <TextView android:id="@+id/apps_toolbar_name"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/apps_toolbar_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -54,13 +52,12 @@
                     android:visibility="visible"
 
                     style="@style/ThemeComponentTextViewPrimary"
-                    android:textSize="@dimen/textAppearanceTitleLarge"
+                    android:textAppearance="?textAppearanceTitleLarge"
                     android:text="@string/main_apps_text"
                     />
-                <androidx.appcompat.widget.AppCompatEditText android:id="@+id/apps_toolbar_search"
+                <com.google.android.material.textfield.TextInputLayout android:id="@+id/apps_toolbar_search"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
                     app:layout_constraintStart_toEndOf="@id/apps_toolbar_back"
                     app:layout_constraintEnd_toStartOf="@id/apps_toolbar_menu"
                     app:layout_constraintTop_toTopOf="parent"
@@ -68,8 +65,14 @@
                     android:visibility="gone"
 
                     android:hint="@string/search"
-                    />
-                <TextView android:id="@+id/apps_toolbar_search_btn"
+                    app:endIconMode="clear_text"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/apps_toolbar_search_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/apps_toolbar_search_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -84,7 +87,7 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     />
-                <TextView android:id="@+id/apps_toolbar_menu"
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/apps_toolbar_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -100,7 +103,7 @@
                     android:clickable="true"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout android:id="@+id/apps_loading"
         android:layout_width="0dp"

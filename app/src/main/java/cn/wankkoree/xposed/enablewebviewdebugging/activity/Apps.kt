@@ -12,7 +12,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.Toast
+import com.google.android.material.textview.MaterialTextView
+import com.google.android.material.imageview.ShapeableImageView
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -61,12 +63,12 @@ class Apps : AppCompatActivity() {
                 finish()
             }
         }
-        viewBinding.appsToolbarSearch.doAfterTextChanged {
+        viewBinding.appsToolbarSearchValue.doAfterTextChanged {
             with(modulePrefs("apps")) {
                 adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, it.toString(), true)
             }
         }
-        viewBinding.appsToolbarSearch.setOnFocusChangeListener { it, b ->
+        viewBinding.appsToolbarSearchValue.setOnFocusChangeListener { it, b ->
             val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             if (b)
                 imm.showSoftInput(it, InputMethodManager.SHOW_IMPLICIT)
@@ -78,10 +80,10 @@ class Apps : AppCompatActivity() {
                 viewBinding.appsToolbarName.visibility = View.GONE
                 viewBinding.appsToolbarSearchBtn.visibility = View.GONE
                 viewBinding.appsToolbarSearch.visibility = View.VISIBLE
-                viewBinding.appsToolbarSearch.requestFocus()
+                viewBinding.appsToolbarSearchValue.requestFocus()
                 isSearching = true
                 with(modulePrefs("apps")) {
-                    adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearch.text.toString(), true)
+                    adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearchValue.text.toString(), true)
                 }
             } else {
                 viewBinding.appsToolbarSearch.visibility = View.GONE
@@ -89,7 +91,7 @@ class Apps : AppCompatActivity() {
                 viewBinding.appsToolbarSearchBtn.visibility = View.VISIBLE
                 isSearching = false
                 with(modulePrefs("apps")) {
-                    adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearch.text.toString(), true)
+                    adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearchValue.text.toString(), true)
                 }
             }
         }
@@ -106,12 +108,12 @@ class Apps : AppCompatActivity() {
                         R.id.apps_toolbar_menu_show_system_app -> with(modulePrefs("apps")) {
                             it.isChecked = !it.isChecked
                             put(AppsSP.show_system_app, it.isChecked)
-                            adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearch.text.toString(), true)
+                            adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearchValue.text.toString(), true)
                         }
                         R.id.apps_toolbar_menu_show_no_network -> with(modulePrefs("apps")) {
                             it.isChecked = !it.isChecked
                             put(AppsSP.show_no_network, it.isChecked)
-                            adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearch.text.toString(), true)
+                            adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearchValue.text.toString(), true)
                         }
                     }
                     true
@@ -166,7 +168,7 @@ class Apps : AppCompatActivity() {
                                 .thenBy{it.isSystemApp}
                                 .thenBy(Collator.getInstance()){it.name}
                         ),
-                        get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearch.text.toString()
+                        get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearchValue.text.toString()
                     )
                 }
                 viewBinding.appsToolbarSearch.isEnabled = true
@@ -276,7 +278,7 @@ class Apps : AppCompatActivity() {
 
             holder.itemView.setOnClickListener {
                 val p = filteredData.indexOfFirst { al ->
-                    al.pkg == (it.findViewById(R.id.component_applistitem_package) as TextView).text
+                    al.pkg == (it.findViewById(R.id.component_applistitem_package) as MaterialTextView).text
                 }
                 val intent = Intent(context, App::class.java)
                 intent.putExtra(Intent.EXTRA_PACKAGE_NAME, filteredData[p].pkg)
@@ -313,11 +315,11 @@ class Apps : AppCompatActivity() {
         )
 
         inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-            val iconView: ImageView = view.findViewById(R.id.component_applistitem_icon)
-            val nameView: TextView = view.findViewById(R.id.component_applistitem_name)
-            val versionView: TextView = view.findViewById(R.id.component_applistitem_version)
-            val packageView: TextView = view.findViewById(R.id.component_applistitem_package)
-            val stateView: TextView = view.findViewById(R.id.component_applistitem_state)
+            val iconView: ShapeableImageView = view.findViewById(R.id.component_applistitem_icon)
+            val nameView: MaterialTextView = view.findViewById(R.id.component_applistitem_name)
+            val versionView: MaterialTextView = view.findViewById(R.id.component_applistitem_version)
+            val packageView: MaterialTextView = view.findViewById(R.id.component_applistitem_package)
+            val stateView: MaterialTextView = view.findViewById(R.id.component_applistitem_state)
             val isSystemAppView: Tag = view.findViewById(R.id.component_applistitem_is_system_app)
             val isNoNetworkView: Tag = view.findViewById(R.id.component_applistitem_is_no_network)
         }
