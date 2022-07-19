@@ -86,7 +86,7 @@ dependencies {
     // 语言特性支持
     implementation 'androidx.core:core-ktx:1.8.0'                               // Jetpack
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0'             // Jetpack - Lifecycle
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'     // Kotlin - Coroutines Android
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'     // Kotlin - Coroutines Android
 
     // 界面支持
     implementation 'androidx.appcompat:appcompat:1.4.2'                         // Jetpack - AppCompat
