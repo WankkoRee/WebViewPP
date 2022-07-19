@@ -132,7 +132,7 @@ class Advance: AppCompatActivity() {
         }
 
         viewBinding.advanceLicenseYukiCard.setCardBackgroundColor((getPrimaryColor(viewBinding.advanceLicenseYukiIcon.drawable, this@Advance).first or 0xff000000.toInt()) and 0x33ffffff)
-        viewBinding.advanceLicenseYukiDesc.text = getString(R.string.this_module_is_constructed_using_yukihookapi) + "\n" + getString(R.string.advance_yuki_version_text).format(YukiHookAPI.API_VERSION_NAME, YukiHookAPI.API_VERSION_CODE)
+        viewBinding.advanceLicenseYukiDesc.text = getString(R.string.this_module_is_constructed_using_yukihookapi) + "\n" + getString(R.string.advance_yuki_version_text, YukiHookAPI.API_VERSION_NAME, YukiHookAPI.API_VERSION_CODE)
         viewBinding.advanceLicenseYukiButtonGithub.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/fankes/YukiHookAPI")))
         }

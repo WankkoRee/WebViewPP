@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.icu.text.Collator
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -148,7 +149,7 @@ class Apps : AppCompatActivity() {
                         app.applicationInfo.loadIcon(packageManager),
                         app.applicationInfo.loadLabel(packageManager) as String,
                         app.versionName ?: "",
-                        app.versionCode,
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) app.longVersionCode else app.versionCode.toLong(),
                         app.packageName,
                         app.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 1,
                         app.requestedPermissions == null || !app.requestedPermissions.contains("android.permission.INTERNET"),
@@ -210,7 +211,7 @@ class Apps : AppCompatActivity() {
                     return oldItem.icon == newItem.icon &&
                             oldItem.name == newItem.name &&
                             oldItem.versionName == newItem.versionName &&
-                            oldItem.versionCode == newItem.versionCode &&
+                            oldItem.longVersionCode == newItem.longVersionCode &&
                             oldItem.ruleNumbers == newItem.ruleNumbers &&
                             oldItem.isSystemApp == newItem.isSystemApp &&
                             oldItem.isNoNetwork == newItem.isNoNetwork
@@ -268,9 +269,9 @@ class Apps : AppCompatActivity() {
                     holder.nameView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 else
                     holder.nameView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-            holder.versionView.text = context!!.getString(R.string.version_format).format(filteredData[position].versionName, filteredData[position].versionCode)
+            holder.versionView.text = context!!.getString(R.string.version_format, filteredData[position].versionName, filteredData[position].longVersionCode)
             holder.packageView.text = filteredData[position].pkg
-            holder.stateView.text = context!!.getString(R.string.applistitem_num).format(context!!.getString(if (filteredData[position].isEnabled) R.string.enabled else R.string.disabled), filteredData[position].ruleNumbers)
+            holder.stateView.text = context!!.getString(R.string.applistitem_num, context!!.getString(if (filteredData[position].isEnabled) R.string.enabled else R.string.disabled), filteredData[position].ruleNumbers)
             holder.isSystemAppView.color = context!!.getColor(if (!filteredData[position].isSystemApp) R.color.backgroundSuccess else R.color.backgroundError)
             holder.isSystemAppView.text = context!!.getString(if (!filteredData[position].isSystemApp) R.string.user_application else R.string.system_application)
             holder.isNoNetworkView.color = context!!.getColor(if (!filteredData[position].isNoNetwork) R.color.backgroundSuccess else R.color.backgroundError)
@@ -305,7 +306,7 @@ class Apps : AppCompatActivity() {
             val icon: Drawable,
             val name: String,
             val versionName: String,
-            val versionCode: Int,
+            val longVersionCode: Long,
             val pkg: String,
             val isSystemApp: Boolean,
             val isNoNetwork: Boolean,

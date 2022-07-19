@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.transition.Slide
 import android.util.Log
@@ -47,7 +48,7 @@ class App : AppCompatActivity() {
     private lateinit var icon: Drawable
     private lateinit var name: String
     private lateinit var versionName: String
-    private var versionCode: Int = 0
+    private var longVersionCode: Long = 0
     private lateinit var pkg: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,14 +63,14 @@ class App : AppCompatActivity() {
         icon = app.applicationInfo.loadIcon(packageManager)
         name = app.applicationInfo.loadLabel(packageManager) as String
         versionName = app.versionName ?: ""
-        versionCode = app.versionCode
+        longVersionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) app.longVersionCode else app.versionCode.toLong()
 
         viewBinding.appToolbarName.text = name
         viewBinding.appIcon.setImageDrawable(icon)
         viewBinding.appIcon.contentDescription = name
         viewBinding.appText.text = name
         viewBinding.appPackage.text = pkg
-        viewBinding.appVersion.text = getString(R.string.version_format).format(versionName, versionCode)
+        viewBinding.appVersion.text = getString(R.string.version_format, versionName, longVersionCode)
         refresh()
 
         viewBinding.appToolbarBack.setOnClickListener {
@@ -92,7 +93,7 @@ class App : AppCompatActivity() {
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
                                         toast!!.show()
                                     }
                                 }
@@ -105,7 +106,7 @@ class App : AppCompatActivity() {
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
                                         toast!!.show()
                                     }
                                 }
@@ -124,7 +125,7 @@ class App : AppCompatActivity() {
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
                                         toast!!.show()
                                     }
                                 }
@@ -140,7 +141,7 @@ class App : AppCompatActivity() {
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
                                         toast!!.show()
                                     }
                                 }
@@ -159,7 +160,7 @@ class App : AppCompatActivity() {
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
                                         toast!!.show()
                                     }
                                 }
@@ -174,7 +175,7 @@ class App : AppCompatActivity() {
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
                                         toast!!.show()
                                     }
                                 }
@@ -187,7 +188,7 @@ class App : AppCompatActivity() {
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
                                         toast!!.show()
                                     }
                                 }
@@ -205,7 +206,7 @@ class App : AppCompatActivity() {
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
                                         toast!!.show()
                                     }
                                 }
@@ -221,7 +222,7 @@ class App : AppCompatActivity() {
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
+                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
                                         toast!!.show()
                                     }
                                 }
@@ -289,7 +290,7 @@ class App : AppCompatActivity() {
         viewBinding.appHooksAdd.setOnClickListener {
             ruleResultContract.launch(Intent(this@App, Rule::class.java).apply {
                 putExtra("pkg", pkg)
-                putExtra("version", getString(R.string.version_format).format(versionName, versionCode))
+                putExtra("version", getString(R.string.version_format, versionName, longVersionCode))
             }, ActivityOptionsCompat.makeSceneTransitionAnimation(this))
         }
         viewBinding.appResourcesVconsoleCard.setOnLongClickListener {
@@ -1196,7 +1197,7 @@ class App : AppCompatActivity() {
                         // TODO: 添加更多 hook 方法
                         "hookWebView" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookRuleWebView::class.java)
-                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != null && hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
+                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
                                 getString(R.string.code_hookParam, "Class_WebView", hookEntry.Class_WebView),
                                 getString(R.string.code_hookParam, "Method_getSettings", hookEntry.Method_getSettings),
                                 getString(R.string.code_hookParam, "Method_setWebContentsDebuggingEnabled", hookEntry.Method_setWebContentsDebuggingEnabled),
@@ -1207,7 +1208,7 @@ class App : AppCompatActivity() {
                         }
                         "hookWebViewClient" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookRuleWebViewClient::class.java)
-                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != null && hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
+                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
                                 getString(R.string.code_hookParam, "Class_WebView", hookEntry.Class_WebView),
                                 getString(R.string.code_hookParam, "Class_WebViewClient", hookEntry.Class_WebViewClient),
                                 getString(R.string.code_hookParam, "Method_onPageFinished", hookEntry.Method_onPageFinished),
@@ -1217,7 +1218,7 @@ class App : AppCompatActivity() {
                         }
                         "replaceNebulaUCSDK" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.ReplaceNebulaUCSDK::class.java)
-                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != null && hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
+                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
                                 getString(R.string.code_hookParam, "Class_UcServiceSetup", hookEntry.Class_UcServiceSetup),
                                 getString(R.string.code_hookParam, "Method_updateUCVersionAndSdcardPath", hookEntry.Method_updateUCVersionAndSdcardPath),
                                 getString(R.string.code_hookParam, "Field_sInitUcFromSdcardPath", hookEntry.Field_sInitUcFromSdcardPath),
@@ -1225,7 +1226,7 @@ class App : AppCompatActivity() {
                         }
                         "hookCrossWalk" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookCrossWalk::class.java)
-                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != null && hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
+                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
                                 getString(R.string.code_hookParam, "Class_XWalkView", hookEntry.Class_XWalkView),
                                 getString(R.string.code_hookParam, "Method_getSettings", hookEntry.Method_getSettings),
                                 getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", hookEntry.Method_setJavaScriptEnabled),
@@ -1237,14 +1238,14 @@ class App : AppCompatActivity() {
                         }
                         "hookXWebPreferences" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebPreferences::class.java)
-                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != null && hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
+                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
                                 getString(R.string.code_hookParam, "Class_XWebPreferences", hookEntry.Class_XWebPreferences),
                                 getString(R.string.code_hookParam, "Method_setValue", hookEntry.Method_setValue),
                             ).joinToString(""))
                         }
                         "hookXWebView" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebView::class.java)
-                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != null && hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
+                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
                                 getString(R.string.code_hookParam, "Class_XWebView", hookEntry.Class_XWebView),
                                 getString(R.string.code_hookParam, "Method_initWebviewCore", hookEntry.Method_initWebviewCore),
                                 getString(R.string.code_hookParam, "Method_isXWalk", hookEntry.Method_isXWalk),
@@ -1268,7 +1269,7 @@ class App : AppCompatActivity() {
                 v.setOnClickListener {
                     ruleResultContract.launch(Intent(this@App, Rule::class.java).apply {
                         putExtra("pkg", pkg)
-                        putExtra("version", getString(R.string.version_format).format(versionName, versionCode))
+                        putExtra("version", getString(R.string.version_format, versionName, longVersionCode))
                         putExtra("rule_name", ruleName)
                     }, ActivityOptionsCompat.makeSceneTransitionAnimation(this@App, it, "targetRule"))
                 }

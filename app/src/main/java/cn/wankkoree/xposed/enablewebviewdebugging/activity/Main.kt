@@ -44,7 +44,7 @@ class Main: AppCompatActivity() {
         markdown = Markwon.create(this@Main)
 
         viewBinding.mainToolbarIcon.setImageDrawable(packageManager.getApplicationIcon(BuildConfig.APPLICATION_ID))
-        viewBinding.mainVersionText.text = getString(R.string.main_version_text).format("${BuildConfig.VERSION_NAME}-${BuildConfig.BUILD_TYPE}", BuildConfig.VERSION_CODE)
+        viewBinding.mainVersionText.text = getString(R.string.main_version_text, "${BuildConfig.VERSION_NAME}-${BuildConfig.BUILD_TYPE}", BuildConfig.VERSION_CODE)
         if (isXposedModuleActive) {
             viewBinding.mainStatusCard.setCardBackgroundColor((getColor(R.color.backgroundSuccess) or 0xff000000.toInt()) and 0x77ffffff)
             viewBinding.mainStatusIcon.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawableCompat(R.drawable.ic_round_check_circle_24), null, null, null)
@@ -52,8 +52,8 @@ class Main: AppCompatActivity() {
             viewBinding.mainStatusText.text = getString(R.string.enabled)
             viewBinding.mainXposedText.visibility = View.VISIBLE
             when {
-                executorVersion != -1 -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format("${executorName}(API ${executorVersion})")
-                else -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text).format(executorName)
+                executorVersion != -1 -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text, "${executorName}(API ${executorVersion})")
+                else -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text, executorName)
             }
         } else {
             viewBinding.mainStatusCard.setCardBackgroundColor((getColor(R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)
@@ -149,7 +149,7 @@ class Main: AppCompatActivity() {
     }
 
     private fun refresh() {
-        viewBinding.mainAppsNum.text = getString(R.string.main_apps_num).format(modulePrefs("apps").getSet(AppsSP.enabled).size)
+        viewBinding.mainAppsNum.text = getString(R.string.main_apps_num, modulePrefs("apps").getSet(AppsSP.enabled).size)
     }
 
     private fun checkUpdate() {
@@ -175,7 +175,7 @@ class Main: AppCompatActivity() {
                                     dialog.findViewById(android.R.id.message)!!,
                                     """## ${getString(R.string.latest_version)}
                                         |
-                                        |`${getString(R.string.version_format).format(latestName, latestCode)}`
+                                        |`${getString(R.string.version_format, latestName, latestCode)}`
                                         |
                                         |${latest.body}
                                     """.trimMargin()
@@ -192,7 +192,7 @@ class Main: AppCompatActivity() {
                         }
                     }
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.latest_version)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.latest_version)), e)
                 })
             }
     }

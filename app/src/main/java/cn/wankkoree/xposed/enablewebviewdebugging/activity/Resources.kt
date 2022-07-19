@@ -61,9 +61,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsoleDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.vConsole_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.vconsole)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -79,9 +79,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsolePluginSourcesDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.vConsole_plugin_sources_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_sources)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_sources)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_sources)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_sources)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -97,9 +97,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsolePluginStatsDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.vConsole_plugin_stats_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_stats)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_stats)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_stats)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_stats)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -115,9 +115,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsolePluginVueDevtoolsDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.vConsole_plugin_vue_devtools_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_vue_devtools)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_vue_devtools)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_vue_devtools)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_vue_devtools)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -133,9 +133,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsolePluginOutputlogDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.vConsole_plugin_outputlog_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_outputlog)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_outputlog)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.vconsole_plugin_outputlog)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_outputlog)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -151,9 +151,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.eruda_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.eruda)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -169,9 +169,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginFpsDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.eruda_plugin_fps_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_fps)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_fps)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_fps)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.eruda_plugin_fps)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -187,9 +187,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginFeaturesDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.eruda_plugin_features_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_features)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_features)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_features)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.eruda_plugin_features)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -205,9 +205,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginTimingDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.eruda_plugin_timing_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_timing)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_timing)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_timing)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.eruda_plugin_timing)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -223,9 +223,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginMemoryDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.eruda_plugin_memory_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_memory)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_memory)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_memory)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.eruda_plugin_memory)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -241,9 +241,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginCodeDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.eruda_plugin_code_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_code)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_code)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_code)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.eruda_plugin_code)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -259,9 +259,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginBenchmarkDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.eruda_plugin_benchmark_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_benchmark)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_benchmark)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_benchmark)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.eruda_plugin_benchmark)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -277,9 +277,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginGeolocationDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.eruda_plugin_geolocation_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_geolocation)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_geolocation)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_geolocation)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.eruda_plugin_geolocation)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -295,9 +295,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginDomDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.eruda_plugin_dom_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_dom)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_dom)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_dom)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.eruda_plugin_dom)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -313,9 +313,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginOrientationDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.eruda_plugin_orientation_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_orientation)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_orientation)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_orientation)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.eruda_plugin_orientation)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -331,9 +331,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginTouchesDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.eruda_plugin_touches_latest, it.tags.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_touches)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_touches)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.eruda_plugin_touches)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.eruda_plugin_touches)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -349,9 +349,9 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesNebulaucsdkDownload.isEnabled = true
                     modulePrefs("resources").put(ResourcesSP.nebulaUCSDK_latest, metadata.latest)
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), e)
+                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.nebulaucsdk)), e)
                     toast?.cancel()
-                    toast = Toast.makeText(context, getString(R.string.pull_failed).format(getString(R.string.nebulaucsdk)), Toast.LENGTH_SHORT)
+                    toast = Toast.makeText(context, getString(R.string.pull_failed, getString(R.string.nebulaucsdk)), Toast.LENGTH_SHORT)
                     toast!!.show()
                 })
             }
@@ -802,7 +802,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.vConsole) && get(AppSP.vConsole_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -835,7 +835,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.vConsole_plugin_sources) && get(AppSP.vConsole_plugin_sources_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -868,7 +868,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.vConsole_plugin_stats) && get(AppSP.vConsole_plugin_stats_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -901,7 +901,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.vConsole_plugin_vue_devtools) && get(AppSP.vConsole_plugin_vue_devtools_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -934,7 +934,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.vConsole_plugin_outputlog) && get(AppSP.vConsole_plugin_outputlog_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -967,7 +967,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.eruda) && get(AppSP.eruda_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -1000,7 +1000,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.eruda_plugin_fps) && get(AppSP.eruda_plugin_fps_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -1033,7 +1033,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.eruda_plugin_features) && get(AppSP.eruda_plugin_features_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -1066,7 +1066,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.eruda_plugin_timing) && get(AppSP.eruda_plugin_timing_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -1099,7 +1099,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.eruda_plugin_memory) && get(AppSP.eruda_plugin_memory_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -1132,7 +1132,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.eruda_plugin_code) && get(AppSP.eruda_plugin_code_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -1165,7 +1165,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.eruda_plugin_benchmark) && get(AppSP.eruda_plugin_benchmark_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -1198,7 +1198,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.eruda_plugin_geolocation) && get(AppSP.eruda_plugin_geolocation_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -1231,7 +1231,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.eruda_plugin_dom) && get(AppSP.eruda_plugin_dom_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -1264,7 +1264,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.eruda_plugin_orientation) && get(AppSP.eruda_plugin_orientation_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -1297,7 +1297,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.eruda_plugin_touches) && get(AppSP.eruda_plugin_touches_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }
@@ -1330,7 +1330,7 @@ class Resources : AppCompatActivity() {
                                 name("apps_$pkg")
                                 if (get(AppSP.nebulaUCSDK) && get(AppSP.nebulaUCSDK_version) == version) {
                                     toast?.cancel()
-                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it).format(pkg), Toast.LENGTH_SHORT)
+                                    toast = Toast.makeText(context, getString(R.string.delete_failed)+'\n'+getString(R.string.because_s_is_using_it, pkg), Toast.LENGTH_SHORT)
                                     toast!!.show()
                                     return@setOnLongClickListener true
                                 }

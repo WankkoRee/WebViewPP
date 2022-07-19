@@ -205,9 +205,9 @@ class Rule : AppCompatActivity() {
                                     dialogBinding.dialogCloudRulesRules.addView(v)
                                 }
                             }, { e ->
-                                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(pkg+' '+getString(R.string.cloud_rules)), e)
+                                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules)), e)
                                 toast?.cancel()
-                                toast = Toast.makeText(this@Rule, getString(R.string.pull_failed).format(pkg+' '+version+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), Toast.LENGTH_SHORT)
+                                toast = Toast.makeText(this@Rule, getString(R.string.pull_failed, pkg+' '+version+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), Toast.LENGTH_SHORT)
                                 toast!!.show()
                                 dialog.cancel()
                             })
@@ -226,9 +226,9 @@ class Rule : AppCompatActivity() {
                                 toast!!.show()
                             }
                         }, { e ->
-                            Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed).format(pkg+' '+getString(R.string.cloud_rules)), e)
+                            Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules)), e)
                             toast?.cancel()
-                            toast = Toast.makeText(this@Rule, getString(R.string.pull_failed).format(pkg+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), Toast.LENGTH_SHORT)
+                            toast = Toast.makeText(this@Rule, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), Toast.LENGTH_SHORT)
                             toast!!.show()
                             dialog.cancel()
                         })
@@ -240,17 +240,17 @@ class Rule : AppCompatActivity() {
             val type = viewBinding.ruleHookMethod.text.toString()
             if (name.isEmpty()) {
                 toast?.cancel()
-                toast = Toast.makeText(this@Rule, getString(R.string.s_cannot_be_empty).format(getString(R.string.rule_name)), Toast.LENGTH_SHORT)
+                toast = Toast.makeText(this@Rule, getString(R.string.s_cannot_be_empty, getString(R.string.rule_name)), Toast.LENGTH_SHORT)
                 toast!!.show()
                 return@setOnClickListener
             } else if (name.contains('|')) {
                 toast?.cancel()
-                toast = Toast.makeText(this@Rule, getString(R.string.s_cannot_contains_vertical).format(getString(R.string.rule_name)), Toast.LENGTH_SHORT)
+                toast = Toast.makeText(this@Rule, getString(R.string.s_cannot_contains_vertical, getString(R.string.rule_name)), Toast.LENGTH_SHORT)
                 toast!!.show()
                 return@setOnClickListener
             } else if (type.isEmpty()) {
                 toast?.cancel()
-                toast = Toast.makeText(this@Rule, getString(R.string.s_cannot_be_empty).format(getString(R.string.rule_type)), Toast.LENGTH_SHORT)
+                toast = Toast.makeText(this@Rule, getString(R.string.s_cannot_be_empty, getString(R.string.rule_type)), Toast.LENGTH_SHORT)
                 toast!!.show()
                 return@setOnClickListener
             } else {
@@ -260,7 +260,7 @@ class Rule : AppCompatActivity() {
                     } catch (_: ValueAlreadyExistedInSet) {
                         if (ruleName == null || ruleName != name) { // 新建 or 修改名称
                             toast?.cancel()
-                            toast = Toast.makeText(this@Rule, getString(R.string.s_already_exists).format(getString(R.string.rule_name) + """ "$name" """), Toast.LENGTH_SHORT)
+                            toast = Toast.makeText(this@Rule, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$name" """), Toast.LENGTH_SHORT)
                             toast!!.show()
                             return@setOnClickListener
                         }
