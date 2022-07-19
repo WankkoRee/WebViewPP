@@ -82,4 +82,5 @@
     <string name="delete">Delete</string>
     <string name="version">Version</string>
     <string name="rule_type">Rule Type</string>
+    <string name="from">From %s</string>
 </resources>

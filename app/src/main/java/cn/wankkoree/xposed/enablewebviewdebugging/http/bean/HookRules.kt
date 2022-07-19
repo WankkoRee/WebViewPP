@@ -18,102 +18,102 @@ data class HookRules (
 ) {
     class HookRule (
         @SerializedName("name")
-        val name: String,
+        val name: String = "",
         @SerializedName("remark")
-        val remark: String,
+        val remark: String = "",
     )
     class HookRuleWebView (
         @SerializedName("name")
-        val name: String,
+        val name: String = "",
         @SerializedName("remark")
-        val remark: String,
+        val remark: String = "",
         @SerializedName("Class_WebView")
-        val Class_WebView: String,
+        val Class_WebView: String = "android.webkit.WebView",
         @SerializedName("Method_getSettings")
-        val Method_getSettings: String,
+        val Method_getSettings: String = "getSettings",
         @SerializedName("Method_setWebContentsDebuggingEnabled")
-        val Method_setWebContentsDebuggingEnabled: String,
+        val Method_setWebContentsDebuggingEnabled: String = "setWebContentsDebuggingEnabled",
         @SerializedName("Method_setJavaScriptEnabled")
-        val Method_setJavaScriptEnabled: String,
+        val Method_setJavaScriptEnabled: String = "setJavaScriptEnabled",
         @SerializedName("Method_loadUrl")
-        val Method_loadUrl: String,
+        val Method_loadUrl: String = "loadUrl",
         @SerializedName("Method_setWebViewClient")
-        val Method_setWebViewClient: String,
+        val Method_setWebViewClient: String = "setWebViewClient",
     )
     class HookRuleWebViewClient (
         @SerializedName("name")
-        val name: String,
+        val name: String = "",
         @SerializedName("remark")
-        val remark: String,
+        val remark: String = "",
         @SerializedName("Class_WebView")
-        val Class_WebView: String,
+        val Class_WebView: String = "android.webkit.WebView",
         @SerializedName("Class_WebViewClient")
-        val Class_WebViewClient: String,
+        val Class_WebViewClient: String = "android.webkit.WebViewClient",
         @SerializedName("Method_onPageFinished")
-        val Method_onPageFinished: String,
+        val Method_onPageFinished: String = "onPageFinished",
         @SerializedName("Method_evaluateJavascript")
-        val Method_evaluateJavascript: String,
+        val Method_evaluateJavascript: String = "evaluateJavascript",
         @SerializedName("Class_ValueCallback")
-        val Class_ValueCallback: String,
+        val Class_ValueCallback: String = "android.webkit.ValueCallback",
     )
     class ReplaceNebulaUCSDK (
         @SerializedName("name")
-        val name: String,
+        val name: String = "",
         @SerializedName("remark")
-        val remark: String,
+        val remark: String = "",
         @SerializedName("Class_UcServiceSetup")
-        val Class_UcServiceSetup: String,
+        val Class_UcServiceSetup: String = "com.alipay.mobile.nebulauc.impl.UcServiceSetup",
         @SerializedName("Method_updateUCVersionAndSdcardPath")
-        val Method_updateUCVersionAndSdcardPath: String,
+        val Method_updateUCVersionAndSdcardPath: String = "updateUCVersionAndSdcardPath",
         @SerializedName("Field_sInitUcFromSdcardPath")
-        val Field_sInitUcFromSdcardPath: String,
+        val Field_sInitUcFromSdcardPath: String = "sInitUcFromSdcardPath",
     )
     class HookCrossWalk (
         @SerializedName("name")
-        val name: String,
+        val name: String = "",
         @SerializedName("remark")
-        val remark: String,
+        val remark: String = "",
         @SerializedName("Class_XWalkView")
-        val Class_XWalkView: String,
+        val Class_XWalkView: String = "org.xwalk.core.XWalkView",
         @SerializedName("Method_getSettings")
-        val Method_getSettings: String,
+        val Method_getSettings: String = "getSettings",
         @SerializedName("Method_setJavaScriptEnabled")
-        val Method_setJavaScriptEnabled: String,
+        val Method_setJavaScriptEnabled: String = "setJavaScriptEnabled",
         @SerializedName("Method_loadUrl")
-        val Method_loadUrl: String,
+        val Method_loadUrl: String = "loadUrl",
         @SerializedName("Method_setResourceClient")
-        val Method_setResourceClient: String,
+        val Method_setResourceClient: String = "setResourceClient",
         @SerializedName("Class_XWalkPreferences")
-        val Class_XWalkPreferences: String,
+        val Class_XWalkPreferences: String = "org.xwalk.core.XWalkPreferences",
         @SerializedName("Method_setValue")
-        val Method_setValue: String,
+        val Method_setValue: String = "setValue",
     )
     class HookXWebPreferences (
         @SerializedName("name")
-        val name: String,
+        val name: String = "",
         @SerializedName("remark")
-        val remark: String,
+        val remark: String = "",
         @SerializedName("Class_XWebPreferences")
-        val Class_XWebPreferences: String,
+        val Class_XWebPreferences: String = "org.xwalk.core.XWalkPreferences",
         @SerializedName("Method_setValue")
-        val Method_setValue: String,
+        val Method_setValue: String = "setValue",
     )
     class HookXWebView (
         @SerializedName("name")
-        val name: String,
+        val name: String = "",
         @SerializedName("remark")
-        val remark: String,
+        val remark: String = "",
         @SerializedName("Class_XWebView")
-        val Class_XWebView: String,
+        val Class_XWebView: String = "com.tencent.xweb.WebView",
         @SerializedName("Method_initWebviewCore")
-        val Method_initWebviewCore: String,
+        val Method_initWebviewCore: String = "initWebviewCore",
         @SerializedName("Method_isXWalk")
-        val Method_isXWalk: String,
+        val Method_isXWalk: String = "isXWalk",
         @SerializedName("Method_isPinus")
-        val Method_isPinus: String,
+        val Method_isPinus: String = "isPinus",
         @SerializedName("Method_isX5")
-        val Method_isX5: String,
+        val Method_isX5: String = "isX5",
         @SerializedName("Method_isSys")
-        val Method_isSys: String,
+        val Method_isSys: String = "isSys",
     )
 }

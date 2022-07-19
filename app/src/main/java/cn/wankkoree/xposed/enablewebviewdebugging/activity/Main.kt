@@ -22,7 +22,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.GsonBuilder
 import com.highcapable.yukihookapi.YukiHookAPI.Status.executorName
 import com.highcapable.yukihookapi.YukiHookAPI.Status.executorVersion
-import com.highcapable.yukihookapi.YukiHookAPI.Status.isModuleActive
+import com.highcapable.yukihookapi.YukiHookAPI.Status.isXposedModuleActive
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 import io.noties.markwon.Markwon
 import java.net.URLEncoder
@@ -44,7 +44,7 @@ class Main: AppCompatActivity() {
 
         viewBinding.mainToolbarIcon.setImageDrawable(packageManager.getApplicationIcon(BuildConfig.APPLICATION_ID))
         viewBinding.mainVersionText.text = getString(R.string.main_version_text).format("${BuildConfig.VERSION_NAME}-${BuildConfig.BUILD_TYPE}", BuildConfig.VERSION_CODE)
-        if (isModuleActive) {
+        if (isXposedModuleActive) {
             viewBinding.mainStatusCard.setCardBackgroundColor((getColor(R.color.backgroundSuccess) or 0xff000000.toInt()) and 0x77ffffff)
             viewBinding.mainStatusIcon.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawableCompat(R.drawable.ic_round_check_circle_24), null, null, null)
             viewBinding.mainStatusIcon.contentDescription = getString(R.string.enabled)
@@ -65,7 +65,7 @@ class Main: AppCompatActivity() {
         checkUpdate()
 
         viewBinding.mainToolbarMenu.setOnClickListener {
-            if (!isModuleActive && !BuildConfig.DEBUG) {
+            if (!isXposedModuleActive && !BuildConfig.DEBUG) {
                 toast?.cancel()
                 toast = Toast.makeText(this, getString(R.string.please_enable_the_module_first), Toast.LENGTH_SHORT)
                 toast!!.show()
@@ -114,7 +114,7 @@ class Main: AppCompatActivity() {
             checkUpdate()
         }
         viewBinding.mainAppsCard.setOnClickListener {
-            if (!isModuleActive && !BuildConfig.DEBUG) {
+            if (!isXposedModuleActive && !BuildConfig.DEBUG) {
                 toast?.cancel()
                 toast = Toast.makeText(this, getString(R.string.please_enable_the_module_first), Toast.LENGTH_SHORT)
                 toast!!.show()
@@ -123,7 +123,7 @@ class Main: AppCompatActivity() {
             appsResultContract.launch(Unit)
         }
         viewBinding.mainResourcesCard.setOnClickListener {
-            if (!isModuleActive && !BuildConfig.DEBUG) {
+            if (!isXposedModuleActive && !BuildConfig.DEBUG) {
                 toast?.cancel()
                 toast = Toast.makeText(this, getString(R.string.please_enable_the_module_first), Toast.LENGTH_SHORT)
                 toast!!.show()

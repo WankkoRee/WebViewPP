@@ -74,4 +74,5 @@
     <string name="delete">删除</string>
     <string name="version">版本</string>
     <string name="rule_type">规则类型</string>
+    <string name="from">来自 %s</string>
 </resources>

@@ -84,12 +84,6 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
                                             "hookWebView",
                                             "",
-                                            "android.webkit.WebView",
-                                            "getSettings",
-                                            "setWebContentsDebuggingEnabled",
-                                            "setJavaScriptEnabled",
-                                            "loadUrl",
-                                            "setWebViewClient",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -103,11 +97,6 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
                                             "",
-                                            "android.webkit.WebView",
-                                            "android.webkit.WebViewClient",
-                                            "onPageFinished",
-                                            "evaluateJavascript",
-                                            "android.webkit.ValueCallback",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -126,12 +115,7 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
                                             "hookWebView",
                                             "",
-                                            "com.tencent.smtt.sdk.WebView",
-                                            "getSettings",
-                                            "setWebContentsDebuggingEnabled",
-                                            "setJavaScriptEnabled",
-                                            "loadUrl",
-                                            "setWebViewClient",
+                                            Class_WebView = "com.tencent.smtt.sdk.WebView",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -145,11 +129,9 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
                                             "",
-                                            "com.tencent.smtt.sdk.WebView",
-                                            "com.tencent.smtt.sdk.WebViewClient",
-                                            "onPageFinished",
-                                            "evaluateJavascript",
-                                            "com.tencent.smtt.sdk.ValueCallback",
+                                            Class_WebView = "com.tencent.smtt.sdk.WebView",
+                                            Class_WebViewClient = "com.tencent.smtt.sdk.WebViewClient",
+                                            Class_ValueCallback = "com.tencent.smtt.sdk.ValueCallback",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -168,12 +150,7 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
                                             "hookWebView",
                                             "",
-                                            "com.uc.webview.export.WebView",
-                                            "getSettings",
-                                            "setWebContentsDebuggingEnabled",
-                                            "setJavaScriptEnabled",
-                                            "loadUrl",
-                                            "setWebViewClient",
+                                            Class_WebView = "com.uc.webview.export.WebView",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -187,11 +164,8 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
                                             "",
-                                            "com.uc.webview.export.WebView",
-                                            "com.alipay.mobile.nebulauc.impl.UCWebViewClient",
-                                            "onPageFinished",
-                                            "evaluateJavascript",
-                                            "android.webkit.ValueCallback",
+                                            Class_WebView = "com.uc.webview.export.WebView",
+                                            Class_WebViewClient = "com.alipay.mobile.nebulauc.impl.UCWebViewClient",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -205,9 +179,6 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.ReplaceNebulaUCSDK(
                                             "replaceNebulaUCSDK",
                                             "",
-                                            "com.alipay.mobile.nebulauc.impl.UcServiceSetup",
-                                            "updateUCVersionAndSdcardPath",
-                                            "sInitUcFromSdcardPath",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -226,13 +197,6 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookCrossWalk(
                                             "hookCrossWalk",
                                             "",
-                                            "org.xwalk.core.XWalkView",
-                                            "getSettings",
-                                            "setJavaScriptEnabled",
-                                            "loadUrl",
-                                            "setResourceClient",
-                                            "org.xwalk.core.XWalkPreferences",
-                                            "setValue",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -246,11 +210,9 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
                                             "",
-                                            "org.xwalk.core.XWalkView",
-                                            "org.xwalk.core.XWalkResourceClient",
-                                            "onLoadFinished",
-                                            "evaluateJavascript",
-                                            "android.webkit.ValueCallback",
+                                            Class_WebView = "org.xwalk.core.XWalkView",
+                                            Class_WebViewClient = "org.xwalk.core.XWalkResourceClient",
+                                            Method_onPageFinished = "onLoadFinished",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()

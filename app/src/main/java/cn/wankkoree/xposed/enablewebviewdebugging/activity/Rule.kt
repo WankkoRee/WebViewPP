@@ -67,7 +67,7 @@ class Rule : AppCompatActivity() {
                                 // TODO: 添加更多 hook 方法
                                 if (rules.hookWebView != null) for (hookRule in rules.hookWebView) {
                                     val v = Code(this@Rule)
-                                    v.code = getString(R.string.code_hookFunction, if (hookRule.remark != null && hookRule.remark != "") getString(R.string.code_hookRemark, hookRule.remark) else "", hookRule.name, "hookWebView", arrayOf(
+                                    v.code = getString(R.string.code_hookFunction, if (hookRule.remark.trim() != "") getString(R.string.code_hookRemark, hookRule.remark.trim()) else "", hookRule.name, "hookWebView", arrayOf(
                                         getString(R.string.code_hookParam, "Class_WebView", hookRule.Class_WebView),
                                         getString(R.string.code_hookParam, "Method_getSettings", hookRule.Method_getSettings),
                                         getString(R.string.code_hookParam, "Method_setWebContentsDebuggingEnabled", hookRule.Method_setWebContentsDebuggingEnabled),
@@ -79,7 +79,7 @@ class Rule : AppCompatActivity() {
                                     v.setOnClickListener {
                                         viewBinding.ruleHookMethod.setText("hookWebView", false)
                                         viewBinding.ruleName.setText(hookRule.name)
-                                        viewBinding.ruleRemark.setText(hookRule.remark ?: "")
+                                        viewBinding.ruleRemark.setText((getString(R.string.from, version) + "\n" + hookRule.remark.trim()).trim())
                                         viewBinding.ruleHookWebViewClassWebView.setText(hookRule.Class_WebView)
                                         viewBinding.ruleHookWebViewMethodGetSettings.setText(hookRule.Method_getSettings)
                                         viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.setText(hookRule.Method_setWebContentsDebuggingEnabled)
@@ -92,7 +92,7 @@ class Rule : AppCompatActivity() {
                                 }
                                 if (rules.hookWebViewClient != null) for (hookRule in rules.hookWebViewClient) {
                                     val v = Code(this@Rule)
-                                    v.code = getString(R.string.code_hookFunction, if (hookRule.remark != null && hookRule.remark != "") getString(R.string.code_hookRemark, hookRule.remark) else "", hookRule.name, "hookWebViewClient", arrayOf(
+                                    v.code = getString(R.string.code_hookFunction, if (hookRule.remark.trim() != "") getString(R.string.code_hookRemark, hookRule.remark.trim()) else "", hookRule.name, "hookWebViewClient", arrayOf(
                                         getString(R.string.code_hookParam, "Class_WebView", hookRule.Class_WebView),
                                         getString(R.string.code_hookParam, "Class_WebViewClient", hookRule.Class_WebViewClient),
                                         getString(R.string.code_hookParam, "Method_onPageFinished", hookRule.Method_onPageFinished),
@@ -103,7 +103,7 @@ class Rule : AppCompatActivity() {
                                     v.setOnClickListener {
                                         viewBinding.ruleHookMethod.setText("hookWebViewClient", false)
                                         viewBinding.ruleName.setText(hookRule.name)
-                                        viewBinding.ruleRemark.setText(hookRule.remark ?: "")
+                                        viewBinding.ruleRemark.setText((getString(R.string.from, version) + "\n" + hookRule.remark.trim()).trim())
                                         viewBinding.ruleHookWebViewClientClassWebView.setText(hookRule.Class_WebView)
                                         viewBinding.ruleHookWebViewClientClassWebViewClient.setText(hookRule.Class_WebViewClient)
                                         viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText(hookRule.Method_onPageFinished)
@@ -115,7 +115,7 @@ class Rule : AppCompatActivity() {
                                 }
                                 if (rules.replaceNebulaUCSDK != null) for (hookRule in rules.replaceNebulaUCSDK) {
                                     val v = Code(this@Rule)
-                                    v.code = getString(R.string.code_hookFunction, if (hookRule.remark != null && hookRule.remark != "") getString(R.string.code_hookRemark, hookRule.remark) else "", hookRule.name, "replaceNebulaUCSDK", arrayOf(
+                                    v.code = getString(R.string.code_hookFunction, if (hookRule.remark.trim() != "") getString(R.string.code_hookRemark, hookRule.remark.trim()) else "", hookRule.name, "replaceNebulaUCSDK", arrayOf(
                                         getString(R.string.code_hookParam, "Class_UcServiceSetup", hookRule.Class_UcServiceSetup),
                                         getString(R.string.code_hookParam, "Method_updateUCVersionAndSdcardPath", hookRule.Method_updateUCVersionAndSdcardPath),
                                         getString(R.string.code_hookParam, "Field_sInitUcFromSdcardPath", hookRule.Field_sInitUcFromSdcardPath),
@@ -124,7 +124,7 @@ class Rule : AppCompatActivity() {
                                     v.setOnClickListener {
                                         viewBinding.ruleHookMethod.setText("replaceNebulaUCSDK", false)
                                         viewBinding.ruleName.setText(hookRule.name)
-                                        viewBinding.ruleRemark.setText(hookRule.remark ?: "")
+                                        viewBinding.ruleRemark.setText((getString(R.string.from, version) + "\n" + hookRule.remark.trim()).trim())
                                         viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.setText(hookRule.Class_UcServiceSetup)
                                         viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.setText(hookRule.Method_updateUCVersionAndSdcardPath)
                                         viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.setText(hookRule.Field_sInitUcFromSdcardPath)
@@ -134,7 +134,7 @@ class Rule : AppCompatActivity() {
                                 }
                                 if (rules.hookCrossWalk != null) for (hookRule in rules.hookCrossWalk) {
                                     val v = Code(this@Rule)
-                                    v.code = getString(R.string.code_hookFunction, if (hookRule.remark != null && hookRule.remark != "") getString(R.string.code_hookRemark, hookRule.remark) else "", hookRule.name, "hookCrossWalk", arrayOf(
+                                    v.code = getString(R.string.code_hookFunction, if (hookRule.remark.trim() != "") getString(R.string.code_hookRemark, hookRule.remark.trim()) else "", hookRule.name, "hookCrossWalk", arrayOf(
                                         getString(R.string.code_hookParam, "Class_XWalkView", hookRule.Class_XWalkView),
                                         getString(R.string.code_hookParam, "Method_getSettings", hookRule.Method_getSettings),
                                         getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", hookRule.Method_setJavaScriptEnabled),
@@ -147,7 +147,7 @@ class Rule : AppCompatActivity() {
                                     v.setOnClickListener {
                                         viewBinding.ruleHookMethod.setText("hookCrossWalk", false)
                                         viewBinding.ruleName.setText(hookRule.name)
-                                        viewBinding.ruleRemark.setText(hookRule.remark ?: "")
+                                        viewBinding.ruleRemark.setText((getString(R.string.from, version) + "\n" + hookRule.remark.trim()).trim())
                                         viewBinding.ruleHookCrossWalkClassXWalkView.setText(hookRule.Class_XWalkView)
                                         viewBinding.ruleHookCrossWalkMethodGetSettings.setText(hookRule.Method_getSettings)
                                         viewBinding.ruleHookCrossWalkMethodSetJavaScriptEnabled.setText(hookRule.Method_setJavaScriptEnabled)
@@ -161,7 +161,7 @@ class Rule : AppCompatActivity() {
                                 }
                                 if (rules.hookXWebPreferences != null) for (hookRule in rules.hookXWebPreferences) {
                                     val v = Code(this@Rule)
-                                    v.code = getString(R.string.code_hookFunction, if (hookRule.remark != null && hookRule.remark != "") getString(R.string.code_hookRemark, hookRule.remark) else "", hookRule.name, "hookXWebPreferences", arrayOf(
+                                    v.code = getString(R.string.code_hookFunction, if (hookRule.remark.trim() != "") getString(R.string.code_hookRemark, hookRule.remark.trim()) else "", hookRule.name, "hookXWebPreferences", arrayOf(
                                         getString(R.string.code_hookParam, "Class_XWebPreferences",  hookRule.Class_XWebPreferences),
                                         getString(R.string.code_hookParam, "Method_setValue",  hookRule.Method_setValue),
                                     ).joinToString(""))
@@ -169,7 +169,7 @@ class Rule : AppCompatActivity() {
                                     v.setOnClickListener {
                                         viewBinding.ruleHookMethod.setText("hookXWebPreferences", false)
                                         viewBinding.ruleName.setText(hookRule.name)
-                                        viewBinding.ruleRemark.setText(hookRule.remark ?: "")
+                                        viewBinding.ruleRemark.setText((getString(R.string.from, version) + "\n" + hookRule.remark.trim()).trim())
                                         viewBinding.ruleHookXWebPreferencesClassXWebPreferences.setText(hookRule.Class_XWebPreferences)
                                         viewBinding.ruleHookXWebPreferencesMethodSetValue.setText(hookRule.Method_setValue)
                                         dialog.cancel()
@@ -178,7 +178,7 @@ class Rule : AppCompatActivity() {
                                 }
                                 if (rules.hookXWebView != null) for (hookRule in rules.hookXWebView) {
                                     val v = Code(this@Rule)
-                                    v.code = getString(R.string.code_hookFunction, if (hookRule.remark != null && hookRule.remark != "") getString(R.string.code_hookRemark, hookRule.remark) else "", hookRule.name, "hookXWebView", arrayOf(
+                                    v.code = getString(R.string.code_hookFunction, if (hookRule.remark.trim() != "") getString(R.string.code_hookRemark, hookRule.remark.trim()) else "", hookRule.name, "hookXWebView", arrayOf(
                                         getString(R.string.code_hookParam, "Class_XWebView", hookRule.Class_XWebView),
                                         getString(R.string.code_hookParam, "Method_initWebviewCore", hookRule.Method_initWebviewCore),
                                         getString(R.string.code_hookParam, "Method_isXWalk", hookRule.Method_isXWalk),
@@ -190,7 +190,7 @@ class Rule : AppCompatActivity() {
                                     v.setOnClickListener {
                                         viewBinding.ruleHookMethod.setText("hookXWebView", false)
                                         viewBinding.ruleName.setText(hookRule.name)
-                                        viewBinding.ruleRemark.setText(hookRule.remark ?: "")
+                                        viewBinding.ruleRemark.setText((getString(R.string.from, version) + "\n" + hookRule.remark.trim()).trim())
                                         viewBinding.ruleHookXWebViewClassClassXWebView.setText(hookRule.Class_XWebView)
                                         viewBinding.ruleHookXWebViewMethodInitWebviewCore.setText(hookRule.Method_initWebviewCore)
                                         viewBinding.ruleHookXWebViewMethodIsXWalk.setText(hookRule.Method_isXWalk)
@@ -352,12 +352,15 @@ class Rule : AppCompatActivity() {
                     viewBinding.ruleHookCrossWalk.visibility = View.GONE
                     viewBinding.ruleHookXWebPreferences.visibility = View.GONE
                     viewBinding.ruleHookXWebView.visibility = View.GONE
-                    if (viewBinding.ruleHookWebViewClassWebView.text!!.isEmpty()) viewBinding.ruleHookWebViewClassWebView.setText("android.webkit.WebView")
-                    if (viewBinding.ruleHookWebViewMethodGetSettings.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodGetSettings.setText("getSettings")
-                    if (viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.setText("setWebContentsDebuggingEnabled")
-                    if (viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.setText("setJavaScriptEnabled")
-                    if (viewBinding.ruleHookWebViewMethodLoadUrl.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodLoadUrl.setText("loadUrl")
-                    if (viewBinding.ruleHookWebViewMethodSetWebViewClient.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodSetWebViewClient.setText("setWebViewClient")
+
+                    HookRules.HookRuleWebView().also {
+                        if (viewBinding.ruleHookWebViewClassWebView.text!!.isEmpty()) viewBinding.ruleHookWebViewClassWebView.setText(it.Class_WebView)
+                        if (viewBinding.ruleHookWebViewMethodGetSettings.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodGetSettings.setText(it.Method_getSettings)
+                        if (viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.setText(it.Method_setWebContentsDebuggingEnabled)
+                        if (viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.setText(it.Method_setJavaScriptEnabled)
+                        if (viewBinding.ruleHookWebViewMethodLoadUrl.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodLoadUrl.setText(it.Method_loadUrl)
+                        if (viewBinding.ruleHookWebViewMethodSetWebViewClient.text!!.isEmpty()) viewBinding.ruleHookWebViewMethodSetWebViewClient.setText(it.Method_setWebViewClient)
+                    }
                 }
                 "hookWebViewClient" -> {
                     viewBinding.ruleHookWebView.visibility = View.GONE
@@ -366,11 +369,14 @@ class Rule : AppCompatActivity() {
                     viewBinding.ruleHookCrossWalk.visibility = View.GONE
                     viewBinding.ruleHookXWebPreferences.visibility = View.GONE
                     viewBinding.ruleHookXWebView.visibility = View.GONE
-                    if (viewBinding.ruleHookWebViewClientClassWebView.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassWebView.setText("android.webkit.WebView")
-                    if (viewBinding.ruleHookWebViewClientClassWebViewClient.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassWebViewClient.setText("android.webkit.WebViewClient")
-                    if (viewBinding.ruleHookWebViewClientMethodOnPageFinished.text!!.isEmpty()) viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText("onPageFinished")
-                    if (viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.text!!.isEmpty()) viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText("evaluateJavascript")
-                    if (viewBinding.ruleHookWebViewClientClassValueCallback.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassValueCallback.setText("android.webkit.ValueCallback")
+
+                    HookRules.HookRuleWebViewClient().also {
+                        if (viewBinding.ruleHookWebViewClientClassWebView.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassWebView.setText(it.Class_WebView)
+                        if (viewBinding.ruleHookWebViewClientClassWebViewClient.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassWebViewClient.setText(it.Class_WebViewClient)
+                        if (viewBinding.ruleHookWebViewClientMethodOnPageFinished.text!!.isEmpty()) viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText(it.Method_onPageFinished)
+                        if (viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.text!!.isEmpty()) viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText(it.Method_evaluateJavascript)
+                        if (viewBinding.ruleHookWebViewClientClassValueCallback.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassValueCallback.setText(it.Class_ValueCallback)
+                    }
                 }
                 "replaceNebulaUCSDK" -> {
                     viewBinding.ruleHookWebView.visibility = View.GONE
@@ -379,9 +385,12 @@ class Rule : AppCompatActivity() {
                     viewBinding.ruleHookCrossWalk.visibility = View.GONE
                     viewBinding.ruleHookXWebPreferences.visibility = View.GONE
                     viewBinding.ruleHookXWebView.visibility = View.GONE
-                    if (viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.text!!.isEmpty()) viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.setText("com.alipay.mobile.nebulauc.impl.UcServiceSetup")
-                    if (viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.text!!.isEmpty()) viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.setText("updateUCVersionAndSdcardPath")
-                    if (viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.text!!.isEmpty()) viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.setText("sInitUcFromSdcardPath")
+
+                    HookRules.ReplaceNebulaUCSDK().also {
+                        if (viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.text!!.isEmpty()) viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.setText(it.Class_UcServiceSetup)
+                        if (viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.text!!.isEmpty()) viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.setText(it.Method_updateUCVersionAndSdcardPath)
+                        if (viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.text!!.isEmpty()) viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.setText(it.Field_sInitUcFromSdcardPath)
+                    }
                 }
                 "hookCrossWalk" -> {
                     viewBinding.ruleHookWebView.visibility = View.GONE
@@ -390,13 +399,16 @@ class Rule : AppCompatActivity() {
                     viewBinding.ruleHookCrossWalk.visibility = View.VISIBLE
                     viewBinding.ruleHookXWebPreferences.visibility = View.GONE
                     viewBinding.ruleHookXWebView.visibility = View.GONE
-                    if (viewBinding.ruleHookCrossWalkClassXWalkView.text!!.isEmpty()) viewBinding.ruleHookCrossWalkClassXWalkView.setText("org.xwalk.core.XWalkView")
-                    if (viewBinding.ruleHookCrossWalkMethodGetSettings.text!!.isEmpty()) viewBinding.ruleHookCrossWalkMethodGetSettings.setText("getSettings")
-                    if (viewBinding.ruleHookCrossWalkMethodSetJavaScriptEnabled.text!!.isEmpty()) viewBinding.ruleHookCrossWalkMethodSetJavaScriptEnabled.setText("setJavaScriptEnabled")
-                    if (viewBinding.ruleHookCrossWalkMethodLoadUrl.text!!.isEmpty()) viewBinding.ruleHookCrossWalkMethodLoadUrl.setText("loadUrl")
-                    if (viewBinding.ruleHookCrossWalkMethodSetResourceClient.text!!.isEmpty()) viewBinding.ruleHookCrossWalkMethodSetResourceClient.setText("setResourceClient")
-                    if (viewBinding.ruleHookCrossWalkClassXWalkPreferences.text!!.isEmpty()) viewBinding.ruleHookCrossWalkClassXWalkPreferences.setText("org.xwalk.core.XWalkPreferences")
-                    if (viewBinding.ruleHookCrossWalkMethodSetValue.text!!.isEmpty()) viewBinding.ruleHookCrossWalkMethodSetValue.setText("setValue")
+
+                    HookRules.HookCrossWalk().also {
+                        if (viewBinding.ruleHookCrossWalkClassXWalkView.text!!.isEmpty()) viewBinding.ruleHookCrossWalkClassXWalkView.setText(it.Class_XWalkView)
+                        if (viewBinding.ruleHookCrossWalkMethodGetSettings.text!!.isEmpty()) viewBinding.ruleHookCrossWalkMethodGetSettings.setText(it.Method_getSettings)
+                        if (viewBinding.ruleHookCrossWalkMethodSetJavaScriptEnabled.text!!.isEmpty()) viewBinding.ruleHookCrossWalkMethodSetJavaScriptEnabled.setText(it.Method_setJavaScriptEnabled)
+                        if (viewBinding.ruleHookCrossWalkMethodLoadUrl.text!!.isEmpty()) viewBinding.ruleHookCrossWalkMethodLoadUrl.setText(it.Method_loadUrl)
+                        if (viewBinding.ruleHookCrossWalkMethodSetResourceClient.text!!.isEmpty()) viewBinding.ruleHookCrossWalkMethodSetResourceClient.setText(it.Method_setResourceClient)
+                        if (viewBinding.ruleHookCrossWalkClassXWalkPreferences.text!!.isEmpty()) viewBinding.ruleHookCrossWalkClassXWalkPreferences.setText(it.Class_XWalkPreferences)
+                        if (viewBinding.ruleHookCrossWalkMethodSetValue.text!!.isEmpty()) viewBinding.ruleHookCrossWalkMethodSetValue.setText(it.Method_setValue)
+                    }
                 }
                 "hookXWebPreferences" -> {
                     viewBinding.ruleHookWebView.visibility = View.GONE
@@ -405,8 +417,11 @@ class Rule : AppCompatActivity() {
                     viewBinding.ruleHookCrossWalk.visibility = View.GONE
                     viewBinding.ruleHookXWebPreferences.visibility = View.VISIBLE
                     viewBinding.ruleHookXWebView.visibility = View.GONE
-                    if (viewBinding.ruleHookXWebPreferencesClassXWebPreferences.text!!.isEmpty()) viewBinding.ruleHookXWebPreferencesClassXWebPreferences.setText("org.xwalk.core.XWalkPreferences")
-                    if (viewBinding.ruleHookXWebPreferencesMethodSetValue.text!!.isEmpty()) viewBinding.ruleHookXWebPreferencesMethodSetValue.setText("setValue")
+
+                    HookRules.HookXWebPreferences().also {
+                        if (viewBinding.ruleHookXWebPreferencesClassXWebPreferences.text!!.isEmpty()) viewBinding.ruleHookXWebPreferencesClassXWebPreferences.setText(it.Class_XWebPreferences)
+                        if (viewBinding.ruleHookXWebPreferencesMethodSetValue.text!!.isEmpty()) viewBinding.ruleHookXWebPreferencesMethodSetValue.setText(it.Method_setValue)
+                    }
                 }
                 "hookXWebView" -> {
                     viewBinding.ruleHookWebView.visibility = View.GONE
@@ -415,12 +430,15 @@ class Rule : AppCompatActivity() {
                     viewBinding.ruleHookCrossWalk.visibility = View.GONE
                     viewBinding.ruleHookXWebPreferences.visibility = View.GONE
                     viewBinding.ruleHookXWebView.visibility = View.VISIBLE
-                    if (viewBinding.ruleHookXWebViewClassClassXWebView.text!!.isEmpty()) viewBinding.ruleHookXWebViewClassClassXWebView.setText("com.tencent.xweb.WebView")
-                    if (viewBinding.ruleHookXWebViewMethodInitWebviewCore.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodInitWebviewCore.setText("initWebviewCore")
-                    if (viewBinding.ruleHookXWebViewMethodIsXWalk.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsXWalk.setText("isXWalk")
-                    if (viewBinding.ruleHookXWebViewMethodIsPinus.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsPinus.setText("isPinus")
-                    if (viewBinding.ruleHookXWebViewMethodIsX5.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsX5.setText("isX5")
-                    if (viewBinding.ruleHookXWebViewMethodIsSys.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsSys.setText("isSys")
+
+                    HookRules.HookXWebView().also {
+                        if (viewBinding.ruleHookXWebViewClassClassXWebView.text!!.isEmpty()) viewBinding.ruleHookXWebViewClassClassXWebView.setText(it.Class_XWebView)
+                        if (viewBinding.ruleHookXWebViewMethodInitWebviewCore.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodInitWebviewCore.setText(it.Method_initWebviewCore)
+                        if (viewBinding.ruleHookXWebViewMethodIsXWalk.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsXWalk.setText(it.Method_isXWalk)
+                        if (viewBinding.ruleHookXWebViewMethodIsPinus.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsPinus.setText(it.Method_isPinus)
+                        if (viewBinding.ruleHookXWebViewMethodIsX5.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsX5.setText(it.Method_isX5)
+                        if (viewBinding.ruleHookXWebViewMethodIsSys.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsSys.setText(it.Method_isSys)
+                    }
                 }
                 else -> {
                     viewBinding.ruleHookWebView.visibility = View.GONE
@@ -434,100 +452,38 @@ class Rule : AppCompatActivity() {
             }
             refreshCode()
         }
-        viewBinding.ruleName.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleRemark.doAfterTextChanged {
-            refreshCode()
-        }
+        viewBinding.ruleName.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleRemark.doAfterTextChanged { refreshCode() }
         // TODO: 添加更多 hook 方法
-        viewBinding.ruleHookWebViewClassWebView.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookWebViewMethodGetSettings.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookWebViewMethodLoadUrl.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookWebViewMethodSetWebViewClient.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookWebViewClientClassWebView.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookWebViewClientClassWebViewClient.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookWebViewClientMethodOnPageFinished.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookWebViewClientClassValueCallback.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookCrossWalkClassXWalkView.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookCrossWalkMethodGetSettings.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookCrossWalkMethodSetJavaScriptEnabled.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookCrossWalkMethodLoadUrl.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookCrossWalkMethodSetResourceClient.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookCrossWalkClassXWalkPreferences.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookCrossWalkMethodSetValue.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookXWebPreferencesClassXWebPreferences.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookXWebPreferencesMethodSetValue.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookXWebViewClassClassXWebView.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookXWebViewMethodInitWebviewCore.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookXWebViewMethodIsXWalk.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookXWebViewMethodIsPinus.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookXWebViewMethodIsX5.doAfterTextChanged {
-            refreshCode()
-        }
-        viewBinding.ruleHookXWebViewMethodIsSys.doAfterTextChanged {
-            refreshCode()
-        }
+        viewBinding.ruleHookWebViewClassWebView.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookWebViewMethodGetSettings.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookWebViewMethodLoadUrl.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookWebViewMethodSetWebViewClient.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookWebViewClientClassWebView.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookWebViewClientClassWebViewClient.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookWebViewClientMethodOnPageFinished.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookWebViewClientClassValueCallback.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookCrossWalkClassXWalkView.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookCrossWalkMethodGetSettings.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookCrossWalkMethodSetJavaScriptEnabled.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookCrossWalkMethodLoadUrl.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookCrossWalkMethodSetResourceClient.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookCrossWalkClassXWalkPreferences.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookCrossWalkMethodSetValue.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookXWebPreferencesClassXWebPreferences.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookXWebPreferencesMethodSetValue.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookXWebViewClassClassXWebView.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookXWebViewMethodInitWebviewCore.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookXWebViewMethodIsXWalk.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookXWebViewMethodIsPinus.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookXWebViewMethodIsX5.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookXWebViewMethodIsSys.doAfterTextChanged { refreshCode() }
         refresh()
     }
 
@@ -614,47 +570,77 @@ class Rule : AppCompatActivity() {
     private fun refreshCode() {
         viewBinding.ruleCode.code = when (viewBinding.ruleHookMethod.text.toString()) {
             // TODO: 添加更多 hook 方法
-            "hookWebView" -> getString(R.string.code_hookFunction, if (viewBinding.ruleRemark.text.toString() != "") getString(R.string.code_hookRemark, viewBinding.ruleRemark.text.toString()) else "", viewBinding.ruleName.text.toString(), "hookWebView", arrayOf(
-                getString(R.string.code_hookParam, "Class_WebView", viewBinding.ruleHookWebViewClassWebView.text.toString()),
-                getString(R.string.code_hookParam, "Method_getSettings", viewBinding.ruleHookWebViewMethodGetSettings.text.toString()),
-                getString(R.string.code_hookParam, "Method_setWebContentsDebuggingEnabled", viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.text.toString()),
-                getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.text.toString()),
-                getString(R.string.code_hookParam, "Method_loadUrl", viewBinding.ruleHookWebViewMethodLoadUrl.text.toString()),
-                getString(R.string.code_hookParam, "Method_setWebViewClient", viewBinding.ruleHookWebViewMethodSetWebViewClient.text.toString()),
-            ).joinToString(""))
-            "hookWebViewClient" -> getString(R.string.code_hookFunction, if (viewBinding.ruleRemark.text.toString() != "") getString(R.string.code_hookRemark, viewBinding.ruleRemark.text.toString()) else "", viewBinding.ruleName.text.toString(), "hookWebViewClient", arrayOf(
-                getString(R.string.code_hookParam, "Class_WebView", viewBinding.ruleHookWebViewClientClassWebView.text.toString()),
-                getString(R.string.code_hookParam, "Class_WebViewClient", viewBinding.ruleHookWebViewClientClassWebViewClient.text.toString()),
-                getString(R.string.code_hookParam, "Method_onPageFinished", viewBinding.ruleHookWebViewClientMethodOnPageFinished.text.toString()),
-                getString(R.string.code_hookParam, "Method_evaluateJavascript", viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.text.toString()),
-                getString(R.string.code_hookParam, "Class_ValueCallback", viewBinding.ruleHookWebViewClientClassValueCallback.text.toString()),
-            ).joinToString(""))
-            "replaceNebulaUCSDK" -> getString(R.string.code_hookFunction, if (viewBinding.ruleRemark.text.toString() != "") getString(R.string.code_hookRemark, viewBinding.ruleRemark.text.toString()) else "", viewBinding.ruleName.text.toString(), "replaceNebulaUCSDK", arrayOf(
-                getString(R.string.code_hookParam, "Class_UcServiceSetup", viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.text.toString()),
-                getString(R.string.code_hookParam, "Method_updateUCVersionAndSdcardPath", viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.text.toString()),
-                getString(R.string.code_hookParam, "Field_sInitUcFromSdcardPath", viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.text.toString()),
-            ).joinToString(""))
-            "hookCrossWalk" -> getString(R.string.code_hookFunction, if (viewBinding.ruleRemark.text.toString() != "") getString(R.string.code_hookRemark, viewBinding.ruleRemark.text.toString()) else "", viewBinding.ruleName.text.toString(), "hookCrossWalk", arrayOf(
-                getString(R.string.code_hookParam, "Class_XWalkView", viewBinding.ruleHookCrossWalkClassXWalkView.text.toString()),
-                getString(R.string.code_hookParam, "Method_getSettings", viewBinding.ruleHookCrossWalkMethodGetSettings.text.toString()),
-                getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", viewBinding.ruleHookCrossWalkMethodSetJavaScriptEnabled.text.toString()),
-                getString(R.string.code_hookParam, "Method_loadUrl", viewBinding.ruleHookCrossWalkMethodLoadUrl.text.toString()),
-                getString(R.string.code_hookParam, "Method_setResourceClient", viewBinding.ruleHookCrossWalkMethodSetResourceClient.text.toString()),
-                getString(R.string.code_hookParam, "Class_XWalkPreferences", viewBinding.ruleHookCrossWalkClassXWalkPreferences.text.toString()),
-                getString(R.string.code_hookParam, "Method_setValue", viewBinding.ruleHookCrossWalkMethodSetValue.text.toString()),
-            ).joinToString(""))
-            "hookXWebPreferences" -> getString(R.string.code_hookFunction, if (viewBinding.ruleRemark.text.toString() != "") getString(R.string.code_hookRemark, viewBinding.ruleRemark.text.toString()) else "", viewBinding.ruleName.text.toString(), "hookXWebPreferences", arrayOf(
-                getString(R.string.code_hookParam, "Class_XWebPreferences", viewBinding.ruleHookXWebPreferencesClassXWebPreferences.text.toString()),
-                getString(R.string.code_hookParam, "Method_setValue", viewBinding.ruleHookXWebPreferencesMethodSetValue.text.toString()),
-            ).joinToString(""))
-            "hookXWebView" -> getString(R.string.code_hookFunction, if (viewBinding.ruleRemark.text.toString() != "") getString(R.string.code_hookRemark, viewBinding.ruleRemark.text.toString()) else "", viewBinding.ruleName.text.toString(), "hookXWebView", arrayOf(
-                getString(R.string.code_hookParam, "Class_XWebView", viewBinding.ruleHookXWebViewClassClassXWebView.text.toString()),
-                getString(R.string.code_hookParam, "Method_initWebviewCore", viewBinding.ruleHookXWebViewMethodInitWebviewCore.text.toString()),
-                getString(R.string.code_hookParam, "Method_isXWalk", viewBinding.ruleHookXWebViewMethodIsXWalk.text.toString()),
-                getString(R.string.code_hookParam, "Method_isPinus", viewBinding.ruleHookXWebViewMethodIsPinus.text.toString()),
-                getString(R.string.code_hookParam, "Method_isX5", viewBinding.ruleHookXWebViewMethodIsX5.text.toString()),
-                getString(R.string.code_hookParam, "Method_isSys", viewBinding.ruleHookXWebViewMethodIsSys.text.toString()),
-            ).joinToString(""))
+            "hookWebView" -> getString(R.string.code_hookFunction,
+                viewBinding.ruleRemark.text.toString().trim().let {if (it != "") getString(R.string.code_hookRemark, it) else ""},
+                viewBinding.ruleName.text.toString().trim(),
+                "hookWebView",
+                arrayOf(
+                    getString(R.string.code_hookParam, "Class_WebView", viewBinding.ruleHookWebViewClassWebView.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_getSettings", viewBinding.ruleHookWebViewMethodGetSettings.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_setWebContentsDebuggingEnabled", viewBinding.ruleHookWebViewMethodSetWebContentsDebuggingEnabled.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_loadUrl", viewBinding.ruleHookWebViewMethodLoadUrl.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_setWebViewClient", viewBinding.ruleHookWebViewMethodSetWebViewClient.text.toString().trim()),
+                ).joinToString("")
+            )
+            "hookWebViewClient" -> getString(R.string.code_hookFunction,
+                viewBinding.ruleRemark.text.toString().trim().let {if (it != "") getString(R.string.code_hookRemark, it) else ""},
+                viewBinding.ruleName.text.toString().trim(),
+                "hookWebViewClient",
+                arrayOf(
+                    getString(R.string.code_hookParam, "Class_WebView", viewBinding.ruleHookWebViewClientClassWebView.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Class_WebViewClient", viewBinding.ruleHookWebViewClientClassWebViewClient.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_onPageFinished", viewBinding.ruleHookWebViewClientMethodOnPageFinished.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_evaluateJavascript", viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Class_ValueCallback", viewBinding.ruleHookWebViewClientClassValueCallback.text.toString().trim()),
+                ).joinToString("")
+            )
+            "replaceNebulaUCSDK" -> getString(R.string.code_hookFunction,
+                viewBinding.ruleRemark.text.toString().trim().let {if (it != "") getString(R.string.code_hookRemark, it) else ""},
+                viewBinding.ruleName.text.toString().trim(),
+                "replaceNebulaUCSDK",
+                arrayOf(
+                    getString(R.string.code_hookParam, "Class_UcServiceSetup", viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_updateUCVersionAndSdcardPath", viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Field_sInitUcFromSdcardPath", viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.text.toString().trim()),
+                ).joinToString("")
+            )
+            "hookCrossWalk" -> getString(R.string.code_hookFunction,
+                viewBinding.ruleRemark.text.toString().trim().let {if (it != "") getString(R.string.code_hookRemark, it) else ""},
+                viewBinding.ruleName.text.toString().trim(),
+                "hookCrossWalk",
+                arrayOf(
+                    getString(R.string.code_hookParam, "Class_XWalkView", viewBinding.ruleHookCrossWalkClassXWalkView.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_getSettings", viewBinding.ruleHookCrossWalkMethodGetSettings.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", viewBinding.ruleHookCrossWalkMethodSetJavaScriptEnabled.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_loadUrl", viewBinding.ruleHookCrossWalkMethodLoadUrl.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_setResourceClient", viewBinding.ruleHookCrossWalkMethodSetResourceClient.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Class_XWalkPreferences", viewBinding.ruleHookCrossWalkClassXWalkPreferences.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_setValue", viewBinding.ruleHookCrossWalkMethodSetValue.text.toString().trim()),
+                ).joinToString("")
+            )
+            "hookXWebPreferences" -> getString(R.string.code_hookFunction,
+                viewBinding.ruleRemark.text.toString().trim().let {if (it != "") getString(R.string.code_hookRemark, it) else ""},
+                viewBinding.ruleName.text.toString().trim(),
+                "hookXWebPreferences",
+                arrayOf(
+                    getString(R.string.code_hookParam, "Class_XWebPreferences", viewBinding.ruleHookXWebPreferencesClassXWebPreferences.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_setValue", viewBinding.ruleHookXWebPreferencesMethodSetValue.text.toString().trim()),
+                ).joinToString("")
+            )
+            "hookXWebView" -> getString(R.string.code_hookFunction,
+                viewBinding.ruleRemark.text.toString().trim().let {if (it != "") getString(R.string.code_hookRemark, it) else ""},
+                viewBinding.ruleName.text.toString().trim(),
+                "hookXWebView",
+                arrayOf(
+                    getString(R.string.code_hookParam, "Class_XWebView", viewBinding.ruleHookXWebViewClassClassXWebView.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_initWebviewCore", viewBinding.ruleHookXWebViewMethodInitWebviewCore.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_isXWalk", viewBinding.ruleHookXWebViewMethodIsXWalk.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_isPinus", viewBinding.ruleHookXWebViewMethodIsPinus.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_isX5", viewBinding.ruleHookXWebViewMethodIsX5.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_isSys", viewBinding.ruleHookXWebViewMethodIsSys.text.toString().trim()),
+                ).joinToString("")
+            )
             else -> getString(R.string.unknown_hook_method)
         }
     }
