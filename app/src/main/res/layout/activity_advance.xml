@@ -72,11 +72,11 @@
             <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/advance_setting_data_source"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
 
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
                 >
                 <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_setting_data_source_title"
                     android:layout_width="0dp"
@@ -115,6 +115,47 @@
                     android:textAlignment="textEnd"
                     android:lines="1"
                     android:ellipsize="middle"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/advance_setting_auto_check_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                >
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_setting_auto_check_update_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/advance_setting_auto_check_update_value"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/advance_setting_auto_check_update_desc"
+
+                    style="@style/ThemeComponentTextViewPrimary"
+                    android:textAppearance="?textAppearanceBodyLarge"
+                    android:text="@string/auto_check_update"
+                    />
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_setting_auto_check_update_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/advance_setting_auto_check_update_value"
+                    app:layout_constraintTop_toBottomOf="@id/advance_setting_auto_check_update_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    style="@style/ThemeComponentTextViewSecondary"
+                    android:textAppearance="?textAppearanceLabelLarge"
+                    android:text="@string/advance_setting_auto_check_update_desc"
+                    />
+                <com.google.android.material.switchmaterial.SwitchMaterial android:id="@+id/advance_setting_auto_check_update_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <com.google.android.material.card.MaterialCardView android:id="@+id/advance_license_author_card"

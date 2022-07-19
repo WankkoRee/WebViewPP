@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
-import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP.data_source
+import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ActivityAdvanceBinding
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.DialogDataSourceBinding
 import com.github.kittinunf.fuel.Fuel
@@ -36,7 +36,7 @@ class Advance: AppCompatActivity() {
                 setNegativeButton(getString(R.string.cancel)) { _, _ -> }
                 setPositiveButton(getString(R.string.save), null)
 
-                val dataSource = modulePrefs("module").get(data_source)
+                val dataSource = modulePrefs("module").get(ModuleSP.data_source)
                 when (dataSource) {
                     "https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master" -> dialogBinding.dialogDataSource.check(dialogBinding.dialogDataSourceGithub.id)
                     "https://raw.fastgit.org/WankkoRee/EnableWebViewDebugging-Rules/master" -> dialogBinding.dialogDataSource.check(dialogBinding.dialogDataSourceFastgit.id)
@@ -100,19 +100,27 @@ class Advance: AppCompatActivity() {
                 dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                     when (dialogBinding.dialogDataSource.checkedRadioButtonId) {
                         dialogBinding.dialogDataSourceGithub.id -> {
-                            modulePrefs("module").put(data_source, "https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master")
+                            modulePrefs("module").put(ModuleSP.data_source, "https://raw.githubusercontent.com/WankkoRee/EnableWebViewDebugging-Rules/master")
                         }
                         dialogBinding.dialogDataSourceFastgit.id -> {
-                            modulePrefs("module").put(data_source, "https://raw.fastgit.org/WankkoRee/EnableWebViewDebugging-Rules/master")
+                            modulePrefs("module").put(ModuleSP.data_source, "https://raw.fastgit.org/WankkoRee/EnableWebViewDebugging-Rules/master")
                         }
                         dialogBinding.dialogDataSourceCustom.id -> {
-                            modulePrefs("module").put(data_source, dialogBinding.dialogDataSourceCustomInputValue.text.toString())
+                            modulePrefs("module").put(ModuleSP.data_source, dialogBinding.dialogDataSourceCustomInputValue.text.toString())
                         }
                     }
                     refresh()
                     dialog.cancel()
                 }
             }
+        }
+
+        viewBinding.advanceSettingAutoCheckUpdate.setOnClickListener {
+            viewBinding.advanceSettingAutoCheckUpdateValue.isChecked = !viewBinding.advanceSettingAutoCheckUpdateValue.isChecked
+        }
+        viewBinding.advanceSettingAutoCheckUpdateValue.setOnCheckedChangeListener { _, isChecked ->
+            modulePrefs("module").put(ModuleSP.auto_check_update, isChecked)
+            refresh()
         }
 
         viewBinding.advanceLicenseAuthorCard.setCardBackgroundColor((getPrimaryColor(viewBinding.advanceLicenseAuthorIcon.drawable, this@Advance).first or 0xff000000.toInt()) and 0x33ffffff)
@@ -150,7 +158,8 @@ class Advance: AppCompatActivity() {
 
     private fun refresh() {
         with(modulePrefs("module")) {
-            viewBinding.advanceSettingDataSourceValue.text = get(data_source)
+            viewBinding.advanceSettingDataSourceValue.text = get(ModuleSP.data_source)
+            viewBinding.advanceSettingAutoCheckUpdateValue.isChecked = get(ModuleSP.auto_check_update)
         }
     }
 }

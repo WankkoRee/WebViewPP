@@ -13,6 +13,7 @@ import androidx.appcompat.widget.PopupMenu
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 import cn.wankkoree.xposed.enablewebviewdebugging.data.AppsSP
+import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP
 import cn.wankkoree.xposed.enablewebviewdebugging.data.ResourcesSP
 import cn.wankkoree.xposed.enablewebviewdebugging.data.getSet
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ActivityMainBinding
@@ -62,7 +63,7 @@ class Main: AppCompatActivity() {
             viewBinding.mainXposedText.visibility = View.GONE
         }
         refresh()
-        checkUpdate()
+        if (modulePrefs("module").get(ModuleSP.auto_check_update)) checkUpdate()
 
         viewBinding.mainToolbarMenu.setOnClickListener {
             if (!isXposedModuleActive && !BuildConfig.DEBUG) {

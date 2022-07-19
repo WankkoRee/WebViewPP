@@ -13,8 +13,13 @@ import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 import cn.wankkoree.xposed.enablewebviewdebugging.ValueAlreadyExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Tag
-import cn.wankkoree.xposed.enablewebviewdebugging.data.*
-import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP.data_source
+import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP
+import cn.wankkoree.xposed.enablewebviewdebugging.data.ResourcesSP
+import cn.wankkoree.xposed.enablewebviewdebugging.data.AppsSP
+import cn.wankkoree.xposed.enablewebviewdebugging.data.AppSP
+import cn.wankkoree.xposed.enablewebviewdebugging.data.getSet
+import cn.wankkoree.xposed.enablewebviewdebugging.data.remove
+import cn.wankkoree.xposed.enablewebviewdebugging.data.put
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ActivityResourcesBinding
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.requests.CancellableRequest
@@ -334,7 +339,7 @@ class Resources : AppCompatActivity() {
             }
 
         viewBinding.resourcesNebulaucsdkDownload.isEnabled = false
-        Fuel.get("${modulePrefs("module").get(data_source)}/resources/nebulaucsdk/metadata.json")
+        Fuel.get("${modulePrefs("module").get(ModuleSP.data_source)}/resources/nebulaucsdk/metadata.json")
             .responseObject<cn.wankkoree.xposed.enablewebviewdebugging.http.bean.Metadata> { _, _, result ->
                 result.fold({ metadata ->
                     val adapter = ArrayAdapter(context, R.layout.component_spinneritem, metadata.versions)
@@ -738,8 +743,8 @@ class Resources : AppCompatActivity() {
                 version,
                 ResourcesSP.nebulaUCSDK_versions,
                 listOf(
-                    Pair("${modulePrefs("module").get(data_source)}/resources/nebulaucsdk/$version/arm64-v8a.so", "nebulaUCSDK_arm64-v8a"),
-                    Pair("${modulePrefs("module").get(data_source)}/resources/nebulaucsdk/$version/armeabi-v7a.so", "nebulaUCSDK_armeabi-v7a"),
+                    Pair("${modulePrefs("module").get(ModuleSP.data_source)}/resources/nebulaucsdk/$version/arm64-v8a.so", "nebulaUCSDK_arm64-v8a"),
+                    Pair("${modulePrefs("module").get(ModuleSP.data_source)}/resources/nebulaucsdk/$version/armeabi-v7a.so", "nebulaUCSDK_armeabi-v7a"),
                 ),
                 base64 = true
             )

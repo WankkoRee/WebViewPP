@@ -11,7 +11,10 @@ import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.R
 import cn.wankkoree.xposed.enablewebviewdebugging.ValueAlreadyExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
-import cn.wankkoree.xposed.enablewebviewdebugging.data.*
+import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP
+import cn.wankkoree.xposed.enablewebviewdebugging.data.AppSP
+import cn.wankkoree.xposed.enablewebviewdebugging.data.put
+import cn.wankkoree.xposed.enablewebviewdebugging.data.remove
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.DialogCloudRulesBinding
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ActivityRuleBinding
 import cn.wankkoree.xposed.enablewebviewdebugging.http.bean.HookRules

@@ -22,7 +22,12 @@ import cn.wankkoree.xposed.enablewebviewdebugging.R
 import cn.wankkoree.xposed.enablewebviewdebugging.ValueAlreadyExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.ValueNotExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
-import cn.wankkoree.xposed.enablewebviewdebugging.data.*
+import cn.wankkoree.xposed.enablewebviewdebugging.data.AppSP
+import cn.wankkoree.xposed.enablewebviewdebugging.data.AppsSP
+import cn.wankkoree.xposed.enablewebviewdebugging.data.ResourcesSP
+import cn.wankkoree.xposed.enablewebviewdebugging.data.put
+import cn.wankkoree.xposed.enablewebviewdebugging.data.getSet
+import cn.wankkoree.xposed.enablewebviewdebugging.data.remove
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ActivityAppBinding
 import cn.wankkoree.xposed.enablewebviewdebugging.http.bean.HookRules
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

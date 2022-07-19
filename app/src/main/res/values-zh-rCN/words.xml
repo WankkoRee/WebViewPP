@@ -75,4 +75,5 @@
     <string name="version">版本</string>
     <string name="rule_type">规则类型</string>
     <string name="from">来自 %s</string>
+    <string name="auto_check_update">自动检查更新</string>
 </resources>

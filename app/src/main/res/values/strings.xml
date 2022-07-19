@@ -16,4 +16,5 @@
     <string name="advance_setting_data_source_desc">Used to pull cloud rules, pull part of hooking resources, etc</string>
     <string name="dialog_data_source_desc">GitHub is more recommended for global users.\nFastGit is more recommended for users in mainland China.\nOf course, you can use other custom data source.</string>
     <string name="dialog_cloud_rules_desc">1. Choose the version which most similar to the app in your device.\n2. Save all rules for the version (If you understand the role of each rule, you can save it as needed).</string>
+    <string name="advance_setting_auto_check_update_desc">Auto check update or not when module launched.</string>
 </resources>
