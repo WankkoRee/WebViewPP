@@ -2,35 +2,33 @@ package cn.wankkoree.xposed.enablewebviewdebugging.hook.method
 
 import cn.wankkoree.xposed.enablewebviewdebugging.data.AppSP
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.Main
+import cn.wankkoree.xposed.enablewebviewdebugging.hook.methodX
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.factory.normalClass
 import com.highcapable.yukihookapi.hook.log.loggerD
 import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.log.loggerI
 import com.highcapable.yukihookapi.hook.param.PackageParam
-import com.highcapable.yukihookapi.hook.type.java.StringType
 
 /** Hook WebViewClient类，实现：
  *
  * webViewClient.onPageFinished({webView.evaluateJavascript($vConsole+$eruda)})
  **/
 fun PackageParam.hookWebViewClient (
-    Class_WebView: String = "android.webkit.WebView",
-    Class_WebViewClient: String = "android.webkit.WebViewClient",
-    Method_onPageFinished: String = "onPageFinished",
-    Method_evaluateJavascript: String = "evaluateJavascript",
-    Class_ValueCallback: String = "android.webkit.ValueCallback",
+    Class_WebViewClient: String,
+    Method_onPageFinished: String,
+    Class_WebView: String,
+    Method_evaluateJavascript: String,
 ) {
     Class_WebViewClient.hook {
         injectMember {
-            allMethods(Method_onPageFinished)
+            methodX(Method_onPageFinished)
             beforeHook {
                 val webView = args[0]
 
                 if (Main.debug) loggerD(msg = "${instanceClass.name}.onPageFinished({webView.evaluateJavascript(\$vConsole+\$eruda)})")
                 findClass(Class_WebView).normalClass!!.method {
-                    name = Method_evaluateJavascript
-                    param(StringType, Class_ValueCallback)
+                    methodX(Method_evaluateJavascript)
                 }.result {
                     onNoSuchMethod {
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookWebViewClient\uD83D\uDC49onPageFinished\uD83D\uDC49evaluateJavascript", e = it)

@@ -135,9 +135,10 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
                                             "",
-                                            Class_WebView = "com.tencent.smtt.sdk.WebView",
                                             Class_WebViewClient = "com.tencent.smtt.sdk.WebViewClient",
-                                            Class_ValueCallback = "com.tencent.smtt.sdk.ValueCallback",
+                                            Method_onPageFinished = "onPageFinished(com.tencent.smtt.sdk.WebView,str)",
+                                            Class_WebView = "com.tencent.smtt.sdk.WebView",
+                                            Method_evaluateJavascript = "evaluateJavascript(str,com.tencent.smtt.sdk.ValueCallback)",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -170,8 +171,9 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
                                             "",
-                                            Class_WebView = "com.uc.webview.export.WebView",
                                             Class_WebViewClient = "com.alipay.mobile.nebulauc.impl.UCWebViewClient",
+                                            Method_onPageFinished = "onPageFinished(com.uc.webview.export.WebView,str)",
+                                            Class_WebView = "com.uc.webview.export.WebView",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -216,9 +218,9 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
                                             "",
-                                            Class_WebView = "org.xwalk.core.XWalkView",
                                             Class_WebViewClient = "org.xwalk.core.XWalkResourceClient",
-                                            Method_onPageFinished = "onLoadFinished",
+                                            Method_onPageFinished = "onLoadFinished(org.xwalk.core.XWalkView,str)",
+                                            Class_WebView = "org.xwalk.core.XWalkView",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -1209,11 +1211,10 @@ class App : AppCompatActivity() {
                         "hookWebViewClient" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookRuleWebViewClient::class.java)
                             v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
-                                getString(R.string.code_hookParam, "Class_WebView", hookEntry.Class_WebView),
                                 getString(R.string.code_hookParam, "Class_WebViewClient", hookEntry.Class_WebViewClient),
                                 getString(R.string.code_hookParam, "Method_onPageFinished", hookEntry.Method_onPageFinished),
+                                getString(R.string.code_hookParam, "Class_WebView", hookEntry.Class_WebView),
                                 getString(R.string.code_hookParam, "Method_evaluateJavascript", hookEntry.Method_evaluateJavascript),
-                                getString(R.string.code_hookParam, "Class_ValueCallback", hookEntry.Class_ValueCallback),
                             ).joinToString(""))
                         }
                         "replaceNebulaUCSDK" -> {

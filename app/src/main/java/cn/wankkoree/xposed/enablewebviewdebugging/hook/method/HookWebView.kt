@@ -2,12 +2,12 @@ package cn.wankkoree.xposed.enablewebviewdebugging.hook.method
 
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.Main
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.debug.printStackTrace
+import cn.wankkoree.xposed.enablewebviewdebugging.hook.methodX
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.loggerD
 import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.log.loggerI
 import com.highcapable.yukihookapi.hook.param.PackageParam
-import com.highcapable.yukihookapi.hook.type.java.BooleanType
 
 private val webSettingsClassHashSet = HashSet<String>()
 
@@ -22,12 +22,12 @@ private val webSettingsClassHashSet = HashSet<String>()
  * webView.setWebViewClient() debug breakpoint
  **/
 fun PackageParam.hookWebView (
-    Class_WebView: String = "android.webkit.WebView",
-    Method_getSettings: String = "getSettings",
-    Method_setWebContentsDebuggingEnabled: String = "setWebContentsDebuggingEnabled",
-    Method_setJavaScriptEnabled: String = "setJavaScriptEnabled",
-    Method_loadUrl: String = "loadUrl",
-    Method_setWebViewClient: String = "setWebViewClient",
+    Class_WebView: String,
+    Method_getSettings: String,
+    Method_setWebContentsDebuggingEnabled: String,
+    Method_setJavaScriptEnabled: String,
+    Method_loadUrl: String,
+    Method_setWebViewClient: String,
 ) {
     Class_WebView.hook {
         injectMember {
@@ -35,7 +35,7 @@ fun PackageParam.hookWebView (
             afterHook {
                 val webView = instance
                 val webSettings = method {
-                    name = Method_getSettings
+                    methodX(Method_getSettings)
                 }.result {
                     onNoSuchMethod {
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookWebView\uD83D\uDC49<init>\uD83D\uDC49getSettings", e = it)
@@ -44,8 +44,7 @@ fun PackageParam.hookWebView (
 
                 if (Main.debug) loggerD(msg = "${instanceClass.name} new().static setWebContentsDebuggingEnabled(true)")
                 method {
-                    name = Method_setWebContentsDebuggingEnabled
-                    param(BooleanType)
+                    methodX(Method_setWebContentsDebuggingEnabled)
                 }.result {
                     onNoSuchMethod {
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookWebView\uD83D\uDC49<init>\uD83D\uDC49setWebContentsDebuggingEnabled", e = it)
@@ -55,8 +54,7 @@ fun PackageParam.hookWebView (
 
                 if (Main.debug) loggerD(msg = "${instanceClass.name} new().getSettings().setJavaScriptEnabled(true)")
                 webSettings!!.javaClass.method {
-                    name = Method_setJavaScriptEnabled
-                    param(BooleanType)
+                    methodX(Method_setJavaScriptEnabled)
                 }.result {
                     onNoSuchMethod {
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookWebView\uD83D\uDC49<init>\uD83D\uDC49setJavaScriptEnabled", e = it)
@@ -85,7 +83,7 @@ fun PackageParam.hookWebView (
         }
 
         injectMember {
-            allMethods(name = Method_setWebContentsDebuggingEnabled)
+            methodX(Method_setWebContentsDebuggingEnabled)
             beforeHook {
                 if (args[0] != true) {
                     if (Main.debug) loggerD(msg = "${instanceClass.name}.setWebContentsDebuggingEnabled(${args[0]} -> true)")
@@ -109,7 +107,7 @@ fun PackageParam.hookWebView (
 
         if (Main.debug) {
             injectMember {
-                allMethods(name = Method_loadUrl)
+                methodX(Method_loadUrl)
                 afterHook {
                     loggerD(msg = "${instanceClass.name}.loadUrl(\"${args[0]}\")")
                     printStackTrace()
@@ -132,7 +130,7 @@ fun PackageParam.hookWebView (
 
         if (Main.debug) {
             injectMember {
-                allMethods(name = Method_setWebViewClient)
+                methodX(Method_setWebViewClient)
                 afterHook {
                     if (args[0] != null) {
                         loggerD(msg = "${instanceClass.name}.setWebViewClient(${args[0]!!.javaClass.name})")
@@ -174,7 +172,7 @@ fun PackageParam.hookWebSettings(
 ) {
     Class_WebSettings.hook(isUseAppClassLoader = false) {
         injectMember {
-            allMethods(name = Method_setJavaScriptEnabled)
+            methodX(Method_setJavaScriptEnabled)
             beforeHook {
                 if (args[0] != true) {
                     if (Main.debug) loggerD(msg = "${instanceClass.name}.setJavaScriptEnabled(${args[0]} -> true)")

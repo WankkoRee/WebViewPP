@@ -2,14 +2,13 @@ package cn.wankkoree.xposed.enablewebviewdebugging.hook.method
 
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.Main
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.debug.printStackTrace
+import cn.wankkoree.xposed.enablewebviewdebugging.hook.methodX
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.factory.normalClass
 import com.highcapable.yukihookapi.hook.log.loggerD
 import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.log.loggerI
 import com.highcapable.yukihookapi.hook.param.PackageParam
-import com.highcapable.yukihookapi.hook.type.java.BooleanType
-import com.highcapable.yukihookapi.hook.type.java.StringType
 
 private val webSettingsClassHashSet = HashSet<String>()
 
@@ -26,13 +25,13 @@ private val webSettingsClassHashSet = HashSet<String>()
  * webView.setResourceClient() debug breakpoint
  **/
 fun PackageParam.hookCrossWalk (
-    Class_XWalkView: String = "org.xwalk.core.XWalkView",
-    Method_getSettings: String = "getSettings",
-    Method_setJavaScriptEnabled: String = "setJavaScriptEnabled",
-    Method_loadUrl: String = "loadUrl",
-    Method_setResourceClient: String = "setResourceClient",
-    Class_XWalkPreferences: String = "org.xwalk.core.XWalkPreferences",
-    Method_setValue: String = "setValue",
+    Class_XWalkView: String,
+    Method_getSettings: String,
+    Method_setJavaScriptEnabled: String,
+    Method_loadUrl: String,
+    Method_setResourceClient: String,
+    Class_XWalkPreferences: String,
+    Method_setValue: String,
 ) {
     Class_XWalkView.hook {
         injectMember {
@@ -40,7 +39,7 @@ fun PackageParam.hookCrossWalk (
             afterHook {
                 val webView = instance
                 val webSettings = method {
-                    name = Method_getSettings
+                    methodX(Method_getSettings)
                 }.result {
                     onNoSuchMethod {
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookCrossWalk\uD83D\uDC49<init>\uD83D\uDC49getSettings", e = it)
@@ -48,8 +47,7 @@ fun PackageParam.hookCrossWalk (
                 }.get(webView).call()
 
                 findClass(Class_XWalkPreferences).normalClass!!.method {
-                    name(Method_setValue)
-                    param(StringType, BooleanType)
+                    methodX(Method_setValue)
                 }.result {
                     onNoSuchMethod {
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookCrossWalk\uD83D\uDC49<init>\uD83D\uDC49setValue", e = it)
@@ -62,8 +60,7 @@ fun PackageParam.hookCrossWalk (
 
                 if (Main.debug) loggerD(msg = "${instanceClass.name} new().getSettings().setJavaScriptEnabled(true)")
                 webSettings!!.javaClass.method {
-                    name = Method_setJavaScriptEnabled
-                    param(BooleanType)
+                    methodX(Method_setJavaScriptEnabled)
                 }.result {
                     onNoSuchMethod {
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookCrossWalk\uD83D\uDC49<init>\uD83D\uDC49setJavaScriptEnabled", e = it)
@@ -74,7 +71,7 @@ fun PackageParam.hookCrossWalk (
                 if (!webSettingsClassHashSet.contains(webSettings.javaClass.name)) {
                     webSettings.javaClass.hook(isUseAppClassLoader = false) {
                         injectMember {
-                            allMethods(name = Method_setJavaScriptEnabled)
+                            methodX(Method_setJavaScriptEnabled)
                             beforeHook {
                                 if (args[0] != true) {
                                     if (Main.debug) loggerD(msg = "${instanceClass.name}.setJavaScriptEnabled(${args[0]} -> true)")
@@ -132,7 +129,7 @@ fun PackageParam.hookCrossWalk (
 
         if (Main.debug) {
             injectMember {
-                allMethods(name = Method_loadUrl)
+                methodX(Method_loadUrl)
                 afterHook {
                     loggerD(msg = "${instanceClass.name}.loadUrl(\"${args[0]}\")")
                     printStackTrace()
@@ -155,7 +152,7 @@ fun PackageParam.hookCrossWalk (
 
         if (Main.debug) {
             injectMember {
-                allMethods(name = Method_setResourceClient)
+                methodX(Method_setResourceClient)
                 afterHook {
                     if (args[0] != null) {
                         loggerD(msg = "${instanceClass.name}.setResourceClient(${args[0]!!.javaClass.name})")
@@ -188,7 +185,7 @@ fun PackageParam.hookCrossWalk (
     }
     Class_XWalkPreferences.hook {
         injectMember {
-            allMethods(Method_setValue)
+            methodX(Method_setValue)
             beforeHook {
                 if (args[0] == "remote-debugging") {
                     if (args[1] != true) {

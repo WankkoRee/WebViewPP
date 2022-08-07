@@ -96,22 +96,20 @@ class Rule : AppCompatActivity() {
                                 if (rules.hookWebViewClient != null) for (hookRule in rules.hookWebViewClient) {
                                     val v = Code(this@Rule)
                                     v.code = getString(R.string.code_hookFunction, if (hookRule.remark.trim() != "") getString(R.string.code_hookRemark, hookRule.remark.trim()) else "", hookRule.name, "hookWebViewClient", arrayOf(
-                                        getString(R.string.code_hookParam, "Class_WebView", hookRule.Class_WebView),
                                         getString(R.string.code_hookParam, "Class_WebViewClient", hookRule.Class_WebViewClient),
                                         getString(R.string.code_hookParam, "Method_onPageFinished", hookRule.Method_onPageFinished),
+                                        getString(R.string.code_hookParam, "Class_WebView", hookRule.Class_WebView),
                                         getString(R.string.code_hookParam, "Method_evaluateJavascript", hookRule.Method_evaluateJavascript),
-                                        getString(R.string.code_hookParam, "Class_ValueCallback", hookRule.Class_ValueCallback),
                                     ).joinToString(""))
                                     v.isClickable = true
                                     v.setOnClickListener {
                                         viewBinding.ruleHookMethod.setText("hookWebViewClient", false)
                                         viewBinding.ruleName.setText(hookRule.name)
                                         viewBinding.ruleRemark.setText((getString(R.string.from, version) + "\n" + hookRule.remark.trim()).trim())
-                                        viewBinding.ruleHookWebViewClientClassWebView.setText(hookRule.Class_WebView)
                                         viewBinding.ruleHookWebViewClientClassWebViewClient.setText(hookRule.Class_WebViewClient)
                                         viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText(hookRule.Method_onPageFinished)
+                                        viewBinding.ruleHookWebViewClientClassWebView.setText(hookRule.Class_WebView)
                                         viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText(hookRule.Method_evaluateJavascript)
-                                        viewBinding.ruleHookWebViewClientClassValueCallback.setText(hookRule.Class_ValueCallback)
                                         dialog.cancel()
                                     }
                                     dialogBinding.dialogCloudRulesRules.addView(v)
@@ -287,11 +285,10 @@ class Rule : AppCompatActivity() {
                             HookRules.HookRuleWebViewClient(
                                 type,
                                 viewBinding.ruleRemark.text.toString(),
-                                viewBinding.ruleHookWebViewClientClassWebView.text.toString(),
                                 viewBinding.ruleHookWebViewClientClassWebViewClient.text.toString(),
                                 viewBinding.ruleHookWebViewClientMethodOnPageFinished.text.toString(),
+                                viewBinding.ruleHookWebViewClientClassWebView.text.toString(),
                                 viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.text.toString(),
-                                viewBinding.ruleHookWebViewClientClassValueCallback.text.toString(),
                             )
                         )
                         "replaceNebulaUCSDK" -> Gson().toJson(
@@ -374,11 +371,10 @@ class Rule : AppCompatActivity() {
                     viewBinding.ruleHookXWebView.visibility = View.GONE
 
                     HookRules.HookRuleWebViewClient().also {
-                        if (viewBinding.ruleHookWebViewClientClassWebView.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassWebView.setText(it.Class_WebView)
                         if (viewBinding.ruleHookWebViewClientClassWebViewClient.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassWebViewClient.setText(it.Class_WebViewClient)
                         if (viewBinding.ruleHookWebViewClientMethodOnPageFinished.text!!.isEmpty()) viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText(it.Method_onPageFinished)
+                        if (viewBinding.ruleHookWebViewClientClassWebView.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassWebView.setText(it.Class_WebView)
                         if (viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.text!!.isEmpty()) viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText(it.Method_evaluateJavascript)
-                        if (viewBinding.ruleHookWebViewClientClassValueCallback.text!!.isEmpty()) viewBinding.ruleHookWebViewClientClassValueCallback.setText(it.Class_ValueCallback)
                     }
                 }
                 "replaceNebulaUCSDK" -> {
@@ -464,11 +460,10 @@ class Rule : AppCompatActivity() {
         viewBinding.ruleHookWebViewMethodSetJavaScriptEnabled.doAfterTextChanged { refreshCode() }
         viewBinding.ruleHookWebViewMethodLoadUrl.doAfterTextChanged { refreshCode() }
         viewBinding.ruleHookWebViewMethodSetWebViewClient.doAfterTextChanged { refreshCode() }
-        viewBinding.ruleHookWebViewClientClassWebView.doAfterTextChanged { refreshCode() }
         viewBinding.ruleHookWebViewClientClassWebViewClient.doAfterTextChanged { refreshCode() }
         viewBinding.ruleHookWebViewClientMethodOnPageFinished.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookWebViewClientClassWebView.doAfterTextChanged { refreshCode() }
         viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.doAfterTextChanged { refreshCode() }
-        viewBinding.ruleHookWebViewClientClassValueCallback.doAfterTextChanged { refreshCode() }
         viewBinding.ruleReplaceNebulaUCSDKClassUcServiceSetup.doAfterTextChanged { refreshCode() }
         viewBinding.ruleReplaceNebulaUCSDKMethodUpdateUCVersionAndSdcardPath.doAfterTextChanged { refreshCode() }
         viewBinding.ruleReplaceNebulaUCSDKFieldSInitUcFromSdcardPath.doAfterTextChanged { refreshCode() }
@@ -514,11 +509,10 @@ class Rule : AppCompatActivity() {
                     "hookWebViewClient" -> {
                         val hookEntry = Gson().fromJson(hookJson, HookRules.HookRuleWebViewClient::class.java)
                         viewBinding.ruleRemark.setText(hookEntry.remark)
-                        viewBinding.ruleHookWebViewClientClassWebView.setText(hookEntry.Class_WebView)
                         viewBinding.ruleHookWebViewClientClassWebViewClient.setText(hookEntry.Class_WebViewClient)
                         viewBinding.ruleHookWebViewClientMethodOnPageFinished.setText(hookEntry.Method_onPageFinished)
+                        viewBinding.ruleHookWebViewClientClassWebView.setText(hookEntry.Class_WebView)
                         viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.setText(hookEntry.Method_evaluateJavascript)
-                        viewBinding.ruleHookWebViewClientClassValueCallback.setText(hookEntry.Class_ValueCallback)
                         viewBinding.ruleHookMethod.setText("hookWebViewClient", false)
                     }
                     "replaceNebulaUCSDK" -> {
@@ -591,11 +585,10 @@ class Rule : AppCompatActivity() {
                 viewBinding.ruleName.text.toString().trim(),
                 "hookWebViewClient",
                 arrayOf(
-                    getString(R.string.code_hookParam, "Class_WebView", viewBinding.ruleHookWebViewClientClassWebView.text.toString().trim()),
                     getString(R.string.code_hookParam, "Class_WebViewClient", viewBinding.ruleHookWebViewClientClassWebViewClient.text.toString().trim()),
                     getString(R.string.code_hookParam, "Method_onPageFinished", viewBinding.ruleHookWebViewClientMethodOnPageFinished.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Class_WebView", viewBinding.ruleHookWebViewClientClassWebView.text.toString().trim()),
                     getString(R.string.code_hookParam, "Method_evaluateJavascript", viewBinding.ruleHookWebViewClientMethodEvaluateJavascript.text.toString().trim()),
-                    getString(R.string.code_hookParam, "Class_ValueCallback", viewBinding.ruleHookWebViewClientClassValueCallback.text.toString().trim()),
                 ).joinToString("")
             )
             "replaceNebulaUCSDK" -> getString(R.string.code_hookFunction,

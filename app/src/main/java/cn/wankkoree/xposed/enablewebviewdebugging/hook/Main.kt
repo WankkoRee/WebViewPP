@@ -87,11 +87,10 @@ class Main : IYukiHookXposedInit {
                         "hookWebViewClient" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookRuleWebViewClient::class.java)
                             hookWebViewClient(
-                                Class_WebView = hookEntry.Class_WebView,
                                 Class_WebViewClient = hookEntry.Class_WebViewClient,
                                 Method_onPageFinished = hookEntry.Method_onPageFinished,
+                                Class_WebView = hookEntry.Class_WebView,
                                 Method_evaluateJavascript = hookEntry.Method_evaluateJavascript,
-                                Class_ValueCallback = hookEntry.Class_ValueCallback,
                             )
                         }
                         "replaceNebulaUCSDK" -> {

@@ -1,12 +1,11 @@
 package cn.wankkoree.xposed.enablewebviewdebugging.hook.method
 
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.Main
+import cn.wankkoree.xposed.enablewebviewdebugging.hook.methodX
 import com.highcapable.yukihookapi.hook.log.loggerD
 import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.log.loggerI
 import com.highcapable.yukihookapi.hook.param.PackageParam
-import com.highcapable.yukihookapi.hook.type.java.BooleanType
-import com.highcapable.yukihookapi.hook.type.java.StringType
 
 /** Hook XWebPreferences类，实现：
  *
@@ -15,8 +14,8 @@ import com.highcapable.yukihookapi.hook.type.java.StringType
  * xWebPreferences.setValue(XWalkPreferences.ENABLE_JAVASCRIPT, true)
  **/
 fun PackageParam.hookXWebPreferences (
-    Class_XWebPreferences: String = "org.xwalk.core.XWalkPreferences",
-    Method_setValue: String = "setValue",
+    Class_XWebPreferences: String,
+    Method_setValue: String,
 ) {
     Class_XWebPreferences.hook {
         injectMember {
@@ -25,8 +24,7 @@ fun PackageParam.hookXWebPreferences (
                 val xWebPreferences = instance
 
                 method {
-                    name(Method_setValue)
-                    param(StringType, BooleanType)
+                    methodX(Method_setValue)
                 }.result {
                     onNoSuchMethod {
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookXWebPreferences\uD83D\uDC49<init>\uD83D\uDC49setValue", e = it)
@@ -53,7 +51,7 @@ fun PackageParam.hookXWebPreferences (
             }
         }
         injectMember {
-            allMethods(Method_setValue)
+            methodX(Method_setValue)
             beforeHook {
                 if (args[0] == "remote-debugging") {
                     if (args[1] != true) {

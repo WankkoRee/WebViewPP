@@ -1,49 +1,49 @@
 package cn.wankkoree.xposed.enablewebviewdebugging.hook.method
 
-import android.widget.Toast
+import cn.wankkoree.xposed.enablewebviewdebugging.hook.methodX
 import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.log.loggerI
 import com.highcapable.yukihookapi.hook.param.PackageParam
 
 /** Hook XWeb WebView类，实现：
  *
- * webView.Method_initWebviewCore({Toast(XWeb Engine)})
+ * webView.initWebviewCore({Toast(XWeb Engine)})
  **/
 fun PackageParam.hookXWebView (
-    Class_XWebView: String = "com.tencent.xweb.WebView",
-    Method_initWebviewCore: String = "initWebviewCore",
-    Method_isXWalk: String = "isXWalk",
-    Method_isPinus: String = "isPinus",
-    Method_isX5: String = "isX5",
-    Method_isSys: String = "isSys",
+    Class_XWebView: String,
+    Method_initWebviewCore: String,
+    Method_isXWalk: String,
+    Method_isPinus: String,
+    Method_isX5: String,
+    Method_isSys: String,
 ) {
     Class_XWebView.hook {
         injectMember {
-            allMethods(Method_initWebviewCore)
+            methodX(Method_initWebviewCore)
             afterHook {
                 val isXWalk = method {
-                    name(Method_isXWalk)
+                    methodX(Method_isXWalk)
                 }.result {
                     onNoSuchMethod {
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookXWebView\uD83D\uDC49initWebviewCore\uD83D\uDC49isXWalk", e = it)
                     }
                 }.get().call() as Boolean
                 val isPinus = method {
-                    name(Method_isPinus)
+                    methodX(Method_isPinus)
                 }.result {
                     onNoSuchMethod {
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookXWebView\uD83D\uDC49initWebviewCore\uD83D\uDC49isPinus", e = it)
                     }
                 }.get().call() as Boolean
                 val isX5 = method {
-                    name(Method_isX5)
+                    methodX(Method_isX5)
                 }.result {
                     onNoSuchMethod {
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookXWebView\uD83D\uDC49initWebviewCore\uD83D\uDC49isX5", e = it)
                     }
                 }.get().call() as Boolean
                 val isSys = method {
-                    name(Method_isSys)
+                    methodX(Method_isSys)
                 }.result {
                     onNoSuchMethod {
                         loggerE(msg = "Hook.Method.NoSuchMethod at hookXWebView\uD83D\uDC49initWebviewCore\uD83D\uDC49isSys", e = it)

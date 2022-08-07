@@ -3,6 +3,7 @@ package cn.wankkoree.xposed.enablewebviewdebugging.hook.method
 import android.util.Base64
 import cn.wankkoree.xposed.enablewebviewdebugging.data.AppSP
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.Main
+import cn.wankkoree.xposed.enablewebviewdebugging.hook.methodX
 import com.highcapable.yukihookapi.hook.log.loggerD
 import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.log.loggerI
@@ -14,14 +15,14 @@ import java.io.File
  * ucServiceSetup.updateUCVersionAndSdcardPath({sInitUcFromSdcardPath=$nebulaUCSDK})
  **/
 fun PackageParam.replaceNebulaUCSDK (
-    Class_UcServiceSetup: String = "com.alipay.mobile.nebulauc.impl.UcServiceSetup",
-    Method_updateUCVersionAndSdcardPath: String = "updateUCVersionAndSdcardPath",
-    Field_sInitUcFromSdcardPath: String = "sInitUcFromSdcardPath",
+    Class_UcServiceSetup: String,
+    Method_updateUCVersionAndSdcardPath: String,
+    Field_sInitUcFromSdcardPath: String,
     cpuArch: String,
 ) {
     Class_UcServiceSetup.hook {
         injectMember {
-            allMethods(Method_updateUCVersionAndSdcardPath)
+            methodX(Method_updateUCVersionAndSdcardPath)
             afterHook {
                 if (Main.debug) loggerD(msg = "${instanceClass.name}.updateUCVersionAndSdcardPath({sInitUcFromSdcardPath=\$nebulaUCSDK})")
                 if (prefs("apps_${Main.mProcessName}").get(AppSP.nebulaUCSDK)) {
