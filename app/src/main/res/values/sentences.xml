@@ -22,4 +22,5 @@
     <string name="xweb_currently_has_no_standard_implementation_so_no_standard_rules_is_provided_please_use_the_cloud_rules">XWeb currently has no standard implementation, so no standard rules is provided. please use the cloud rules.</string>
     <string name="s_cannot_contains_vertical">%s cannot contains \'|\'.</string>
     <string name="please_enter_the_correct_git_repo_address">Please enter the correct git repo address.</string>
+    <string name="please_update_your_module_to_use_this_rule_as_the_current_version_you_are_using_does_not_meet_the_minimum_version_it_requires">Please update your module to use this rule as the current version you are using does not meet the minimum version it requires.</string>
 </resources>

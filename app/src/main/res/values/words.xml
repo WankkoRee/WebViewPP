@@ -84,4 +84,8 @@
     <string name="rule_type">Rule Type</string>
     <string name="from">From %s</string>
     <string name="auto_check_update">Auto Check Update</string>
+    <string name="rule_version_d">Rule Version: %d</string>
+    <string name="rule_version">Rule Version</string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
 </resources>

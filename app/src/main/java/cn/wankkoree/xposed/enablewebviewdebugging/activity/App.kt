@@ -89,7 +89,6 @@ class App : AppCompatActivity() {
                                         put(AppSP.hooks, ruleName)
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
                                             "hookWebView",
-                                            "",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -102,7 +101,6 @@ class App : AppCompatActivity() {
                                         put(AppSP.hooks, ruleName)
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
-                                            "",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -120,7 +118,6 @@ class App : AppCompatActivity() {
                                         put(AppSP.hooks, ruleName)
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
                                             "hookWebView",
-                                            "",
                                             Class_WebView = "com.tencent.smtt.sdk.WebView",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
@@ -134,7 +131,6 @@ class App : AppCompatActivity() {
                                         put(AppSP.hooks, ruleName)
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
-                                            "",
                                             Class_WebViewClient = "com.tencent.smtt.sdk.WebViewClient",
                                             Method_onPageFinished = "onPageFinished(com.tencent.smtt.sdk.WebView,str)",
                                             Class_WebView = "com.tencent.smtt.sdk.WebView",
@@ -156,7 +152,6 @@ class App : AppCompatActivity() {
                                         put(AppSP.hooks, ruleName)
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
                                             "hookWebView",
-                                            "",
                                             Class_WebView = "com.uc.webview.export.WebView",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
@@ -170,7 +165,6 @@ class App : AppCompatActivity() {
                                         put(AppSP.hooks, ruleName)
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
-                                            "",
                                             Class_WebViewClient = "com.alipay.mobile.nebulauc.impl.UCWebViewClient",
                                             Method_onPageFinished = "onPageFinished(com.uc.webview.export.WebView,str)",
                                             Class_WebView = "com.uc.webview.export.WebView",
@@ -186,7 +180,6 @@ class App : AppCompatActivity() {
                                         put(AppSP.hooks, ruleName)
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.ReplaceNebulaUCSDK(
                                             "replaceNebulaUCSDK",
-                                            "",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -204,7 +197,6 @@ class App : AppCompatActivity() {
                                         put(AppSP.hooks, ruleName)
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookCrossWalk(
                                             "hookCrossWalk",
-                                            "",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         toast?.cancel()
@@ -217,7 +209,6 @@ class App : AppCompatActivity() {
                                         put(AppSP.hooks, ruleName)
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
-                                            "",
                                             Class_WebViewClient = "org.xwalk.core.XWalkResourceClient",
                                             Method_onPageFinished = "onLoadFinished(org.xwalk.core.XWalkView,str)",
                                             Class_WebView = "org.xwalk.core.XWalkView",
@@ -1199,61 +1190,121 @@ class App : AppCompatActivity() {
                         // TODO: 添加更多 hook 方法
                         "hookWebView" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookRuleWebView::class.java)
-                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
-                                getString(R.string.code_hookParam, "Class_WebView", hookEntry.Class_WebView),
-                                getString(R.string.code_hookParam, "Method_getSettings", hookEntry.Method_getSettings),
-                                getString(R.string.code_hookParam, "Method_setWebContentsDebuggingEnabled", hookEntry.Method_setWebContentsDebuggingEnabled),
-                                getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", hookEntry.Method_setJavaScriptEnabled),
-                                getString(R.string.code_hookParam, "Method_loadUrl", hookEntry.Method_loadUrl),
-                                getString(R.string.code_hookParam, "Method_setWebViewClient", hookEntry.Method_setWebViewClient),
-                            ).joinToString(""))
+                            v.code = getString(R.string.code_hookFunction,
+                                when {
+                                    (hookEntry.remark != "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, hookEntry.remark + "<br/>" + getString(R.string.rule_version_d, hookEntry.version.toLong()))
+                                    (hookEntry.remark != "" && hookEntry.version == 0u) -> getString(R.string.code_hookRemark, hookEntry.remark)
+                                    (hookEntry.remark == "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, getString(R.string.rule_version_d, hookEntry.version.toLong()))
+                                    else -> "" // hookEntry.remark == "" && hookEntry.version == 0u
+                                },
+                                ruleName,
+                                hookEntry.name,
+                                arrayOf(
+                                    getString(R.string.code_hookParam, "Class_WebView", hookEntry.Class_WebView),
+                                    getString(R.string.code_hookParam, "Method_getSettings", hookEntry.Method_getSettings),
+                                    getString(R.string.code_hookParam, "Method_setWebContentsDebuggingEnabled", hookEntry.Method_setWebContentsDebuggingEnabled),
+                                    getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", hookEntry.Method_setJavaScriptEnabled),
+                                    getString(R.string.code_hookParam, "Method_loadUrl", hookEntry.Method_loadUrl),
+                                    getString(R.string.code_hookParam, "Method_setWebViewClient", hookEntry.Method_setWebViewClient),
+                                ).joinToString("")
+                            )
                         }
                         "hookWebViewClient" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookRuleWebViewClient::class.java)
-                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
-                                getString(R.string.code_hookParam, "Class_WebViewClient", hookEntry.Class_WebViewClient),
-                                getString(R.string.code_hookParam, "Method_onPageFinished", hookEntry.Method_onPageFinished),
-                                getString(R.string.code_hookParam, "Class_WebView", hookEntry.Class_WebView),
-                                getString(R.string.code_hookParam, "Method_evaluateJavascript", hookEntry.Method_evaluateJavascript),
-                            ).joinToString(""))
+                            v.code = getString(R.string.code_hookFunction,
+                                when {
+                                    (hookEntry.remark != "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, hookEntry.remark + "<br/>" + getString(R.string.rule_version_d, hookEntry.version.toLong()))
+                                    (hookEntry.remark != "" && hookEntry.version == 0u) -> getString(R.string.code_hookRemark, hookEntry.remark)
+                                    (hookEntry.remark == "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, getString(R.string.rule_version_d, hookEntry.version.toLong()))
+                                    else -> "" // hookEntry.remark == "" && hookEntry.version == 0u
+                                },
+                                ruleName,
+                                hookEntry.name,
+                                arrayOf(
+                                    getString(R.string.code_hookParam, "Class_WebViewClient", hookEntry.Class_WebViewClient),
+                                    getString(R.string.code_hookParam, "Method_onPageFinished", hookEntry.Method_onPageFinished),
+                                    getString(R.string.code_hookParam, "Class_WebView", hookEntry.Class_WebView),
+                                    getString(R.string.code_hookParam, "Method_evaluateJavascript", hookEntry.Method_evaluateJavascript),
+                                ).joinToString("")
+                            )
                         }
                         "replaceNebulaUCSDK" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.ReplaceNebulaUCSDK::class.java)
-                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
-                                getString(R.string.code_hookParam, "Class_UcServiceSetup", hookEntry.Class_UcServiceSetup),
-                                getString(R.string.code_hookParam, "Method_updateUCVersionAndSdcardPath", hookEntry.Method_updateUCVersionAndSdcardPath),
-                                getString(R.string.code_hookParam, "Field_sInitUcFromSdcardPath", hookEntry.Field_sInitUcFromSdcardPath),
-                            ).joinToString(""))
+                            v.code = getString(R.string.code_hookFunction,
+                                when {
+                                    (hookEntry.remark != "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, hookEntry.remark + "<br/>" + getString(R.string.rule_version_d, hookEntry.version.toLong()))
+                                    (hookEntry.remark != "" && hookEntry.version == 0u) -> getString(R.string.code_hookRemark, hookEntry.remark)
+                                    (hookEntry.remark == "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, getString(R.string.rule_version_d, hookEntry.version.toLong()))
+                                    else -> "" // hookEntry.remark == "" && hookEntry.version == 0u
+                                },
+                                ruleName,
+                                hookEntry.name,
+                                arrayOf(
+                                    getString(R.string.code_hookParam, "Class_UcServiceSetup", hookEntry.Class_UcServiceSetup),
+                                    getString(R.string.code_hookParam, "Method_updateUCVersionAndSdcardPath", hookEntry.Method_updateUCVersionAndSdcardPath),
+                                    getString(R.string.code_hookParam, "Field_sInitUcFromSdcardPath", hookEntry.Field_sInitUcFromSdcardPath),
+                                ).joinToString("")
+                            )
                         }
                         "hookCrossWalk" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookCrossWalk::class.java)
-                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
-                                getString(R.string.code_hookParam, "Class_XWalkView", hookEntry.Class_XWalkView),
-                                getString(R.string.code_hookParam, "Method_getSettings", hookEntry.Method_getSettings),
-                                getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", hookEntry.Method_setJavaScriptEnabled),
-                                getString(R.string.code_hookParam, "Method_loadUrl", hookEntry.Method_loadUrl),
-                                getString(R.string.code_hookParam, "Method_setResourceClient", hookEntry.Method_setResourceClient),
-                                getString(R.string.code_hookParam, "Class_XWalkPreferences", hookEntry.Class_XWalkPreferences),
-                                getString(R.string.code_hookParam, "Method_setValue", hookEntry.Method_setValue),
-                            ).joinToString(""))
+                            v.code = getString(R.string.code_hookFunction,
+                                when {
+                                    (hookEntry.remark != "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, hookEntry.remark + "<br/>" + getString(R.string.rule_version_d, hookEntry.version.toLong()))
+                                    (hookEntry.remark != "" && hookEntry.version == 0u) -> getString(R.string.code_hookRemark, hookEntry.remark)
+                                    (hookEntry.remark == "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, getString(R.string.rule_version_d, hookEntry.version.toLong()))
+                                    else -> "" // hookEntry.remark == "" && hookEntry.version == 0u
+                                },
+                                ruleName,
+                                hookEntry.name,
+                                arrayOf(
+                                    getString(R.string.code_hookParam, "Class_XWalkView", hookEntry.Class_XWalkView),
+                                    getString(R.string.code_hookParam, "Method_getSettings", hookEntry.Method_getSettings),
+                                    getString(R.string.code_hookParam, "Method_setJavaScriptEnabled", hookEntry.Method_setJavaScriptEnabled),
+                                    getString(R.string.code_hookParam, "Method_loadUrl", hookEntry.Method_loadUrl),
+                                    getString(R.string.code_hookParam, "Method_setResourceClient", hookEntry.Method_setResourceClient),
+                                    getString(R.string.code_hookParam, "Class_XWalkPreferences", hookEntry.Class_XWalkPreferences),
+                                    getString(R.string.code_hookParam, "Method_setValue", hookEntry.Method_setValue),
+                                ).joinToString("")
+                            )
                         }
                         "hookXWebPreferences" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebPreferences::class.java)
-                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
-                                getString(R.string.code_hookParam, "Class_XWebPreferences", hookEntry.Class_XWebPreferences),
-                                getString(R.string.code_hookParam, "Method_setValue", hookEntry.Method_setValue),
-                            ).joinToString(""))
+                            v.code = getString(R.string.code_hookFunction,
+                                when {
+                                    (hookEntry.remark != "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, hookEntry.remark + "<br/>" + getString(R.string.rule_version_d, hookEntry.version.toLong()))
+                                    (hookEntry.remark != "" && hookEntry.version == 0u) -> getString(R.string.code_hookRemark, hookEntry.remark)
+                                    (hookEntry.remark == "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, getString(R.string.rule_version_d, hookEntry.version.toLong()))
+                                    else -> "" // hookEntry.remark == "" && hookEntry.version == 0u
+                                },
+                                ruleName,
+                                hookEntry.name,
+                                arrayOf(
+                                    getString(R.string.code_hookParam, "Class_XWebPreferences", hookEntry.Class_XWebPreferences),
+                                    getString(R.string.code_hookParam, "Method_setValue", hookEntry.Method_setValue),
+                                ).joinToString("")
+                            )
                         }
                         "hookXWebView" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebView::class.java)
-                            v.code = getString(R.string.code_hookFunction, if (hookEntry.remark != "") getString(R.string.code_hookRemark, hookEntry.remark) else "", ruleName, hookEntry.name, arrayOf(
-                                getString(R.string.code_hookParam, "Class_XWebView", hookEntry.Class_XWebView),
-                                getString(R.string.code_hookParam, "Method_initWebviewCore", hookEntry.Method_initWebviewCore),
-                                getString(R.string.code_hookParam, "Method_isXWalk", hookEntry.Method_isXWalk),
-                                getString(R.string.code_hookParam, "Method_isPinus", hookEntry.Method_isPinus),
-                                getString(R.string.code_hookParam, "Method_isX5", hookEntry.Method_isX5),
-                                getString(R.string.code_hookParam, "Method_isSys", hookEntry.Method_isSys),
-                            ).joinToString(""))
+                            v.code = getString(R.string.code_hookFunction,
+                                when {
+                                    (hookEntry.remark != "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, hookEntry.remark + "<br/>" + getString(R.string.rule_version_d, hookEntry.version.toLong()))
+                                    (hookEntry.remark != "" && hookEntry.version == 0u) -> getString(R.string.code_hookRemark, hookEntry.remark)
+                                    (hookEntry.remark == "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, getString(R.string.rule_version_d, hookEntry.version.toLong()))
+                                    else -> "" // hookEntry.remark == "" && hookEntry.version == 0u
+                                },
+                                ruleName,
+                                hookEntry.name,
+                                arrayOf(
+                                    getString(R.string.code_hookParam, "Class_XWebView", hookEntry.Class_XWebView),
+                                    getString(R.string.code_hookParam, "Method_initWebviewCore", hookEntry.Method_initWebviewCore),
+                                    getString(R.string.code_hookParam, "Method_isXWalk", hookEntry.Method_isXWalk),
+                                    getString(R.string.code_hookParam, "Method_isPinus", hookEntry.Method_isPinus),
+                                    getString(R.string.code_hookParam, "Method_isX5", hookEntry.Method_isX5),
+                                    getString(R.string.code_hookParam, "Method_isSys", hookEntry.Method_isSys),
+                                ).joinToString("")
+                            )
                         }
                         else -> {
                             v.code = getString(R.string.unknown_hook_method)

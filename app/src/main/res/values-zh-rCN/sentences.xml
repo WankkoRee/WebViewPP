@@ -20,6 +20,7 @@
     <string name="your_version_is_higher_than_the_latest_version_it_may_be_a_withdrawn_version_or_a_prerelease_version">你的版本比最新版本还高，可能是已撤回版本或预发布的测试版本。</string>
     <string name="if_you_find_this_project_useful_please_star_this_project">如果你觉得这个项目有用，不妨为这个项目点亮 Star 吧。</string>
     <string name="xweb_currently_has_no_standard_implementation_so_no_standard_rules_is_provided_please_use_the_cloud_rules">XWeb 暂时没有标准实现，所以不提供标准规则集，请使用云端规则。</string>
-    <string name="s_cannot_contains_vertical">>%s 不可包含\'|\'。</string>
-    <string name="please_enter_the_correct_git_repo_address">>请输入正确的 Git 仓库地址。</string>
+    <string name="s_cannot_contains_vertical">%s 不可包含\'|\'。</string>
+    <string name="please_enter_the_correct_git_repo_address">请输入正确的 Git 仓库地址。</string>
+    <string name="please_update_your_module_to_use_this_rule_as_the_current_version_you_are_using_does_not_meet_the_minimum_version_it_requires">请更新模块以使用此规则，因为你使用的当前版本不满足它需要的最低版本。</string>
 </resources>

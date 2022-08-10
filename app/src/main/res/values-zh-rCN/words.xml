@@ -76,4 +76,8 @@
     <string name="rule_type">规则类型</string>
     <string name="from">来自 %s</string>
     <string name="auto_check_update">自动检查更新</string>
+    <string name="rule_version_d">规则版本: %d</string>
+    <string name="rule_version">规则版本</string>
+    <string name="error">错误</string>
+    <string name="ok">好的</string>
 </resources>
