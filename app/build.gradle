@@ -22,8 +22,8 @@ android {
         applicationId "cn.wankkoree.xp.webviewpp"
         minSdk 27
         targetSdk 33
-        versionCode 14
-        versionName 'v2.4.1'
+        versionCode 15
+        versionName 'v3.0.0'
     }
 
     buildTypes {
