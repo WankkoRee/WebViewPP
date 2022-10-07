@@ -4,7 +4,6 @@ import cn.wankkoree.xposed.enablewebviewdebugging.hook.Main
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.debug.printStackTrace
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.methodX
 import com.highcapable.yukihookapi.hook.factory.method
-import com.highcapable.yukihookapi.hook.factory.normalClass
 import com.highcapable.yukihookapi.hook.log.loggerD
 import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.log.loggerI
@@ -46,7 +45,7 @@ fun PackageParam.hookCrossWalk (
                     }
                 }.get(webView).call()
 
-                findClass(Class_XWalkPreferences).normalClass!!.method {
+                Class_XWalkPreferences.toClass().method {
                     methodX(Method_setValue)
                 }.result {
                     onNoSuchMethod {
@@ -69,7 +68,7 @@ fun PackageParam.hookCrossWalk (
                 }
 
                 if (!webSettingsClassHashSet.contains(webSettings.javaClass.name)) {
-                    webSettings.javaClass.hook(isUseAppClassLoader = false) {
+                    webSettings.javaClass.hook(isForceUseAbsolute = false) {
                         injectMember {
                             methodX(Method_setJavaScriptEnabled)
                             beforeHook {

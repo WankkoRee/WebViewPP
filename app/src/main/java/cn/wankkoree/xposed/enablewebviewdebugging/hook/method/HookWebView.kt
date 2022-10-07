@@ -170,7 +170,7 @@ fun PackageParam.hookWebSettings(
     Class_WebSettings: Class<*>,
     Method_setJavaScriptEnabled: String,
 ) {
-    Class_WebSettings.hook(isUseAppClassLoader = false) {
+    Class_WebSettings.hook(isForceUseAbsolute = false) {
         injectMember {
             methodX(Method_setJavaScriptEnabled)
             beforeHook {

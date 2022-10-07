@@ -4,7 +4,6 @@ import cn.wankkoree.xposed.enablewebviewdebugging.data.AppSP
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.Main
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.methodX
 import com.highcapable.yukihookapi.hook.factory.method
-import com.highcapable.yukihookapi.hook.factory.normalClass
 import com.highcapable.yukihookapi.hook.log.loggerD
 import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.log.loggerI
@@ -27,7 +26,7 @@ fun PackageParam.hookWebViewClient (
                 val webView = args[0]
 
                 if (Main.debug) loggerD(msg = "${instanceClass.name}.onPageFinished({webView.evaluateJavascript(\$vConsole+\$eruda)})")
-                findClass(Class_WebView).normalClass!!.method {
+                Class_WebView.toClass().method {
                     methodX(Method_evaluateJavascript)
                 }.result {
                     onNoSuchMethod {

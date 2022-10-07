@@ -1,13 +1,13 @@
 package cn.wankkoree.xposed.enablewebviewdebugging.hook
 
-import com.highcapable.yukihookapi.hook.core.YukiMemberHookCreater
-import com.highcapable.yukihookapi.hook.core.finder.MethodFinder
+import com.highcapable.yukihookapi.hook.core.YukiMemberHookCreator
+import com.highcapable.yukihookapi.hook.core.finder.members.MethodFinder
 import com.highcapable.yukihookapi.hook.type.java.*
 import java.util.Locale
 
 val methodRegex = Regex("^(?:\\( *(.*?) *\\))? *(.+?)(?: *\\( *(.*?) *\\))?\$")
 
-fun YukiMemberHookCreater.MemberHookCreater.methodX(methodDefinition: String) = methodRegex.matchEntire(methodDefinition)!!.let {
+fun YukiMemberHookCreator.MemberHookCreator.methodX(methodDefinition: String) = methodRegex.matchEntire(methodDefinition)!!.let {
     if (it.groups[1] == null && it.groups[3] == null) {
         allMethods(it.groupValues[2])
     } else if (it.groups[1] != null && it.groups[3] == null) {

@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.devtools.ksp' version '1.7.0-1.0.6'
+    id 'com.google.devtools.ksp' version '1.7.10-1.0.6'
 }
 
 android {
@@ -16,12 +16,12 @@ android {
         }
     }
 
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "cn.wankkoree.xposed.enablewebviewdebugging"
         minSdk 27
-        targetSdk 32
+        targetSdk 33
         versionCode 12
         versionName 'v2.3.0'
     }
@@ -80,16 +80,16 @@ android {
 dependencies {
     // Xposed Hook
     compileOnly 'de.robv.android.xposed:api:82'                                 // Xposed
-    implementation 'com.highcapable.yukihookapi:api:1.0.92'                     // Yuki Hook API
-    ksp 'com.highcapable.yukihookapi:ksp-xposed:1.0.92'                         // Yuki Hook API - KSP
+    implementation 'com.highcapable.yukihookapi:api:1.1.4'                      // Yuki Hook API
+    ksp 'com.highcapable.yukihookapi:ksp-xposed:1.1.4'                          // Yuki Hook API - KSP
 
     // 语言特性支持
-    implementation 'androidx.core:core-ktx:1.8.0'                               // Jetpack
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0'             // Jetpack - Lifecycle
+    implementation 'androidx.core:core-ktx:1.9.0'                               // Jetpack
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'             // Jetpack - Lifecycle
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'     // Kotlin - Coroutines Android
 
     // 界面支持
-    implementation 'androidx.appcompat:appcompat:1.4.2'                         // Jetpack - AppCompat
+    implementation 'androidx.appcompat:appcompat:1.5.1'                         // Jetpack - AppCompat
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'           // Jetpack - Constraint Layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'       // Jetpack - Swipe Refresh Layout
     implementation 'androidx.gridlayout:gridlayout:1.0.0'                       // Jetpack - Grid Layout
