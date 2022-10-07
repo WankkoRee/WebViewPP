@@ -10,7 +10,7 @@ import com.highcapable.yukihookapi.hook.log.loggerI
 import com.highcapable.yukihookapi.hook.param.PackageParam
 import java.io.File
 
-/** Hook UcServiceSetup类，实现：
+/** Hook UcServiceSetup类，实现:
  *
  * ucServiceSetup.updateUCVersionAndSdcardPath({sInitUcFromSdcardPath=$nebulaUCSDK})
  **/

@@ -5,7 +5,7 @@ import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.log.loggerI
 import com.highcapable.yukihookapi.hook.param.PackageParam
 
-/** Hook XWeb WebView类，实现：
+/** Hook XWeb WebView类，实现:
  *
  * webView.initWebviewCore({Toast(XWeb Engine)})
  **/

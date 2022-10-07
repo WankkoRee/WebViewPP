@@ -34,15 +34,15 @@ class Main : IYukiHookXposedInit {
             loggerI(msg = "Welcome to EnableWebViewDebugging ${BuildConfig.VERSION_NAME}-${BuildConfig.BUILD_TYPE}(${BuildConfig.VERSION_CODE})!")
 
             if (packageName != mProcessName) { // 不为主进程和私有进程 TODO: 判断公有进程
-                loggerI(msg = "do not hook other application process：$mProcessName")
+                loggerI(msg = "do not hook other application process: $mProcessName")
                 return@encase // 不 hook 憨批 MIUI 等会被重复 hook 的情况
             }
             if (mProcessName == BuildConfig.APPLICATION_ID) {
-                loggerI(msg = "do not hook self：$mProcessName")
+                loggerI(msg = "do not hook self: $mProcessName")
                 return@encase // 不 hook 自己
             }
             if (mProcessName == "com.android.webview" || mProcessName == "com.google.android.webview") {
-                loggerW(msg = "do not hook webview library：$mProcessName")
+                loggerW(msg = "do not hook webview library: $mProcessName")
                 return@encase // 不 hook WebView 本身
             }
             val pref = prefs("apps_$mProcessName")

@@ -11,7 +11,7 @@ import com.highcapable.yukihookapi.hook.param.PackageParam
 
 private val webSettingsClassHashSet = HashSet<String>()
 
-/** Hook XWalkView类和XWalkPreferences类，实现：
+/** Hook XWalkView类和XWalkPreferences类，实现:
  *
  * xWalkView.getSettings().setJavaScriptEnabled(true)
  *

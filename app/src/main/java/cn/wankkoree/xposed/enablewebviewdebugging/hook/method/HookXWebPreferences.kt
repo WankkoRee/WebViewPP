@@ -7,7 +7,7 @@ import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.log.loggerI
 import com.highcapable.yukihookapi.hook.param.PackageParam
 
-/** Hook XWebPreferences类，实现：
+/** Hook XWebPreferences类，实现:
  *
  * xWebPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true)
  *

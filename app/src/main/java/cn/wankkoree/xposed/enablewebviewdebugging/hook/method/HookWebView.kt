@@ -11,7 +11,7 @@ import com.highcapable.yukihookapi.hook.param.PackageParam
 
 private val webSettingsClassHashSet = HashSet<String>()
 
-/** Hook WebView类，实现：
+/** Hook WebView类，实现:
  *
  * WebView.setWebContentsDebuggingEnabled(true)
  *
@@ -162,7 +162,7 @@ fun PackageParam.hookWebView (
         }
     }
 }
-/** Hook WebSettings类，实现：
+/** Hook WebSettings类，实现:
  *
  * webSettings().setJavaScriptEnabled(true)
  **/
