@@ -149,7 +149,8 @@
                     android:hint="@string/rule_remark"
                     />
             </com.google.android.material.textfield.TextInputLayout>
-            <cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code android:id="@+id/rule_code" android:transitionName="targetRule"
+            <cn.wankkoree.xp.webviewpp.activity.component.Code
+                android:id="@+id/rule_code" android:transitionName="targetRule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"

@@ -68,7 +68,7 @@
         android:lines="1"
         android:ellipsize="middle"
         />
-    <cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Tag android:id="@+id/component_applistitem_is_system_app"
+    <cn.wankkoree.xp.webviewpp.activity.component.Tag android:id="@+id/component_applistitem_is_system_app"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
@@ -76,7 +76,7 @@
         app:layout_constraintTop_toBottomOf="@id/component_applistitem_version"
         app:layout_constraintBottom_toTopOf="@id/component_applistitem_is_no_network"
         />
-    <cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Tag android:id="@+id/component_applistitem_is_no_network"
+    <cn.wankkoree.xp.webviewpp.activity.component.Tag android:id="@+id/component_applistitem_is_no_network"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"

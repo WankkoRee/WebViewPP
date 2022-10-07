@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">EnableWebViewDebugging</string>
+    <string name="app_name" translatable="false">WebViewPP</string>
     <string name="app_description">Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4, Crosswalk(XWalk), XWeb.</string>
     <string name="main_version_text">Module Version: %s(%d)</string>
     <string name="main_xposed_text">Hook Framework: %s</string>

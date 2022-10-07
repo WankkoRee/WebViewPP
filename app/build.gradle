@@ -19,7 +19,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "cn.wankkoree.xposed.enablewebviewdebugging"
+        applicationId "cn.wankkoree.xp.webviewpp"
         minSdk 27
         targetSdk 33
         versionCode 14
@@ -68,7 +68,7 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'cn.wankkoree.xposed.enablewebviewdebugging'
+    namespace 'cn.wankkoree.xp.webviewpp'
 
     applicationVariants.all { variant ->
         variant.outputs.all {

@@ -33,7 +33,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "EnableWebViewDebugging"
+rootProject.name = "WebViewPP"
 include ':app'
 include ':test_webview'
 include ':test_tbsx5'
