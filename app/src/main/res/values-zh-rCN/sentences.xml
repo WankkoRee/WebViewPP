@@ -23,4 +23,6 @@
     <string name="s_cannot_contains_vertical">%s 不可包含\'|\'。</string>
     <string name="please_enter_the_correct_git_repo_address">请输入正确的 Git 仓库地址。</string>
     <string name="please_update_your_module_to_use_this_rule_as_the_current_version_you_are_using_does_not_meet_the_minimum_version_it_requires">请更新模块以使用此规则，因为你使用的当前版本不满足它需要的最低版本。</string>
+    <string name="it_is_used_to_find_all_possible_load_url_methods_and_print_their_stack_traces_to_the_log_and_it_will_cause_the_target_app_to_freeze_so_don_not_enable_it_if_not_necessary">此功能用于寻找可能的 loadUrl 方法并打印其调用堆栈到日志，此功能会导致目标 app 卡顿，如无必要请勿开启。</string>
+    <string name="there_are_updates_to_s">%s 有更新。</string>
 </resources>

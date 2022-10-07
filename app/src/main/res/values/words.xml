@@ -88,4 +88,6 @@
     <string name="rule_version">Rule Version</string>
     <string name="error">Error</string>
     <string name="ok">OK</string>
+    <string name="debug_mode">Debug Mode</string>
+    <string name="checking_for_rules_updates">Checking For Rules Updates</string>
 </resources>

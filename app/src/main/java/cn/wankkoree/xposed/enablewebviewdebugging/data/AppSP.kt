@@ -4,6 +4,7 @@ import com.highcapable.yukihookapi.hook.xposed.prefs.data.PrefsData
 
 object AppSP {
     val is_enabled = PrefsData("is_enabled", false)
+    val debug_mode = PrefsData("debug_mode", false)
     /**
      * 哈希去重的 Hook 规则名称集合，以|分隔，并且有多个对应的"hook_entry_$name"子变量
      */

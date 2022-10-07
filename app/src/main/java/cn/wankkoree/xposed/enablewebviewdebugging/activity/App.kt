@@ -25,12 +25,15 @@ import cn.wankkoree.xposed.enablewebviewdebugging.ValueNotExistedInSet
 import cn.wankkoree.xposed.enablewebviewdebugging.activity.component.Code
 import cn.wankkoree.xposed.enablewebviewdebugging.data.AppSP
 import cn.wankkoree.xposed.enablewebviewdebugging.data.AppsSP
+import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP
 import cn.wankkoree.xposed.enablewebviewdebugging.data.ResourcesSP
 import cn.wankkoree.xposed.enablewebviewdebugging.data.put
 import cn.wankkoree.xposed.enablewebviewdebugging.data.getSet
 import cn.wankkoree.xposed.enablewebviewdebugging.data.remove
 import cn.wankkoree.xposed.enablewebviewdebugging.databinding.ActivityAppBinding
 import cn.wankkoree.xposed.enablewebviewdebugging.http.bean.HookRules
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
@@ -49,6 +52,7 @@ class App : AppCompatActivity() {
     private lateinit var name: String
     private lateinit var versionName: String
     private var longVersionCode: Long = 0
+    private lateinit var version: String
     private lateinit var pkg: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,13 +68,14 @@ class App : AppCompatActivity() {
         name = app.applicationInfo.loadLabel(packageManager) as String
         versionName = app.versionName ?: ""
         longVersionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) app.longVersionCode else app.versionCode.toLong()
+        version = getString(R.string.version_format, versionName, longVersionCode)
 
         viewBinding.appToolbarName.text = name
         viewBinding.appIcon.setImageDrawable(icon)
         viewBinding.appIcon.contentDescription = name
         viewBinding.appText.text = name
         viewBinding.appPackage.text = pkg
-        viewBinding.appVersion.text = getString(R.string.version_format, versionName, longVersionCode)
+        viewBinding.appVersion.text = version
         refresh()
 
         viewBinding.appToolbarBack.setOnClickListener {
@@ -235,8 +240,30 @@ class App : AppCompatActivity() {
         viewBinding.appToolbarMenu.setOnClickListener {
             PopupMenu(this, it).apply {
                 menuInflater.inflate(R.menu.app_toolbar_menu, menu)
-                setOnMenuItemClickListener {
-                    when (it.itemId) {
+                with(modulePrefs("apps_$pkg")) {
+                    menu.findItem(R.id.app_toolbar_menu_debug_mode).isChecked = get(AppSP.debug_mode)
+                }
+                setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.app_toolbar_menu_checking_for_rules_updates -> {
+                            checkUpdate()
+                        }
+                        R.id.app_toolbar_menu_debug_mode -> {
+                            if (menuItem.isChecked) {
+                                modulePrefs("apps_$pkg").put(AppSP.debug_mode, false)
+                            } else {
+                                MaterialAlertDialogBuilder(this@App).apply {
+                                    setTitle(R.string.debug_mode)
+                                    setMessage(R.string.it_is_used_to_find_all_possible_load_url_methods_and_print_their_stack_traces_to_the_log_and_it_will_cause_the_target_app_to_freeze_so_don_not_enable_it_if_not_necessary)
+                                    setNegativeButton(R.string.cancel) { _, _ ->
+                                        modulePrefs("apps_$pkg").put(AppSP.debug_mode, false)
+                                    }
+                                    setPositiveButton(R.string.confirm) { _, _ ->
+                                        modulePrefs("apps_$pkg").put(AppSP.debug_mode, true)
+                                    }
+                                }.show()
+                            }
+                        }
                         R.id.app_toolbar_menu_configure_in_other_apps -> {
                             startActivity(Intent.createChooser(
                                 Intent(Intent.ACTION_SHOW_APP_INFO).putExtra(Intent.EXTRA_PACKAGE_NAME, pkg),
@@ -283,7 +310,7 @@ class App : AppCompatActivity() {
         viewBinding.appHooksAdd.setOnClickListener {
             ruleResultContract.launch(Intent(this@App, Rule::class.java).apply {
                 putExtra("pkg", pkg)
-                putExtra("version", getString(R.string.version_format, versionName, longVersionCode))
+                putExtra("version", version)
             }, ActivityOptionsCompat.makeSceneTransitionAnimation(this))
         }
         viewBinding.appResourcesVconsoleCard.setOnLongClickListener {
@@ -774,6 +801,131 @@ class App : AppCompatActivity() {
         }
     }
 
+    private fun checkUpdate() {
+        with(modulePrefs) {
+            name("module")
+            Fuel.get("${get(ModuleSP.data_source)}/rules/$pkg/$version.json")
+                .responseObject< HookRules> { _, _, result ->
+                    result.fold({ rules ->
+                        var hasUpdate = false
+                        name("apps_$pkg")
+                        getSet(AppSP.hooks).forEach { ruleName ->
+                            val hookJson = getString("hook_entry_$ruleName", "{}")
+                            try {
+                                val targetRule = Gson().fromJson(hookJson, HookRules.HookRule::class.java)
+                                if (targetRule.version > 0u) {
+                                    when (targetRule.name) {
+                                        // TODO: 添加更多 hook 方法
+                                        "hookWebView" -> {
+                                            if (rules.hookWebView != null) for (hookRule in rules.hookWebView) {
+                                                if (hookRule.name == ruleName) {
+                                                    if (hookRule.version > targetRule.version) {
+                                                        toast?.cancel()
+                                                        toast = Toast.makeText(this@App, getString(R.string.there_are_updates_to_s, ruleName), Toast.LENGTH_SHORT)
+                                                        toast!!.show()
+                                                        hasUpdate = true
+                                                    }
+                                                    break
+                                                }
+                                            }
+                                        }
+                                        "hookWebViewClient" -> {
+                                            if (rules.hookWebViewClient != null) for (hookRule in rules.hookWebViewClient) {
+                                                if (hookRule.name == ruleName) {
+                                                    if (hookRule.version > targetRule.version) {
+                                                        toast?.cancel()
+                                                        toast = Toast.makeText(this@App, getString(R.string.there_are_updates_to_s, ruleName), Toast.LENGTH_SHORT)
+                                                        toast!!.show()
+                                                        hasUpdate = true
+                                                    }
+                                                    break
+                                                }
+                                            }
+                                        }
+                                        "replaceNebulaUCSDK" -> {
+                                            if (rules.replaceNebulaUCSDK != null) for (hookRule in rules.replaceNebulaUCSDK) {
+                                                if (hookRule.name == ruleName) {
+                                                    if (hookRule.version > targetRule.version) {
+                                                        toast?.cancel()
+                                                        toast = Toast.makeText(this@App, getString(R.string.there_are_updates_to_s, ruleName), Toast.LENGTH_SHORT)
+                                                        toast!!.show()
+                                                        hasUpdate = true
+                                                    }
+                                                    break
+                                                }
+                                            }
+                                        }
+                                        "hookCrossWalk" -> {
+                                            if (rules.hookCrossWalk != null) for (hookRule in rules.hookCrossWalk) {
+                                                if (hookRule.name == ruleName) {
+                                                    if (hookRule.version > targetRule.version) {
+                                                        toast?.cancel()
+                                                        toast = Toast.makeText(this@App, getString(R.string.there_are_updates_to_s, ruleName), Toast.LENGTH_SHORT)
+                                                        toast!!.show()
+                                                        hasUpdate = true
+                                                    }
+                                                    break
+                                                }
+                                            }
+                                        }
+                                        "hookXWebPreferences" -> {
+                                            if (rules.hookXWebPreferences != null) for (hookRule in rules.hookXWebPreferences) {
+                                                if (hookRule.name == ruleName) {
+                                                    if (hookRule.version > targetRule.version) {
+                                                        toast?.cancel()
+                                                        toast = Toast.makeText(this@App, getString(R.string.there_are_updates_to_s, ruleName), Toast.LENGTH_SHORT)
+                                                        toast!!.show()
+                                                        hasUpdate = true
+                                                    }
+                                                    break
+                                                }
+                                            }
+                                        }
+                                        "hookXWebView" -> {
+                                            if (rules.hookXWebView != null) for (hookRule in rules.hookXWebView) {
+                                                if (hookRule.name == ruleName) {
+                                                    if (hookRule.version > targetRule.version) {
+                                                        toast?.cancel()
+                                                        toast = Toast.makeText(this@App, getString(R.string.there_are_updates_to_s, ruleName), Toast.LENGTH_SHORT)
+                                                        toast!!.show()
+                                                        hasUpdate = true
+                                                    }
+                                                    break
+                                                }
+                                            }
+                                        }
+                                        else -> {
+                                            Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method)+": "+targetRule.name)
+                                            toast?.cancel()
+                                            toast = Toast.makeText(this@App, getString(R.string.unknown_hook_method)+"\n"+targetRule.name, Toast.LENGTH_SHORT)
+                                            toast!!.show()
+                                            return@forEach // continue
+                                        }
+                                    }
+                                }
+                            } catch (e: Exception) {
+                                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
+                                toast?.cancel()
+                                toast = Toast.makeText(this@App, getString(R.string.parse_failed)+"\n"+getString(R.string.please_reset), Toast.LENGTH_SHORT)
+                                toast!!.show()
+                                return@forEach // continue
+                            }
+                        }
+                        if (!hasUpdate) {
+                            toast?.cancel()
+                            toast = Toast.makeText(this@App, getString(R.string.is_the_latest_version), Toast.LENGTH_SHORT)
+                            toast!!.show()
+                        }
+                    }, { e ->
+                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules)), e)
+                        toast?.cancel()
+                        toast = Toast.makeText(this@App, getString(R.string.pull_failed, pkg+' '+version+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), Toast.LENGTH_SHORT)
+                        toast!!.show()
+                    })
+                }
+        }
+    }
+
     private fun refresh() {
         with(modulePrefs) {
             name("resources")
@@ -1182,6 +1334,7 @@ class App : AppCompatActivity() {
             }
 
             viewBinding.appHooksList.removeAllViews()
+            name("apps_$pkg")
             getSet(AppSP.hooks).forEach { ruleName ->
                 val v = Code(this@App)
                 val hookJson = getString("hook_entry_$ruleName", "{}")
@@ -1321,7 +1474,7 @@ class App : AppCompatActivity() {
                 v.setOnClickListener {
                     ruleResultContract.launch(Intent(this@App, Rule::class.java).apply {
                         putExtra("pkg", pkg)
-                        putExtra("version", getString(R.string.version_format, versionName, longVersionCode))
+                        putExtra("version", version)
                         putExtra("rule_name", ruleName)
                     }, ActivityOptionsCompat.makeSceneTransitionAnimation(this@App, it, "targetRule"))
                 }

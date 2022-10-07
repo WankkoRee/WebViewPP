@@ -2,7 +2,6 @@ package cn.wankkoree.xposed.enablewebviewdebugging.hook
 
 import cn.wankkoree.xposed.enablewebviewdebugging.BuildConfig
 import cn.wankkoree.xposed.enablewebviewdebugging.data.AppSP
-import cn.wankkoree.xposed.enablewebviewdebugging.data.ModuleSP
 import cn.wankkoree.xposed.enablewebviewdebugging.data.getSet
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.debug.*
 import cn.wankkoree.xposed.enablewebviewdebugging.hook.method.*
@@ -10,6 +9,7 @@ import cn.wankkoree.xposed.enablewebviewdebugging.http.bean.HookRules
 import com.google.gson.Gson
 import com.highcapable.yukihookapi.YukiHookAPI
 import com.highcapable.yukihookapi.annotation.xposed.InjectYukiHookWithXposed
+import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.xposed.proxy.IYukiHookXposedInit
 import com.highcapable.yukihookapi.hook.log.*
 
@@ -67,6 +67,10 @@ class Main : IYukiHookXposedInit {
             }
 
             loggerI(msg = "loading rules")
+
+            if (pref.get(AppSP.debug_mode)) {
+                hookWebViewAllMembers()
+            }
 
             pref.getSet(AppSP.hooks).forEach { name ->
                 val hookJson = pref.getString("hook_entry_$name", "{}")

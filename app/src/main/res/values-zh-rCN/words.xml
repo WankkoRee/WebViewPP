@@ -80,4 +80,6 @@
     <string name="rule_version">规则版本</string>
     <string name="error">错误</string>
     <string name="ok">好的</string>
+    <string name="debug_mode">调试模式</string>
+    <string name="checking_for_rules_updates">检查规则更新</string>
 </resources>

@@ -3,6 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/app_toolbar_menu_checking_for_rules_updates"
+        android:title="@string/checking_for_rules_updates"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/app_toolbar_menu_debug_mode"
+        android:title="@string/debug_mode"
+        app:showAsAction="never"
+        android:checkable="true"
+        />
+    <item
         android:id="@+id/app_toolbar_menu_configure_in_other_apps"
         android:title="@string/configure_in_other_apps"
         app:showAsAction="never"/>
