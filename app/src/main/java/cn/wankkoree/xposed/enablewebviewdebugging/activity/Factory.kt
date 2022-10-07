@@ -15,8 +15,6 @@ val grayColorFilter = ColorMatrixColorFilter(ColorMatrix().apply {
     setSaturation(0f)
 })
 
-fun colorStateSingle(color: Int): ColorStateList = ColorStateList(arrayOf(intArrayOf()), intArrayOf(color))
-
 fun getPrimaryColor(d: Drawable, context: Context): Triple<Int, Int, Int> {
     // https://stackoverflow.com/a/55852660/15603001
     d.state = intArrayOf(android.R.attr.state_enabled)

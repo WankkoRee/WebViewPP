@@ -82,4 +82,7 @@
     <string name="ok">好的</string>
     <string name="debug_mode">调试模式</string>
     <string name="checking_for_rules_updates">检查规则更新</string>
+    <string name="share_rules">规则分享</string>
+    <string name="export_to_clip">导出到剪贴板</string>
+    <string name="import_from_clip">导入自剪贴板</string>
 </resources>

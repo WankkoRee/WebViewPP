@@ -1,5 +1,7 @@
 package cn.wankkoree.xposed.enablewebviewdebugging.activity
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -9,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.transition.Slide
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -80,6 +83,62 @@ class App : AppCompatActivity() {
 
         viewBinding.appToolbarBack.setOnClickListener {
             finishAfterTransition()
+        }
+        viewBinding.appToolbarShare.setOnClickListener { v ->
+            PopupMenu(this, v).apply {
+                menuInflater.inflate(R.menu.app_toolbar_share, menu)
+                setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.app_toolbar_share_export_to_clip -> {
+                            with(modulePrefs("apps_$pkg")) {
+                                val hooks = getSet(AppSP.hooks).toList()
+                                val clipHeader = Base64.encodeToString(hooks.joinToString("|").encodeToByteArray(), Base64.NO_WRAP or Base64.URL_SAFE or Base64.NO_PADDING)
+                                val clipBody = hooks.joinToString("|") { ruleName ->
+                                    Base64.encodeToString(getString("hook_entry_$ruleName", "{}").encodeToByteArray(), Base64.NO_WRAP or Base64.URL_SAFE or Base64.NO_PADDING)
+                                }
+                                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                val clip: ClipData = ClipData.newPlainText("export", "$clipHeader|$clipBody")
+                                clipboard.setPrimaryClip(clip)
+                            }
+                        }
+                        R.id.app_toolbar_share_import_from_clip -> {
+                            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                            val item = clipboard.primaryClip!!.getItemAt(0).text.toString()
+                            val clip = item.split('|')
+                            if (clip.size >= 2) {
+                                val clipHeader = Base64.decode(clip[0], Base64.NO_WRAP or Base64.URL_SAFE or Base64.NO_PADDING).decodeToString().split('|')
+                                val clipBody = clip.drop(1).map { encodingRule ->
+                                    Base64.decode(encodingRule, Base64.NO_WRAP or Base64.URL_SAFE or Base64.NO_PADDING).decodeToString()
+                                }
+                                if (clipHeader.size == clipBody.size) {
+                                    with(modulePrefs("apps_$pkg")) {
+                                        for (i in clipHeader.indices) {
+                                            try {
+                                                put(AppSP.hooks, clipHeader[i])
+                                                putString("hook_entry_${clipHeader[i]}", clipBody[i])
+                                            } catch (_: ValueAlreadyExistedInSet) {
+                                                toast?.cancel()
+                                                toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "${clipHeader[i]}" """), Toast.LENGTH_SHORT)
+                                                toast!!.show()
+                                            }
+                                        }
+                                    }
+                                    refresh()
+                                } else {
+                                    toast?.cancel()
+                                    toast = Toast.makeText(this@App, getString(R.string.parse_failed), Toast.LENGTH_SHORT)
+                                    toast!!.show()
+                                }
+                            } else {
+                                toast?.cancel()
+                                toast = Toast.makeText(this@App, getString(R.string.parse_failed), Toast.LENGTH_SHORT)
+                                toast!!.show()
+                            }
+                        }
+                    }
+                    true
+                }
+            }.show()
         }
         viewBinding.appToolbarPreset.setOnClickListener { v ->
             PopupMenu(this, v).apply {
