@@ -75,3 +75,7 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4,
 
   The inspiration for vConsole injection.
   >vConsole 注入的灵感来源。
+
+## Trend / 趋势
+
+[![Star Trend](https://api.star-history.com/svg?repos=WankkoRee/WebViewPP&type=Timeline)](https://seladb.github.io/StarTrack-js/#/preload?r=WankkoRee,WebViewPP)
