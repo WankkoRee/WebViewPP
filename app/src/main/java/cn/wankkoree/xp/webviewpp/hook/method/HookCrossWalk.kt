@@ -3,6 +3,7 @@ package cn.wankkoree.xp.webviewpp.hook.method
 import cn.wankkoree.xp.webviewpp.hook.Main
 import cn.wankkoree.xp.webviewpp.hook.debug.printStackTrace
 import cn.wankkoree.xp.webviewpp.hook.methodX
+import com.highcapable.yukihookapi.hook.factory.MembersType
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.loggerD
 import com.highcapable.yukihookapi.hook.log.loggerE
@@ -34,7 +35,7 @@ fun PackageParam.hookCrossWalk (
 ) {
     Class_XWalkView.hook {
         injectMember {
-            allConstructors()
+            allMembers(MembersType.CONSTRUCTOR)
             afterHook {
                 val webView = instance
                 val webSettings = method {

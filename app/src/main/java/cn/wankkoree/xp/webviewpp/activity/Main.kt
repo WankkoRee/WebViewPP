@@ -22,8 +22,7 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.GsonBuilder
-import com.highcapable.yukihookapi.YukiHookAPI.Status.executorName
-import com.highcapable.yukihookapi.YukiHookAPI.Status.executorVersion
+import com.highcapable.yukihookapi.YukiHookAPI.Status.Executor
 import com.highcapable.yukihookapi.YukiHookAPI.Status.isXposedModuleActive
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 import io.noties.markwon.Markwon
@@ -53,8 +52,8 @@ class Main: AppCompatActivity() {
             viewBinding.mainStatusText.text = getString(R.string.enabled)
             viewBinding.mainXposedText.visibility = View.VISIBLE
             when {
-                executorVersion != -1 -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text, "${executorName}(API ${executorVersion})")
-                else -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text, executorName)
+                Executor.apiLevel != -1 -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text, "${Executor.name}(API ${Executor.apiLevel})")
+                else -> viewBinding.mainXposedText.text = getString(R.string.main_xposed_text, Executor.name)
             }
         } else {
             viewBinding.mainStatusCard.setCardBackgroundColor((getColor(R.color.backgroundError) or 0xff000000.toInt()) and 0x77ffffff)

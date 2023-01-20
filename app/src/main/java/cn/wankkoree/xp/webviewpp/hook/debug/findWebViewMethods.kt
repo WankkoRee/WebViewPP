@@ -8,7 +8,7 @@ import com.highcapable.yukihookapi.hook.log.loggerI
 import com.highcapable.yukihookapi.hook.param.PackageParam
 import com.highcapable.yukihookapi.hook.type.defined.VagueType
 import com.highcapable.yukihookapi.hook.type.java.JavaClassLoader
-import com.highcapable.yukihookapi.hook.type.java.StringType
+import com.highcapable.yukihookapi.hook.type.java.StringClass
 
 private val hooked = HashSet<Class<*>>()
 
@@ -33,7 +33,7 @@ private fun PackageParam.hookTarget(clazz: Class<*>) {
     clazz.hook(isForceUseAbsolute = true) {
         injectMember {
             method {
-                param(StringType)
+                param(StringClass)
             }.all()
             beforeHook {
                 with(args(0).string()) {
@@ -52,7 +52,7 @@ private fun PackageParam.hookTarget(clazz: Class<*>) {
         }
         injectMember {
             method {
-                param(StringType, VagueType)
+                param(StringClass, VagueType)
             }.all()
             beforeHook {
                 with(args(0).string()) {
@@ -71,7 +71,7 @@ private fun PackageParam.hookTarget(clazz: Class<*>) {
         }
         injectMember {
             method {
-                param(VagueType, StringType)
+                param(VagueType, StringClass)
             }.all()
             beforeHook {
                 with(args(1).string()) {
@@ -90,7 +90,7 @@ private fun PackageParam.hookTarget(clazz: Class<*>) {
         }
         injectMember {
             method {
-                param(VagueType, StringType, VagueType)
+                param(VagueType, StringClass, VagueType)
             }.all()
             beforeHook {
                 with(args(1).string()) {
@@ -116,7 +116,7 @@ fun PackageParam.findWebViewMethods() {
         injectMember {
             method {
                 name = "loadClass"
-                param(StringType)
+                param(StringClass)
             }
             afterHook {
                 if (hasThrowable == true) return@afterHook

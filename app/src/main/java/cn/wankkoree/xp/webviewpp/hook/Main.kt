@@ -61,7 +61,7 @@ class Main : IYukiHookXposedInit {
                 return@encase // 目标 App 的 Hook 未启用
             }
 
-            YukiHookAPI.Configs.debugTag = "WebViewPP<$packageName>"
+            YukiHookLogger.Configs.tag = "WebViewPP<$packageName>"
 
             loggerI(msg = "hook $mProcessName which run in $processName")
 

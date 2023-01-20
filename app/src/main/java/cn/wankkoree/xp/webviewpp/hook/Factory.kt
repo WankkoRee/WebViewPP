@@ -9,7 +9,7 @@ val methodRegex = Regex("^(?:\\( *(.*?) *\\))? *(.+?)(?: *\\( *(.*?) *\\))?\$")
 
 fun YukiMemberHookCreator.MemberHookCreator.methodX(methodDefinition: String) = methodRegex.matchEntire(methodDefinition)!!.let {
     if (it.groups[1] == null && it.groups[3] == null) {
-        allMethods(it.groupValues[2])
+        method { name = it.groupValues[2] }.all()
     } else if (it.groups[1] != null && it.groups[3] == null) {
         method {
             name(it.groupValues[2])
@@ -69,8 +69,8 @@ fun String.typeConvert(): Any = when (this.lowercase(Locale.getDefault())) {
     "obj" -> "java.lang.Object"
     "object" -> "java.lang.Object"
     "short" -> ShortType
-    "str" -> StringType
-    "string" -> StringType
+    "str" -> StringClass
+    "string" -> StringClass
     "unit" -> UnitType
     "void" -> UnitType
     else -> this
