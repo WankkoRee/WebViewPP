@@ -20,11 +20,21 @@ class Main : IYukiHookXposedInit {
         var mProcessName = ""
     }
 
-    override fun onInit() = YukiHookAPI.configs {
-        isDebug = debug
-        isAllowPrintingLogs = debug
-        isEnableModulePrefsCache = false
-        isEnableMemberCache = false
+    override fun onInit() {
+        YukiHookAPI.configs {
+            debugLog {
+                isEnable = debug
+                isRecord = false
+                elements(TAG, PRIORITY, PACKAGE_NAME, USER_ID)
+            }
+            isDebug = debug
+            isEnableModulePrefsCache = false
+            isEnableModuleAppResourcesCache = false
+            isEnableHookModuleStatus = true
+            isEnableHookSharedPreferences = false
+            isEnableDataChannel = false
+            isEnableMemberCache = false
+        }
     }
 
     override fun onHook() = YukiHookAPI.encase {
@@ -34,7 +44,7 @@ class Main : IYukiHookXposedInit {
             loggerI(msg = "Welcome to WebViewPP ${BuildConfig.VERSION_NAME}-${BuildConfig.BUILD_TYPE}(${BuildConfig.VERSION_CODE})!")
 
             if (packageName != mProcessName) { // 不为主进程和私有进程 TODO: 判断公有进程
-                loggerI(msg = "do not hook other application process: $mProcessName")
+                loggerI(msg = "do not hook other application package: $packageName or application process: $mProcessName")
                 return@encase // 不 hook 憨批 MIUI 等会被重复 hook 的情况
             }
             if (mProcessName == BuildConfig.APPLICATION_ID) {

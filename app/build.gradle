@@ -4,6 +4,9 @@ plugins {
     id 'com.google.devtools.ksp' version '1.7.10-1.0.6'
 }
 
+def git_count = "git rev-list HEAD --count".execute().text.trim()
+def git_hash = "git rev-list HEAD --abbrev-commit --max-count=1".execute().text.trim()
+
 android {
     signingConfigs {
         release {
@@ -23,7 +26,7 @@ android {
         minSdk 27
         targetSdk 33
         versionCode 15
-        versionName 'v3.0.0'
+        versionName "v3.0.0.$git_count.$git_hash"
     }
 
     buildTypes {
@@ -70,8 +73,8 @@ android {
     }
     namespace 'cn.wankkoree.xp.webviewpp'
 
-    applicationVariants.all { variant ->
-        variant.outputs.all {
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach {
             outputFileName = "${defaultConfig.applicationId}-${defaultConfig.versionName}_${defaultConfig.versionCode}-${variant.buildType.name}.apk"
         }
     }
@@ -89,11 +92,11 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'     // Kotlin - Coroutines Android
 
     // 界面支持
-    implementation 'androidx.appcompat:appcompat:1.5.1'                         // Jetpack - AppCompat
+    implementation 'androidx.appcompat:appcompat:1.6.0'                         // Jetpack - AppCompat
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'           // Jetpack - Constraint Layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'       // Jetpack - Swipe Refresh Layout
     implementation 'androidx.gridlayout:gridlayout:1.0.0'                       // Jetpack - Grid Layout
-    implementation 'com.google.android.material:material:1.6.1'                 // Material Design
+    implementation 'com.google.android.material:material:1.7.0'                 // Material Design
     implementation 'com.google.android.flexbox:flexbox:3.0.0'                   // Flexbox
     implementation 'io.noties.markwon:core:4.6.2'                               // Markdown
 
