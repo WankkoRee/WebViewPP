@@ -30,7 +30,7 @@ private fun PackageParam.hookTarget(clazz: Class<*>) {
     hooked.add(clazz)
 
     loggerD(msg = "find clazz: ${clazz.name}")
-    clazz.hook(isForceUseAbsolute = false) {
+    clazz.hook(isForceUseAbsolute = true) {
         injectMember {
             method {
                 param(StringType)
@@ -40,10 +40,13 @@ private fun PackageParam.hookTarget(clazz: Class<*>) {
                     if (
                         startsWith("http://") ||
                         startsWith("https://") ||
+                        startsWith("file://") ||
                         startsWith("javascript:") ||
                         startsWith("about:")
-                    )
+                    ) {
                         loggerD(msg = "called: ${clazz.name}.${method.name}(${args.joinToString(", ")})")
+                        printStackTrace()
+                    }
                 }
             }
         }
@@ -56,10 +59,13 @@ private fun PackageParam.hookTarget(clazz: Class<*>) {
                     if (
                         startsWith("http://") ||
                         startsWith("https://") ||
+                        startsWith("file://") ||
                         startsWith("javascript:") ||
                         startsWith("about:")
-                    )
+                    ) {
                         loggerD(msg = "called: ${clazz.name}.${method.name}(${args.joinToString(", ")})")
+                        printStackTrace()
+                    }
                 }
             }
         }
@@ -72,10 +78,13 @@ private fun PackageParam.hookTarget(clazz: Class<*>) {
                     if (
                         startsWith("http://") ||
                         startsWith("https://") ||
+                        startsWith("file://") ||
                         startsWith("javascript:") ||
                         startsWith("about:")
-                    )
+                    ) {
                         loggerD(msg = "called: ${clazz.name}.${method.name}(${args.joinToString(", ")})")
+                        printStackTrace()
+                    }
                 }
             }
         }
@@ -88,10 +97,13 @@ private fun PackageParam.hookTarget(clazz: Class<*>) {
                     if (
                         startsWith("http://") ||
                         startsWith("https://") ||
+                        startsWith("file://") ||
                         startsWith("javascript:") ||
                         startsWith("about:")
-                    )
+                    ) {
                         loggerD(msg = "called: ${clazz.name}.${method.name}(${args.joinToString(", ")})")
+                        printStackTrace()
+                    }
                 }
             }
         }
@@ -99,9 +111,6 @@ private fun PackageParam.hookTarget(clazz: Class<*>) {
 }
 
 fun PackageParam.findWebViewMethods() {
-    appClassLoader.listOfClasses().forEach {
-        hookTarget(it.toClass())
-    }
     JavaClassLoader.hook(isForceUseAbsolute = true) {
         useDangerousOperation("Yes do as I say!")
         injectMember {
@@ -111,8 +120,11 @@ fun PackageParam.findWebViewMethods() {
             }
             afterHook {
                 if (hasThrowable == true) return@afterHook
-                if (result != null)
-                    hookTarget(result as Class<*>)
+                if (result != null) {
+                    (result as Class<*>).also { clazz ->
+                        hookTarget(clazz)
+                    }
+                }
             }
         }.result {
             onNoSuchMemberFailure {
@@ -134,6 +146,14 @@ fun PackageParam.findWebViewMethods() {
         }
         onPrepareHook {
             loggerI(msg = "Hook.Class.Started at findWebViewMethods")
+        }
+    }
+    appClassLoader.listOfClasses().forEach {
+        try {
+            hookTarget(it.toClass())
+        } catch (e: Exception) {
+            loggerE(msg = "hook Failed!", e = e)
+            return@forEach // continue
         }
     }
 }
