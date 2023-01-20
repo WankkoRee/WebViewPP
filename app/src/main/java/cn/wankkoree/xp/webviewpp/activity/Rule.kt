@@ -49,7 +49,6 @@ class Rule : AppCompatActivity() {
             "hookWebViewClient",
             "replaceNebulaUCSDK",
             "hookCrossWalk",
-            "hookXWebPreferences",
             "hookXWebView",
         ))
 
@@ -237,42 +236,6 @@ class Rule : AppCompatActivity() {
                                     }
                                     dialogBinding.dialogCloudRulesRules.addView(v)
                                 }
-                                if (rules.hookXWebPreferences != null) for (hookRule in rules.hookXWebPreferences) {
-                                    val v = Code(this@Rule)
-                                    v.code = getString(R.string.code_hookFunction,
-                                        when {
-                                            (hookRule.remark.trim() != "" && hookRule.version > 0u) -> getString(R.string.code_hookRemark, hookRule.remark.trim() + "<br/>" + getString(R.string.rule_version_d, hookRule.version.toLong()))
-                                            (hookRule.remark.trim() != "" && hookRule.version == 0u) -> getString(R.string.code_hookRemark, hookRule.remark.trim())
-                                            (hookRule.remark.trim() == "" && hookRule.version > 0u) -> getString(R.string.code_hookRemark, getString(R.string.rule_version_d, hookRule.version.toLong()))
-                                            else -> "" // hookRule.remark == "" && hookRule.version == 0u
-                                        },
-                                        hookRule.name,
-                                        "hookXWebPreferences",
-                                        arrayOf(
-                                            getString(R.string.code_hookParam, "Class_XWebPreferences",  hookRule.Class_XWebPreferences),
-                                            getString(R.string.code_hookParam, "Method_setValue",  hookRule.Method_setValue),
-                                        ).joinToString("")
-                                    )
-                                    v.isClickable = true
-                                    v.setOnClickListener {
-                                        if (hookRule.require > BuildConfig.VERSION_CODE.toUInt()) {
-                                            MaterialAlertDialogBuilder(this@Rule).apply {
-                                                setTitle(getString(R.string.error))
-                                                setMessage(getString(R.string.please_update_your_module_to_use_this_rule_as_the_current_version_you_are_using_does_not_meet_the_minimum_version_it_requires))
-                                                setPositiveButton(getString(R.string.ok)) { _, _ -> }
-                                            }.show()
-                                        } else {
-                                            viewBinding.ruleHookMethod.setText("hookXWebPreferences", false)
-                                            viewBinding.ruleName.setText(hookRule.name)
-                                            viewBinding.ruleVersion.setText(hookRule.version.toString())
-                                            viewBinding.ruleRemark.setText((getString(R.string.from, version) + "\n" + hookRule.remark.trim()).trim())
-                                            viewBinding.ruleHookXWebPreferencesClassXWebPreferences.setText(hookRule.Class_XWebPreferences)
-                                            viewBinding.ruleHookXWebPreferencesMethodSetValue.setText(hookRule.Method_setValue)
-                                            dialog.cancel()
-                                        }
-                                    }
-                                    dialogBinding.dialogCloudRulesRules.addView(v)
-                                }
                                 if (rules.hookXWebView != null) for (hookRule in rules.hookXWebView) {
                                     val v = Code(this@Rule)
                                     v.code = getString(R.string.code_hookFunction,
@@ -436,16 +399,6 @@ class Rule : AppCompatActivity() {
                                 viewBinding.ruleHookCrossWalkMethodSetValue.text.toString(),
                             )
                         )
-                        "hookXWebPreferences" -> Gson().toJson(
-                            HookRules.HookXWebPreferences(
-                                type,
-                                viewBinding.ruleVersion.text.toString().toUIntOrNull()?:0u,
-                                viewBinding.ruleRemark.text.toString(),
-                                0u,
-                                viewBinding.ruleHookXWebPreferencesClassXWebPreferences.text.toString(),
-                                viewBinding.ruleHookXWebPreferencesMethodSetValue.text.toString(),
-                            )
-                        )
                         "hookXWebView" -> Gson().toJson(
                             HookRules.HookXWebView(
                                 type,
@@ -477,7 +430,6 @@ class Rule : AppCompatActivity() {
                     viewBinding.ruleHookWebViewClient.visibility = View.GONE
                     viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
                     viewBinding.ruleHookCrossWalk.visibility = View.GONE
-                    viewBinding.ruleHookXWebPreferences.visibility = View.GONE
                     viewBinding.ruleHookXWebView.visibility = View.GONE
 
                     HookRules.HookRuleWebView().also {
@@ -494,7 +446,6 @@ class Rule : AppCompatActivity() {
                     viewBinding.ruleHookWebViewClient.visibility = View.VISIBLE
                     viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
                     viewBinding.ruleHookCrossWalk.visibility = View.GONE
-                    viewBinding.ruleHookXWebPreferences.visibility = View.GONE
                     viewBinding.ruleHookXWebView.visibility = View.GONE
 
                     HookRules.HookRuleWebViewClient().also {
@@ -509,7 +460,6 @@ class Rule : AppCompatActivity() {
                     viewBinding.ruleHookWebViewClient.visibility = View.GONE
                     viewBinding.ruleReplaceNebulaUCSDK.visibility = View.VISIBLE
                     viewBinding.ruleHookCrossWalk.visibility = View.GONE
-                    viewBinding.ruleHookXWebPreferences.visibility = View.GONE
                     viewBinding.ruleHookXWebView.visibility = View.GONE
 
                     HookRules.ReplaceNebulaUCSDK().also {
@@ -523,7 +473,6 @@ class Rule : AppCompatActivity() {
                     viewBinding.ruleHookWebViewClient.visibility = View.GONE
                     viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
                     viewBinding.ruleHookCrossWalk.visibility = View.VISIBLE
-                    viewBinding.ruleHookXWebPreferences.visibility = View.GONE
                     viewBinding.ruleHookXWebView.visibility = View.GONE
 
                     HookRules.HookCrossWalk().also {
@@ -536,25 +485,11 @@ class Rule : AppCompatActivity() {
                         if (viewBinding.ruleHookCrossWalkMethodSetValue.text!!.isEmpty()) viewBinding.ruleHookCrossWalkMethodSetValue.setText(it.Method_setValue)
                     }
                 }
-                "hookXWebPreferences" -> {
-                    viewBinding.ruleHookWebView.visibility = View.GONE
-                    viewBinding.ruleHookWebViewClient.visibility = View.GONE
-                    viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
-                    viewBinding.ruleHookCrossWalk.visibility = View.GONE
-                    viewBinding.ruleHookXWebPreferences.visibility = View.VISIBLE
-                    viewBinding.ruleHookXWebView.visibility = View.GONE
-
-                    HookRules.HookXWebPreferences().also {
-                        if (viewBinding.ruleHookXWebPreferencesClassXWebPreferences.text!!.isEmpty()) viewBinding.ruleHookXWebPreferencesClassXWebPreferences.setText(it.Class_XWebPreferences)
-                        if (viewBinding.ruleHookXWebPreferencesMethodSetValue.text!!.isEmpty()) viewBinding.ruleHookXWebPreferencesMethodSetValue.setText(it.Method_setValue)
-                    }
-                }
                 "hookXWebView" -> {
                     viewBinding.ruleHookWebView.visibility = View.GONE
                     viewBinding.ruleHookWebViewClient.visibility = View.GONE
                     viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
                     viewBinding.ruleHookCrossWalk.visibility = View.GONE
-                    viewBinding.ruleHookXWebPreferences.visibility = View.GONE
                     viewBinding.ruleHookXWebView.visibility = View.VISIBLE
 
                     HookRules.HookXWebView().also {
@@ -571,7 +506,6 @@ class Rule : AppCompatActivity() {
                     viewBinding.ruleHookWebViewClient.visibility = View.GONE
                     viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
                     viewBinding.ruleHookCrossWalk.visibility = View.GONE
-                    viewBinding.ruleHookXWebPreferences.visibility = View.GONE
                     viewBinding.ruleHookXWebView.visibility = View.GONE
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method))
                 }
@@ -602,8 +536,6 @@ class Rule : AppCompatActivity() {
         viewBinding.ruleHookCrossWalkMethodSetResourceClient.doAfterTextChanged { refreshCode() }
         viewBinding.ruleHookCrossWalkClassXWalkPreferences.doAfterTextChanged { refreshCode() }
         viewBinding.ruleHookCrossWalkMethodSetValue.doAfterTextChanged { refreshCode() }
-        viewBinding.ruleHookXWebPreferencesClassXWebPreferences.doAfterTextChanged { refreshCode() }
-        viewBinding.ruleHookXWebPreferencesMethodSetValue.doAfterTextChanged { refreshCode() }
         viewBinding.ruleHookXWebViewClassClassXWebView.doAfterTextChanged { refreshCode() }
         viewBinding.ruleHookXWebViewMethodInitWebviewCore.doAfterTextChanged { refreshCode() }
         viewBinding.ruleHookXWebViewMethodIsXWeb.doAfterTextChanged { refreshCode() }
@@ -666,14 +598,6 @@ class Rule : AppCompatActivity() {
                         viewBinding.ruleHookCrossWalkClassXWalkPreferences.setText(hookEntry.Class_XWalkPreferences)
                         viewBinding.ruleHookCrossWalkMethodSetValue.setText(hookEntry.Method_setValue)
                         viewBinding.ruleHookMethod.setText("hookCrossWalk", false)
-                    }
-                    "hookXWebPreferences" -> {
-                        val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebPreferences::class.java)
-                        viewBinding.ruleVersion.setText(hookEntry.version.toString())
-                        viewBinding.ruleRemark.setText(hookEntry.remark)
-                        viewBinding.ruleHookXWebPreferencesClassXWebPreferences.setText(hookEntry.Class_XWebPreferences)
-                        viewBinding.ruleHookXWebPreferencesMethodSetValue.setText(hookEntry.Method_setValue)
-                        viewBinding.ruleHookMethod.setText("hookXWebPreferences", false)
                     }
                     "hookXWebView" -> {
                         val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebView::class.java)
@@ -775,22 +699,6 @@ class Rule : AppCompatActivity() {
                     getString(R.string.code_hookParam, "Method_setResourceClient", viewBinding.ruleHookCrossWalkMethodSetResourceClient.text.toString().trim()),
                     getString(R.string.code_hookParam, "Class_XWalkPreferences", viewBinding.ruleHookCrossWalkClassXWalkPreferences.text.toString().trim()),
                     getString(R.string.code_hookParam, "Method_setValue", viewBinding.ruleHookCrossWalkMethodSetValue.text.toString().trim()),
-                ).joinToString("")
-            )
-            "hookXWebPreferences" -> getString(R.string.code_hookFunction,
-                Pair(viewBinding.ruleRemark.text.toString().trim(), viewBinding.ruleVersion.text.toString().toUIntOrNull()?:0u).let {(ruleRemark, ruleVersion) ->
-                    when {
-                        (ruleRemark != "" && ruleVersion > 0u) -> getString(R.string.code_hookRemark, ruleRemark + "<br/>" + getString(R.string.rule_version_d, ruleVersion.toLong()))
-                        (ruleRemark != "" && ruleVersion == 0u) -> getString(R.string.code_hookRemark, ruleRemark)
-                        (ruleRemark == "" && ruleVersion > 0u) -> getString(R.string.code_hookRemark, getString(R.string.rule_version_d, ruleVersion.toLong()))
-                        else -> "" // ruleRemark == "" && ruleVersion == 0u
-                    }
-                },
-                viewBinding.ruleName.text.toString().trim(),
-                "hookXWebPreferences",
-                arrayOf(
-                    getString(R.string.code_hookParam, "Class_XWebPreferences", viewBinding.ruleHookXWebPreferencesClassXWebPreferences.text.toString().trim()),
-                    getString(R.string.code_hookParam, "Method_setValue", viewBinding.ruleHookXWebPreferencesMethodSetValue.text.toString().trim()),
                 ).joinToString("")
             )
             "hookXWebView" -> getString(R.string.code_hookFunction,

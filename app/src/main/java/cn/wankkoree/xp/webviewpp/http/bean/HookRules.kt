@@ -11,8 +11,6 @@ data class HookRules (
     val replaceNebulaUCSDK: List<ReplaceNebulaUCSDK>?,
     @SerializedName("hookCrossWalk")
     val hookCrossWalk: List<HookCrossWalk>?,
-    @SerializedName("hookXWebPreferences")
-    val hookXWebPreferences: List<HookXWebPreferences>?,
     @SerializedName("hookXWebView")
     val hookXWebView: List<HookXWebView>?,
 ) {
@@ -103,20 +101,6 @@ data class HookRules (
         val Method_setResourceClient: String = "setResourceClient",
         @SerializedName("Class_XWalkPreferences")
         val Class_XWalkPreferences: String = "org.xwalk.core.XWalkPreferences",
-        @SerializedName("Method_setValue")
-        val Method_setValue: String = "setValue(str,bool)",
-    )
-    class HookXWebPreferences (
-        @SerializedName("name")
-        val name: String = "",
-        @SerializedName("version")
-        val version: UInt = 0u,
-        @SerializedName("remark")
-        val remark: String = "",
-        @SerializedName("require")
-        val require: UInt = 0u,
-        @SerializedName("Class_XWebPreferences")
-        val Class_XWebPreferences: String = "org.xwalk.core.XWalkPreferences",
         @SerializedName("Method_setValue")
         val Method_setValue: String = "setValue(str,bool)",
     )

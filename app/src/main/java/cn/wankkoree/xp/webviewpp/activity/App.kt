@@ -927,19 +927,6 @@ class App : AppCompatActivity() {
                                                 }
                                             }
                                         }
-                                        "hookXWebPreferences" -> {
-                                            if (rules.hookXWebPreferences != null) for (hookRule in rules.hookXWebPreferences) {
-                                                if (hookRule.name == ruleName) {
-                                                    if (hookRule.version > targetRule.version) {
-                                                        toast?.cancel()
-                                                        toast = Toast.makeText(this@App, getString(R.string.there_are_updates_to_s, ruleName), Toast.LENGTH_SHORT)
-                                                        toast!!.show()
-                                                        hasUpdate = true
-                                                    }
-                                                    break
-                                                }
-                                            }
-                                        }
                                         "hookXWebView" -> {
                                             if (rules.hookXWebView != null) for (hookRule in rules.hookXWebView) {
                                                 if (hookRule.name == ruleName) {
@@ -1476,23 +1463,6 @@ class App : AppCompatActivity() {
                                     getString(R.string.code_hookParam, "Method_loadUrl", hookEntry.Method_loadUrl),
                                     getString(R.string.code_hookParam, "Method_setResourceClient", hookEntry.Method_setResourceClient),
                                     getString(R.string.code_hookParam, "Class_XWalkPreferences", hookEntry.Class_XWalkPreferences),
-                                    getString(R.string.code_hookParam, "Method_setValue", hookEntry.Method_setValue),
-                                ).joinToString("")
-                            )
-                        }
-                        "hookXWebPreferences" -> {
-                            val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebPreferences::class.java)
-                            v.code = getString(R.string.code_hookFunction,
-                                when {
-                                    (hookEntry.remark != "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, hookEntry.remark + "<br/>" + getString(R.string.rule_version_d, hookEntry.version.toLong()))
-                                    (hookEntry.remark != "" && hookEntry.version == 0u) -> getString(R.string.code_hookRemark, hookEntry.remark)
-                                    (hookEntry.remark == "" && hookEntry.version > 0u) -> getString(R.string.code_hookRemark, getString(R.string.rule_version_d, hookEntry.version.toLong()))
-                                    else -> "" // hookEntry.remark == "" && hookEntry.version == 0u
-                                },
-                                ruleName,
-                                hookEntry.name,
-                                arrayOf(
-                                    getString(R.string.code_hookParam, "Class_XWebPreferences", hookEntry.Class_XWebPreferences),
                                     getString(R.string.code_hookParam, "Method_setValue", hookEntry.Method_setValue),
                                 ).joinToString("")
                             )

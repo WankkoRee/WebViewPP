@@ -120,13 +120,6 @@ class Main : IYukiHookXposedInit {
                                 Method_setValue = hookEntry.Method_setValue,
                             )
                         }
-                        "hookXWebPreferences" -> {
-                            val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebPreferences::class.java)
-                            hookXWebPreferences(
-                                Class_XWebPreferences = hookEntry.Class_XWebPreferences,
-                                Method_setValue = hookEntry.Method_setValue,
-                            )
-                        }
                         "hookXWebView" -> {
                             val hookEntry = Gson().fromJson(hookJson, HookRules.HookXWebView::class.java)
                             hookXWebView(
