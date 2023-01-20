@@ -287,10 +287,10 @@ class Rule : AppCompatActivity() {
                                         arrayOf(
                                             getString(R.string.code_hookParam, "Class_XWebView", hookRule.Class_XWebView),
                                             getString(R.string.code_hookParam, "Method_initWebviewCore", hookRule.Method_initWebviewCore),
-                                            getString(R.string.code_hookParam, "Method_isXWalk", hookRule.Method_isXWalk),
-                                            getString(R.string.code_hookParam, "Method_isPinus", hookRule.Method_isPinus),
-                                            getString(R.string.code_hookParam, "Method_isX5", hookRule.Method_isX5),
+                                            getString(R.string.code_hookParam, "Method_isXWeb", hookRule.Method_isXWeb),
                                             getString(R.string.code_hookParam, "Method_isSys", hookRule.Method_isSys),
+                                            getString(R.string.code_hookParam, "Class_XWebPreferences", hookRule.Class_XWebPreferences),
+                                            getString(R.string.code_hookParam, "Method_setValue", hookRule.Method_setValue),
                                         ).joinToString("")
                                     )
                                     v.isClickable = true
@@ -308,10 +308,10 @@ class Rule : AppCompatActivity() {
                                             viewBinding.ruleRemark.setText((getString(R.string.from, version) + "\n" + hookRule.remark.trim()).trim())
                                             viewBinding.ruleHookXWebViewClassClassXWebView.setText(hookRule.Class_XWebView)
                                             viewBinding.ruleHookXWebViewMethodInitWebviewCore.setText(hookRule.Method_initWebviewCore)
-                                            viewBinding.ruleHookXWebViewMethodIsXWalk.setText(hookRule.Method_isXWalk)
-                                            viewBinding.ruleHookXWebViewMethodIsPinus.setText(hookRule.Method_isPinus)
-                                            viewBinding.ruleHookXWebViewMethodIsX5.setText(hookRule.Method_isX5)
+                                            viewBinding.ruleHookXWebViewMethodIsXWeb.setText(hookRule.Method_isXWeb)
                                             viewBinding.ruleHookXWebViewMethodIsSys.setText(hookRule.Method_isSys)
+                                            viewBinding.ruleHookXWebViewClassXWebPreferences.setText(hookRule.Class_XWebPreferences)
+                                            viewBinding.ruleHookXWebViewMethodSetValue.setText(hookRule.Method_setValue)
                                             dialog.cancel()
                                         }
                                     }
@@ -454,10 +454,10 @@ class Rule : AppCompatActivity() {
                                 0u,
                                 viewBinding.ruleHookXWebViewClassClassXWebView.text.toString(),
                                 viewBinding.ruleHookXWebViewMethodInitWebviewCore.text.toString(),
-                                viewBinding.ruleHookXWebViewMethodIsXWalk.text.toString(),
-                                viewBinding.ruleHookXWebViewMethodIsPinus.text.toString(),
-                                viewBinding.ruleHookXWebViewMethodIsX5.text.toString(),
+                                viewBinding.ruleHookXWebViewMethodIsXWeb.text.toString(),
                                 viewBinding.ruleHookXWebViewMethodIsSys.text.toString(),
+                                viewBinding.ruleHookXWebViewClassXWebPreferences.text.toString(),
+                                viewBinding.ruleHookXWebViewMethodSetValue.text.toString(),
                             )
                         )
                         else -> {
@@ -560,10 +560,10 @@ class Rule : AppCompatActivity() {
                     HookRules.HookXWebView().also {
                         if (viewBinding.ruleHookXWebViewClassClassXWebView.text!!.isEmpty()) viewBinding.ruleHookXWebViewClassClassXWebView.setText(it.Class_XWebView)
                         if (viewBinding.ruleHookXWebViewMethodInitWebviewCore.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodInitWebviewCore.setText(it.Method_initWebviewCore)
-                        if (viewBinding.ruleHookXWebViewMethodIsXWalk.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsXWalk.setText(it.Method_isXWalk)
-                        if (viewBinding.ruleHookXWebViewMethodIsPinus.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsPinus.setText(it.Method_isPinus)
-                        if (viewBinding.ruleHookXWebViewMethodIsX5.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsX5.setText(it.Method_isX5)
+                        if (viewBinding.ruleHookXWebViewMethodIsXWeb.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsXWeb.setText(it.Method_isXWeb)
                         if (viewBinding.ruleHookXWebViewMethodIsSys.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodIsSys.setText(it.Method_isSys)
+                        if (viewBinding.ruleHookXWebViewClassXWebPreferences.text!!.isEmpty()) viewBinding.ruleHookXWebViewClassXWebPreferences.setText(it.Class_XWebPreferences)
+                        if (viewBinding.ruleHookXWebViewMethodSetValue.text!!.isEmpty()) viewBinding.ruleHookXWebViewMethodSetValue.setText(it.Method_setValue)
                     }
                 }
                 else -> {
@@ -606,10 +606,10 @@ class Rule : AppCompatActivity() {
         viewBinding.ruleHookXWebPreferencesMethodSetValue.doAfterTextChanged { refreshCode() }
         viewBinding.ruleHookXWebViewClassClassXWebView.doAfterTextChanged { refreshCode() }
         viewBinding.ruleHookXWebViewMethodInitWebviewCore.doAfterTextChanged { refreshCode() }
-        viewBinding.ruleHookXWebViewMethodIsXWalk.doAfterTextChanged { refreshCode() }
-        viewBinding.ruleHookXWebViewMethodIsPinus.doAfterTextChanged { refreshCode() }
-        viewBinding.ruleHookXWebViewMethodIsX5.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookXWebViewMethodIsXWeb.doAfterTextChanged { refreshCode() }
         viewBinding.ruleHookXWebViewMethodIsSys.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookXWebViewClassXWebPreferences.doAfterTextChanged { refreshCode() }
+        viewBinding.ruleHookXWebViewMethodSetValue.doAfterTextChanged { refreshCode() }
         refresh()
     }
 
@@ -681,10 +681,10 @@ class Rule : AppCompatActivity() {
                         viewBinding.ruleRemark.setText(hookEntry.remark)
                         viewBinding.ruleHookXWebViewClassClassXWebView.setText(hookEntry.Class_XWebView)
                         viewBinding.ruleHookXWebViewMethodInitWebviewCore.setText(hookEntry.Method_initWebviewCore)
-                        viewBinding.ruleHookXWebViewMethodIsXWalk.setText(hookEntry.Method_isXWalk)
-                        viewBinding.ruleHookXWebViewMethodIsPinus.setText(hookEntry.Method_isPinus)
-                        viewBinding.ruleHookXWebViewMethodIsX5.setText(hookEntry.Method_isX5)
+                        viewBinding.ruleHookXWebViewMethodIsXWeb.setText(hookEntry.Method_isXWeb)
                         viewBinding.ruleHookXWebViewMethodIsSys.setText(hookEntry.Method_isSys)
+                        viewBinding.ruleHookXWebViewClassXWebPreferences.setText(hookEntry.Class_XWebPreferences)
+                        viewBinding.ruleHookXWebViewMethodSetValue.setText(hookEntry.Method_setValue)
                         viewBinding.ruleHookMethod.setText("hookXWebView", false)
                     }
                 }
@@ -807,10 +807,10 @@ class Rule : AppCompatActivity() {
                 arrayOf(
                     getString(R.string.code_hookParam, "Class_XWebView", viewBinding.ruleHookXWebViewClassClassXWebView.text.toString().trim()),
                     getString(R.string.code_hookParam, "Method_initWebviewCore", viewBinding.ruleHookXWebViewMethodInitWebviewCore.text.toString().trim()),
-                    getString(R.string.code_hookParam, "Method_isXWalk", viewBinding.ruleHookXWebViewMethodIsXWalk.text.toString().trim()),
-                    getString(R.string.code_hookParam, "Method_isPinus", viewBinding.ruleHookXWebViewMethodIsPinus.text.toString().trim()),
-                    getString(R.string.code_hookParam, "Method_isX5", viewBinding.ruleHookXWebViewMethodIsX5.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_isXWeb", viewBinding.ruleHookXWebViewMethodIsXWeb.text.toString().trim()),
                     getString(R.string.code_hookParam, "Method_isSys", viewBinding.ruleHookXWebViewMethodIsSys.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Class_XWebPreferences", viewBinding.ruleHookXWebViewClassXWebPreferences.text.toString().trim()),
+                    getString(R.string.code_hookParam, "Method_setValue", viewBinding.ruleHookXWebViewMethodSetValue.text.toString().trim()),
                 ).joinToString("")
             )
             else -> getString(R.string.unknown_hook_method)

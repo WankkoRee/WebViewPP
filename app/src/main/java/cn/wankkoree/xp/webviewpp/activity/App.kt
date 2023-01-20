@@ -1511,10 +1511,10 @@ class App : AppCompatActivity() {
                                 arrayOf(
                                     getString(R.string.code_hookParam, "Class_XWebView", hookEntry.Class_XWebView),
                                     getString(R.string.code_hookParam, "Method_initWebviewCore", hookEntry.Method_initWebviewCore),
-                                    getString(R.string.code_hookParam, "Method_isXWalk", hookEntry.Method_isXWalk),
-                                    getString(R.string.code_hookParam, "Method_isPinus", hookEntry.Method_isPinus),
-                                    getString(R.string.code_hookParam, "Method_isX5", hookEntry.Method_isX5),
+                                    getString(R.string.code_hookParam, "Method_isXWeb", hookEntry.Method_isXWeb),
                                     getString(R.string.code_hookParam, "Method_isSys", hookEntry.Method_isSys),
+                                    getString(R.string.code_hookParam, "Class_XWebPreferences", hookEntry.Class_XWebPreferences),
+                                    getString(R.string.code_hookParam, "Method_setValue", hookEntry.Method_setValue),
                                 ).joinToString("")
                             )
                         }

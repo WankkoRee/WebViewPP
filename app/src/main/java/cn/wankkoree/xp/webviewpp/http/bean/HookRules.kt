@@ -133,13 +133,13 @@ data class HookRules (
         val Class_XWebView: String = "com.tencent.xweb.WebView",
         @SerializedName("Method_initWebviewCore")
         val Method_initWebviewCore: String = "(void)initWebviewCore",
-        @SerializedName("Method_isXWalk")
-        val Method_isXWalk: String = "(bool)isXWalk()",
-        @SerializedName("Method_isPinus")
-        val Method_isPinus: String = "(bool)isPinus()",
-        @SerializedName("Method_isX5")
-        val Method_isX5: String = "(bool)isX5()",
+        @SerializedName("Method_isXWeb")
+        val Method_isXWeb: String = "(bool)isXWebKernel()",
         @SerializedName("Method_isSys")
-        val Method_isSys: String = "(bool)isSys()",
+        val Method_isSys: String = "(bool)isSysKernel()",
+        @SerializedName("Class_XWebPreferences")
+        val Class_XWebPreferences: String = "com.tencent.xweb.XWebPreferences",
+        @SerializedName("Method_setValue")
+        val Method_setValue: String = "setValue(str, bool)",
     )
 }

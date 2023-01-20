@@ -132,10 +132,10 @@ class Main : IYukiHookXposedInit {
                             hookXWebView(
                                 Class_XWebView = hookEntry.Class_XWebView,
                                 Method_initWebviewCore = hookEntry.Method_initWebviewCore,
-                                Method_isXWalk = hookEntry.Method_isXWalk,
-                                Method_isPinus = hookEntry.Method_isPinus,
-                                Method_isX5 = hookEntry.Method_isX5,
+                                Method_isXWeb = hookEntry.Method_isXWeb,
                                 Method_isSys = hookEntry.Method_isSys,
+                                Class_XWebPreferences = hookEntry.Class_XWebPreferences,
+                                Method_setValue = hookEntry.Method_setValue,
                             )
                         }
                         else -> {
