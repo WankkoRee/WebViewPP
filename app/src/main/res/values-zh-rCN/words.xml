@@ -85,4 +85,5 @@
     <string name="share_rules">规则分享</string>
     <string name="export_to_clip">导出到剪贴板</string>
     <string name="import_from_clip">导入自剪贴板</string>
+    <string name="app_center_anonymous_data_collection">AppCenter 匿名数据收集</string>
 </resources>

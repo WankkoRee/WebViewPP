@@ -8,3 +8,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+/app/APP_CENTER_SECRET

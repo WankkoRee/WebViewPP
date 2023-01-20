@@ -123,6 +123,14 @@ class Advance: AppCompatActivity() {
             refresh()
         }
 
+        viewBinding.advanceSettingAppCenter.setOnClickListener {
+            viewBinding.advanceSettingAppCenterValue.isChecked = !viewBinding.advanceSettingAppCenterValue.isChecked
+        }
+        viewBinding.advanceSettingAppCenterValue.setOnCheckedChangeListener { _, isChecked ->
+            modulePrefs("module").put(ModuleSP.app_center, isChecked)
+            refresh()
+        }
+
         viewBinding.advanceLicenseAuthorCard.setCardBackgroundColor((getPrimaryColor(viewBinding.advanceLicenseAuthorIcon.drawable, this@Advance).first or 0xff000000.toInt()) and 0x33ffffff)
         viewBinding.advanceLicenseAuthorButtonGithub.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/WankkoRee")))
@@ -160,6 +168,7 @@ class Advance: AppCompatActivity() {
         with(modulePrefs("module")) {
             viewBinding.advanceSettingDataSourceValue.text = get(ModuleSP.data_source)
             viewBinding.advanceSettingAutoCheckUpdateValue.isChecked = get(ModuleSP.auto_check_update)
+            viewBinding.advanceSettingAppCenterValue.isChecked = get(ModuleSP.app_center)
         }
     }
 }

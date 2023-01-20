@@ -16,4 +16,5 @@
     <string name="dialog_data_source_desc">GitHub 更适合全球用户使用。\nFastGit 更适合中国大陆用户使用。\n当然，你也可以使用其他自定义数据源。</string>
     <string name="dialog_cloud_rules_desc">1. 选择与你设备上安装的 App 最接近的版本。\n2. 保存此版本的所有规则（如果了解各个规则的作用可以按需保存）。</string>
     <string name="advance_setting_auto_check_update_desc">模块启动时是否检查更新。</string>
+    <string name="advance_setting_app_center_desc">AppCenter 是一个来自微软的数据匿名收集方案。我们使用它来匿名收集您使用本模块期间的崩溃日志、性能指标、交互习惯等数据。</string>
 </resources>

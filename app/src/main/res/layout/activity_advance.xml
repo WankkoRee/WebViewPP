@@ -158,6 +158,47 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/advance_setting_app_center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                >
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_setting_app_center_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/advance_setting_app_center_value"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/advance_setting_app_center_desc"
+
+                    style="@style/ThemeComponentTextViewPrimary"
+                    android:textAppearance="?textAppearanceBodyLarge"
+                    android:text="@string/app_center_anonymous_data_collection"
+                    />
+                <com.google.android.material.textview.MaterialTextView android:id="@+id/advance_setting_app_center_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/advance_setting_app_center_value"
+                    app:layout_constraintTop_toBottomOf="@id/advance_setting_app_center_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    style="@style/ThemeComponentTextViewSecondary"
+                    android:textAppearance="?textAppearanceLabelLarge"
+                    android:text="@string/advance_setting_app_center_desc"
+                    />
+                <com.google.android.material.switchmaterial.SwitchMaterial android:id="@+id/advance_setting_app_center_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <com.google.android.material.card.MaterialCardView android:id="@+id/advance_license_author_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

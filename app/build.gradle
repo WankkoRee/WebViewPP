@@ -4,9 +4,6 @@ plugins {
     id 'com.google.devtools.ksp' version '1.7.10-1.0.6'
 }
 
-def git_count = "git rev-list HEAD --count".execute().text.trim()
-def git_hash = "git rev-list HEAD --abbrev-commit --max-count=1".execute().text.trim()
-
 android {
     signingConfigs {
         release {
@@ -23,11 +20,15 @@ android {
     compileSdk 33
 
     defaultConfig {
+        def git_count = "git rev-list HEAD --count".execute().text.trim()
+        def git_hash = "git rev-list HEAD --abbrev-commit --max-count=1".execute().text.trim()
+
         applicationId "cn.wankkoree.xp.webviewpp"
         minSdk 27
         targetSdk 33
         versionCode 15
         versionName "v3.0.0.$git_count.$git_hash"
+        buildConfigField("String", "APP_CENTER_SECRET", "\"${file('./APP_CENTER_SECRET').readLines()[0]}\"")
     }
 
     buildTypes {
@@ -82,29 +83,34 @@ android {
 }
 
 dependencies {
+    def yukiHookApiVersion = '1.1.4'
+    def appCenterSdkVersion = '4.4.5'
+
     // Xposed Hook
-    compileOnly 'de.robv.android.xposed:api:82'                                 // Xposed
-    implementation 'com.highcapable.yukihookapi:api:1.1.4'                      // Yuki Hook API
-    ksp 'com.highcapable.yukihookapi:ksp-xposed:1.1.4'                          // Yuki Hook API - KSP
+    compileOnly 'de.robv.android.xposed:api:82'                                                     // Xposed
+    implementation "com.highcapable.yukihookapi:api:$yukiHookApiVersion"                            // Yuki Hook API
+    ksp "com.highcapable.yukihookapi:ksp-xposed:$yukiHookApiVersion"                                // Yuki Hook API - KSP
 
     // 语言特性支持
-    implementation 'androidx.core:core-ktx:1.9.0'                               // Jetpack
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'             // Jetpack - Lifecycle
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'     // Kotlin - Coroutines Android
+    implementation 'androidx.core:core-ktx:1.9.0'                                                   // Jetpack
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'                                 // Jetpack - Lifecycle
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'                         // Kotlin - Coroutines Android
 
     // 界面支持
-    implementation 'androidx.appcompat:appcompat:1.6.0'                         // Jetpack - AppCompat
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'           // Jetpack - Constraint Layout
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'       // Jetpack - Swipe Refresh Layout
-    implementation 'androidx.gridlayout:gridlayout:1.0.0'                       // Jetpack - Grid Layout
-    implementation 'com.google.android.material:material:1.7.0'                 // Material Design
-    implementation 'com.google.android.flexbox:flexbox:3.0.0'                   // Flexbox
-    implementation 'io.noties.markwon:core:4.6.2'                               // Markdown
+    implementation 'androidx.appcompat:appcompat:1.6.0'                                             // Jetpack - AppCompat
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'                               // Jetpack - Constraint Layout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'                           // Jetpack - Swipe Refresh Layout
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'                                           // Jetpack - Grid Layout
+    implementation 'com.google.android.material:material:1.7.0'                                     // Material Design
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'                                       // Flexbox
+    implementation 'io.noties.markwon:core:4.6.2'                                                   // Markdown
 
     // 功能支持
-    implementation 'androidx.palette:palette-ktx:1.0.0'                         // Jetpack - Palette
-    implementation 'com.github.kittinunf.fuel:fuel:2.3.1'                       // Fuel
-    implementation 'com.github.kittinunf.fuel:fuel-android:2.3.1'               // Fuel - Android
-    implementation 'com.github.kittinunf.fuel:fuel-gson:2.3.1'                  // Fuel - Gson
-    implementation 'com.google.code.gson:gson:2.9.0'                            // Gson
+    implementation 'androidx.palette:palette-ktx:1.0.0'                                             // Jetpack - Palette
+    implementation 'com.github.kittinunf.fuel:fuel:2.3.1'                                           // Fuel
+    implementation 'com.github.kittinunf.fuel:fuel-android:2.3.1'                                   // Fuel - Android
+    implementation 'com.github.kittinunf.fuel:fuel-gson:2.3.1'                                      // Fuel - Gson
+    implementation 'com.google.code.gson:gson:2.9.0'                                                // Gson
+    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"             // App Center
+    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"               // App Center
 }

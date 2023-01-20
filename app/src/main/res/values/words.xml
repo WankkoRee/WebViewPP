@@ -93,4 +93,5 @@
     <string name="share_rules">Share Rules</string>
     <string name="export_to_clip">Export To Clip</string>
     <string name="import_from_clip">Import From Clip</string>
+    <string name="app_center_anonymous_data_collection">AppCenter Anonymous Data Collection</string>
 </resources>
