@@ -14,8 +14,8 @@ import com.highcapable.yukihookapi.hook.param.PackageParam
  * webViewClient.onPageFinished({webView.evaluateJavascript($vConsole+$eruda)})
  **/
 fun PackageParam.hookWebViewClient (
-    Class_WebViewClient: String,
-    Method_onPageFinished: String,
+    Class_WebViewClient : String,
+    Method_onPageFinished : String,
     Class_WebView: String,
     Method_evaluateJavascript: String,
 ) {

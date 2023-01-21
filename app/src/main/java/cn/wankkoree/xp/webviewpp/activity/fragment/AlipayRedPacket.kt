@@ -15,18 +15,20 @@ import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 
 class AlipayRedPacket : Fragment() {
     private val application = ModuleApplication.appContext as Application
+    private lateinit var viewBinding : FragmentSupportAlipayRedPacketBinding
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val fragmentSupportAlipayBinding = FragmentSupportAlipayRedPacketBinding.inflate(inflater, container, false)
-        fragmentSupportAlipayBinding.fragmentSupportAlipayRedPacketCopy.setOnClickListener {
+        inflater : LayoutInflater,
+        container : ViewGroup?,
+        savedInstanceState : Bundle?
+    ) : View {
+        viewBinding = FragmentSupportAlipayRedPacketBinding.inflate(inflater, container, false)
+        viewBinding.fragmentSupportAlipayRedPacketCopy.setOnClickListener {
             val clipboard = application.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("alipay_red_packet_key", "810737536")
             clipboard.setPrimaryClip(clip)
             application.toast(getString(R.string.copied_just_go_to_alipay_and_search_it), false)
         }
-        return fragmentSupportAlipayBinding.root
+        return viewBinding.root
     }
 }

@@ -18,12 +18,12 @@ import com.highcapable.yukihookapi.hook.param.PackageParam
  * webView.initWebviewCore({XWebPreferences.setValue(IXWebPreferences.ENABLE_JAVASCRIPT, true)})
  **/
 fun PackageParam.hookXWebView (
-    Class_XWebView: String,
-    Method_initWebviewCore: String,
-    Method_isXWeb: String,
-    Method_isSys: String,
-    Class_XWebPreferences: String,
-    Method_setValue: String,
+    Class_XWebView : String,
+    Method_initWebviewCore : String,
+    Method_isXWeb : String,
+    Method_isSys : String,
+    Class_XWebPreferences : String,
+    Method_setValue : String,
 ) {
     Class_XWebView.hook {
         injectMember {

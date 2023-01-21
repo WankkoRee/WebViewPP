@@ -12,7 +12,7 @@ import com.highcapable.yukihookapi.hook.type.java.StringClass
 
 private val hooked = HashSet<Class<*>>()
 
-private fun PackageParam.hookTarget(clazz: Class<*>) {
+private fun PackageParam.hookTarget(clazz : Class<*>) {
     if (clazz.name.startsWith(BuildConfig.APPLICATION_ID)) return
     if (clazz.name.startsWith("com.highcapable.yukihookapi.")) return
     if (clazz.name.startsWith("org.lsposed.")) return
@@ -151,7 +151,7 @@ fun PackageParam.findWebViewMethods() {
     appClassLoader.listOfClasses().forEach {
         try {
             hookTarget(it.toClass())
-        } catch (e: Exception) {
+        } catch (e : Exception) {
             loggerE(msg = "hook Failed!", e = e)
             return@forEach // continue
         }

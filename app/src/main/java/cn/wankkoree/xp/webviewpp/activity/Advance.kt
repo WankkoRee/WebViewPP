@@ -13,18 +13,19 @@ import cn.wankkoree.xp.webviewpp.application.Application
 import cn.wankkoree.xp.webviewpp.data.ModuleSP
 import cn.wankkoree.xp.webviewpp.databinding.ActivityAdvanceBinding
 import cn.wankkoree.xp.webviewpp.databinding.DialogDataSourceBinding
+import cn.wankkoree.xp.webviewpp.util.AppCenterTool
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.highcapable.yukihookapi.YukiHookAPI
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
-import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication.Companion.appContext
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 
-class Advance: AppCompatActivity() {
-    private val application = appContext as Application
-    private lateinit var viewBinding: ActivityAdvanceBinding
+class Advance : AppCompatActivity() {
+    private val application = ModuleApplication.appContext as Application
+    private lateinit var viewBinding : ActivityAdvanceBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityAdvanceBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
@@ -121,6 +122,7 @@ class Advance: AppCompatActivity() {
         }
         viewBinding.advanceSettingAppCenterValue.setOnCheckedChangeListener { _, isChecked ->
             modulePrefs("module").put(ModuleSP.app_center, isChecked)
+            AppCenterTool.init()
             refresh()
         }
 

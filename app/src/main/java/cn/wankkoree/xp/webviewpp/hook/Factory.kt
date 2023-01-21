@@ -7,7 +7,7 @@ import java.util.Locale
 
 val methodRegex = Regex("^(?:\\( *(.*?) *\\))? *(.+?)(?: *\\( *(.*?) *\\))?\$")
 
-fun YukiMemberHookCreator.MemberHookCreator.methodX(methodDefinition: String) = methodRegex.matchEntire(methodDefinition)!!.let {
+fun YukiMemberHookCreator.MemberHookCreator.methodX(methodDefinition : String) = methodRegex.matchEntire(methodDefinition)!!.let {
     if (it.groups[1] == null && it.groups[3] == null) {
         method { name = it.groupValues[2] }.all()
     } else if (it.groups[1] != null && it.groups[3] == null) {
@@ -37,7 +37,7 @@ fun YukiMemberHookCreator.MemberHookCreator.methodX(methodDefinition: String) = 
     }
 }
 
-fun MethodFinder.methodX (methodDefinition: String) = methodRegex.matchEntire(methodDefinition)!!.let {
+fun MethodFinder.methodX (methodDefinition : String) = methodRegex.matchEntire(methodDefinition)!!.let {
     name(it.groupValues[2])
     if (it.groups[3] != null) {
         val params = it.groupValues[3].split(',').map { v -> v.trim() }.filter { v -> v.isNotEmpty() }
@@ -51,7 +51,7 @@ fun MethodFinder.methodX (methodDefinition: String) = methodRegex.matchEntire(me
     }
 }
 
-fun String.typeConvert(): Any = when (this.lowercase(Locale.getDefault())) {
+fun String.typeConvert() : Any = when (this.lowercase(Locale.getDefault())) {
     "bool" -> BooleanType
     "boolean" -> BooleanType
     "byte" -> "java.lang.Byte"

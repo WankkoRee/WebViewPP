@@ -33,21 +33,21 @@ import cn.wankkoree.xp.webviewpp.data.AppsSP
 import cn.wankkoree.xp.webviewpp.data.getSet
 import cn.wankkoree.xp.webviewpp.databinding.ActivityAppsBinding
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
-import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication.Companion.appContext
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class Apps : AppCompatActivity() {
-    private val application = appContext as Application
-    private lateinit var viewBinding: ActivityAppsBinding
+    private val application = ModuleApplication.appContext as Application
+    private lateinit var viewBinding : ActivityAppsBinding
     private val appResultContract = registerForActivityResult(AppResultContract()) {
         adapter.update(it)
     }
 
-    lateinit var adapter: AppListItemAdapter
+    lateinit var adapter : AppListItemAdapter
     private var isSearching = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityAppsBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
@@ -71,7 +71,7 @@ class Apps : AppCompatActivity() {
             }
         }
         viewBinding.appsToolbarSearchValue.setOnFocusChangeListener { it, b ->
-            val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm : InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             if (b)
                 imm.showSoftInput(it, InputMethodManager.SHOW_IMPLICIT)
             else
@@ -181,18 +181,18 @@ class Apps : AppCompatActivity() {
         }
     }
 
-    class AppListItemAdapter(private val lifecycleScope: LifecycleCoroutineScope) : RecyclerView.Adapter<AppListItemAdapter.ViewHolder>() {
-        private var context: Apps? = null
-        private var rawData: List<AppListItem> = emptyList()
-        private val filteredData: MutableList<AppListItem> = mutableListOf()
+    class AppListItemAdapter(private val lifecycleScope : LifecycleCoroutineScope) : RecyclerView.Adapter<AppListItemAdapter.ViewHolder>() {
+        private var context : Apps? = null
+        private var rawData : List<AppListItem> = emptyList()
+        private val filteredData : MutableList<AppListItem> = mutableListOf()
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : ViewHolder {
             context = parent.context as Apps
             val view = LayoutInflater.from(context).inflate(R.layout.component_applistitem, parent, false)
             return ViewHolder(view)
         }
 
-        fun init(data: List<AppListItem>, showSystemApp: Boolean, showNoNetwork: Boolean, isSearching: Boolean, searchText: String) {
+        fun init(data : List<AppListItem>, showSystemApp: Boolean, showNoNetwork: Boolean, isSearching: Boolean, searchText: String) {
             rawData = data.toList()
             val oldFilteredData = filteredData.toList()
             filteredData.clear()

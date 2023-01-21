@@ -14,7 +14,7 @@ val grayColorFilter = ColorMatrixColorFilter(ColorMatrix().apply {
     setSaturation(0f)
 })
 
-fun getPrimaryColor(d: Drawable, context: Context): Triple<Int, Int, Int> {
+fun getPrimaryColor(d : Drawable, context : Context) : Triple<Int, Int, Int> {
     // https://stackoverflow.com/a/55852660/15603001
     d.state = intArrayOf(android.R.attr.state_enabled)
     val bitmap = Bitmap.createBitmap(d.intrinsicWidth, d.intrinsicHeight, Bitmap.Config.ARGB_8888)
@@ -30,7 +30,7 @@ fun getPrimaryColor(d: Drawable, context: Context): Triple<Int, Int, Int> {
     }
 }
 
-fun Context.getDrawableCompat(resId: Int) = AppCompatResources.getDrawable(this@getDrawableCompat, resId)
+fun Context.getDrawableCompat(resId : Int) = AppCompatResources.getDrawable(this@getDrawableCompat, resId)
 
 fun Long.autoUnitByte() : String = when (this@autoUnitByte) {
     in 0 until 1024 -> "${this@autoUnitByte} B"
@@ -39,4 +39,4 @@ fun Long.autoUnitByte() : String = when (this@autoUnitByte) {
     else -> "${(this@autoUnitByte / 1073741824.0).round(2)} GB"
 }
 
-fun Number.round(scale: Int) : String = String.format("%.${scale}f", this@round)
+fun Number.round(scale : Int) : String = String.format("%.${scale}f", this@round)

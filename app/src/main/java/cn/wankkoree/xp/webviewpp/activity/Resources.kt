@@ -27,7 +27,7 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.requests.CancellableRequest
 import com.github.kittinunf.fuel.gson.responseObject
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
-import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication.Companion.appContext
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import com.highcapable.yukihookapi.hook.xposed.prefs.data.PrefsData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,11 +41,11 @@ class Resources : AppCompatActivity() {
         val downloadStates : HashMap<Int, Triple<MutableList<Enum<DownloadState>>, MutableList<Long>, MutableList<Long>>> = HashMap()
     }
 
-    private val application = appContext as Application
-    private lateinit var viewBinding: ActivityResourcesBinding
-    private lateinit var context: Context
+    private val application = ModuleApplication.appContext as Application
+    private lateinit var viewBinding : ActivityResourcesBinding
+    private lateinit var context : Context
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityResourcesBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)

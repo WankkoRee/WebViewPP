@@ -24,17 +24,17 @@ import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
-import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication.Companion.appContext
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 
 class Rule : AppCompatActivity() {
-    private val application = appContext as Application
-    private lateinit var viewBinding: ActivityRuleBinding
+    private val application = ModuleApplication.appContext as Application
+    private lateinit var viewBinding : ActivityRuleBinding
 
-    private lateinit var pkg: String
-    private lateinit var version: String
-    private var ruleName: String? = null
+    private lateinit var pkg : String
+    private lateinit var version : String
+    private var ruleName : String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         window.enterTransition = Slide()
         window.exitTransition = Slide()

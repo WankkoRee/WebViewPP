@@ -9,7 +9,6 @@ import cn.wankkoree.xp.webviewpp.http.bean.HookRules
 import com.google.gson.Gson
 import com.highcapable.yukihookapi.YukiHookAPI
 import com.highcapable.yukihookapi.annotation.xposed.InjectYukiHookWithXposed
-import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.xposed.proxy.IYukiHookXposedInit
 import com.highcapable.yukihookapi.hook.log.*
 
@@ -28,12 +27,12 @@ class Main : IYukiHookXposedInit {
                 elements(TAG, PRIORITY, PACKAGE_NAME, USER_ID)
             }
             isDebug = debug
-            isEnableModulePrefsCache = false
-            isEnableModuleAppResourcesCache = false
+            isEnableModulePrefsCache = true
+            isEnableModuleAppResourcesCache = true
             isEnableHookModuleStatus = true
             isEnableHookSharedPreferences = false
             isEnableDataChannel = false
-            isEnableMemberCache = false
+            isEnableMemberCache = true
         }
     }
 
@@ -43,7 +42,7 @@ class Main : IYukiHookXposedInit {
 
             loggerI(msg = "Welcome to WebViewPP ${BuildConfig.VERSION_NAME}-${BuildConfig.BUILD_TYPE}(${BuildConfig.VERSION_CODE})!")
 
-            if (packageName != mProcessName) { // 不为主进程和私有进程 TODO: 判断公有进程
+            if (packageName != mProcessName) { // 不为主进程和私有进程 TODO : 判断公有进程
                 loggerI(msg = "do not hook other application package: $packageName or application process: $mProcessName")
                 return@encase // 不 hook 憨批 MIUI 等会被重复 hook 的情况
             }
@@ -145,7 +144,7 @@ class Main : IYukiHookXposedInit {
                             loggerE(msg = "Unknown Hook Method: $hookMethod")
                         }
                     }
-                } catch (e: Exception) {
+                } catch (e : Exception) {
                     loggerE(msg = "Parse Failed!", e = e)
                     return@forEach // continue
                 }

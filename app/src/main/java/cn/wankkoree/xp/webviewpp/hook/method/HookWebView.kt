@@ -23,12 +23,12 @@ private val webSettingsClassHashSet = HashSet<String>()
  * webView.setWebViewClient() debug breakpoint
  **/
 fun PackageParam.hookWebView (
-    Class_WebView: String,
-    Method_getSettings: String,
-    Method_setWebContentsDebuggingEnabled: String,
-    Method_setJavaScriptEnabled: String,
-    Method_loadUrl: String,
-    Method_setWebViewClient: String,
+    Class_WebView : String,
+    Method_getSettings : String,
+    Method_setWebContentsDebuggingEnabled : String,
+    Method_setJavaScriptEnabled : String,
+    Method_loadUrl : String,
+    Method_setWebViewClient : String,
 ) {
     Class_WebView.hook {
         injectMember {
@@ -168,8 +168,8 @@ fun PackageParam.hookWebView (
  * webSettings().setJavaScriptEnabled(true)
  **/
 fun PackageParam.hookWebSettings(
-    Class_WebSettings: Class<*>,
-    Method_setJavaScriptEnabled: String,
+    Class_WebSettings : Class<*>,
+    Method_setJavaScriptEnabled : String,
 ) {
     Class_WebSettings.hook(isForceUseAbsolute = false) {
         injectMember {

@@ -35,19 +35,19 @@ import com.google.gson.GsonBuilder
 import com.highcapable.yukihookapi.YukiHookAPI.Status.Executor
 import com.highcapable.yukihookapi.YukiHookAPI.Status.isXposedModuleActive
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
-import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication.Companion.appContext
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import io.noties.markwon.Markwon
 import java.net.URLEncoder
 
-class Main: AppCompatActivity() {
-    private val application = appContext as Application
-    private lateinit var viewBinding: ActivityMainBinding
+class Main : AppCompatActivity() {
+    private val application = ModuleApplication.appContext as Application
+    private lateinit var viewBinding : ActivityMainBinding
     private val appsResultContract = registerForActivityResult(AppsResultContract()) {
         refresh()
     }
-    private lateinit var markdown: Markwon
+    private lateinit var markdown : Markwon
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
@@ -139,8 +139,8 @@ class Main: AppCompatActivity() {
             val dialogBinding = DialogSupportBinding.inflate(layoutInflater)
             BottomSheetDialog(this@Main).apply {
                 dialogBinding.dialogSupportPager.adapter = object : FragmentStateAdapter(this@Main) {
-                    override fun getItemCount(): Int = 3
-                    override fun createFragment(position: Int): Fragment = when (position) {
+                    override fun getItemCount() : Int = 3
+                    override fun createFragment(position : Int): Fragment = when (position) {
                         0 -> AlipayRedPacket()
                         1 -> Alipay()
                         2 -> WeChat()

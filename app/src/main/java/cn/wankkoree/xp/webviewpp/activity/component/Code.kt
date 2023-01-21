@@ -9,16 +9,16 @@ import android.widget.HorizontalScrollView
 import com.google.android.material.textview.MaterialTextView
 import cn.wankkoree.xp.webviewpp.R
 
-class Code: HorizontalScrollView {
-    private lateinit var codeView: MaterialTextView
+class Code : HorizontalScrollView {
+    private lateinit var codeView : MaterialTextView
 
-    var code: String = ""
+    var code : String = ""
         set(value) {
             field = value
             codeView.text = Html.fromHtml(value, Html.FROM_HTML_MODE_LEGACY)
         }
 
-    constructor(context: Context): this(context, null)
+    constructor(context : Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?): this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
         init(context)

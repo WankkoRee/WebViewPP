@@ -40,11 +40,11 @@ import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
-import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication.Companion.appContext
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 
 class App : AppCompatActivity() {
-    private val application = appContext as Application
-    private lateinit var viewBinding: ActivityAppBinding
+    private val application = ModuleApplication.appContext as Application
+    private lateinit var viewBinding : ActivityAppBinding
     private val ruleResultContract = registerForActivityResult(RuleResultContract()) {
         refresh()
     }
@@ -52,14 +52,14 @@ class App : AppCompatActivity() {
         refresh()
     }
 
-    private lateinit var icon: Drawable
-    private lateinit var name: String
-    private lateinit var versionName: String
-    private var longVersionCode: Long = 0
-    private lateinit var version: String
-    private lateinit var pkg: String
+    private lateinit var icon : Drawable
+    private lateinit var name : String
+    private lateinit var versionName : String
+    private var longVersionCode : Long = 0
+    private lateinit var version : String
+    private lateinit var pkg : String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         window.enterTransition = Slide()
         window.exitTransition = Slide()
@@ -98,7 +98,7 @@ class App : AppCompatActivity() {
                                     Base64.encodeToString(getString("hook_entry_$ruleName", "{}").encodeToByteArray(), Base64.NO_WRAP or Base64.URL_SAFE or Base64.NO_PADDING)
                                 }
                                 val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                                val clip: ClipData = ClipData.newPlainText("export", "$clipHeader|$clipBody")
+                                val clip : ClipData = ClipData.newPlainText("export", "$clipHeader|$clipBody")
                                 clipboard.setPrimaryClip(clip)
                             }
                         }
@@ -117,7 +117,7 @@ class App : AppCompatActivity() {
                                             try {
                                                 put(AppSP.hooks, clipHeader[i])
                                                 putString("hook_entry_${clipHeader[i]}", clipBody[i])
-                                            } catch (_: ValueAlreadyExistedInSet) {
+                                            } catch (_ : ValueAlreadyExistedInSet) {
                                                 application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "${clipHeader[i]}" """), false)
                                             }
                                         }
@@ -149,7 +149,7 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
                                             "hookWebView",
                                         )))
-                                    } catch (_: ValueAlreadyExistedInSet) {
+                                    } catch (_ : ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }
@@ -159,7 +159,7 @@ class App : AppCompatActivity() {
                                         putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
                                         )))
-                                    } catch (_: ValueAlreadyExistedInSet) {
+                                    } catch (_ : ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }
@@ -175,7 +175,7 @@ class App : AppCompatActivity() {
                                             "hookWebView",
                                             Class_WebView = "com.tencent.smtt.sdk.WebView",
                                         )))
-                                    } catch (_: ValueAlreadyExistedInSet) {
+                                    } catch (_ : ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }
@@ -189,7 +189,7 @@ class App : AppCompatActivity() {
                                             Class_WebView = "com.tencent.smtt.sdk.WebView",
                                             Method_evaluateJavascript = "evaluateJavascript(str,com.tencent.smtt.sdk.ValueCallback)",
                                         )))
-                                    } catch (_: ValueAlreadyExistedInSet) {
+                                    } catch (_ : ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }
@@ -205,7 +205,7 @@ class App : AppCompatActivity() {
                                             "hookWebView",
                                             Class_WebView = "com.uc.webview.export.WebView",
                                         )))
-                                    } catch (_: ValueAlreadyExistedInSet) {
+                                    } catch (_ : ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }

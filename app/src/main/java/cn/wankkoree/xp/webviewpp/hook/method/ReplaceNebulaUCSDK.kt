@@ -15,10 +15,10 @@ import java.io.File
  * ucServiceSetup.updateUCVersionAndSdcardPath({sInitUcFromSdcardPath=$nebulaUCSDK})
  **/
 fun PackageParam.replaceNebulaUCSDK (
-    Class_UcServiceSetup: String,
-    Method_updateUCVersionAndSdcardPath: String,
-    Field_sInitUcFromSdcardPath: String,
-    cpuArch: String,
+    Class_UcServiceSetup : String,
+    Method_updateUCVersionAndSdcardPath : String,
+    Field_sInitUcFromSdcardPath : String,
+    cpuArch : String,
 ) {
     Class_UcServiceSetup.hook {
         injectMember {

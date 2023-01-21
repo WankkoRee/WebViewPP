@@ -9,28 +9,30 @@ import androidx.fragment.app.Fragment
 import cn.wankkoree.xp.webviewpp.R
 import cn.wankkoree.xp.webviewpp.application.Application
 import cn.wankkoree.xp.webviewpp.databinding.FragmentSupportAlipayBinding
-import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication.Companion.appContext
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import java.net.URLEncoder
 
 class Alipay : Fragment() {
-    private val application = appContext as Application
+    private val application = ModuleApplication.appContext as Application
+    private lateinit var viewBinding : FragmentSupportAlipayBinding
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val fragmentSupportAlipayBinding = FragmentSupportAlipayBinding.inflate(inflater, container, false)
-        fragmentSupportAlipayBinding.fragmentSupportAlipayOpen.setOnClickListener {
+        inflater : LayoutInflater,
+        container : ViewGroup?,
+        savedInstanceState : Bundle?
+    ) : View {
+        viewBinding = FragmentSupportAlipayBinding.inflate(inflater, container, false)
+        viewBinding.fragmentSupportAlipayOpen.setOnClickListener {
             val intent = Intent.parseUri("intent://platformapi/startapp" +
                     "?saId=10000007" + // 扫二维码
                     "&qrcode=${URLEncoder.encode("https://qr.alipay.com/tsx03240ll1s0gcvv1qd924", "UTF-8")}" + // 钦定扫码结果以跳过扫码
                     "#Intent;scheme=alipayqr;package=com.eg.android.AlipayGphone;end", Intent.URI_INTENT_SCHEME)
             try {
                 startActivity(intent)
-            } catch (e: android.content.ActivityNotFoundException) {
+            } catch (e : android.content.ActivityNotFoundException) {
                 application.toast(getString(R.string.alipay_is_not_found_please_install_it_first), false)
             }
         }
-        return fragmentSupportAlipayBinding.root
+        return viewBinding.root
     }
 }

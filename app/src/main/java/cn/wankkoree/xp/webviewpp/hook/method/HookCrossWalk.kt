@@ -25,12 +25,12 @@ private val webSettingsClassHashSet = HashSet<String>()
  * webView.setResourceClient() debug breakpoint
  **/
 fun PackageParam.hookCrossWalk (
-    Class_XWalkView: String,
-    Method_getSettings: String,
-    Method_setJavaScriptEnabled: String,
-    Method_loadUrl: String,
-    Method_setResourceClient: String,
-    Class_XWalkPreferences: String,
+    Class_XWalkView : String,
+    Method_getSettings : String,
+    Method_setJavaScriptEnabled : String,
+    Method_loadUrl : String,
+    Method_setResourceClient : String,
+    Class_XWalkPreferences : String,
     Method_setValue: String,
 ) {
     Class_XWalkView.hook {
