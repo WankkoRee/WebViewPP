@@ -4,7 +4,7 @@
     <string name="menu">菜单</string>
     <string name="logo">图标</string>
     <string name="disabled">未启用</string>
-    <string name="donate">捐赠</string>
+    <string name="support">支持</string>
     <string name="unknown">未知</string>
     <string name="enabled">已启用</string>
     <string name="back">返回</string>
@@ -86,4 +86,11 @@
     <string name="export_to_clip">导出到剪贴板</string>
     <string name="import_from_clip">导入自剪贴板</string>
     <string name="app_center_anonymous_data_collection">AppCenter 匿名数据收集</string>
+    <string name="alipay_red_packet">支付宝红包</string>
+    <string name="alipay">支付宝</string>
+    <string name="wechat">微信</string>
+    <string name="copy">复制</string>
+    <string name="copied">已复制</string>
+    <string name="open_directly">直接打开</string>
+    <string name="copy_key">复制口令</string>
 </resources>

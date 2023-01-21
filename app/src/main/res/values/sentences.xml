@@ -25,4 +25,5 @@
     <string name="please_update_your_module_to_use_this_rule_as_the_current_version_you_are_using_does_not_meet_the_minimum_version_it_requires">Please update your module to use this rule as the current version you are using does not meet the minimum version it requires.</string>
     <string name="it_is_used_to_find_all_possible_load_url_methods_and_print_their_stack_traces_to_the_log_and_it_will_cause_the_target_app_to_freeze_so_don_not_enable_it_if_not_necessary">It is used to find all possible \'loadUrl\' methods and print their StackTraces to the log. And it will cause the target app to freeze, so don not enable it if not necessary.</string>
     <string name="there_are_updates_to_s">There are updates to %s.</string>
+    <string name="copied_just_go_to_alipay_and_search_it">Copied. Just go to Alipay and search it.</string>
 </resources>

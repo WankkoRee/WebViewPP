@@ -10,17 +10,27 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.children
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import cn.wankkoree.xp.webviewpp.BuildConfig
 import cn.wankkoree.xp.webviewpp.R
+import cn.wankkoree.xp.webviewpp.activity.fragment.Alipay
+import cn.wankkoree.xp.webviewpp.activity.fragment.AlipayRedPacket
+import cn.wankkoree.xp.webviewpp.activity.fragment.WeChat
 import cn.wankkoree.xp.webviewpp.data.AppsSP
 import cn.wankkoree.xp.webviewpp.data.ModuleSP
 import cn.wankkoree.xp.webviewpp.data.ResourcesSP
 import cn.wankkoree.xp.webviewpp.data.getSet
 import cn.wankkoree.xp.webviewpp.http.bean.api.github.RepoRelease
 import cn.wankkoree.xp.webviewpp.databinding.ActivityMainBinding
+import cn.wankkoree.xp.webviewpp.databinding.DialogSupportBinding
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.GsonBuilder
 import com.highcapable.yukihookapi.YukiHookAPI.Status.Executor
 import com.highcapable.yukihookapi.YukiHookAPI.Status.isXposedModuleActive
@@ -133,18 +143,36 @@ class Main: AppCompatActivity() {
             val intent = Intent(this, Resources::class.java)
             startActivity(intent)
         }
-        viewBinding.mainDonateCard.setOnClickListener {
-            val intent = Intent.parseUri("intent://platformapi/startapp" +
-                    "?saId=10000007" + // 扫二维码
-                    "&qrcode=${URLEncoder.encode("https://qr.alipay.com/tsx03240ll1s0gcvv1qd924", "UTF-8")}" + // 钦定扫码结果以跳过扫码
-                    "#Intent;scheme=alipayqr;package=com.eg.android.AlipayGphone;end", Intent.URI_INTENT_SCHEME)
-            try {
-                startActivity(intent)
-            } catch (e: android.content.ActivityNotFoundException) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.alipay_is_not_found_please_install_it_first), Toast.LENGTH_SHORT)
-                toast!!.show()
-            }
+        viewBinding.mainSupportCard.setOnClickListener {
+            val dialogBinding = DialogSupportBinding.inflate(layoutInflater)
+            BottomSheetDialog(this@Main).apply {
+                dialogBinding.dialogSupportPager.adapter = object : FragmentStateAdapter(this@Main) {
+                    override fun getItemCount(): Int = 3
+                    override fun createFragment(position: Int): Fragment = when (position) {
+                        0 -> AlipayRedPacket()
+                        1 -> Alipay()
+                        2 -> WeChat()
+                        else -> Alipay()
+                    }
+                }
+                dialogBinding.dialogSupportPager.children.find { it is RecyclerView }?.let {
+                    (it as RecyclerView).isNestedScrollingEnabled = false // 禁用自身滚动以启用底部对话框拖动
+                }
+                TabLayoutMediator(dialogBinding.dialogSupportTab, dialogBinding.dialogSupportPager) { tab, position ->
+                    when (position) {
+                        0 -> {
+                            tab.text = getString(R.string.alipay_red_packet)
+                        }
+                        1 -> {
+                            tab.text = getString(R.string.alipay)
+                        }
+                        2 -> {
+                            tab.text = getString(R.string.wechat)
+                        }
+                    }
+                }.attach()
+                setContentView(dialogBinding.root)
+            }.show()
         }
     }
 

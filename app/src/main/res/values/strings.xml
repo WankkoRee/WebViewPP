@@ -6,7 +6,7 @@
     <string name="main_xposed_text">Hook Framework: %s</string>
     <string name="main_apps_text">Hooking Rules Manager</string>
     <string name="main_apps_num">WebView Hook of %d Applications Enabled</string>
-    <string name="main_donate_desc_text">Your donation is the biggest motivation for my developing</string>
+    <string name="main_support_desc_text">Whether it is free support or paid donations, it is the biggest motivation for my developing.</string>
     <string name="main_resources_text">Hooking Resources Manager</string>
     <string name="main_resources_desc">Manage some loadable resources here, such as vConsole</string>
     <string name="applistitem_num">%1$s, %2$d rules</string>
@@ -18,4 +18,5 @@
     <string name="dialog_cloud_rules_desc">1. Choose the version which most similar to the app in your device.\n2. Save all rules for the version (If you understand the role of each rule, you can save it as needed).</string>
     <string name="advance_setting_auto_check_update_desc">Auto check update or not when module launched.</string>
     <string name="advance_setting_app_center_desc">AppCenter is an anonymous data collection solution from Microsoft. We use it to anonymously collect crash logs, performance indicators, interaction habits and other data during your use of this module.</string>
+    <string name="dialog_support_desc">For Chinese user:\n\t1. Alipay Red Packet is which you can get a free red packet and pay it to me every day.\n\t2. AliPay is recommended because it can pay with some red packets you got from Alipay just like #1(Scanning through the album may not work, it is recommended to scan through another screen).\n\t3. WeChat is not recommended because of its handling fee for me.\n\nFor global user:\n\tI do not support accepting donations for the time being due to the handling fee and other reasons.</string>
 </resources>

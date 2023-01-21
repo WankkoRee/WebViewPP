@@ -37,6 +37,7 @@
 
                     android:contentDescription="@string/logo"
                     android:src="@mipmap/ic_launcher"
+                    android:adjustViewBounds="true"
                     />
                 <com.google.android.material.textview.MaterialTextView android:id="@+id/main_toolbar_name"
                     android:layout_width="0dp"
@@ -260,7 +261,7 @@
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
-            <com.google.android.material.card.MaterialCardView android:id="@+id/main_donate_card"
+            <com.google.android.material.card.MaterialCardView android:id="@+id/main_support_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -275,7 +276,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="16dp"
                     >
-                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_donate_icon"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_support_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -283,35 +284,35 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
 
-                        app:drawableStartCompat="@drawable/ic_round_monetization_on_24"
+                        app:drawableStartCompat="@drawable/ic_round_favorite_24"
                         app:drawableTint="@color/textPrimary"
-                        android:contentDescription="@string/donate"
+                        android:contentDescription="@string/support"
                         />
-                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_donate_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_support_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        app:layout_constraintStart_toEndOf="@id/main_donate_icon"
+                        app:layout_constraintStart_toEndOf="@id/main_support_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/main_donate_desc_text"
+                        app:layout_constraintBottom_toTopOf="@id/main_support_desc_text"
 
                         style="@style/ThemeComponentTextViewPrimary"
                         android:textAppearance="?textAppearanceBodyLarge"
-                        android:text="@string/donate"
+                        android:text="@string/support"
                         />
-                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_donate_desc_text"
+                    <com.google.android.material.textview.MaterialTextView android:id="@+id/main_support_desc_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        app:layout_constraintStart_toEndOf="@id/main_donate_icon"
+                        app:layout_constraintStart_toEndOf="@id/main_support_icon"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/main_donate_text"
+                        app:layout_constraintTop_toBottomOf="@id/main_support_text"
                         app:layout_constraintBottom_toBottomOf="parent"
 
                         style="@style/ThemeComponentTextViewSecondary"
                         android:textAppearance="?textAppearanceLabelLarge"
-                        android:text="@string/main_donate_desc_text"
+                        android:text="@string/main_support_desc_text"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>

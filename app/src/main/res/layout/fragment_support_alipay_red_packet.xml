@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <com.google.android.material.imageview.ShapeableImageView android:id="@+id/fragment_support_alipay_red_packet_qrcode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:contentDescription="@string/alipay_red_packet"
+            android:src="@mipmap/alipay_red_packet_qrcode"
+            android:adjustViewBounds="true"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
+            />
+    <com.google.android.material.button.MaterialButton android:id="@+id/fragment_support_alipay_red_packet_copy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_support_alipay_red_packet_qrcode"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:text="@string/copy_key"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -4,7 +4,7 @@
     <string name="menu">Menu</string>
     <string name="logo">Logo</string>
     <string name="disabled">Disabled</string>
-    <string name="donate">Donate</string>
+    <string name="support">Support</string>
     <string name="unknown">Unknown</string>
     <string name="enabled">Enabled</string>
     <string name="back">Back</string>
@@ -94,4 +94,11 @@
     <string name="export_to_clip">Export To Clip</string>
     <string name="import_from_clip">Import From Clip</string>
     <string name="app_center_anonymous_data_collection">AppCenter Anonymous Data Collection</string>
+    <string name="alipay_red_packet">Alipay Red Packet</string>
+    <string name="alipay">Alipay</string>
+    <string name="wechat">WeChat</string>
+    <string name="copy">Copy</string>
+    <string name="copied">Copied</string>
+    <string name="open_directly">Open Directly</string>
+    <string name="copy_key">Copy Key</string>
 </resources>
