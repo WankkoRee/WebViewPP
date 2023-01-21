@@ -13,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import com.google.android.material.textview.MaterialTextView
 import com.google.android.material.imageview.ShapeableImageView
 import androidx.activity.result.contract.ActivityResultContract
@@ -28,17 +27,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.wankkoree.xp.webviewpp.R
 import cn.wankkoree.xp.webviewpp.activity.component.Tag
+import cn.wankkoree.xp.webviewpp.application.Application
 import cn.wankkoree.xp.webviewpp.data.AppSP
 import cn.wankkoree.xp.webviewpp.data.AppsSP
 import cn.wankkoree.xp.webviewpp.data.getSet
 import cn.wankkoree.xp.webviewpp.databinding.ActivityAppsBinding
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication.Companion.appContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class Apps : AppCompatActivity() {
+    private val application = appContext as Application
     private lateinit var viewBinding: ActivityAppsBinding
-    private var toast: Toast? = null
     private val appResultContract = registerForActivityResult(AppResultContract()) {
         adapter.update(it)
     }

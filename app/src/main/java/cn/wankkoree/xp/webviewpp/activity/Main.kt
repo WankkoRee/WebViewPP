@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -19,6 +18,7 @@ import cn.wankkoree.xp.webviewpp.R
 import cn.wankkoree.xp.webviewpp.activity.fragment.Alipay
 import cn.wankkoree.xp.webviewpp.activity.fragment.AlipayRedPacket
 import cn.wankkoree.xp.webviewpp.activity.fragment.WeChat
+import cn.wankkoree.xp.webviewpp.application.Application
 import cn.wankkoree.xp.webviewpp.data.AppsSP
 import cn.wankkoree.xp.webviewpp.data.ModuleSP
 import cn.wankkoree.xp.webviewpp.data.ResourcesSP
@@ -35,13 +35,13 @@ import com.google.gson.GsonBuilder
 import com.highcapable.yukihookapi.YukiHookAPI.Status.Executor
 import com.highcapable.yukihookapi.YukiHookAPI.Status.isXposedModuleActive
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication.Companion.appContext
 import io.noties.markwon.Markwon
 import java.net.URLEncoder
 
 class Main: AppCompatActivity() {
-
+    private val application = appContext as Application
     private lateinit var viewBinding: ActivityMainBinding
-    private var toast: Toast? = null
     private val appsResultContract = registerForActivityResult(AppsResultContract()) {
         refresh()
     }
@@ -77,9 +77,7 @@ class Main: AppCompatActivity() {
 
         viewBinding.mainToolbarMenu.setOnClickListener {
             if (!isXposedModuleActive && !BuildConfig.DEBUG) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_enable_the_module_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_enable_the_module_first), false)
                 return@setOnClickListener
             }
             PopupMenu(this@Main, it).apply {
@@ -105,9 +103,7 @@ class Main: AppCompatActivity() {
                                         }
                                         name("resources").clear()
                                     }
-                                    toast?.cancel()
-                                    toast = Toast.makeText(this@Main, getString(R.string.reset_completed), Toast.LENGTH_SHORT)
-                                    toast!!.show()
+                                    application.toast(getString(R.string.reset_completed), false)
                                     refresh()
                                 }
                             }.show()
@@ -126,18 +122,14 @@ class Main: AppCompatActivity() {
         }
         viewBinding.mainAppsCard.setOnClickListener {
             if (!isXposedModuleActive && !BuildConfig.DEBUG) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_enable_the_module_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_enable_the_module_first), false)
                 return@setOnClickListener
             }
             appsResultContract.launch(Unit)
         }
         viewBinding.mainResourcesCard.setOnClickListener {
             if (!isXposedModuleActive && !BuildConfig.DEBUG) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_enable_the_module_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_enable_the_module_first), false)
                 return@setOnClickListener
             }
             val intent = Intent(this, Resources::class.java)
@@ -181,9 +173,7 @@ class Main: AppCompatActivity() {
     }
 
     private fun checkUpdate() {
-        toast?.cancel()
-        toast = Toast.makeText(this@Main, getString(R.string.checking_for_updates), Toast.LENGTH_SHORT)
-        toast!!.show()
+        application.toast(getString(R.string.checking_for_updates), false)
         Fuel.get("https://api.github.com/repos/WankkoRee/WebViewPP/releases/latest")
             .responseObject<RepoRelease>(GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create()) { _, _, result ->
                 result.fold({ latest ->
@@ -210,13 +200,9 @@ class Main: AppCompatActivity() {
                                 )
                             }
                         } else if (latestCode == BuildConfig.VERSION_CODE) {
-                            toast?.cancel()
-                            toast = Toast.makeText(this@Main, getString(R.string.is_the_latest_version), Toast.LENGTH_SHORT)
-                            toast!!.show()
+                            application.toast(getString(R.string.is_the_latest_version), false)
                         } else {
-                            toast?.cancel()
-                            toast = Toast.makeText(this@Main, getString(R.string.your_version_is_higher_than_the_latest_version_it_may_be_a_withdrawn_version_or_a_prerelease_version), Toast.LENGTH_SHORT)
-                            toast!!.show()
+                            application.toast(getString(R.string.your_version_is_higher_than_the_latest_version_it_may_be_a_withdrawn_version_or_a_prerelease_version), false)
                         }
                     }
                 }, { e ->

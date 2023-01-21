@@ -5,11 +5,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import cn.wankkoree.xp.webviewpp.BuildConfig
 import cn.wankkoree.xp.webviewpp.R
+import cn.wankkoree.xp.webviewpp.application.Application
 import cn.wankkoree.xp.webviewpp.data.ModuleSP
 import cn.wankkoree.xp.webviewpp.databinding.ActivityAdvanceBinding
 import cn.wankkoree.xp.webviewpp.databinding.DialogDataSourceBinding
@@ -18,10 +18,11 @@ import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.highcapable.yukihookapi.YukiHookAPI
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication.Companion.appContext
 
 class Advance: AppCompatActivity() {
+    private val application = appContext as Application
     private lateinit var viewBinding: ActivityAdvanceBinding
-    private var toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,18 +68,14 @@ class Advance: AppCompatActivity() {
                         dialogBinding.dialogDataSourceFastgit.id -> "https://raw.fastgit.org/WankkoRee/WebViewPP-Rules/master"
                         dialogBinding.dialogDataSourceCustom.id -> dialogBinding.dialogDataSourceCustomInputValue.text.let {
                             if (it == null || (!it.startsWith("http://", true) && !it.startsWith("https://", true))) {
-                                toast?.cancel()
-                                toast = Toast.makeText(this@Advance, getString(R.string.unavailable), Toast.LENGTH_SHORT)
-                                toast!!.show()
+                                application.toast(getString(R.string.unavailable), false)
                                 null
                             } else {
                                 it.toString()
                             }
                         }
                         else -> {
-                            toast?.cancel()
-                            toast = Toast.makeText(this@Advance, getString(R.string.unknown_checked_radio_button_id), Toast.LENGTH_SHORT)
-                            toast!!.show()
+                            application.toast(getString(R.string.unknown_checked_radio_button_id), false)
                             null
                         }
                     } ?: return@TestEvent
@@ -86,14 +83,10 @@ class Advance: AppCompatActivity() {
                     Fuel.get("$dataSource/rules/rules.json")
                         .responseObject<List<String>> { _, _, result ->
                             result.fold({
-                                toast?.cancel()
-                                toast = Toast.makeText(this@Advance, getString(R.string.available), Toast.LENGTH_SHORT)
-                                toast!!.show()
+                                application.toast(getString(R.string.available), false)
                             }, {
                                 Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unavailable), it)
-                                toast?.cancel()
-                                toast = Toast.makeText(this@Advance, getString(R.string.unavailable), Toast.LENGTH_SHORT)
-                                toast!!.show()
+                                application.toast(getString(R.string.unavailable), false)
                             })
                         }
                 }
@@ -148,9 +141,7 @@ class Advance: AppCompatActivity() {
         viewBinding.advanceLicenseModuleCard.setCardBackgroundColor((getPrimaryColor(viewBinding.advanceLicenseModuleIcon.drawable, this@Advance).first or 0xff000000.toInt()) and 0x33ffffff)
         viewBinding.advanceLicenseModuleIcon.setImageDrawable(packageManager.getApplicationIcon(BuildConfig.APPLICATION_ID))
         viewBinding.advanceLicenseModuleButtonGithub.setOnClickListener {
-            toast?.cancel()
-            toast = Toast.makeText(this@Advance, getString(R.string.if_you_find_this_project_useful_please_star_this_project), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(R.string.if_you_find_this_project_useful_please_star_this_project), false)
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/WankkoRee/WebViewPP")))
         }
         viewBinding.advanceLicenseModuleButtonTelegram.setOnClickListener {

@@ -16,7 +16,6 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -26,6 +25,7 @@ import cn.wankkoree.xp.webviewpp.R
 import cn.wankkoree.xp.webviewpp.ValueAlreadyExistedInSet
 import cn.wankkoree.xp.webviewpp.ValueNotExistedInSet
 import cn.wankkoree.xp.webviewpp.activity.component.Code
+import cn.wankkoree.xp.webviewpp.application.Application
 import cn.wankkoree.xp.webviewpp.data.AppSP
 import cn.wankkoree.xp.webviewpp.data.AppsSP
 import cn.wankkoree.xp.webviewpp.data.ModuleSP
@@ -40,10 +40,11 @@ import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication.Companion.appContext
 
 class App : AppCompatActivity() {
+    private val application = appContext as Application
     private lateinit var viewBinding: ActivityAppBinding
-    private var toast: Toast? = null
     private val ruleResultContract = registerForActivityResult(RuleResultContract()) {
         refresh()
     }
@@ -117,22 +118,16 @@ class App : AppCompatActivity() {
                                                 put(AppSP.hooks, clipHeader[i])
                                                 putString("hook_entry_${clipHeader[i]}", clipBody[i])
                                             } catch (_: ValueAlreadyExistedInSet) {
-                                                toast?.cancel()
-                                                toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "${clipHeader[i]}" """), Toast.LENGTH_SHORT)
-                                                toast!!.show()
+                                                application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "${clipHeader[i]}" """), false)
                                             }
                                         }
                                     }
                                     refresh()
                                 } else {
-                                    toast?.cancel()
-                                    toast = Toast.makeText(this@App, getString(R.string.parse_failed), Toast.LENGTH_SHORT)
-                                    toast!!.show()
+                                    application.toast(getString(R.string.parse_failed), false)
                                 }
                             } else {
-                                toast?.cancel()
-                                toast = Toast.makeText(this@App, getString(R.string.parse_failed), Toast.LENGTH_SHORT)
-                                toast!!.show()
+                                application.toast(getString(R.string.parse_failed), false)
                             }
                         }
                     }
@@ -155,9 +150,7 @@ class App : AppCompatActivity() {
                                             "hookWebView",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
-                                        toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
-                                        toast!!.show()
+                                        application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }
                                 (getString(R.string.standard_s, getString(R.string.webview_rules)) + " " + "hookWebViewClient").also { ruleName ->
@@ -167,9 +160,7 @@ class App : AppCompatActivity() {
                                             "hookWebViewClient",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
-                                        toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
-                                        toast!!.show()
+                                        application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }
                             }
@@ -185,9 +176,7 @@ class App : AppCompatActivity() {
                                             Class_WebView = "com.tencent.smtt.sdk.WebView",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
-                                        toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
-                                        toast!!.show()
+                                        application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }
                                 (getString(R.string.standard_s, getString(R.string.tbsx5_rules)) + " " + "hookWebViewClient").also { ruleName ->
@@ -201,9 +190,7 @@ class App : AppCompatActivity() {
                                             Method_evaluateJavascript = "evaluateJavascript(str,com.tencent.smtt.sdk.ValueCallback)",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
-                                        toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
-                                        toast!!.show()
+                                        application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }
                             }
@@ -219,9 +206,7 @@ class App : AppCompatActivity() {
                                             Class_WebView = "com.uc.webview.export.WebView",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
-                                        toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
-                                        toast!!.show()
+                                        application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }
                                 (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "hookWebViewClient").also { ruleName ->
@@ -234,9 +219,7 @@ class App : AppCompatActivity() {
                                             Class_WebView = "com.uc.webview.export.WebView",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
-                                        toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
-                                        toast!!.show()
+                                        application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }
                                 (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "replaceNebulaUCSDK").also { ruleName ->
@@ -246,9 +229,7 @@ class App : AppCompatActivity() {
                                             "replaceNebulaUCSDK",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
-                                        toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
-                                        toast!!.show()
+                                        application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }
                             }
@@ -263,9 +244,7 @@ class App : AppCompatActivity() {
                                             "hookCrossWalk",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
-                                        toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
-                                        toast!!.show()
+                                        application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }
                                 (getString(R.string.standard_s, getString(R.string.crosswalk_rules)) + " " + "hookWebViewClient").also { ruleName ->
@@ -278,18 +257,14 @@ class App : AppCompatActivity() {
                                             Class_WebView = "org.xwalk.core.XWalkView",
                                         )))
                                     } catch (_: ValueAlreadyExistedInSet) {
-                                        toast?.cancel()
-                                        toast = Toast.makeText(this@App, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), Toast.LENGTH_SHORT)
-                                        toast!!.show()
+                                        application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
                                 }
                             }
                             refresh()
                         }
                         R.id.app_toolbar_preset_xweb -> {
-                            toast?.cancel()
-                            toast = Toast.makeText(this@App, getString(R.string.xweb_currently_has_no_standard_implementation_so_no_standard_rules_is_provided_please_use_the_cloud_rules), Toast.LENGTH_SHORT)
-                            toast!!.show()
+                            application.toast(getString(R.string.xweb_currently_has_no_standard_implementation_so_no_standard_rules_is_provided_please_use_the_cloud_rules), false)
                         }
                     }
                     true
@@ -361,9 +336,7 @@ class App : AppCompatActivity() {
                 modulePrefs("apps").put(AppsSP.enabled, pkg)
             else
                 modulePrefs("apps").remove(AppsSP.enabled, pkg)
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appHooksAdd.setOnClickListener {
@@ -378,9 +351,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesVconsoleCard.setOnClickListener {
             if (viewBinding.appResourcesVconsoleVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -388,9 +359,7 @@ class App : AppCompatActivity() {
                 put(AppSP.vConsole, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesVconsoleVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -405,9 +374,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesVconsolePluginSourcesCard.setOnClickListener {
             if (viewBinding.appResourcesVconsolePluginSourcesVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -415,9 +382,7 @@ class App : AppCompatActivity() {
                 put(AppSP.vConsole_plugin_sources, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesVconsolePluginSourcesVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -432,9 +397,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesVconsolePluginStatsCard.setOnClickListener {
             if (viewBinding.appResourcesVconsolePluginStatsVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -442,9 +405,7 @@ class App : AppCompatActivity() {
                 put(AppSP.vConsole_plugin_stats, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesVconsolePluginStatsVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -459,9 +420,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesVconsolePluginVueDevtoolsCard.setOnClickListener {
             if (viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -469,9 +428,7 @@ class App : AppCompatActivity() {
                 put(AppSP.vConsole_plugin_vue_devtools, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -486,9 +443,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesVconsolePluginOutputlogCard.setOnClickListener {
             if (viewBinding.appResourcesVconsolePluginOutputlogVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -496,9 +451,7 @@ class App : AppCompatActivity() {
                 put(AppSP.vConsole_plugin_outputlog, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesVconsolePluginOutputlogVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -513,9 +466,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesErudaCard.setOnClickListener {
             if (viewBinding.appResourcesErudaVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -523,9 +474,7 @@ class App : AppCompatActivity() {
                 put(AppSP.eruda, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesErudaVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -540,9 +489,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesErudaPluginFpsCard.setOnClickListener {
             if (viewBinding.appResourcesErudaPluginFpsVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -550,9 +497,7 @@ class App : AppCompatActivity() {
                 put(AppSP.eruda_plugin_fps, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesErudaPluginFpsVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -567,9 +512,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesErudaPluginFeaturesCard.setOnClickListener {
             if (viewBinding.appResourcesErudaPluginFeaturesVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -577,9 +520,7 @@ class App : AppCompatActivity() {
                 put(AppSP.eruda_plugin_features, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesErudaPluginFeaturesVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -594,9 +535,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesErudaPluginTimingCard.setOnClickListener {
             if (viewBinding.appResourcesErudaPluginTimingVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -604,9 +543,7 @@ class App : AppCompatActivity() {
                 put(AppSP.eruda_plugin_timing, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesErudaPluginTimingVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -621,9 +558,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesErudaPluginMemoryCard.setOnClickListener {
             if (viewBinding.appResourcesErudaPluginMemoryVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -631,9 +566,7 @@ class App : AppCompatActivity() {
                 put(AppSP.eruda_plugin_memory, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesErudaPluginMemoryVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -648,9 +581,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesErudaPluginCodeCard.setOnClickListener {
             if (viewBinding.appResourcesErudaPluginCodeVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -658,9 +589,7 @@ class App : AppCompatActivity() {
                 put(AppSP.eruda_plugin_code, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesErudaPluginCodeVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -675,9 +604,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesErudaPluginBenchmarkCard.setOnClickListener {
             if (viewBinding.appResourcesErudaPluginBenchmarkVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -685,9 +612,7 @@ class App : AppCompatActivity() {
                 put(AppSP.eruda_plugin_fps, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesErudaPluginBenchmarkVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -702,9 +627,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesErudaPluginBenchmarkCard.setOnClickListener {
             if (viewBinding.appResourcesErudaPluginBenchmarkVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -712,9 +635,7 @@ class App : AppCompatActivity() {
                 put(AppSP.eruda_plugin_benchmark, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesErudaPluginBenchmarkVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -729,9 +650,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesErudaPluginGeolocationCard.setOnClickListener {
             if (viewBinding.appResourcesErudaPluginGeolocationVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -739,9 +658,7 @@ class App : AppCompatActivity() {
                 put(AppSP.eruda_plugin_geolocation, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesErudaPluginGeolocationVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -756,9 +673,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesErudaPluginDomCard.setOnClickListener {
             if (viewBinding.appResourcesErudaPluginDomVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -766,9 +681,7 @@ class App : AppCompatActivity() {
                 put(AppSP.eruda_plugin_dom, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesErudaPluginDomVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -783,9 +696,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesErudaPluginOrientationCard.setOnClickListener {
             if (viewBinding.appResourcesErudaPluginOrientationVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -793,9 +704,7 @@ class App : AppCompatActivity() {
                 put(AppSP.eruda_plugin_orientation, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesErudaPluginOrientationVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -810,9 +719,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesErudaPluginTouchesCard.setOnClickListener {
             if (viewBinding.appResourcesErudaPluginTouchesVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -820,9 +727,7 @@ class App : AppCompatActivity() {
                 put(AppSP.eruda_plugin_touches, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesErudaPluginTouchesVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -837,9 +742,7 @@ class App : AppCompatActivity() {
         }
         viewBinding.appResourcesNebulaucsdkCard.setOnClickListener {
             if (viewBinding.appResourcesNebulaucsdkVersion.adapter.count == 0) {
-                toast?.cancel()
-                toast = Toast.makeText(this, getString(R.string.please_download_resources_at_first), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
             val state = modulePrefs("apps_$pkg").run {
@@ -847,9 +750,7 @@ class App : AppCompatActivity() {
                 put(AppSP.nebulaUCSDK, state)
                 state
             }
-            toast?.cancel()
-            toast = Toast.makeText(this, getString(if (state) R.string.enabled else R.string.disabled), Toast.LENGTH_SHORT)
-            toast!!.show()
+            application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
         viewBinding.appResourcesNebulaucsdkVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -879,9 +780,7 @@ class App : AppCompatActivity() {
                                             if (rules.hookWebView != null) for (hookRule in rules.hookWebView) {
                                                 if (hookRule.name == ruleName) {
                                                     if (hookRule.version > targetRule.version) {
-                                                        toast?.cancel()
-                                                        toast = Toast.makeText(this@App, getString(R.string.there_are_updates_to_s, ruleName), Toast.LENGTH_SHORT)
-                                                        toast!!.show()
+                                                        application.toast(getString(R.string.there_are_updates_to_s, ruleName), false)
                                                         hasUpdate = true
                                                     }
                                                     break
@@ -892,9 +791,7 @@ class App : AppCompatActivity() {
                                             if (rules.hookWebViewClient != null) for (hookRule in rules.hookWebViewClient) {
                                                 if (hookRule.name == ruleName) {
                                                     if (hookRule.version > targetRule.version) {
-                                                        toast?.cancel()
-                                                        toast = Toast.makeText(this@App, getString(R.string.there_are_updates_to_s, ruleName), Toast.LENGTH_SHORT)
-                                                        toast!!.show()
+                                                        application.toast(getString(R.string.there_are_updates_to_s, ruleName), false)
                                                         hasUpdate = true
                                                     }
                                                     break
@@ -905,9 +802,7 @@ class App : AppCompatActivity() {
                                             if (rules.replaceNebulaUCSDK != null) for (hookRule in rules.replaceNebulaUCSDK) {
                                                 if (hookRule.name == ruleName) {
                                                     if (hookRule.version > targetRule.version) {
-                                                        toast?.cancel()
-                                                        toast = Toast.makeText(this@App, getString(R.string.there_are_updates_to_s, ruleName), Toast.LENGTH_SHORT)
-                                                        toast!!.show()
+                                                        application.toast(getString(R.string.there_are_updates_to_s, ruleName), false)
                                                         hasUpdate = true
                                                     }
                                                     break
@@ -918,9 +813,7 @@ class App : AppCompatActivity() {
                                             if (rules.hookCrossWalk != null) for (hookRule in rules.hookCrossWalk) {
                                                 if (hookRule.name == ruleName) {
                                                     if (hookRule.version > targetRule.version) {
-                                                        toast?.cancel()
-                                                        toast = Toast.makeText(this@App, getString(R.string.there_are_updates_to_s, ruleName), Toast.LENGTH_SHORT)
-                                                        toast!!.show()
+                                                        application.toast(getString(R.string.there_are_updates_to_s, ruleName), false)
                                                         hasUpdate = true
                                                     }
                                                     break
@@ -931,9 +824,7 @@ class App : AppCompatActivity() {
                                             if (rules.hookXWebView != null) for (hookRule in rules.hookXWebView) {
                                                 if (hookRule.name == ruleName) {
                                                     if (hookRule.version > targetRule.version) {
-                                                        toast?.cancel()
-                                                        toast = Toast.makeText(this@App, getString(R.string.there_are_updates_to_s, ruleName), Toast.LENGTH_SHORT)
-                                                        toast!!.show()
+                                                        application.toast(getString(R.string.there_are_updates_to_s, ruleName), false)
                                                         hasUpdate = true
                                                     }
                                                     break
@@ -942,31 +833,23 @@ class App : AppCompatActivity() {
                                         }
                                         else -> {
                                             Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method)+": "+targetRule.name)
-                                            toast?.cancel()
-                                            toast = Toast.makeText(this@App, getString(R.string.unknown_hook_method)+"\n"+targetRule.name, Toast.LENGTH_SHORT)
-                                            toast!!.show()
+                                            application.toast(getString(R.string.unknown_hook_method)+"\n"+targetRule.name, false)
                                             return@forEach // continue
                                         }
                                     }
                                 }
                             } catch (e: Exception) {
                                 Log.e(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
-                                toast?.cancel()
-                                toast = Toast.makeText(this@App, getString(R.string.parse_failed)+"\n"+getString(R.string.please_reset), Toast.LENGTH_SHORT)
-                                toast!!.show()
+                                application.toast(getString(R.string.parse_failed)+"\n"+getString(R.string.please_reset), false)
                                 return@forEach // continue
                             }
                         }
                         if (!hasUpdate) {
-                            toast?.cancel()
-                            toast = Toast.makeText(this@App, getString(R.string.is_the_latest_version), Toast.LENGTH_SHORT)
-                            toast!!.show()
+                            application.toast(getString(R.string.is_the_latest_version), false)
                         }
                     }, { e ->
                         Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules)), e)
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.pull_failed, pkg+' '+version+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.pull_failed, pkg+' '+version+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), false)
                     })
                 }
         }
@@ -1065,9 +948,7 @@ class App : AppCompatActivity() {
                     val last = vConsoleAdapter.getPosition(get(AppSP.vConsole_version))
                     if (last >= 0) viewBinding.appResourcesVconsoleVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = vConsoleAdapter.getPosition(get(ResourcesSP.vConsole_latest))
                         viewBinding.appResourcesVconsoleVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1092,9 +973,7 @@ class App : AppCompatActivity() {
                     val last = vConsolePluginSourcesAdapter.getPosition(get(AppSP.vConsole_plugin_sources_version))
                     if (last >= 0) viewBinding.appResourcesVconsolePluginSourcesVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = vConsolePluginSourcesAdapter.getPosition(get(ResourcesSP.vConsole_plugin_sources_latest))
                         viewBinding.appResourcesVconsolePluginSourcesVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1109,9 +988,7 @@ class App : AppCompatActivity() {
                     val last = vConsolePluginStatsAdapter.getPosition(get(AppSP.vConsole_plugin_stats_version))
                     if (last >= 0) viewBinding.appResourcesVconsolePluginStatsVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = vConsolePluginStatsAdapter.getPosition(get(ResourcesSP.vConsole_plugin_stats_latest))
                         viewBinding.appResourcesVconsolePluginStatsVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1126,9 +1003,7 @@ class App : AppCompatActivity() {
                     val last = vConsolePluginVueDevtoolsAdapter.getPosition(get(AppSP.vConsole_plugin_vue_devtools_version))
                     if (last >= 0) viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = vConsolePluginVueDevtoolsAdapter.getPosition(get(ResourcesSP.vConsole_plugin_vue_devtools_latest))
                         viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1143,9 +1018,7 @@ class App : AppCompatActivity() {
                     val last = vConsolePluginOutputlogAdapter.getPosition(get(AppSP.vConsole_plugin_outputlog_version))
                     if (last >= 0) viewBinding.appResourcesVconsolePluginOutputlogVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = vConsolePluginOutputlogAdapter.getPosition(get(ResourcesSP.vConsole_plugin_outputlog_latest))
                         viewBinding.appResourcesVconsolePluginOutputlogVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1160,9 +1033,7 @@ class App : AppCompatActivity() {
                     val last = erudaAdapter.getPosition(get(AppSP.eruda_version))
                     if (last >= 0) viewBinding.appResourcesErudaVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = erudaAdapter.getPosition(get(ResourcesSP.eruda_latest))
                         viewBinding.appResourcesErudaVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1199,9 +1070,7 @@ class App : AppCompatActivity() {
                     val last = erudaPluginFpsAdapter.getPosition(get(AppSP.eruda_plugin_fps_version))
                     if (last >= 0) viewBinding.appResourcesErudaPluginFpsVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = erudaPluginFpsAdapter.getPosition(get(ResourcesSP.eruda_plugin_fps_latest))
                         viewBinding.appResourcesErudaPluginFpsVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1216,9 +1085,7 @@ class App : AppCompatActivity() {
                     val last = erudaPluginFeaturesAdapter.getPosition(get(AppSP.eruda_plugin_features_version))
                     if (last >= 0) viewBinding.appResourcesErudaPluginFeaturesVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = erudaPluginFeaturesAdapter.getPosition(get(ResourcesSP.eruda_plugin_features_latest))
                         viewBinding.appResourcesErudaPluginFeaturesVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1233,9 +1100,7 @@ class App : AppCompatActivity() {
                     val last = erudaPluginTimingAdapter.getPosition(get(AppSP.eruda_plugin_timing_version))
                     if (last >= 0) viewBinding.appResourcesErudaPluginTimingVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = erudaPluginTimingAdapter.getPosition(get(ResourcesSP.eruda_plugin_timing_latest))
                         viewBinding.appResourcesErudaPluginTimingVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1250,9 +1115,7 @@ class App : AppCompatActivity() {
                     val last = erudaPluginMemoryAdapter.getPosition(get(AppSP.eruda_plugin_memory_version))
                     if (last >= 0) viewBinding.appResourcesErudaPluginMemoryVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = erudaPluginMemoryAdapter.getPosition(get(ResourcesSP.eruda_plugin_memory_latest))
                         viewBinding.appResourcesErudaPluginMemoryVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1267,9 +1130,7 @@ class App : AppCompatActivity() {
                     val last = erudaPluginCodeAdapter.getPosition(get(AppSP.eruda_plugin_code_version))
                     if (last >= 0) viewBinding.appResourcesErudaPluginCodeVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = erudaPluginCodeAdapter.getPosition(get(ResourcesSP.eruda_plugin_code_latest))
                         viewBinding.appResourcesErudaPluginCodeVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1284,9 +1145,7 @@ class App : AppCompatActivity() {
                     val last = erudaPluginBenchmarkAdapter.getPosition(get(AppSP.eruda_plugin_benchmark_version))
                     if (last >= 0) viewBinding.appResourcesErudaPluginBenchmarkVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = erudaPluginBenchmarkAdapter.getPosition(get(ResourcesSP.eruda_plugin_benchmark_latest))
                         viewBinding.appResourcesErudaPluginBenchmarkVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1301,9 +1160,7 @@ class App : AppCompatActivity() {
                     val last = erudaPluginGeolocationAdapter.getPosition(get(AppSP.eruda_plugin_geolocation_version))
                     if (last >= 0) viewBinding.appResourcesErudaPluginGeolocationVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = erudaPluginGeolocationAdapter.getPosition(get(ResourcesSP.eruda_plugin_geolocation_latest))
                         viewBinding.appResourcesErudaPluginGeolocationVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1318,9 +1175,7 @@ class App : AppCompatActivity() {
                     val last = erudaPluginDomAdapter.getPosition(get(AppSP.eruda_plugin_dom_version))
                     if (last >= 0) viewBinding.appResourcesErudaPluginDomVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = erudaPluginDomAdapter.getPosition(get(ResourcesSP.eruda_plugin_dom_latest))
                         viewBinding.appResourcesErudaPluginDomVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1335,9 +1190,7 @@ class App : AppCompatActivity() {
                     val last = erudaPluginOrientationAdapter.getPosition(get(AppSP.eruda_plugin_orientation_version))
                     if (last >= 0) viewBinding.appResourcesErudaPluginOrientationVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = erudaPluginOrientationAdapter.getPosition(get(ResourcesSP.eruda_plugin_orientation_latest))
                         viewBinding.appResourcesErudaPluginOrientationVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1352,9 +1205,7 @@ class App : AppCompatActivity() {
                     val last = erudaPluginTouchesAdapter.getPosition(get(AppSP.eruda_plugin_touches_version))
                     if (last >= 0) viewBinding.appResourcesErudaPluginTouchesVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = erudaPluginTouchesAdapter.getPosition(get(ResourcesSP.eruda_plugin_touches_latest))
                         viewBinding.appResourcesErudaPluginTouchesVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1369,9 +1220,7 @@ class App : AppCompatActivity() {
                     val last = nebulaUCSDKAdapter.getPosition(get(AppSP.nebulaUCSDK_version))
                     if (last >= 0) viewBinding.appResourcesNebulaucsdkVersion.setSelection(last)
                     else {
-                        toast?.cancel()
-                        toast = Toast.makeText(this@App, getString(R.string.nothing_set_yet_a_default_will_be_set), Toast.LENGTH_SHORT)
-                        toast!!.show()
+                        application.toast(getString(R.string.nothing_set_yet_a_default_will_be_set), false)
                         name("resources")
                         val latest = nebulaUCSDKAdapter.getPosition(get(ResourcesSP.nebulaUCSDK_latest))
                         viewBinding.appResourcesNebulaucsdkVersion.setSelection(if (latest >= 0) latest else 0)
@@ -1494,9 +1343,7 @@ class App : AppCompatActivity() {
                     }
                 } catch (e: Exception) {
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
-                    toast?.cancel()
-                    toast = Toast.makeText(this@App, getString(R.string.parse_failed)+"\n"+getString(R.string.please_reset), Toast.LENGTH_SHORT)
-                    toast!!.show()
+                    application.toast(getString(R.string.parse_failed)+"\n"+getString(R.string.please_reset), false)
                     return@forEach // continue
                 }
                 v.isClickable = true
@@ -1530,9 +1377,7 @@ class App : AppCompatActivity() {
     private fun reset() {
         try { modulePrefs("apps").remove(AppsSP.enabled, pkg) } catch (_: ValueNotExistedInSet) { }
         modulePrefs("apps_$pkg").clear()
-        toast?.cancel()
-        toast = Toast.makeText(this@App, getString(R.string.reset_completed), Toast.LENGTH_SHORT)
-        toast!!.show()
+        application.toast(getString(R.string.reset_completed), false)
     }
 
     class RuleResultContract : ActivityResultContract<Intent, Unit>() {

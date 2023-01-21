@@ -1,7 +1,6 @@
 package cn.wankkoree.xp.webviewpp.activity
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.transition.Slide
 import android.util.Log
@@ -11,6 +10,7 @@ import cn.wankkoree.xp.webviewpp.BuildConfig
 import cn.wankkoree.xp.webviewpp.R
 import cn.wankkoree.xp.webviewpp.ValueAlreadyExistedInSet
 import cn.wankkoree.xp.webviewpp.activity.component.Code
+import cn.wankkoree.xp.webviewpp.application.Application
 import cn.wankkoree.xp.webviewpp.data.ModuleSP
 import cn.wankkoree.xp.webviewpp.data.AppSP
 import cn.wankkoree.xp.webviewpp.data.put
@@ -24,10 +24,11 @@ import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication.Companion.appContext
 
 class Rule : AppCompatActivity() {
+    private val application = appContext as Application
     private lateinit var viewBinding: ActivityRuleBinding
-    private var toast: Toast? = null
 
     private lateinit var pkg: String
     private lateinit var version: String
@@ -282,9 +283,7 @@ class Rule : AppCompatActivity() {
                                 }
                             }, { e ->
                                 Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules)), e)
-                                toast?.cancel()
-                                toast = Toast.makeText(this@Rule, getString(R.string.pull_failed, pkg+' '+version+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), Toast.LENGTH_SHORT)
-                                toast!!.show()
+                                application.toast(getString(R.string.pull_failed, pkg+' '+version+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), false)
                                 dialog.cancel()
                             })
                         }
@@ -297,15 +296,11 @@ class Rule : AppCompatActivity() {
                             if (p >= 0)
                                 dialogBinding.dialogCloudRulesVersions.setText(version, false)
                             else {
-                                toast?.cancel()
-                                toast = Toast.makeText(this@Rule, getString(R.string.no_matching_version), Toast.LENGTH_SHORT)
-                                toast!!.show()
+                                application.toast(getString(R.string.no_matching_version), false)
                             }
                         }, { e ->
                             Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules)), e)
-                            toast?.cancel()
-                            toast = Toast.makeText(this@Rule, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), Toast.LENGTH_SHORT)
-                            toast!!.show()
+                            application.toast(getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), false)
                             dialog.cancel()
                         })
                     }
@@ -315,19 +310,13 @@ class Rule : AppCompatActivity() {
             val name = viewBinding.ruleName.text.toString()
             val type = viewBinding.ruleHookMethod.text.toString()
             if (name.isEmpty()) {
-                toast?.cancel()
-                toast = Toast.makeText(this@Rule, getString(R.string.s_cannot_be_empty, getString(R.string.rule_name)), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.s_cannot_be_empty, getString(R.string.rule_name)), false)
                 return@setOnClickListener
             } else if (name.contains('|')) {
-                toast?.cancel()
-                toast = Toast.makeText(this@Rule, getString(R.string.s_cannot_contains_vertical, getString(R.string.rule_name)), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.s_cannot_contains_vertical, getString(R.string.rule_name)), false)
                 return@setOnClickListener
             } else if (type.isEmpty()) {
-                toast?.cancel()
-                toast = Toast.makeText(this@Rule, getString(R.string.s_cannot_be_empty, getString(R.string.rule_type)), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.s_cannot_be_empty, getString(R.string.rule_type)), false)
                 return@setOnClickListener
             } else {
                 with(modulePrefs("apps_$pkg")) {
@@ -335,9 +324,7 @@ class Rule : AppCompatActivity() {
                         put(AppSP.hooks, name)
                     } catch (_: ValueAlreadyExistedInSet) {
                         if (ruleName == null || ruleName != name) { // 新建 or 修改名称
-                            toast?.cancel()
-                            toast = Toast.makeText(this@Rule, getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$name" """), Toast.LENGTH_SHORT)
-                            toast!!.show()
+                            application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$name" """), false)
                             return@setOnClickListener
                         }
                     }
@@ -614,9 +601,7 @@ class Rule : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 Log.e(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
-                toast?.cancel()
-                toast = Toast.makeText(this@Rule, getString(R.string.parse_failed), Toast.LENGTH_SHORT)
-                toast!!.show()
+                application.toast(getString(R.string.parse_failed), false)
                 return
             }
         }
