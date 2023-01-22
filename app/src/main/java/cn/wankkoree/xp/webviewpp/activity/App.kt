@@ -35,6 +35,7 @@ import cn.wankkoree.xp.webviewpp.data.getSet
 import cn.wankkoree.xp.webviewpp.data.remove
 import cn.wankkoree.xp.webviewpp.databinding.ActivityAppBinding
 import cn.wankkoree.xp.webviewpp.http.bean.HookRules
+import cn.wankkoree.xp.webviewpp.util.AppCenterTool
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -65,6 +66,7 @@ class App : AppCompatActivity() {
         window.exitTransition = Slide()
         viewBinding = ActivityAppBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        AppCenterTool.trackEvent("activity", hashMapOf("activity" to "app"))
 
         pkg = intent.getStringExtra(Intent.EXTRA_PACKAGE_NAME)!!
         val app = packageManager.getPackageInfo(pkg, PackageManager.GET_META_DATA)
@@ -332,9 +334,10 @@ class App : AppCompatActivity() {
                 put(AppSP.is_enabled, state)
                 state
             }
-            if (state)
+            if (state) {
                 modulePrefs("apps").put(AppsSP.enabled, pkg)
-            else
+                AppCenterTool.trackEvent("application", hashMapOf("application" to "$pkg $version"))
+            } else
                 modulePrefs("apps").remove(AppsSP.enabled, pkg)
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()

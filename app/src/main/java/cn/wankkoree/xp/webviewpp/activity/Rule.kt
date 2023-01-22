@@ -19,6 +19,7 @@ import cn.wankkoree.xp.webviewpp.http.bean.Metadata
 import cn.wankkoree.xp.webviewpp.databinding.DialogCloudRulesBinding
 import cn.wankkoree.xp.webviewpp.databinding.ActivityRuleBinding
 import cn.wankkoree.xp.webviewpp.http.bean.HookRules
+import cn.wankkoree.xp.webviewpp.util.AppCenterTool
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -40,9 +41,11 @@ class Rule : AppCompatActivity() {
         window.exitTransition = Slide()
         viewBinding = ActivityRuleBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        AppCenterTool.trackEvent("activity", hashMapOf("activity" to "rule"))
 
         pkg = intent.getStringExtra("pkg")!!
         version = intent.getStringExtra("version")!!
+        ruleName = intent.getStringExtra("rule_name")
 
         // TODO: 添加更多 hook 方法
         viewBinding.ruleHookMethod.setSimpleItems(arrayOf(
@@ -533,7 +536,6 @@ class Rule : AppCompatActivity() {
     }
 
     private fun refresh() {
-        ruleName = intent.getStringExtra("rule_name")
         if (ruleName == null) {
             viewBinding.ruleHookMethod.setText("", false)
         } else {

@@ -32,6 +32,7 @@ import cn.wankkoree.xp.webviewpp.data.AppSP
 import cn.wankkoree.xp.webviewpp.data.AppsSP
 import cn.wankkoree.xp.webviewpp.data.getSet
 import cn.wankkoree.xp.webviewpp.databinding.ActivityAppsBinding
+import cn.wankkoree.xp.webviewpp.util.AppCenterTool
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import kotlinx.coroutines.Dispatchers
@@ -51,6 +52,7 @@ class Apps : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityAppsBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        AppCenterTool.trackEvent("activity", hashMapOf("activity" to "apps"))
 
         viewBinding.appsLoading.setColorSchemeColors(getColor(R.color.backgroundSuccess), getColor(R.color.backgroundInfo), getColor(R.color.backgroundError))
         viewBinding.appsList.layoutManager = LinearLayoutManager(this@Apps)

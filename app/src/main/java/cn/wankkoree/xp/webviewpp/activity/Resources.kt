@@ -23,6 +23,7 @@ import cn.wankkoree.xp.webviewpp.data.put
 import cn.wankkoree.xp.webviewpp.http.bean.Metadata
 import cn.wankkoree.xp.webviewpp.http.bean.api.npm.Versions
 import cn.wankkoree.xp.webviewpp.databinding.ActivityResourcesBinding
+import cn.wankkoree.xp.webviewpp.util.AppCenterTool
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.requests.CancellableRequest
 import com.github.kittinunf.fuel.gson.responseObject
@@ -48,6 +49,7 @@ class Resources : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityResourcesBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        AppCenterTool.trackEvent("activity", hashMapOf("activity" to "resources"))
 
         refresh()
 

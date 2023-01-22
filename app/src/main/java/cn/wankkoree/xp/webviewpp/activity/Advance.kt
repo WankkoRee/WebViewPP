@@ -29,6 +29,7 @@ class Advance : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityAdvanceBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        AppCenterTool.trackEvent("activity", hashMapOf("activity" to "advance"))
 
         viewBinding.advanceSettingDataSource.setOnClickListener {
             val dialogBinding = DialogDataSourceBinding.inflate(layoutInflater)

@@ -26,6 +26,7 @@ import cn.wankkoree.xp.webviewpp.data.getSet
 import cn.wankkoree.xp.webviewpp.http.bean.api.github.RepoRelease
 import cn.wankkoree.xp.webviewpp.databinding.ActivityMainBinding
 import cn.wankkoree.xp.webviewpp.databinding.DialogSupportBinding
+import cn.wankkoree.xp.webviewpp.util.AppCenterTool
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -44,13 +45,12 @@ class Main : AppCompatActivity() {
     private val appsResultContract = registerForActivityResult(AppsResultContract()) {
         refresh()
     }
-    private lateinit var markdown : Markwon
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-        markdown = Markwon.create(this@Main)
+        AppCenterTool.trackEvent("activity", hashMapOf("activity" to "main"))
 
         viewBinding.mainToolbarIcon.setImageDrawable(packageManager.getApplicationIcon(BuildConfig.APPLICATION_ID))
         viewBinding.mainVersionText.text = getString(R.string.main_version_text, "${BuildConfig.VERSION_NAME}-${BuildConfig.BUILD_TYPE}", BuildConfig.VERSION_CODE)
@@ -188,7 +188,7 @@ class Main : AppCompatActivity() {
                                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(latest.html_url)))
                                 }
                             }.show().also { dialog ->
-                                markdown.setMarkdown(
+                                Markwon.create(this@Main).setMarkdown(
                                     dialog.findViewById(android.R.id.message)!!,
                                     """## ${getString(R.string.latest_version)}
                                         |
