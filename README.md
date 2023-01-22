@@ -31,12 +31,10 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4,
 <div align="center">
   <img width="256" src="https://raw.githubusercontent.com/WankkoRee/WebViewPP/master/docs/Screenshot_main.png" />
   <img width="256" src="https://raw.githubusercontent.com/WankkoRee/WebViewPP/master/docs/Screenshot_apps.png" />
-  <img width="256" src="https://raw.githubusercontent.com/WankkoRee/WebViewPP/master/docs/Screenshot_app_1.png" />
-  <img width="256" src="https://raw.githubusercontent.com/WankkoRee/WebViewPP/master/docs/Screenshot_app_2.png" />
+  <img width="256" src="https://raw.githubusercontent.com/WankkoRee/WebViewPP/master/docs/Screenshot_app.png" />
   <img width="256" src="https://raw.githubusercontent.com/WankkoRee/WebViewPP/master/docs/Screenshot_rule.png" />
   <img width="256" src="https://raw.githubusercontent.com/WankkoRee/WebViewPP/master/docs/Screenshot_cloud_rule.png" />
   <img width="256" src="https://raw.githubusercontent.com/WankkoRee/WebViewPP/master/docs/Screenshot_resources.png" />
-  <img width="256" src="https://raw.githubusercontent.com/WankkoRee/WebViewPP/master/docs/Screenshot_resources_downloading.png" />
   <img width="256" src="https://raw.githubusercontent.com/WankkoRee/WebViewPP/master/docs/Screenshot_advance.png" />
 </div>
 
