@@ -86,7 +86,7 @@ class App : AppCompatActivity() {
             finishAfterTransition()
         }
         viewBinding.appToolbarShare.setOnClickListener { v ->
-            PopupMenu(this, v).apply {
+            PopupMenu(this@App, v).apply {
                 menuInflater.inflate(R.menu.app_toolbar_share, menu)
                 setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
@@ -136,7 +136,7 @@ class App : AppCompatActivity() {
             }.show()
         }
         viewBinding.appToolbarPreset.setOnClickListener { v ->
-            PopupMenu(this, v).apply {
+            PopupMenu(this@App, v).apply {
                 menuInflater.inflate(R.menu.app_toolbar_preset, menu)
                 setOnMenuItemClickListener {
                     when (it.itemId) {
@@ -272,7 +272,7 @@ class App : AppCompatActivity() {
             }.show()
         }
         viewBinding.appToolbarMenu.setOnClickListener {
-            PopupMenu(this, it).apply {
+            PopupMenu(this@App, it).apply {
                 menuInflater.inflate(R.menu.app_toolbar_menu, menu)
                 with(modulePrefs("apps_$pkg")) {
                     menu.findItem(R.id.app_toolbar_menu_debug_mode).isChecked = get(AppSP.debug_mode)
@@ -340,7 +340,7 @@ class App : AppCompatActivity() {
             refresh()
         }
         viewBinding.appHooksAdd.setOnClickListener {
-            ruleResultContract.launch(Intent(this@App, Rule::class.java).apply {
+            ruleResultContract.launch(Intent(application, Rule::class.java).apply {
                 putExtra("pkg", pkg)
                 putExtra("version", version)
             }, ActivityOptionsCompat.makeSceneTransitionAnimation(this))
@@ -933,7 +933,7 @@ class App : AppCompatActivity() {
                     d.colorFilter = if (it) null else grayColorFilter
                 }
                 viewBinding.appIcon.setImageDrawable(iconTemp)
-                val c = getPrimaryColor(iconTemp, this@App)
+                val c = getPrimaryColor(iconTemp, application)
                 viewBinding.appCard.setCardBackgroundColor((c.third or 0xff000000.toInt()) and 0x33ffffff)
                 viewBinding.appText.setTextColor(c.first)
                 viewBinding.appVersion.setTextColor(c.second)
@@ -1348,7 +1348,7 @@ class App : AppCompatActivity() {
                 }
                 v.isClickable = true
                 v.setOnClickListener {
-                    ruleResultContract.launch(Intent(this@App, Rule::class.java).apply {
+                    ruleResultContract.launch(Intent(application, Rule::class.java).apply {
                         putExtra("pkg", pkg)
                         putExtra("version", version)
                         putExtra("rule_name", ruleName)

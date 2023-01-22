@@ -37,7 +37,6 @@ import com.highcapable.yukihookapi.YukiHookAPI.Status.isXposedModuleActive
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import io.noties.markwon.Markwon
-import java.net.URLEncoder
 
 class Main : AppCompatActivity() {
     private val application = ModuleApplication.appContext as Application
@@ -109,7 +108,7 @@ class Main : AppCompatActivity() {
                             }.show()
                         }
                         R.id.main_toolbar_menu_advance -> {
-                            val intent = Intent(this@Main, Advance::class.java)
+                            val intent = Intent(application, Advance::class.java)
                             startActivity(intent)
                         }
                     }
@@ -132,7 +131,7 @@ class Main : AppCompatActivity() {
                 application.toast(getString(R.string.please_enable_the_module_first), false)
                 return@setOnClickListener
             }
-            val intent = Intent(this, Resources::class.java)
+            val intent = Intent(application, Resources::class.java)
             startActivity(intent)
         }
         viewBinding.mainSupportCard.setOnClickListener {

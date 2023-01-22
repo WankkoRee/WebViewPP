@@ -53,7 +53,7 @@ class Apps : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         viewBinding.appsLoading.setColorSchemeColors(getColor(R.color.backgroundSuccess), getColor(R.color.backgroundInfo), getColor(R.color.backgroundError))
-        viewBinding.appsList.layoutManager = LinearLayoutManager(this)
+        viewBinding.appsList.layoutManager = LinearLayoutManager(this@Apps)
         adapter = AppListItemAdapter(lifecycleScope)
         viewBinding.appsList.adapter = adapter
         refresh()
@@ -98,7 +98,7 @@ class Apps : AppCompatActivity() {
             }
         }
         viewBinding.appsToolbarMenu.setOnClickListener {
-            PopupMenu(this, it).apply {
+            PopupMenu(this@Apps, it).apply {
                 menuInflater.inflate(R.menu.apps_toolbar_menu, menu)
                 with(modulePrefs("apps")) {
                     menu.findItem(R.id.apps_toolbar_menu_show_system_app).isChecked = get(AppsSP.show_system_app)
@@ -144,7 +144,7 @@ class Apps : AppCompatActivity() {
             val appList = mutableListOf<AppListItemAdapter.AppListItem>()
             val apps = packageManager.getInstalledPackages(PackageManager.GET_META_DATA or PackageManager.GET_PERMISSIONS)
             for (app in apps) {
-                val appItem = with(this@Apps.modulePrefs("apps_${app.packageName}")) {
+                val appItem = with(modulePrefs("apps_${app.packageName}")) {
                     val hooks = getSet(AppSP.hooks)
                     AppListItemAdapter.AppListItem(
                         app.applicationInfo.loadIcon(packageManager),

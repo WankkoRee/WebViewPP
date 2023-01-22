@@ -126,7 +126,7 @@ class Advance : AppCompatActivity() {
             refresh()
         }
 
-        viewBinding.advanceLicenseAuthorCard.setCardBackgroundColor((getPrimaryColor(viewBinding.advanceLicenseAuthorIcon.drawable, this@Advance).first or 0xff000000.toInt()) and 0x33ffffff)
+        viewBinding.advanceLicenseAuthorCard.setCardBackgroundColor((getPrimaryColor(viewBinding.advanceLicenseAuthorIcon.drawable, application).first or 0xff000000.toInt()) and 0x33ffffff)
         viewBinding.advanceLicenseAuthorButtonGithub.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/WankkoRee")))
         }
@@ -134,13 +134,13 @@ class Advance : AppCompatActivity() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("mailto://wkr@wkr.moe")))
         }
 
-        viewBinding.advanceLicenseYukiCard.setCardBackgroundColor((getPrimaryColor(viewBinding.advanceLicenseYukiIcon.drawable, this@Advance).first or 0xff000000.toInt()) and 0x33ffffff)
+        viewBinding.advanceLicenseYukiCard.setCardBackgroundColor((getPrimaryColor(viewBinding.advanceLicenseYukiIcon.drawable, application).first or 0xff000000.toInt()) and 0x33ffffff)
         viewBinding.advanceLicenseYukiDesc.text = getString(R.string.this_module_is_constructed_using_yukihookapi) + "\n" + getString(R.string.advance_yuki_version_text, YukiHookAPI.API_VERSION_NAME, YukiHookAPI.API_VERSION_CODE)
         viewBinding.advanceLicenseYukiButtonGithub.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/fankes/YukiHookAPI")))
         }
 
-        viewBinding.advanceLicenseModuleCard.setCardBackgroundColor((getPrimaryColor(viewBinding.advanceLicenseModuleIcon.drawable, this@Advance).first or 0xff000000.toInt()) and 0x33ffffff)
+        viewBinding.advanceLicenseModuleCard.setCardBackgroundColor((getPrimaryColor(viewBinding.advanceLicenseModuleIcon.drawable, application).first or 0xff000000.toInt()) and 0x33ffffff)
         viewBinding.advanceLicenseModuleIcon.setImageDrawable(packageManager.getApplicationIcon(BuildConfig.APPLICATION_ID))
         viewBinding.advanceLicenseModuleButtonGithub.setOnClickListener {
             application.toast(getString(R.string.if_you_find_this_project_useful_please_star_this_project), false)

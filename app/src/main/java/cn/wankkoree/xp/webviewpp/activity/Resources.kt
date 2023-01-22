@@ -43,13 +43,11 @@ class Resources : AppCompatActivity() {
 
     private val application = ModuleApplication.appContext as Application
     private lateinit var viewBinding : ActivityResourcesBinding
-    private lateinit var context : Context
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityResourcesBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-        context = this
 
         refresh()
 
@@ -57,7 +55,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesVconsoleVersion.adapter = adapter
                     viewBinding.resourcesVconsoleVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -73,7 +71,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole-sources")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesVconsolePluginSourcesVersion.adapter = adapter
                     viewBinding.resourcesVconsolePluginSourcesVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -89,7 +87,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole-stats-plugin")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesVconsolePluginStatsVersion.adapter = adapter
                     viewBinding.resourcesVconsolePluginStatsVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -105,7 +103,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/vue-vconsole-devtools")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesVconsolePluginVueDevtoolsVersion.adapter = adapter
                     viewBinding.resourcesVconsolePluginVueDevtoolsVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -121,7 +119,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/vconsole-outputlog-plugin")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesVconsolePluginOutputlogVersion.adapter = adapter
                     viewBinding.resourcesVconsolePluginOutputlogVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -137,7 +135,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesErudaVersion.adapter = adapter
                     viewBinding.resourcesErudaVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -153,7 +151,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-fps")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesErudaPluginFpsVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginFpsVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -169,7 +167,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-features")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesErudaPluginFeaturesVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginFeaturesVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -185,7 +183,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-timing")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesErudaPluginTimingVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginTimingVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -201,7 +199,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-memory")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesErudaPluginMemoryVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginMemoryVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -217,7 +215,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-code")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesErudaPluginCodeVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginCodeVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -233,7 +231,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-benchmark")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesErudaPluginBenchmarkVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginBenchmarkVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -249,7 +247,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-geolocation")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesErudaPluginGeolocationVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginGeolocationVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -265,7 +263,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-dom")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesErudaPluginDomVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginDomVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -281,7 +279,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-orientation")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesErudaPluginOrientationVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginOrientationVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -297,7 +295,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("https://data.jsdelivr.com/v1/package/npm/eruda-touches")
             .responseObject<Versions> { _, _, result ->
                 result.fold({
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, it.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, it.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesErudaPluginTouchesVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginTouchesVersion.setSelection(adapter.getPosition(it.tags.latest))
@@ -313,7 +311,7 @@ class Resources : AppCompatActivity() {
         Fuel.get("${modulePrefs("module").get(ModuleSP.data_source)}/resources/nebulaucsdk/metadata.json")
             .responseObject<Metadata> { _, _, result ->
                 result.fold({ metadata ->
-                    val adapter = ArrayAdapter(context, R.layout.component_spinneritem, metadata.versions)
+                    val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, metadata.versions)
                     adapter.setDropDownViewResource(R.layout.component_spinneritem)
                     viewBinding.resourcesNebulaucsdkVersion.adapter = adapter
                     viewBinding.resourcesNebulaucsdkVersion.setSelection(adapter.getPosition(metadata.latest))
@@ -752,7 +750,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesVconsoleLocal.apply {
             removeAllViews()
             vConsoleVersions.forEach { vConsoleVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = vConsoleVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -781,7 +779,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesVconsolePluginSourcesLocal.apply {
             removeAllViews()
             vConsolePluginSourcesVersions.forEach { vConsolePluginSourcesVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = vConsolePluginSourcesVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -810,7 +808,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesVconsolePluginStatsLocal.apply {
             removeAllViews()
             vConsolePluginStatsVersions.forEach { vConsolePluginStatsVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = vConsolePluginStatsVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -839,7 +837,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesVconsolePluginVueDevtoolsLocal.apply {
             removeAllViews()
             vConsolePluginVueDevtoolsVersions.forEach { vConsolePluginVueDevtoolsVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = vConsolePluginVueDevtoolsVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -868,7 +866,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesVconsolePluginOutputlogLocal.apply {
             removeAllViews()
             vConsolePluginOutputlogVersions.forEach { vConsolePluginOutputlogVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = vConsolePluginOutputlogVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -897,7 +895,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesErudaLocal.apply {
             removeAllViews()
             erudaVersions.forEach { erudaVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = erudaVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -926,7 +924,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesErudaPluginFpsLocal.apply {
             removeAllViews()
             erudaPluginFpsVersions.forEach { erudaPluginFpsVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = erudaPluginFpsVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -955,7 +953,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesErudaPluginFeaturesLocal.apply {
             removeAllViews()
             erudaPluginFeaturesVersions.forEach { erudaPluginFeaturesVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = erudaPluginFeaturesVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -984,7 +982,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesErudaPluginTimingLocal.apply {
             removeAllViews()
             erudaPluginTimingVersions.forEach { erudaPluginTimingVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = erudaPluginTimingVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -1013,7 +1011,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesErudaPluginMemoryLocal.apply {
             removeAllViews()
             erudaPluginMemoryVersions.forEach { erudaPluginMemoryVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = erudaPluginMemoryVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -1042,7 +1040,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesErudaPluginCodeLocal.apply {
             removeAllViews()
             erudaPluginCodeVersions.forEach { erudaPluginCodeVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = erudaPluginCodeVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -1071,7 +1069,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesErudaPluginBenchmarkLocal.apply {
             removeAllViews()
             erudaPluginBenchmarkVersions.forEach { erudaPluginBenchmarkVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = erudaPluginBenchmarkVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -1100,7 +1098,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesErudaPluginGeolocationLocal.apply {
             removeAllViews()
             erudaPluginGeolocationVersions.forEach { erudaPluginGeolocationVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = erudaPluginGeolocationVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -1129,7 +1127,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesErudaPluginDomLocal.apply {
             removeAllViews()
             erudaPluginDomVersions.forEach { erudaPluginDomVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = erudaPluginDomVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -1158,7 +1156,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesErudaPluginOrientationLocal.apply {
             removeAllViews()
             erudaPluginOrientationVersions.forEach { erudaPluginOrientationVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = erudaPluginOrientationVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -1187,7 +1185,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesErudaPluginTouchesLocal.apply {
             removeAllViews()
             erudaPluginTouchesVersions.forEach { erudaPluginTouchesVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = erudaPluginTouchesVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
@@ -1216,7 +1214,7 @@ class Resources : AppCompatActivity() {
         viewBinding.resourcesNebulaucsdkLocal.apply {
             removeAllViews()
             nebulaUCSDKVersions.forEach { nebulaUCSDKVersion ->
-                addView(Tag(context).apply {
+                addView(Tag(this@Resources).apply {
                     text = nebulaUCSDKVersion
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
