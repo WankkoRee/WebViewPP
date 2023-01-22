@@ -26,8 +26,8 @@ android {
         applicationId "cn.wankkoree.xp.webviewpp"
         minSdk 27
         targetSdk 33
-        versionCode 15
-        versionName "v3.0.0.$git_count.$git_hash"
+        versionCode 16
+        versionName "v3.1.0.$git_count.$git_hash"
         buildConfigField("String", "APP_CENTER_SECRET", "\"${file('./APP_CENTER_SECRET').readLines()[0]}\"")
     }
 

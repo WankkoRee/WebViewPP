@@ -21,7 +21,7 @@ Enable WebView debugging and add vConsole in it. Support WebView, TBS X5, UC U4,
 
 ## Contacts / 联络
 
-- Telegram Group: [WebViewPP > Chat [zh/NSFW]](https://t.me/WebViewPPChat)
+- Telegram Group: [WebViewPP > Chat [zh/en/SFW]](https://t.me/WebViewPPChat)
 - Telegram Channel: [WebViewPP > UPDATES](https://t.me/WebViewPP)
 - GitHub Issue: [Issues · WankkoRee/WebViewPP](https://github.com/WankkoRee/WebViewPP/issues)
 - E-Mail: [wkr@wkr.moe](mailto:wkr@wkr.moe)
