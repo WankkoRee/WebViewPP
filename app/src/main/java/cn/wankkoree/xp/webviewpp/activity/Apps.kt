@@ -184,6 +184,7 @@ class Apps : AppCompatActivity() {
     }
 
     class AppListItemAdapter(private val lifecycleScope : LifecycleCoroutineScope) : RecyclerView.Adapter<AppListItemAdapter.ViewHolder>() {
+        private val application = ModuleApplication.appContext as Application
         private var context : Apps? = null
         private var rawData : List<AppListItem> = emptyList()
         private val filteredData : MutableList<AppListItem> = mutableListOf()
@@ -297,7 +298,7 @@ class Apps : AppCompatActivity() {
         }
 
         fun update(p: Int) {
-            with(context!!.modulePrefs("apps_${filteredData[p].pkg}")) {
+            with(application.modulePrefs("apps_${filteredData[p].pkg}")) {
                 val hooks = getSet(AppSP.hooks)
                 filteredData[p].isEnabled = get(AppSP.is_enabled)
                 filteredData[p].ruleNumbers = hooks.size
@@ -330,7 +331,7 @@ class Apps : AppCompatActivity() {
     }
 
     class AppResultContract : ActivityResultContract<Intent, Int>() {
-        var p = 0
+        private var p = 0
         override fun createIntent(context: Context, input: Intent): Intent {
             return input.also {
                 p = it.getIntExtra("p", -1)
