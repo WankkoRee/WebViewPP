@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +35,7 @@ import com.google.gson.GsonBuilder
 import com.highcapable.yukihookapi.YukiHookAPI.Status.Executor
 import com.highcapable.yukihookapi.YukiHookAPI.Status.isXposedModuleActive
 import com.highcapable.yukihookapi.hook.factory.prefs
+import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import io.noties.markwon.Markwon
 
@@ -205,7 +205,8 @@ class Main : AppCompatActivity() {
                         }
                     }
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.latest_version)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.latest_version)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.latest_version))), null)
                 })
             }
     }

@@ -1,10 +1,8 @@
 package cn.wankkoree.xp.webviewpp.activity
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.lifecycle.lifecycleScope
@@ -28,6 +26,7 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.requests.CancellableRequest
 import com.github.kittinunf.fuel.gson.responseObject
 import com.highcapable.yukihookapi.hook.factory.prefs
+import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import com.highcapable.yukihookapi.hook.xposed.prefs.data.PrefsData
 import kotlinx.coroutines.Dispatchers
@@ -64,7 +63,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsoleDownload.isEnabled = true
                     prefs("resources").edit { put(ResourcesSP.vConsole_latest, it.tags.latest) }
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.vconsole))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.vconsole)), false)
                 })
             }
@@ -80,7 +80,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsolePluginSourcesDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.vConsole_plugin_sources_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_sources)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_sources)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.vconsole_plugin_sources))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.vconsole_plugin_sources)), false)
                 })
             }
@@ -96,7 +97,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsolePluginStatsDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.vConsole_plugin_stats_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_stats)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_stats)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.vconsole_plugin_stats))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.vconsole_plugin_stats)), false)
                 })
             }
@@ -112,7 +114,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsolePluginVueDevtoolsDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.vConsole_plugin_vue_devtools_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_vue_devtools)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_vue_devtools)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.vconsole_plugin_vue_devtools))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.vconsole_plugin_vue_devtools)), false)
                 })
             }
@@ -128,7 +131,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsolePluginOutputlogDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.vConsole_plugin_outputlog_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_outputlog)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_outputlog)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.vconsole_plugin_outputlog))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.vconsole_plugin_outputlog)), false)
                 })
             }
@@ -144,7 +148,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaDownload.isEnabled = true
                     prefs("resources").edit { put(ResourcesSP.eruda_latest, it.tags.latest) }
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.eruda))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda)), false)
                 })
             }
@@ -160,7 +165,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginFpsDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.eruda_plugin_fps_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_fps)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_fps)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.eruda_plugin_fps))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_fps)), false)
                 })
             }
@@ -176,7 +182,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginFeaturesDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.eruda_plugin_features_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_features)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_features)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.eruda_plugin_features))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_features)), false)
                 })
             }
@@ -192,7 +199,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginTimingDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.eruda_plugin_timing_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_timing)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_timing)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.eruda_plugin_timing))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_timing)), false)
                 })
             }
@@ -208,7 +216,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginMemoryDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.eruda_plugin_memory_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_memory)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_memory)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.eruda_plugin_memory))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_memory)), false)
                 })
             }
@@ -224,7 +233,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginCodeDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.eruda_plugin_code_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_code)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_code)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.eruda_plugin_code))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_code)), false)
                 })
             }
@@ -240,7 +250,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginBenchmarkDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.eruda_plugin_benchmark_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_benchmark)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_benchmark)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.eruda_plugin_benchmark))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_benchmark)), false)
                 })
             }
@@ -256,7 +267,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginGeolocationDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.eruda_plugin_geolocation_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_geolocation)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_geolocation)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.eruda_plugin_geolocation))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_geolocation)), false)
                 })
             }
@@ -272,7 +284,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginDomDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.eruda_plugin_dom_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_dom)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_dom)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.eruda_plugin_dom))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_dom)), false)
                 })
             }
@@ -288,7 +301,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginOrientationDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.eruda_plugin_orientation_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_orientation)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_orientation)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.eruda_plugin_orientation))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_orientation)), false)
                 })
             }
@@ -304,7 +318,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginTouchesDownload.isEnabled = true
                     prefs("resources").edit {put(ResourcesSP.eruda_plugin_touches_latest, it.tags.latest)}
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_touches)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_touches)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.eruda_plugin_touches))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_touches)), false)
                 })
             }
@@ -320,7 +335,8 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesNebulaucsdkDownload.isEnabled = true
                     prefs("resources").edit { put(ResourcesSP.nebulaUCSDK_latest, metadata.latest) }
                 }, { e ->
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.nebulaucsdk)), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.nebulaucsdk)), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, getString(R.string.nebulaucsdk))), null)
                     application.toast(getString(R.string.pull_failed, getString(R.string.nebulaucsdk)), false)
                 })
             }
@@ -424,7 +440,8 @@ class Resources : AppCompatActivity() {
                             }
                         }, { e ->
                             downloadState.first[i] = DownloadState.Failed
-                            Log.e(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
+                            loggerE(BuildConfig.APPLICATION_ID, getString(R.string.download_failed), e)
+                            AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.download_failed)), null)
                         })
 
                         // 统一处理

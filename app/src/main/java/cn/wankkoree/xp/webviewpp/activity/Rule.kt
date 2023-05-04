@@ -3,7 +3,6 @@ package cn.wankkoree.xp.webviewpp.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.transition.Slide
-import android.util.Log
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import cn.wankkoree.xp.webviewpp.BuildConfig
@@ -25,6 +24,7 @@ import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.highcapable.yukihookapi.hook.factory.prefs
+import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 
 class Rule : AppCompatActivity() {
@@ -285,7 +285,8 @@ class Rule : AppCompatActivity() {
                                     dialogBinding.dialogCloudRulesRules.addView(v)
                                 }
                             }, { e ->
-                                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules)), e)
+                                loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules)), e)
+                                AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules))), null)
                                 application.toast(getString(R.string.pull_failed, pkg+' '+version+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), false)
                                 dialog.cancel()
                             })
@@ -302,7 +303,8 @@ class Rule : AppCompatActivity() {
                                 application.toast(getString(R.string.no_matching_version), false)
                             }
                         }, { e ->
-                            Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules)), e)
+                            loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules)), e)
+                            AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules))), null)
                             application.toast(getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), false)
                             dialog.cancel()
                         })
@@ -404,7 +406,7 @@ class Rule : AppCompatActivity() {
                             )
                         )
                         else -> {
-                            Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method))
+                            loggerE(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method))
                             "{}"
                         }
                     }) }
@@ -497,7 +499,7 @@ class Rule : AppCompatActivity() {
                     viewBinding.ruleReplaceNebulaUCSDK.visibility = View.GONE
                     viewBinding.ruleHookCrossWalk.visibility = View.GONE
                     viewBinding.ruleHookXWebView.visibility = View.GONE
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method))
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method))
                 }
             }
             refreshCode()
@@ -602,7 +604,8 @@ class Rule : AppCompatActivity() {
                     }
                 }
             } catch (e: Exception) {
-                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
+                loggerE(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
+                AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.parse_failed)), null)
                 application.toast(getString(R.string.parse_failed), false)
                 return
             }

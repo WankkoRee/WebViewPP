@@ -12,7 +12,6 @@ import android.os.Build
 import android.os.Bundle
 import android.transition.Slide
 import android.util.Base64
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -41,6 +40,7 @@ import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.highcapable.yukihookapi.hook.factory.prefs
+import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 
 class App : AppCompatActivity() {
@@ -835,14 +835,15 @@ class App : AppCompatActivity() {
                                             }
                                         }
                                         else -> {
-                                            Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method)+": "+targetRule.name)
+                                            loggerE(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method)+": "+targetRule.name)
                                             application.toast(getString(R.string.unknown_hook_method)+"\n"+targetRule.name, false)
                                             return@forEach // continue
                                         }
                                     }
                                 }
                             } catch (e: Exception) {
-                                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
+                                loggerE(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
+                                AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.parse_failed)), null)
                                 application.toast(getString(R.string.parse_failed)+"\n"+getString(R.string.please_reset), false)
                                 return@forEach // continue
                             }
@@ -851,7 +852,8 @@ class App : AppCompatActivity() {
                             application.toast(getString(R.string.is_the_latest_version), false)
                         }
                     }, { e ->
-                        Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules)), e)
+                        loggerE(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules)), e)
+                        AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.pull_failed, pkg+' '+getString(R.string.cloud_rules))), null)
                         application.toast(getString(R.string.pull_failed, pkg+' '+version+' '+getString(R.string.cloud_rules))+'\n'+getString(R.string.please_set_custom_hook_rules_then_push_rules_to_rules_repos), false)
                     })
                 }
@@ -1345,7 +1347,8 @@ class App : AppCompatActivity() {
                         }
                     }
                 } catch (e: Exception) {
-                    Log.e(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
+                    loggerE(BuildConfig.APPLICATION_ID, getString(R.string.parse_failed), e)
+                    AppCenterTool.trackError(e, mapOf("msg" to getString(R.string.parse_failed)), null)
                     application.toast(getString(R.string.parse_failed)+"\n"+getString(R.string.please_reset), false)
                     return@forEach // continue
                 }

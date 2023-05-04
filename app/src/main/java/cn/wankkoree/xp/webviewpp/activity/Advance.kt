@@ -3,7 +3,6 @@ package cn.wankkoree.xp.webviewpp.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +18,7 @@ import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.highcapable.yukihookapi.YukiHookAPI
 import com.highcapable.yukihookapi.hook.factory.prefs
+import com.highcapable.yukihookapi.hook.log.loggerE
 import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 
 class Advance : AppCompatActivity() {
@@ -81,13 +81,13 @@ class Advance : AppCompatActivity() {
                             null
                         }
                     } ?: return@TestEvent
-                    Log.e(null, dataSource)
                     Fuel.get("$dataSource/rules/rules.json")
                         .responseObject<List<String>> { _, _, result ->
                             result.fold({
                                 application.toast(getString(R.string.available), false)
                             }, {
-                                Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unavailable), it)
+                                loggerE(BuildConfig.APPLICATION_ID, getString(R.string.unavailable), it)
+                                AppCenterTool.trackError(it, mapOf("msg" to getString(R.string.unavailable)), null)
                                 application.toast(getString(R.string.unavailable), false)
                             })
                         }

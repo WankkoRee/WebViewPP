@@ -9,6 +9,7 @@ import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.analytics.Analytics
 import com.microsoft.appcenter.analytics.EventProperties
 import com.microsoft.appcenter.crashes.Crashes
+import com.microsoft.appcenter.crashes.ingestion.models.ErrorAttachmentLog
 
 object AppCenterTool {
     private val application = ModuleApplication.appContext as Application
@@ -52,5 +53,15 @@ object AppCenterTool {
         if (!initialized) return
         if (!application.prefs("module").get(ModuleSP.app_center)) return
         Analytics.trackEvent(name, properties, flags)
+    }
+    fun trackError (throwable: Throwable) {
+        if (!initialized) return
+        if (!application.prefs("module").get(ModuleSP.app_center)) return
+        Crashes.trackError(throwable)
+    }
+    fun trackError (throwable: Throwable, properties: Map<String, String>?, attachments: Iterable<ErrorAttachmentLog>?) {
+        if (!initialized) return
+        if (!application.prefs("module").get(ModuleSP.app_center)) return
+        Crashes.trackError(throwable, properties, attachments)
     }
 }
