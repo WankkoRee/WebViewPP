@@ -27,12 +27,10 @@ class Main : IYukiHookXposedInit {
                 elements(TAG, PRIORITY, PACKAGE_NAME, USER_ID)
             }
             isDebug = debug
-            isEnableModulePrefsCache = true
             isEnableModuleAppResourcesCache = true
             isEnableHookModuleStatus = true
             isEnableHookSharedPreferences = false
             isEnableDataChannel = false
-            isEnableMemberCache = true
         }
     }
 

@@ -35,7 +35,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.GsonBuilder
 import com.highcapable.yukihookapi.YukiHookAPI.Status.Executor
 import com.highcapable.yukihookapi.YukiHookAPI.Status.isXposedModuleActive
-import com.highcapable.yukihookapi.hook.factory.modulePrefs
+import com.highcapable.yukihookapi.hook.factory.prefs
 import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import io.noties.markwon.Markwon
 
@@ -72,7 +72,7 @@ class Main : AppCompatActivity() {
             viewBinding.mainXposedText.visibility = View.GONE
         }
         refresh()
-        if (modulePrefs("module").get(ModuleSP.auto_check_update)) checkUpdate()
+        if (prefs("module").get(ModuleSP.auto_check_update)) checkUpdate()
 
         viewBinding.mainToolbarMenu.setOnClickListener {
             if (!isXposedModuleActive && !BuildConfig.DEBUG) {
@@ -89,18 +89,18 @@ class Main : AppCompatActivity() {
                                 setMessage(R.string.do_you_really_reset_all_configurations)
                                 setNegativeButton(R.string.cancel) { _, _ -> }
                                 setPositiveButton(R.string.confirm) { _, _ ->
-                                    with(modulePrefs) {
+                                    with(prefs()) {
                                         name("apps").getSet(AppsSP.enabled).forEach { pkg ->
-                                            name("apps_$pkg").clear()
+                                            name("apps_$pkg").edit { clear() }
                                         }
-                                        name("apps").clear()
+                                        name("apps").edit { clear() }
                                         name("resources").getSet(ResourcesSP.vConsole_versions).forEach { version ->
-                                            name("resources_vConsole_$version").clear()
+                                            name("resources_vConsole_$version").edit { clear() }
                                         }
                                         name("resources").getSet(ResourcesSP.nebulaUCSDK_versions).forEach { version ->
-                                            name("resources_nebulaUCSDK_$version").clear()
+                                            name("resources_nebulaUCSDK_$version").edit { clear() }
                                         }
-                                        name("resources").clear()
+                                        name("resources").edit { clear() }
                                     }
                                     application.toast(getString(R.string.reset_completed), false)
                                     refresh()
@@ -168,7 +168,7 @@ class Main : AppCompatActivity() {
     }
 
     private fun refresh() {
-        viewBinding.mainAppsNum.text = getString(R.string.main_apps_num, modulePrefs("apps").getSet(AppsSP.enabled).size)
+        viewBinding.mainAppsNum.text = getString(R.string.main_apps_num, prefs("apps").getSet(AppsSP.enabled).size)
     }
 
     private fun checkUpdate() {

@@ -27,7 +27,7 @@ import cn.wankkoree.xp.webviewpp.util.AppCenterTool
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.requests.CancellableRequest
 import com.github.kittinunf.fuel.gson.responseObject
-import com.highcapable.yukihookapi.hook.factory.modulePrefs
+import com.highcapable.yukihookapi.hook.factory.prefs
 import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import com.highcapable.yukihookapi.hook.xposed.prefs.data.PrefsData
 import kotlinx.coroutines.Dispatchers
@@ -62,7 +62,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsoleVersion.adapter = adapter
                     viewBinding.resourcesVconsoleVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesVconsoleDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.vConsole_latest, it.tags.latest)
+                    prefs("resources").edit { put(ResourcesSP.vConsole_latest, it.tags.latest) }
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.vconsole)), false)
@@ -78,7 +78,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsolePluginSourcesVersion.adapter = adapter
                     viewBinding.resourcesVconsolePluginSourcesVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesVconsolePluginSourcesDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.vConsole_plugin_sources_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.vConsole_plugin_sources_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_sources)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.vconsole_plugin_sources)), false)
@@ -94,7 +94,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsolePluginStatsVersion.adapter = adapter
                     viewBinding.resourcesVconsolePluginStatsVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesVconsolePluginStatsDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.vConsole_plugin_stats_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.vConsole_plugin_stats_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_stats)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.vconsole_plugin_stats)), false)
@@ -110,7 +110,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsolePluginVueDevtoolsVersion.adapter = adapter
                     viewBinding.resourcesVconsolePluginVueDevtoolsVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesVconsolePluginVueDevtoolsDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.vConsole_plugin_vue_devtools_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.vConsole_plugin_vue_devtools_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_vue_devtools)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.vconsole_plugin_vue_devtools)), false)
@@ -126,7 +126,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesVconsolePluginOutputlogVersion.adapter = adapter
                     viewBinding.resourcesVconsolePluginOutputlogVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesVconsolePluginOutputlogDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.vConsole_plugin_outputlog_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.vConsole_plugin_outputlog_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.vconsole_plugin_outputlog)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.vconsole_plugin_outputlog)), false)
@@ -142,7 +142,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaVersion.adapter = adapter
                     viewBinding.resourcesErudaVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesErudaDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.eruda_latest, it.tags.latest)
+                    prefs("resources").edit { put(ResourcesSP.eruda_latest, it.tags.latest) }
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda)), false)
@@ -158,7 +158,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginFpsVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginFpsVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesErudaPluginFpsDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_fps_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.eruda_plugin_fps_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_fps)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_fps)), false)
@@ -174,7 +174,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginFeaturesVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginFeaturesVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesErudaPluginFeaturesDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_features_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.eruda_plugin_features_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_features)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_features)), false)
@@ -190,7 +190,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginTimingVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginTimingVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesErudaPluginTimingDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_timing_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.eruda_plugin_timing_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_timing)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_timing)), false)
@@ -206,7 +206,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginMemoryVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginMemoryVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesErudaPluginMemoryDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_memory_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.eruda_plugin_memory_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_memory)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_memory)), false)
@@ -222,7 +222,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginCodeVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginCodeVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesErudaPluginCodeDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_code_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.eruda_plugin_code_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_code)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_code)), false)
@@ -238,7 +238,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginBenchmarkVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginBenchmarkVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesErudaPluginBenchmarkDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_benchmark_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.eruda_plugin_benchmark_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_benchmark)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_benchmark)), false)
@@ -254,7 +254,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginGeolocationVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginGeolocationVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesErudaPluginGeolocationDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_geolocation_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.eruda_plugin_geolocation_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_geolocation)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_geolocation)), false)
@@ -270,7 +270,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginDomVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginDomVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesErudaPluginDomDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_dom_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.eruda_plugin_dom_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_dom)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_dom)), false)
@@ -286,7 +286,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginOrientationVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginOrientationVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesErudaPluginOrientationDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_orientation_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.eruda_plugin_orientation_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_orientation)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_orientation)), false)
@@ -302,7 +302,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesErudaPluginTouchesVersion.adapter = adapter
                     viewBinding.resourcesErudaPluginTouchesVersion.setSelection(adapter.getPosition(it.tags.latest))
                     viewBinding.resourcesErudaPluginTouchesDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.eruda_plugin_touches_latest, it.tags.latest)
+                    prefs("resources").edit {put(ResourcesSP.eruda_plugin_touches_latest, it.tags.latest)}
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.eruda_plugin_touches)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.eruda_plugin_touches)), false)
@@ -310,7 +310,7 @@ class Resources : AppCompatActivity() {
             }
 
         viewBinding.resourcesNebulaucsdkDownload.isEnabled = false
-        Fuel.get("${modulePrefs("module").get(ModuleSP.data_source)}/resources/nebulaucsdk/metadata.json")
+        Fuel.get("${prefs("module").get(ModuleSP.data_source)}/resources/nebulaucsdk/metadata.json")
             .responseObject<Metadata> { _, _, result ->
                 result.fold({ metadata ->
                     val adapter = ArrayAdapter(this@Resources, R.layout.component_spinneritem, metadata.versions)
@@ -318,7 +318,7 @@ class Resources : AppCompatActivity() {
                     viewBinding.resourcesNebulaucsdkVersion.adapter = adapter
                     viewBinding.resourcesNebulaucsdkVersion.setSelection(adapter.getPosition(metadata.latest))
                     viewBinding.resourcesNebulaucsdkDownload.isEnabled = true
-                    modulePrefs("resources").put(ResourcesSP.nebulaUCSDK_latest, metadata.latest)
+                    prefs("resources").edit { put(ResourcesSP.nebulaUCSDK_latest, metadata.latest) }
                 }, { e ->
                     Log.e(BuildConfig.APPLICATION_ID, getString(R.string.pull_failed, getString(R.string.nebulaucsdk)), e)
                     application.toast(getString(R.string.pull_failed, getString(R.string.nebulaucsdk)), false)
@@ -417,9 +417,9 @@ class Resources : AppCompatActivity() {
                         val downloadState = downloadStates[view.id] ?: return@response
 
                         result.fold({
-                            with(modulePrefs) {
+                            with(prefs()) {
                                 name("resources_${name}_${version}")
-                                putString(task.second, if (base64) Base64.encodeToString(it, Base64.NO_WRAP) else String(it))
+                                edit { putString(task.second, if (base64) Base64.encodeToString(it, Base64.NO_WRAP) else String(it)) }
                                 downloadState.first[i] = DownloadState.Succeed
                             }
                         }, { e ->
@@ -430,7 +430,7 @@ class Resources : AppCompatActivity() {
                         // 统一处理
                         if (!downloadState.first.contains(DownloadState.Downloading)) { // 所有下载任务已结束
                             if (!downloadState.first.contains(DownloadState.Failed)) { // 所有下载任务已成功
-                                with(modulePrefs) {
+                                with(prefs()) {
                                     name("resources")
                                     try { put(hashSetPref, version) } catch (_: ValueAlreadyExistedInSet) {}
                                 }
@@ -704,8 +704,8 @@ class Resources : AppCompatActivity() {
                 version,
                 ResourcesSP.nebulaUCSDK_versions,
                 listOf(
-                    Pair("${modulePrefs("module").get(ModuleSP.data_source)}/resources/nebulaucsdk/$version/arm64-v8a.so", "nebulaUCSDK_arm64-v8a"),
-                    Pair("${modulePrefs("module").get(ModuleSP.data_source)}/resources/nebulaucsdk/$version/armeabi-v7a.so", "nebulaUCSDK_armeabi-v7a"),
+                    Pair("${prefs("module").get(ModuleSP.data_source)}/resources/nebulaucsdk/$version/arm64-v8a.so", "nebulaUCSDK_arm64-v8a"),
+                    Pair("${prefs("module").get(ModuleSP.data_source)}/resources/nebulaucsdk/$version/armeabi-v7a.so", "nebulaUCSDK_armeabi-v7a"),
                 ),
                 base64 = true
             )
@@ -730,7 +730,7 @@ class Resources : AppCompatActivity() {
         val erudaPluginOrientationVersions: HashSet<String>
         val erudaPluginTouchesVersions: HashSet<String>
         val nebulaUCSDKVersions: HashSet<String>
-        with(modulePrefs("resources")) {
+        with(prefs("resources")) {
             vConsoleVersions = getSet(ResourcesSP.vConsole_versions)
             vConsolePluginSourcesVersions = getSet(ResourcesSP.vConsole_plugin_sources_versions)
             vConsolePluginStatsVersions = getSet(ResourcesSP.vConsole_plugin_stats_versions)
@@ -757,7 +757,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -769,7 +769,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.vConsole_versions, version)
                             name("resources_vConsole_$version")
-                            remove("vConsole")
+                            edit { remove("vConsole") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -786,7 +786,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -798,7 +798,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.vConsole_plugin_sources_versions, version)
                             name("resources_vConsole_plugin_sources_$version")
-                            remove("vConsole_plugin_sources")
+                            edit { remove("vConsole_plugin_sources") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -815,7 +815,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -827,7 +827,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.vConsole_plugin_stats_versions, version)
                             name("resources_vConsole_plugin_stats_$version")
-                            remove("vConsole_plugin_stats")
+                            edit { remove("vConsole_plugin_stats") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -844,7 +844,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -856,7 +856,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.vConsole_plugin_vue_devtools_versions, version)
                             name("resources_vConsole_plugin_vue_devtools_$version")
-                            remove("vConsole_plugin_vue_devtools")
+                            edit { remove("vConsole_plugin_vue_devtools") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -873,7 +873,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -885,7 +885,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.vConsole_plugin_outputlog_versions, version)
                             name("resources_vConsole_plugin_outputlog_$version")
-                            remove("vConsole_plugin_outputlog")
+                            edit { remove("vConsole_plugin_outputlog") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -902,7 +902,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -914,7 +914,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.eruda_versions, version)
                             name("resources_eruda_$version")
-                            remove("eruda")
+                            edit { remove("eruda") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -931,7 +931,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -943,7 +943,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.eruda_plugin_fps_versions, version)
                             name("resources_eruda_plugin_fps_$version")
-                            remove("eruda_plugin_fps")
+                            edit { remove("eruda_plugin_fps") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -960,7 +960,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -972,7 +972,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.eruda_plugin_features_versions, version)
                             name("resources_eruda_plugin_features_$version")
-                            remove("eruda_plugin_features")
+                            edit { remove("eruda_plugin_features") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -989,7 +989,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -1001,7 +1001,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.eruda_plugin_timing_versions, version)
                             name("resources_eruda_plugin_timing_$version")
-                            remove("eruda_plugin_timing")
+                            edit { remove("eruda_plugin_timing") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -1018,7 +1018,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -1030,7 +1030,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.eruda_plugin_memory_versions, version)
                             name("resources_eruda_plugin_memory_$version")
-                            remove("eruda_plugin_memory")
+                            edit { remove("eruda_plugin_memory") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -1047,7 +1047,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -1059,7 +1059,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.eruda_plugin_code_versions, version)
                             name("resources_eruda_plugin_code_$version")
-                            remove("eruda_plugin_code")
+                            edit { remove("eruda_plugin_code") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -1076,7 +1076,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -1088,7 +1088,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.eruda_plugin_benchmark_versions, version)
                             name("resources_eruda_plugin_benchmark_$version")
-                            remove("eruda_plugin_benchmark")
+                            edit { remove("eruda_plugin_benchmark") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -1105,7 +1105,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -1117,7 +1117,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.eruda_plugin_geolocation_versions, version)
                             name("resources_eruda_plugin_geolocation_$version")
-                            remove("eruda_plugin_geolocation")
+                            edit { remove("eruda_plugin_geolocation") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -1134,7 +1134,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -1146,7 +1146,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.eruda_plugin_dom_versions, version)
                             name("resources_eruda_plugin_dom_$version")
-                            remove("eruda_plugin_dom")
+                            edit { remove("eruda_plugin_dom") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -1163,7 +1163,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -1175,7 +1175,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.eruda_plugin_orientation_versions, version)
                             name("resources_eruda_plugin_orientation_$version")
-                            remove("eruda_plugin_orientation")
+                            edit { remove("eruda_plugin_orientation") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -1192,7 +1192,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -1204,7 +1204,7 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.eruda_plugin_touches_versions, version)
                             name("resources_eruda_plugin_touches_$version")
-                            remove("eruda_plugin_touches")
+                            edit { remove("eruda_plugin_touches") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()
@@ -1221,7 +1221,7 @@ class Resources : AppCompatActivity() {
                     color = getColor(R.color.backgroundInfo)
                     setOnLongClickListener { t ->
                         val version = (t as Tag).text as String
-                        with(modulePrefs) {
+                        with(prefs()) {
                             name("apps")
                             getSet(AppsSP.enabled).forEach { pkg ->
                                 name("apps_$pkg")
@@ -1233,8 +1233,8 @@ class Resources : AppCompatActivity() {
                             name("resources")
                             remove(ResourcesSP.nebulaUCSDK_versions, version)
                             name("resources_nebulaUCSDK_$version")
-                            remove("nebulaUCSDK_arm64-v8a")
-                            remove("nebulaUCSDK_armeabi-v7a")
+                            edit { remove("nebulaUCSDK_arm64-v8a") }
+                            edit { remove("nebulaUCSDK_armeabi-v7a") }
                         }
                         application.toast(getString(R.string.delete_completed), false)
                         refresh()

@@ -24,7 +24,7 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import com.highcapable.yukihookapi.hook.factory.modulePrefs
+import com.highcapable.yukihookapi.hook.factory.prefs
 import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 
 class Rule : AppCompatActivity() {
@@ -66,7 +66,7 @@ class Rule : AppCompatActivity() {
                 setView(dialogBinding.root)
             }.show().also { dialog ->
                 dialogBinding.dialogCloudRulesVersions.doAfterTextChanged { version ->
-                    Fuel.get("${modulePrefs("module").get(ModuleSP.data_source)}/rules/$pkg/$version.json")
+                    Fuel.get("${prefs("module").get(ModuleSP.data_source)}/rules/$pkg/$version.json")
                         .responseObject<HookRules> { _, _, result ->
                             result.fold({ rules ->
                                 dialogBinding.dialogCloudRulesRules.removeAllViews()
@@ -291,7 +291,7 @@ class Rule : AppCompatActivity() {
                             })
                         }
                 }
-                Fuel.get("${modulePrefs("module").get(ModuleSP.data_source)}/rules/$pkg/metadata.json")
+                Fuel.get("${prefs("module").get(ModuleSP.data_source)}/rules/$pkg/metadata.json")
                     .responseObject<Metadata> { _, _, result ->
                         result.fold({ metadata ->
                             dialogBinding.dialogCloudRulesVersions.setSimpleItems(metadata.versions.toTypedArray())
@@ -322,7 +322,7 @@ class Rule : AppCompatActivity() {
                 application.toast(getString(R.string.s_cannot_be_empty, getString(R.string.rule_type)), false)
                 return@setOnClickListener
             } else {
-                with(modulePrefs("apps_$pkg")) {
+                with(prefs("apps_$pkg")) {
                     try {
                         put(AppSP.hooks, name)
                     } catch (_: ValueAlreadyExistedInSet) {
@@ -333,9 +333,9 @@ class Rule : AppCompatActivity() {
                     }
                     if (ruleName != null && ruleName != name) { // 修改名称
                         remove(AppSP.hooks, ruleName!!)
-                        remove("hook_entry_${ruleName!!}")
+                        edit { remove("hook_entry_${ruleName!!}") }
                     }
-                    putString("hook_entry_$name", when (type) {
+                    edit { putString("hook_entry_$name", when (type) {
                         // TODO: 添加更多 hook 方法
                         "hookWebView" -> Gson().toJson(
                             HookRules.HookRuleWebView(
@@ -407,7 +407,7 @@ class Rule : AppCompatActivity() {
                             Log.e(BuildConfig.APPLICATION_ID, getString(R.string.unknown_hook_method))
                             "{}"
                         }
-                    })
+                    }) }
                 }
                 finishAfterTransition()
             }
@@ -540,7 +540,7 @@ class Rule : AppCompatActivity() {
             viewBinding.ruleHookMethod.setText("", false)
         } else {
             viewBinding.ruleName.setText(ruleName)
-            val hookJson = modulePrefs("apps_$pkg").getString("hook_entry_$ruleName", "{}")
+            val hookJson = prefs("apps_$pkg").getString("hook_entry_$ruleName", "{}")
             try {
                 when(Gson().fromJson(hookJson, HookRules.HookRule::class.java).name) {
                     // TODO: 添加更多 hook 方法

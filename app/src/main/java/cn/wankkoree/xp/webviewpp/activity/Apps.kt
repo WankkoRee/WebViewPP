@@ -33,7 +33,7 @@ import cn.wankkoree.xp.webviewpp.data.AppsSP
 import cn.wankkoree.xp.webviewpp.data.getSet
 import cn.wankkoree.xp.webviewpp.databinding.ActivityAppsBinding
 import cn.wankkoree.xp.webviewpp.util.AppCenterTool
-import com.highcapable.yukihookapi.hook.factory.modulePrefs
+import com.highcapable.yukihookapi.hook.factory.prefs
 import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -68,7 +68,7 @@ class Apps : AppCompatActivity() {
             }
         }
         viewBinding.appsToolbarSearchValue.doAfterTextChanged {
-            with(modulePrefs("apps")) {
+            with(prefs("apps")) {
                 adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, it.toString(), true)
             }
         }
@@ -86,7 +86,7 @@ class Apps : AppCompatActivity() {
                 viewBinding.appsToolbarSearch.visibility = View.VISIBLE
                 viewBinding.appsToolbarSearchValue.requestFocus()
                 isSearching = true
-                with(modulePrefs("apps")) {
+                with(prefs("apps")) {
                     adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearchValue.text.toString(), true)
                 }
             } else {
@@ -94,7 +94,7 @@ class Apps : AppCompatActivity() {
                 viewBinding.appsToolbarName.visibility = View.VISIBLE
                 viewBinding.appsToolbarSearchBtn.visibility = View.VISIBLE
                 isSearching = false
-                with(modulePrefs("apps")) {
+                with(prefs("apps")) {
                     adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearchValue.text.toString(), true)
                 }
             }
@@ -102,21 +102,21 @@ class Apps : AppCompatActivity() {
         viewBinding.appsToolbarMenu.setOnClickListener {
             PopupMenu(this@Apps, it).apply {
                 menuInflater.inflate(R.menu.apps_toolbar_menu, menu)
-                with(modulePrefs("apps")) {
+                with(prefs("apps")) {
                     menu.findItem(R.id.apps_toolbar_menu_show_system_app).isChecked = get(AppsSP.show_system_app)
                     menu.findItem(R.id.apps_toolbar_menu_show_no_network).isChecked = get(AppsSP.show_no_network)
                 }
                 setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.apps_toolbar_menu_refresh ->  refresh()
-                        R.id.apps_toolbar_menu_show_system_app -> with(modulePrefs("apps")) {
+                        R.id.apps_toolbar_menu_show_system_app -> with(prefs("apps")) {
                             it.isChecked = !it.isChecked
-                            put(AppsSP.show_system_app, it.isChecked)
+                            edit { put(AppsSP.show_system_app, it.isChecked) }
                             adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearchValue.text.toString(), true)
                         }
-                        R.id.apps_toolbar_menu_show_no_network -> with(modulePrefs("apps")) {
+                        R.id.apps_toolbar_menu_show_no_network -> with(prefs("apps")) {
                             it.isChecked = !it.isChecked
-                            put(AppsSP.show_no_network, it.isChecked)
+                            edit { put(AppsSP.show_no_network, it.isChecked) }
                             adapter.filter(get(AppsSP.show_system_app), get(AppsSP.show_no_network), isSearching, viewBinding.appsToolbarSearchValue.text.toString(), true)
                         }
                     }
@@ -133,7 +133,7 @@ class Apps : AppCompatActivity() {
         if (isSearching) {
             viewBinding.appsToolbarSearchBtn.callOnClick()
         } else {
-            super.onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
@@ -146,7 +146,7 @@ class Apps : AppCompatActivity() {
             val appList = mutableListOf<AppListItemAdapter.AppListItem>()
             val apps = packageManager.getInstalledPackages(PackageManager.GET_META_DATA or PackageManager.GET_PERMISSIONS)
             for (app in apps) {
-                val appItem = with(modulePrefs("apps_${app.packageName}")) {
+                val appItem = with(prefs("apps_${app.packageName}")) {
                     val hooks = getSet(AppSP.hooks)
                     AppListItemAdapter.AppListItem(
                         app.applicationInfo.loadIcon(packageManager),
@@ -164,7 +164,7 @@ class Apps : AppCompatActivity() {
                 appList.add(appItem)
             }
             lifecycleScope.launch(Dispatchers.Main) {
-                with(modulePrefs("apps")) {
+                with(prefs("apps")) {
                     adapter.init(
                         appList.sortedWith(
                             compareByDescending<AppListItemAdapter.AppListItem>{it.isEnabled}
@@ -298,7 +298,7 @@ class Apps : AppCompatActivity() {
         }
 
         fun update(p: Int) {
-            with(application.modulePrefs("apps_${filteredData[p].pkg}")) {
+            with(application.prefs("apps_${filteredData[p].pkg}")) {
                 val hooks = getSet(AppSP.hooks)
                 filteredData[p].isEnabled = get(AppSP.is_enabled)
                 filteredData[p].ruleNumbers = hooks.size

@@ -40,7 +40,7 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import com.highcapable.yukihookapi.hook.factory.modulePrefs
+import com.highcapable.yukihookapi.hook.factory.prefs
 import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 
 class App : AppCompatActivity() {
@@ -93,7 +93,7 @@ class App : AppCompatActivity() {
                 setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.app_toolbar_share_export_to_clip -> {
-                            with(modulePrefs("apps_$pkg")) {
+                            with(prefs("apps_$pkg")) {
                                 val hooks = getSet(AppSP.hooks).toList()
                                 val clipHeader = Base64.encodeToString(hooks.joinToString("|").encodeToByteArray(), Base64.NO_WRAP or Base64.URL_SAFE or Base64.NO_PADDING)
                                 val clipBody = hooks.joinToString("|") { ruleName ->
@@ -114,11 +114,11 @@ class App : AppCompatActivity() {
                                     Base64.decode(encodingRule, Base64.NO_WRAP or Base64.URL_SAFE or Base64.NO_PADDING).decodeToString()
                                 }
                                 if (clipHeader.size == clipBody.size) {
-                                    with(modulePrefs("apps_$pkg")) {
+                                    with(prefs("apps_$pkg")) {
                                         for (i in clipHeader.indices) {
                                             try {
                                                 put(AppSP.hooks, clipHeader[i])
-                                                putString("hook_entry_${clipHeader[i]}", clipBody[i])
+                                                edit { putString("hook_entry_${clipHeader[i]}", clipBody[i]) }
                                             } catch (_ : ValueAlreadyExistedInSet) {
                                                 application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "${clipHeader[i]}" """), false)
                                             }
@@ -144,13 +144,13 @@ class App : AppCompatActivity() {
                     when (it.itemId) {
                         // TODO: 添加更多 hook 方法
                         R.id.app_toolbar_preset_webview -> {
-                            with(modulePrefs("apps_$pkg")) {
+                            with(prefs("apps_$pkg")) {
                                 (getString(R.string.standard_s, getString(R.string.webview_rules)) + " " + "hookWebView").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
+                                        edit { putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
                                             "hookWebView",
-                                        )))
+                                        ))) }
                                     } catch (_ : ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
@@ -158,9 +158,9 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.webview_rules)) + " " + "hookWebViewClient").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
+                                        edit { putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
-                                        )))
+                                        ))) }
                                     } catch (_ : ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
@@ -169,14 +169,14 @@ class App : AppCompatActivity() {
                             refresh()
                         }
                         R.id.app_toolbar_preset_tbsx5 -> {
-                            with(modulePrefs("apps_$pkg")) {
+                            with(prefs("apps_$pkg")) {
                                 (getString(R.string.standard_s, getString(R.string.tbsx5_rules)) + " " + "hookWebView").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
+                                        edit { putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
                                             "hookWebView",
                                             Class_WebView = "com.tencent.smtt.sdk.WebView",
-                                        )))
+                                        ))) }
                                     } catch (_ : ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
@@ -184,13 +184,13 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.tbsx5_rules)) + " " + "hookWebViewClient").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
+                                        edit { putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
                                             Class_WebViewClient = "com.tencent.smtt.sdk.WebViewClient",
                                             Method_onPageFinished = "onPageFinished(com.tencent.smtt.sdk.WebView,str)",
                                             Class_WebView = "com.tencent.smtt.sdk.WebView",
                                             Method_evaluateJavascript = "evaluateJavascript(str,com.tencent.smtt.sdk.ValueCallback)",
-                                        )))
+                                        ))) }
                                     } catch (_ : ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
@@ -199,14 +199,14 @@ class App : AppCompatActivity() {
                             refresh()
                         }
                         R.id.app_toolbar_preset_ucu4 -> {
-                            with(modulePrefs("apps_$pkg")) {
+                            with(prefs("apps_$pkg")) {
                                 (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "hookWebView").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
+                                        edit { putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebView(
                                             "hookWebView",
                                             Class_WebView = "com.uc.webview.export.WebView",
-                                        )))
+                                        ))) }
                                     } catch (_ : ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
@@ -214,12 +214,12 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "hookWebViewClient").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
+                                        edit { putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
                                             Class_WebViewClient = "com.alipay.mobile.nebulauc.impl.UCWebViewClient",
                                             Method_onPageFinished = "onPageFinished(com.uc.webview.export.WebView,str)",
                                             Class_WebView = "com.uc.webview.export.WebView",
-                                        )))
+                                        ))) }
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
@@ -227,9 +227,9 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.ucu4_rules)) + " " + "replaceNebulaUCSDK").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.ReplaceNebulaUCSDK(
+                                        edit { putString("hook_entry_$ruleName", Gson().toJson(HookRules.ReplaceNebulaUCSDK(
                                             "replaceNebulaUCSDK",
-                                        )))
+                                        ))) }
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
@@ -238,13 +238,13 @@ class App : AppCompatActivity() {
                             refresh()
                         }
                         R.id.app_toolbar_preset_crosswalk -> {
-                            with(modulePrefs("apps_$pkg")) {
+                            with(prefs("apps_$pkg")) {
                                 (getString(R.string.standard_s, getString(R.string.crosswalk_rules)) + " " + "hookCrossWalk").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookCrossWalk(
+                                        edit { putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookCrossWalk(
                                             "hookCrossWalk",
-                                        )))
+                                        ))) }
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
@@ -252,12 +252,12 @@ class App : AppCompatActivity() {
                                 (getString(R.string.standard_s, getString(R.string.crosswalk_rules)) + " " + "hookWebViewClient").also { ruleName ->
                                     try {
                                         put(AppSP.hooks, ruleName)
-                                        putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
+                                        edit { putString("hook_entry_$ruleName", Gson().toJson(HookRules.HookRuleWebViewClient(
                                             "hookWebViewClient",
                                             Class_WebViewClient = "org.xwalk.core.XWalkResourceClient",
                                             Method_onPageFinished = "onLoadFinished(org.xwalk.core.XWalkView,str)",
                                             Class_WebView = "org.xwalk.core.XWalkView",
-                                        )))
+                                        ))) }
                                     } catch (_: ValueAlreadyExistedInSet) {
                                         application.toast(getString(R.string.s_already_exists, getString(R.string.rule_name) + """ "$ruleName" """), false)
                                     }
@@ -276,7 +276,7 @@ class App : AppCompatActivity() {
         viewBinding.appToolbarMenu.setOnClickListener {
             PopupMenu(this@App, it).apply {
                 menuInflater.inflate(R.menu.app_toolbar_menu, menu)
-                with(modulePrefs("apps_$pkg")) {
+                with(prefs("apps_$pkg")) {
                     menu.findItem(R.id.app_toolbar_menu_debug_mode).isChecked = get(AppSP.debug_mode)
                 }
                 setOnMenuItemClickListener { menuItem ->
@@ -286,16 +286,16 @@ class App : AppCompatActivity() {
                         }
                         R.id.app_toolbar_menu_debug_mode -> {
                             if (menuItem.isChecked) {
-                                modulePrefs("apps_$pkg").put(AppSP.debug_mode, false)
+                                prefs("apps_$pkg").edit { put(AppSP.debug_mode, false) }
                             } else {
                                 MaterialAlertDialogBuilder(this@App).apply {
                                     setTitle(R.string.debug_mode)
                                     setMessage(R.string.it_is_used_to_find_all_possible_load_url_methods_and_print_their_stack_traces_to_the_log_and_it_will_cause_the_target_app_to_freeze_so_don_not_enable_it_if_not_necessary)
                                     setNegativeButton(R.string.cancel) { _, _ ->
-                                        modulePrefs("apps_$pkg").put(AppSP.debug_mode, false)
+                                        prefs("apps_$pkg").edit { put(AppSP.debug_mode, false) }
                                     }
                                     setPositiveButton(R.string.confirm) { _, _ ->
-                                        modulePrefs("apps_$pkg").put(AppSP.debug_mode, true)
+                                        prefs("apps_$pkg").edit { put(AppSP.debug_mode, true) }
                                     }
                                 }.show()
                             }
@@ -329,16 +329,16 @@ class App : AppCompatActivity() {
             }.show()
         }
         viewBinding.appCard.setOnClickListener {
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.is_enabled)
-                put(AppSP.is_enabled, state)
+                edit { put(AppSP.is_enabled, state) }
                 state
             }
             if (state) {
-                modulePrefs("apps").put(AppsSP.enabled, pkg)
+                prefs("apps").put(AppsSP.enabled, pkg)
                 AppCenterTool.trackEvent("application", hashMapOf("application" to "$pkg $version"))
             } else
-                modulePrefs("apps").remove(AppsSP.enabled, pkg)
+                prefs("apps").remove(AppsSP.enabled, pkg)
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
             refresh()
         }
@@ -357,9 +357,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.vConsole)
-                put(AppSP.vConsole, state)
+                edit { put(AppSP.vConsole, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -368,7 +368,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesVconsoleVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.vConsole_version, viewBinding.appResourcesVconsoleVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.vConsole_version, viewBinding.appResourcesVconsoleVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesVconsolePluginSourcesCard.setOnLongClickListener {
@@ -380,9 +380,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.vConsole_plugin_sources)
-                put(AppSP.vConsole_plugin_sources, state)
+                edit { put(AppSP.vConsole_plugin_sources, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -391,7 +391,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesVconsolePluginSourcesVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.vConsole_plugin_sources_version, viewBinding.appResourcesVconsolePluginSourcesVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.vConsole_plugin_sources_version, viewBinding.appResourcesVconsolePluginSourcesVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesVconsolePluginStatsCard.setOnLongClickListener {
@@ -403,9 +403,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.vConsole_plugin_stats)
-                put(AppSP.vConsole_plugin_stats, state)
+                edit { put(AppSP.vConsole_plugin_stats, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -414,7 +414,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesVconsolePluginStatsVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.vConsole_plugin_stats_version, viewBinding.appResourcesVconsolePluginStatsVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.vConsole_plugin_stats_version, viewBinding.appResourcesVconsolePluginStatsVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesVconsolePluginVueDevtoolsCard.setOnLongClickListener {
@@ -426,9 +426,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.vConsole_plugin_vue_devtools)
-                put(AppSP.vConsole_plugin_vue_devtools, state)
+                edit { put(AppSP.vConsole_plugin_vue_devtools, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -437,7 +437,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.vConsole_plugin_vue_devtools_version, viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.vConsole_plugin_vue_devtools_version, viewBinding.appResourcesVconsolePluginVueDevtoolsVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesVconsolePluginOutputlogCard.setOnLongClickListener {
@@ -449,9 +449,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.vConsole_plugin_outputlog)
-                put(AppSP.vConsole_plugin_outputlog, state)
+                edit { put(AppSP.vConsole_plugin_outputlog, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -460,7 +460,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesVconsolePluginOutputlogVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.vConsole_plugin_outputlog_version, viewBinding.appResourcesVconsolePluginOutputlogVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.vConsole_plugin_outputlog_version, viewBinding.appResourcesVconsolePluginOutputlogVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesErudaCard.setOnLongClickListener {
@@ -472,9 +472,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.eruda)
-                put(AppSP.eruda, state)
+                edit { put(AppSP.eruda, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -483,7 +483,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesErudaVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.eruda_version, viewBinding.appResourcesErudaVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.eruda_version, viewBinding.appResourcesErudaVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesErudaPluginFpsCard.setOnLongClickListener {
@@ -495,9 +495,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.eruda_plugin_fps)
-                put(AppSP.eruda_plugin_fps, state)
+                edit { put(AppSP.eruda_plugin_fps, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -506,7 +506,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesErudaPluginFpsVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_fps_version, viewBinding.appResourcesErudaPluginFpsVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.eruda_plugin_fps_version, viewBinding.appResourcesErudaPluginFpsVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesErudaPluginFeaturesCard.setOnLongClickListener {
@@ -518,9 +518,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.eruda_plugin_features)
-                put(AppSP.eruda_plugin_features, state)
+                edit { put(AppSP.eruda_plugin_features, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -529,7 +529,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesErudaPluginFeaturesVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_features_version, viewBinding.appResourcesErudaPluginFeaturesVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.eruda_plugin_features_version, viewBinding.appResourcesErudaPluginFeaturesVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesErudaPluginTimingCard.setOnLongClickListener {
@@ -541,9 +541,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.eruda_plugin_timing)
-                put(AppSP.eruda_plugin_timing, state)
+                edit { put(AppSP.eruda_plugin_timing, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -552,7 +552,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesErudaPluginTimingVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_timing_version, viewBinding.appResourcesErudaPluginTimingVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.eruda_plugin_timing_version, viewBinding.appResourcesErudaPluginTimingVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesErudaPluginMemoryCard.setOnLongClickListener {
@@ -564,9 +564,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.eruda_plugin_memory)
-                put(AppSP.eruda_plugin_memory, state)
+                edit { put(AppSP.eruda_plugin_memory, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -575,7 +575,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesErudaPluginMemoryVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_memory_version, viewBinding.appResourcesErudaPluginMemoryVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.eruda_plugin_memory_version, viewBinding.appResourcesErudaPluginMemoryVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesErudaPluginCodeCard.setOnLongClickListener {
@@ -587,9 +587,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.eruda_plugin_code)
-                put(AppSP.eruda_plugin_code, state)
+                edit { put(AppSP.eruda_plugin_code, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -598,7 +598,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesErudaPluginCodeVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_code_version, viewBinding.appResourcesErudaPluginCodeVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.eruda_plugin_code_version, viewBinding.appResourcesErudaPluginCodeVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesErudaPluginBenchmarkCard.setOnLongClickListener {
@@ -610,9 +610,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.eruda_plugin_fps)
-                put(AppSP.eruda_plugin_fps, state)
+                edit { put(AppSP.eruda_plugin_fps, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -621,7 +621,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesErudaPluginBenchmarkVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_fps_version, viewBinding.appResourcesErudaPluginBenchmarkVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.eruda_plugin_fps_version, viewBinding.appResourcesErudaPluginBenchmarkVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesErudaPluginBenchmarkCard.setOnLongClickListener {
@@ -633,9 +633,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.eruda_plugin_benchmark)
-                put(AppSP.eruda_plugin_benchmark, state)
+                edit { put(AppSP.eruda_plugin_benchmark, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -644,7 +644,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesErudaPluginBenchmarkVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_benchmark_version, viewBinding.appResourcesErudaPluginBenchmarkVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.eruda_plugin_benchmark_version, viewBinding.appResourcesErudaPluginBenchmarkVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesErudaPluginGeolocationCard.setOnLongClickListener {
@@ -656,9 +656,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.eruda_plugin_geolocation)
-                put(AppSP.eruda_plugin_geolocation, state)
+                edit { put(AppSP.eruda_plugin_geolocation, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -667,7 +667,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesErudaPluginGeolocationVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_geolocation_version, viewBinding.appResourcesErudaPluginGeolocationVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.eruda_plugin_geolocation_version, viewBinding.appResourcesErudaPluginGeolocationVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesErudaPluginDomCard.setOnLongClickListener {
@@ -679,9 +679,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.eruda_plugin_dom)
-                put(AppSP.eruda_plugin_dom, state)
+                edit { put(AppSP.eruda_plugin_dom, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -690,7 +690,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesErudaPluginDomVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_dom_version, viewBinding.appResourcesErudaPluginDomVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.eruda_plugin_dom_version, viewBinding.appResourcesErudaPluginDomVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesErudaPluginOrientationCard.setOnLongClickListener {
@@ -702,9 +702,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.eruda_plugin_orientation)
-                put(AppSP.eruda_plugin_orientation, state)
+                edit { put(AppSP.eruda_plugin_orientation, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -713,7 +713,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesErudaPluginOrientationVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_orientation_version, viewBinding.appResourcesErudaPluginOrientationVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.eruda_plugin_orientation_version, viewBinding.appResourcesErudaPluginOrientationVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesErudaPluginTouchesCard.setOnLongClickListener {
@@ -725,9 +725,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.eruda_plugin_touches)
-                put(AppSP.eruda_plugin_touches, state)
+                edit { put(AppSP.eruda_plugin_touches, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -736,7 +736,7 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesErudaPluginTouchesVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.eruda_plugin_touches_version, viewBinding.appResourcesErudaPluginTouchesVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.eruda_plugin_touches_version, viewBinding.appResourcesErudaPluginTouchesVersion.adapter.getItem(p) as String)}
             }
         }
         viewBinding.appResourcesNebulaucsdkCard.setOnLongClickListener {
@@ -748,9 +748,9 @@ class App : AppCompatActivity() {
                 application.toast(getString(R.string.please_download_resources_at_first), false)
                 return@setOnClickListener
             }
-            val state = modulePrefs("apps_$pkg").run {
+            val state = prefs("apps_$pkg").run {
                 val state = !get(AppSP.nebulaUCSDK)
-                put(AppSP.nebulaUCSDK, state)
+                edit { put(AppSP.nebulaUCSDK, state) }
                 state
             }
             application.toast(getString(if (state) R.string.enabled else R.string.disabled), false)
@@ -759,13 +759,13 @@ class App : AppCompatActivity() {
         viewBinding.appResourcesNebulaucsdkVersion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
             override fun onItemSelected(parent: AdapterView<*>?, it: View?, p: Int, id: Long) {
-                modulePrefs("apps_$pkg").put(AppSP.nebulaUCSDK_version, viewBinding.appResourcesNebulaucsdkVersion.adapter.getItem(p) as String)
+                prefs("apps_$pkg").edit {put(AppSP.nebulaUCSDK_version, viewBinding.appResourcesNebulaucsdkVersion.adapter.getItem(p) as String)}
             }
         }
     }
 
     private fun checkUpdate() {
-        with(modulePrefs) {
+        with(prefs()) {
             name("module")
             Fuel.get("${get(ModuleSP.data_source)}/rules/$pkg/$version.json")
                 .responseObject<HookRules> { _, _, result ->
@@ -859,7 +859,7 @@ class App : AppCompatActivity() {
     }
 
     private fun refresh() {
-        with(modulePrefs) {
+        with(prefs()) {
             name("resources")
             val vConsoleAdapter = ArrayAdapter(this@App, R.layout.component_spinneritem, getSet(ResourcesSP.vConsole_versions).toArray()).apply {
                 setDropDownViewResource(R.layout.component_spinneritem)
@@ -1363,9 +1363,9 @@ class App : AppCompatActivity() {
                         setMessage(R.string.do_you_really_delete_this_rule)
                         setNegativeButton(R.string.cancel) { _, _ -> }
                         setPositiveButton(R.string.confirm) { _, _ ->
-                            with(modulePrefs("apps_$pkg")) {
+                            with(prefs("apps_$pkg")) {
                                 remove(AppSP.hooks, ruleName)
-                                remove("hook_entry_$ruleName")
+                                edit { remove("hook_entry_$ruleName") }
                             }
                             refresh()
                         }
@@ -1378,8 +1378,8 @@ class App : AppCompatActivity() {
     }
 
     private fun reset() {
-        try { modulePrefs("apps").remove(AppsSP.enabled, pkg) } catch (_: ValueNotExistedInSet) { }
-        modulePrefs("apps_$pkg").clear()
+        try { prefs("apps").remove(AppsSP.enabled, pkg) } catch (_: ValueNotExistedInSet) { }
+        prefs("apps_$pkg").edit { clear() }
         application.toast(getString(R.string.reset_completed), false)
     }
 
