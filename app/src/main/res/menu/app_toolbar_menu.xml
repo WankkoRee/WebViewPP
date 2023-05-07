@@ -7,6 +7,12 @@
         android:title="@string/checking_for_rules_updates"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/app_toolbar_menu_byass_packer"
+        android:title="@string/bypass_packer"
+        app:showAsAction="never"
+        android:checkable="true"
+        />
+    <item
         android:id="@+id/app_toolbar_menu_debug_mode"
         android:title="@string/debug_mode"
         app:showAsAction="never"
