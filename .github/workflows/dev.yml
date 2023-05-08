@@ -39,10 +39,10 @@ jobs:
       id: gradle
       run: chmod +x gradlew && ./gradlew :app:assembleDev
       env:
-        ORG_GRADLE_PROJECT_ANDROID_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-        ORG_GRADLE_PROJECT_ANDROID_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        ORG_GRADLE_PROJECT_ANDROID_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-        ORG_GRADLE_PROJECT_ANDROID_STORE_FILE: ./tmp.jks
+        ORG_GRADLE_PROJECT_androidStorePassword: ${{ secrets.STORE_PASSWORD }}
+        ORG_GRADLE_PROJECT_androidKeyPassword: ${{ secrets.KEY_PASSWORD }}
+        ORG_GRADLE_PROJECT_androidKeyAlias: ${{ secrets.KEY_ALIAS }}
+        ORG_GRADLE_PROJECT_androidStoreFile: ./tmp.jks
 
     - name: 读取打包结果
       id: result
