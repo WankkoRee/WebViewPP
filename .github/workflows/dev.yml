@@ -30,7 +30,7 @@ jobs:
 
     - name: 配置私密环境
       id: secret
-      run: (echo "${SIGNING_KEY}" | base64 -d | tee ./tmp.jks) && (echo -n "${APP_CENTER_SECRET}" | tee ./app/APP_CENTER_SECRET)
+      run: (echo "${SIGNING_KEY}" | base64 -d > ./tmp.jks) && (echo -n "${APP_CENTER_SECRET}" > ./app/APP_CENTER_SECRET)
       env:
         APP_CENTER_SECRET: ${{ secrets.APP_CENTER_SECRET }}
         SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
