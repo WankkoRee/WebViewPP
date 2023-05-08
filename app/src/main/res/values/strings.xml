@@ -19,5 +19,4 @@
     <string name="advance_setting_auto_check_update_desc">Auto check update or not when module launched.</string>
     <string name="advance_setting_app_center_desc">AppCenter is an anonymous data collection solution from Microsoft. We use it to anonymously collect crash logs, performance indicators, interaction habits and other data during your use of this module.</string>
     <string name="dialog_support_desc">For Chinese user:\n\t1. Alipay Red Packet is which you can get a free red packet and pay it to me every day.\n\t2. AliPay is recommended because it can pay with some red packets you got from Alipay just like #1(Scanning through the album may not work, it is recommended to scan through another screen).\n\t3. WeChat is not recommended because of its handling fee for me.\n\nFor global user:\n\tI do not support accepting donations for the time being due to the handling fee and other reasons.</string>
-    <string name="bypass_packer">Support packed app</string>
 </resources>

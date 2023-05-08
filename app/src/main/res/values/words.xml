@@ -101,4 +101,5 @@
     <string name="copied">Copied</string>
     <string name="open_directly">Open Directly</string>
     <string name="copy_key">Copy Key</string>
+    <string name="app_is_protected">App is Protected</string>
 </resources>

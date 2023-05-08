@@ -278,7 +278,7 @@ class App : AppCompatActivity() {
                 menuInflater.inflate(R.menu.app_toolbar_menu, menu)
                 with(prefs("apps_$pkg")) {
                     menu.findItem(R.id.app_toolbar_menu_debug_mode).isChecked = get(AppSP.debug_mode)
-                    menu.findItem(R.id.app_toolbar_menu_byass_packer).isChecked = get(AppSP.bypass_packer)
+                    menu.findItem(R.id.app_toolbar_menu_app_is_protected).isChecked = get(AppSP.app_is_protected)
                 }
                 setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
@@ -301,8 +301,8 @@ class App : AppCompatActivity() {
                                 }.show()
                             }
                         }
-                        R.id.app_toolbar_menu_byass_packer -> {
-                            modulePrefs("apps_$pkg").put(AppSP.bypass_packer, !menuItem.isChecked)
+                        R.id.app_toolbar_menu_app_is_protected -> {
+                            prefs("apps_$pkg").edit {  put(AppSP.app_is_protected, !menuItem.isChecked) }
                         }
                         R.id.app_toolbar_menu_configure_in_other_apps -> {
                             startActivity(Intent.createChooser(

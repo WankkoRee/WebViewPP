@@ -93,4 +93,5 @@
     <string name="copied">已复制</string>
     <string name="open_directly">直接打开</string>
     <string name="copy_key">复制口令</string>
+    <string name="app_is_protected">应用被加固</string>
 </resources>

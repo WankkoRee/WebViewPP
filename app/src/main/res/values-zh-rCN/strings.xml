@@ -18,5 +18,4 @@
     <string name="advance_setting_auto_check_update_desc">模块启动时是否检查更新。</string>
     <string name="advance_setting_app_center_desc">AppCenter 是一个来自微软的数据匿名收集方案。我们使用它来匿名收集您使用本模块期间的崩溃日志、性能指标、交互习惯等数据。</string>
     <string name="dialog_support_desc">对于中国用户:\n\t1. 支付宝红包码可以每天领取免费的红包，你可以把这个红包免费捐赠给我。\n\t2. 推荐通过支付宝捐赠，因为可以使用一些支付宝发放的红包，比如说上面那个（通过相册扫描可能不行，建议通过另一个屏幕扫码）。\n\t3. 不推荐通过微信捐赠，因为它存在手续费。\n\n对于全球用户:\n\t由于手续费等原因，我暂时不支持接受捐款。</string>
-    <string name="bypass_packer">支持加固应用</string>
 </resources>
