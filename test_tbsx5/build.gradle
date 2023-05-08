@@ -6,10 +6,10 @@ plugins {
 android {
     signingConfigs {
         release {
-            storePassword ANDROID_STORE_PASSWORD
-            keyPassword ANDROID_KEY_PASSWORD
-            keyAlias ANDROID_KEY_ALIAS
-            storeFile file(ANDROID_STORE_FILE)
+            storePassword findProperty('androidStorePassword')
+            keyPassword findProperty('androidKeyPassword')
+            keyAlias findProperty('androidKeyAlias')
+            storeFile file(findProperty('androidStoreFile'))
             v1SigningEnabled true
             v2SigningEnabled true
         }
