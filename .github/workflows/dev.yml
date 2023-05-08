@@ -42,7 +42,7 @@ jobs:
         ORG_GRADLE_PROJECT_androidStorePassword: ${{ secrets.STORE_PASSWORD }}
         ORG_GRADLE_PROJECT_androidKeyPassword: ${{ secrets.KEY_PASSWORD }}
         ORG_GRADLE_PROJECT_androidKeyAlias: ${{ secrets.KEY_ALIAS }}
-        ORG_GRADLE_PROJECT_androidStoreFile: ./tmp.jks
+        ORG_GRADLE_PROJECT_androidStoreFile: ../tmp.jks
 
     - name: 读取打包结果
       id: result
