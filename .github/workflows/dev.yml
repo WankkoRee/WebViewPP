@@ -1,0 +1,56 @@
+name: dev CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
+
+jobs:
+  build:
+    name: 打包任务
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    steps:
+    - name: 拉取仓库代码
+      id: checkout
+      uses: actions/checkout@v3
+
+    - name: 配置 JDK 11
+      id: jdk
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Gradle 打包
+      id: gradle
+      run: chmod +x gradlew && ./gradlew :app:assembleDev
+
+    - name: 签名
+      id: sign
+      uses: r0adkll/sign-android-release@v1
+      with:
+        releaseDirectory: app/build/outputs/apk/dev
+        signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+        alias: ${{ secrets.ALIAS }}
+        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+        keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+    - uses: jungwinter/split@v2.1.0
+      id: signed
+      with:
+        msg: ${{ steps.sign.signedReleaseFiles }}
+        separator: '/'
+
+    - name: 存档
+      id: artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ steps.signed._3 }}
+        path: ${{ steps.sign.signedReleaseFile }}

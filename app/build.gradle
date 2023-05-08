@@ -26,8 +26,8 @@ android {
         applicationId "cn.wankkoree.xp.webviewpp"
         minSdk 27
         targetSdk 33
-        versionCode 16
-        versionName "v3.1.0.$git_count.$git_hash"
+        versionCode git_count.toInteger()
+        versionName "v3.1.0.$git_hash"
         buildConfigField("String", "APP_CENTER_SECRET", "\"${file('./APP_CENTER_SECRET').readLines()[0]}\"")
     }
 
@@ -37,7 +37,6 @@ android {
             jniDebuggable false
             renderscriptDebuggable false
             minifyEnabled true
-            zipAlignEnabled true
             shrinkResources  true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -47,16 +46,14 @@ android {
             jniDebuggable false
             renderscriptDebuggable false
             minifyEnabled false
-            zipAlignEnabled false
             shrinkResources  false
             signingConfig signingConfigs.release
         }
         debug {
             debuggable true
-            jniDebuggable false
+            jniDebuggable true
             renderscriptDebuggable false
             minifyEnabled false
-            zipAlignEnabled false
             shrinkResources  false
             signingConfig signingConfigs.release
         }
