@@ -46,7 +46,7 @@ jobs:
 
     - name: 读取打包结果
       id: result
-      run: echo "apk=`find ./app/build/outputs/apk/dev/ -name "*.apk"`"
+      run: echo "apk=`find ./app/build/outputs/apk/dev/ -name "*.apk" -exec basename {} \;`" >> $GITHUB_OUTPUT
 
     - name: 存档
       id: artifact
