@@ -28,29 +28,29 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    - name: 配置私密环境
+      id: secret
+      run: (echo "${SIGNING_KEY}" | base64 -d | tee ./tmp.jks) && (echo -n "${APP_CENTER_SECRET}" | tee ./app/APP_CENTER_SECRET)
+      env:
+        APP_CENTER_SECRET: ${{ secrets.APP_CENTER_SECRET }}
+        SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+
     - name: Gradle 打包
       id: gradle
       run: chmod +x gradlew && ./gradlew :app:assembleDev
+      env:
+        ORG_GRADLE_PROJECT_ANDROID_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        ORG_GRADLE_PROJECT_ANDROID_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        ORG_GRADLE_PROJECT_ANDROID_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        ORG_GRADLE_PROJECT_ANDROID_STORE_FILE: ./tmp.jks
 
-    - name: 签名
-      id: sign
-      uses: r0adkll/sign-android-release@v1
-      with:
-        releaseDirectory: app/build/outputs/apk/dev
-        signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-        alias: ${{ secrets.ALIAS }}
-        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-        keyPassword: ${{ secrets.KEY_PASSWORD }}
-
-    - uses: jungwinter/split@v2.1.0
-      id: signed
-      with:
-        msg: ${{ steps.sign.signedReleaseFiles }}
-        separator: '/'
+    - name: 读取打包结果
+      id: result
+      run: echo "apk=`find ./app/build/outputs/apk/dev/ -name "*.apk"`"
 
     - name: 存档
       id: artifact
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.signed._3 }}
-        path: ${{ steps.sign.signedReleaseFile }}
+        name: ${{ steps.result.outputs.apk }}
+        path: ./app/build/outputs/apk/dev/${{ steps.result.outputs.apk }}
